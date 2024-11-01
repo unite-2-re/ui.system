@@ -8,7 +8,7 @@ import optimizer from 'vite-plugin-optimizer';
 import createExternal from 'vite-plugin-external';
 
 //
-export const NAME = "grid-system";
+export const NAME = "ui";
 export const __dirname = resolve(import.meta.dirname, "../");
 export const terserOptions = {
     ecma: 2020,

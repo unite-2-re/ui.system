@@ -20,6 +20,7 @@
         "inlineSources": true,
         "inlineSourceMap": true,
         "sourceMap": false,
+        "experimentalDecorators": true,
         //"allowImportingTsExtensions": true,
         //"emitDeclarationOnly": true,
         //"noEmit": true,

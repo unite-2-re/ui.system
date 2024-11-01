@@ -1,6 +1,6 @@
 {
     "name": "@unite-2/ui-system",
-    "description": "Long Text Input",
+    "description": "Custom UI System",
     "version": "1.0.0alpha",
     "private": false,
     "type": "module",
