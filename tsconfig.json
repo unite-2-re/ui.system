@@ -1,10 +1,11 @@
 {
     "include": ["./src/**/*"],
-    "exclude": ["./test/**/*", "./dist/**/*", "./externals/**/*", "./src/$polyfill$/*"],
+    "exclude": ["./test/**/*", "./externals/**/*", "./src/$polyfill$/*", "./dist/**/*"],
     "compilerOptions": {
+        "outDir": "./dist",
         "target": "ESNext",
         "module": "ESNext",
-        "lib": ["ESNext", "DOM", "WebWorker"],
+        "lib": ["ES2021", "ESNext", "DOM", "WebWorker"],
         "esModuleInterop": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
@@ -21,6 +22,7 @@
         "inlineSourceMap": true,
         "sourceMap": false,
         "experimentalDecorators": true,
+        "useDefineForClassFields": false,
         //"allowImportingTsExtensions": true,
         //"emitDeclarationOnly": true,
         //"noEmit": true,

@@ -1,4 +1,5 @@
 /// <reference types="lit" />
+
 // @ts-ignore
 import { LitElement, html, css } from "../shared/LitUse";
 
@@ -17,6 +18,15 @@ export class UICheckBox extends LitElement {
 
         // @ts-ignore
         this.classList?.add?.("u2-input");
+
+        // @ts-ignore
+        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
+            // @ts-ignore
+            if (this.shadowRoot) {
+                // @ts-ignore
+                this.themeStyle = module?.default?.(this.shadowRoot);
+            }
+        }).catch(console.warn.bind(console));
     }
 
     // mostly, unused...
@@ -34,14 +44,6 @@ export class UICheckBox extends LitElement {
     //
     render() {
         // use theme module if available
-
-        // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            // @ts-ignore
-            this.themeStyle = module?.default?.(this.shadowRoot);
-        }).catch(console.warn.bind(console));
-
-        //
         return html`${this.themeStyle}<label class="ui-contain"><div class="ui-fill"></div><div class="ui-thumb"></div><slot></slot></label>`;
     }
 }
