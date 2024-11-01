@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <base href="./" />
+    <title>Test Page</title>
+
+    <!-- -->
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, viewport-fit=cover, interactive-widget=overlays-content, shrink-to-fit=no">
+
+    <!-- -->
+    <link ref="prefetch" href="/externals/lib/dom.js">
+    <link ref="prefetch" href="/externals/lib/interact.js">
+    <link ref="prefetch" href="/externals/lib/object.js">
+    <link ref="prefetch" href="/externals/lib/uniform.js">
+
+    <!-- -->
+    <link ref="prefetch" href="/externals/core/core.js">
+    <link ref="prefetch" href="/externals/core/design.js">
+    <link ref="prefetch" href="/externals/core/existence.js">
+    <link ref="prefetch" href="/externals/core/grid.js">
+    <link ref="prefetch" href="/externals/core/theme.js">
+
+    <!-- -->
+    <link ref="prefetch" href="/externals/wcomp/image.js">
+    <link ref="prefetch" href="/externals/wcomp/contextmenu.js">
+    <link ref="prefetch" href="/externals/wcomp/longtext.js">
+    <link ref="prefetch" href="/externals/wcomp/rows.js">
+    <link ref="prefetch" href="/externals/wcomp/scrollbox.js">
+
+    <!-- -->
+    <link rel="icon" type="image/png" href="./favicon.png">
+
+    <!-- -->
+    <script data-owner="runtime" data-type="interact">
+        // avoid any dragging when no-needed...
+        document.documentElement.addEventListener("dragstart", (ev) => {
+            if (ev?.target?.matches?.("div, img, picture, canvas, video, svg")) {
+                ev.preventDefault();
+            }
+        }, {passive: false, capture: true});
+
+        // comment to enable native context menu
+        document.documentElement.addEventListener("contextmenu", (ev)=>{
+            ev.stopPropagation();
+            ev.preventDefault();
+        }, {capture: true});
+
+        //
+        if ("virtualKeyboard" in navigator && navigator?.virtualKeyboard) {
+            // @ts-ignore
+            navigator.virtualKeyboard.overlaysContent = true;
+        }
+    </script>
+
+    <!-- -->
+    <style data-owner="runtime" data-type="layers">
+        @layer u2-props, u2-core, u2-zoom, u2-normalize, u2-theme, u2-colors, u2-rows, u2-grid-box, u2-layout;
+    </style>
+
+    <!-- -->
+    <style data-owner="runtime" data-type="system">
+        body, html {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        body, html {
+            inline-size: 100dvi;
+            block-size: 100dvb;
+            max-inline-size: 100dvi;
+            max-block-size: 100dvb;
+        }
+
+        .u2-test-handler {
+            cursor: grab;
+            inline-size: var(--icon-size);
+            block-size: var(--icon-size);
+            background-color: black;
+            aspect-ratio: 1 / 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <u-gridbox style="inline-size: 100%; block-size: 100%;"></u-gridbox>
+
+    <script src="./test/GridTest.mjs" type="module"></script>
+
+
+</body>
+</html>

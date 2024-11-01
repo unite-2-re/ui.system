@@ -1,0 +1,28 @@
+{
+    "include": ["./src/**/*"],
+    "exclude": ["./test/**/*", "./dist/**/*", "./externals/**/*", "./src/$polyfill$/*"],
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "lib": ["ESNext", "DOM", "WebWorker"],
+        "esModuleInterop": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowJs": true,
+        "allowArbitraryExtensions": true,
+        "allowSyntheticDefaultImports": true,
+        "allowUmdGlobalAccess": true,
+        "allowUnreachableCode": true,
+        "allowUnusedLabels": true,
+        "noImplicitAny": false,
+        "declaration": false,
+        "noImplicitThis": false,
+        "inlineSources": true,
+        "inlineSourceMap": true,
+        "sourceMap": false,
+        //"allowImportingTsExtensions": true,
+        //"emitDeclarationOnly": true,
+        //"noEmit": true,
+        "typeRoots": ["plugins/global.d.ts"]
+    }
+}
