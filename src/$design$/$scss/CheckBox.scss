@@ -21,8 +21,9 @@
 
         //
         @for $i from 1 through 3 {
-            &:has(input[type="radio"]:last-child:nth-child(#{$i})) { --max-value: #{$i}; }
-            &:has(input[type="radio"]:checkbox:nth-child(#{$i})) { --value: #{$i-1}; }
+            &:has(input[type="radio"]:nth-child(#{$i})) { order: #{$i}; };
+            &:has(input[type="radio"]:last-child:nth-child(#{$i})) { --max-value: #{$i}; };
+            &:has(input[type="radio"]:checkbox:nth-child(#{$i})) { --value: #{$i-1}; };
         }
 
         //
