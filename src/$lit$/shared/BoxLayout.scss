@@ -74,7 +74,9 @@
                 // for example
                 content: "🔆";
                 background-image: linear-gradient(var(--current-glyph-color, currentColor), var(--current-glyph-color, currentColor));
+                font-variant-emoji: text;
 
+                //
                 color: transparent;
                 background-clip: text;
                 vertical-align: middle;
