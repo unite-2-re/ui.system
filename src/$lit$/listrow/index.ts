@@ -52,6 +52,16 @@ export class UIListRow extends LitElement {
         super.connectedCallback();
 
         // @ts-ignore
+        this.#parentNode = this?.parentNode;
+        this.#parentNode?.addEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
+
+        //
+        this.updateAttributes();
+    }
+
+    //
+    protected updateAttributes() {
+        // @ts-ignore
         if (this.checked) { this.setAttribute("checked", ""); } else { this.removeAttribute("checked"); }
 
         // @ts-ignore
@@ -61,8 +71,13 @@ export class UIListRow extends LitElement {
         this.setAttribute("data-alpha", this.checked ? "1": "0");
 
         // @ts-ignore
-        this.#parentNode = this?.parentNode;
-        this.#parentNode?.addEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
+        const ownBox = this.shadowRoot?.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])") ?? this.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])");
+        if (ownBox) {
+            ownBox.setAttribute("value", this.value);
+
+            // @ts-ignore
+            ownBox.setAttribute("name", this.parentNode?.dataset?.name || "dummy-radio");
+        };
     }
 
     //
@@ -70,38 +85,20 @@ export class UIListRow extends LitElement {
         if (ev.target.checked != null) {
             // @ts-ignore
             const ownRadio = this.shadowRoot?.querySelector?.("input[type=\"radio\"]") ?? this.querySelector?.("input[type=\"radio\"]");
-
-            //
             if (ownRadio?.name == ev.target?.name) {
                 // fix if was in internal DOM
                 ownRadio.checked = ev.target == ownRadio;
 
                 //
                 this.checked = ownRadio.checked;
-
-                // @ts-ignore
-                if (this.checked) { this.setAttribute("checked", ""); } else { this.removeAttribute("checked"); }
-
-                // @ts-ignore
-                this.setAttribute("data-scheme", this.checked ? "inverse": "solid");
-
-                // @ts-ignore
-                this.setAttribute("data-alpha", this.checked ? "1": "0");
+                this.updateAttributes();
             }
 
             // @ts-ignore
             const ownCheckbox = this.shadowRoot?.querySelector?.("input[type=\"checkbox\"]") ?? this.querySelector?.("input[type=\"checkbox\"]");
             if (ownCheckbox?.name == ev.target?.name && ownCheckbox == ev.target) {
                 this.checked = ownRadio.checked;
-
-                // @ts-ignore
-                if (this.checked) { this.setAttribute("checked", ""); } else { this.removeAttribute("checked"); }
-
-                // @ts-ignore
-                this.setAttribute("data-scheme", this.checked ? "inverse": "solid");
-
-                // @ts-ignore
-                this.setAttribute("data-alpha", this.checked ? "1": "0");
+                this.updateAttributes();
             }
         }
     }
