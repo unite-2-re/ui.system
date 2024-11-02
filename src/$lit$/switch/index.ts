@@ -26,25 +26,22 @@ export class UISwitch extends LitElement {
         // @ts-ignore
         this.classList?.add?.("u2-input");
 
-        //
-        const stateChange = (ev)=>{
-            //
-            if (ev.target.checked != null) {
-                this.value = ev.target.value;
-
-                // @ts-ignore
-                //this.style.setProperty("--checked", this.checked ? 1 : 0);
-            }
-        }
+        // @ts-ignore
+        this.addEventListener("change", this.onSelect.bind(this));
 
         // @ts-ignore
-        this.addEventListener("change", stateChange);
-
-        // @ts-ignore
-        this.addEventListener("input", stateChange);
+        this.addEventListener("input", this.onSelect.bind(this));
 
         // @ts-ignore
         //this.style.setProperty("--checked", this.checked ? 1 : 0);
+    }
+
+    //
+    protected onSelect(ev){
+        //
+        if (ev?.target?.checked) {
+            this.value = ev.target.value;
+        }
     }
 
     // theme style property

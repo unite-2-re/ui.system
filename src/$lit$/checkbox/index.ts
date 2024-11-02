@@ -23,22 +23,22 @@ export class UICheckBox extends LitElement {
         // @ts-ignore
         this.classList?.add?.("u2-input");
 
+        // @ts-ignore
+        this.addEventListener("change", this.onSelect.bind(this));
+
+        // @ts-ignore
+        this.addEventListener("input", this.onSelect.bind(this));
+    }
+
+    //
+    protected onSelect(ev){
         //
-        const stateChange = (ev)=>{
-            //
-            if (ev.target.checked != null) {
-                this.checked = ev.target.checked;
+        if (ev.target.checked != null) {
+            this.checked = ev.target.checked;
 
-                // @ts-ignore
-                //this.style.setProperty("--checked", this.checked ? 1 : 0);
-            }
+            // @ts-ignore
+            //this.style.setProperty("--checked", this.checked ? 1 : 0);
         }
-
-        // @ts-ignore
-        this.addEventListener("change", stateChange);
-
-        // @ts-ignore
-        this.addEventListener("input", stateChange);
     }
 
     // theme style property
