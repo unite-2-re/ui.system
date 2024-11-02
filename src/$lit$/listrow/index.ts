@@ -23,7 +23,7 @@ export class UIListRow extends LitElement {
         super();
 
         // @ts-ignore
-        this.classList?.add?.("ui-switch");
+        this.classList?.add?.("ui-listrow");
 
         // @ts-ignore
         this.classList?.add?.("u2-input");
@@ -60,12 +60,39 @@ export class UIListRow extends LitElement {
     protected onSelect(ev){
         if (ev.target.checked != null) {
             // @ts-ignore
-            const ownRadio = this.querySelector?.("input[type=\"radio\"]");
-            if (ownRadio.name == ev.target?.name) {
+            const ownRadio = this.shadowRoot?.querySelector?.("input[type=\"radio\"]") ?? this.querySelector?.("input[type=\"radio\"]");
+
+            //
+            if (ownRadio?.name == ev.target?.name) {
+                // fix if was in internal DOM
+                ownRadio.checked = ev.target == ownRadio;
+
+                //
                 this.checked = ownRadio.checked;
 
                 // @ts-ignore
                 if (this.checked) { this.setAttribute("checked", ""); } else { this.removeAttribute("checked"); }
+
+                // @ts-ignore
+                this.setAttribute("data-scheme", this.checked ? "inverse": "solid");
+
+                // @ts-ignore
+                this.setAttribute("data-alpha", this.checked ? "1": "0");
+            }
+
+            // @ts-ignore
+            const ownCheckbox = this.shadowRoot?.querySelector?.("input[type=\"checkbox\"]") ?? this.querySelector?.("input[type=\"checkbox\"]");
+            if (ownCheckbox?.name == ev.target?.name && ownCheckbox == ev.target) {
+                this.checked = ownRadio.checked;
+
+                // @ts-ignore
+                if (this.checked) { this.setAttribute("checked", ""); } else { this.removeAttribute("checked"); }
+
+                // @ts-ignore
+                this.setAttribute("data-scheme", this.checked ? "inverse": "solid");
+
+                // @ts-ignore
+                this.setAttribute("data-alpha", this.checked ? "1": "0");
             }
         }
     }
@@ -97,23 +124,22 @@ export class UIListRow extends LitElement {
         // @ts-ignore
         this.addEventListener("click", (ev)=>{
             const input = root.querySelector("input[type=\"radio\"]");
-            if (ev.target != input) { input?.click?.(); };
+            if (ev.target != input || !ev.target?.matches?.("input")) { input?.click?.(); };
         });
 
         // @ts-ignore
         this.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${this?.parentNode?.dataset?.name || "dummy-radio"}>`);
 
-        // @ts-ignore
+        //
         return root;
     }
 
     // also "display" may be "contents"
-    static styles = css`:host { inline-size: 100%; block-size: max-content; pointer-events: auto; cursor: pointer; display: grid; grid-column: 1 / -1; grid-template-rows: minmax(0px, 1fr); grid-template-columns: subgrid; & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"]) { cursor: pointer; grid-row: 1 / 1 span; grid-column: 1 / -1; inline-size: 100%; block-size: 100%; min-block-size: appearance: none; opacity: 0; }; & .ui-columns { pointer-events: none; display: grid; grid-template-rows: minmax(0px, 1fr); grid-template-columns: subgrid; grid-row: 1 / 1 span; grid-column: 1 / -1; inline-size: 100%; block-size: 100%; } }`
+    static styles = css`:host { box-sizing: border-box; inline-size: 100%; block-size: max-content; pointer-events: auto; cursor: pointer; display: grid; grid-column: 1 / -1; grid-template-rows: minmax(0px, 1fr); grid-template-columns: subgrid; & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"]) { box-sizing: border-box; cursor: pointer; grid-row: 1 / 1 span; grid-column: 1 / -1; inline-size: 100%; block-size: 100%; min-block-size: appearance: none; opacity: 0; }; & .ui-columns { box-sizing: border-box; pointer-events: none; display: grid; grid-template-rows: minmax(0px, 1fr); grid-template-columns: subgrid; grid-row: 1 / 1 span; grid-column: 1 / -1; inline-size: 100%; block-size: 100%; ::slotted(*) {padding: 0.25rem;} } }`
 
     //
     render() {
         // @ts-ignore
-        // <input data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${this?.parentNode?.dataset?.name || "dummy-radio"}>
         return html`${this.themeStyle}<slot name="radio"></slot><div part="ui-columns" data-alpha="0" class="ui-columns"><slot></slot></div>`;
     }
 }
