@@ -38,15 +38,6 @@ export class UICheckBox extends LitElement {
         this.addEventListener("input", stateChange);
 
         // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            // @ts-ignore
-            if (this.shadowRoot) {
-                // @ts-ignore
-                this.themeStyle = module?.default?.(this.shadowRoot);
-            }
-        }).catch(console.warn.bind(console));
-
-        // @ts-ignore
         //this.style.setProperty("--checked", this.checked ? 1 : 0);
     }
 
@@ -55,10 +46,21 @@ export class UICheckBox extends LitElement {
     @property() protected checked: boolean = false;
 
     //
-    /*protected createRenderRoot() {
+    protected createRenderRoot() {
+        const root = super.createRenderRoot();
+
         // @ts-ignore
-        return (this.shadowRoot ?? this.attachShadow({ mode: "open" }));
-    }*/
+        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
+            // @ts-ignore
+            if (root) {
+                // @ts-ignore
+                this.themeStyle = module?.default?.(root);
+            }
+        }).catch(console.warn.bind(console));
+
+        // @ts-ignore
+        return root;
+    }
 
     static styles = css`:host {
         inline-size: 1rem;
@@ -88,6 +90,19 @@ export class UICheckBox extends LitElement {
             box-sizing: border-box;
             place-items: center;
             place-content: center;
+            background-color: transparent;
+
+            & > .ui-thumb {
+                z-index: 99;
+            }
+
+            & > .ui-fill {
+                overflow: hidden;
+                background-color: transparent;
+                display: grid;
+                grid-template-columns: minmax(0px, 1fr);
+                grid-template-rows: minmax(0px, 1fr);
+            }
 
             & > * {
                 padding: 0px;
@@ -95,10 +110,21 @@ export class UICheckBox extends LitElement {
                 position: absolute;
                 max-inline-size: 100%;
                 max-block-size: 100%;
+                inline-size: 100%;
+                block-size: 100%;
                 pointer-events: none;
-                background: transparent;
                 box-sizing: border-box;
                 border-radius: 0px;
+
+                & > * {
+                    max-inline-size: 100%;
+                    max-block-size: 100%;
+                    inline-size: 100%;
+                    block-size: 100%;
+
+                    grid-column: 1 / -1;
+                    grid-row: 1 / -1;
+                }
             }
         }
 
@@ -123,7 +149,15 @@ export class UICheckBox extends LitElement {
     //
     render() {
         // use theme module if available
-        return html`${this.themeStyle}<label part="ui-contain" class="ui-contain"><div part="ui-fill" class="ui-fill"></div><div part="ui-thumb" class="ui-thumb"></div><slot></slot></label>`;
+        return html`${this.themeStyle}
+        <label part="ui-contain" class="ui-contain">
+        <div part="ui-fill" class="ui-fill">
+            <div data-scheme="inverse" part="ui-fill-inactive" class="ui-fill-inactive"></div>
+            <div data-scheme="solid" part="ui-fill-active" class="ui-fill-active"></div>
+        </div>
+        <div data-scheme="inverse" part="ui-thumb" class="ui-thumb"></div>
+        <slot></slot>
+        </label>`;
     }
 }
 
