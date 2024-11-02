@@ -52,6 +52,15 @@ export class UIListRow extends LitElement {
         super.connectedCallback();
 
         // @ts-ignore
+        if (this.checked) { this.setAttribute("checked", ""); } else { this.removeAttribute("checked"); }
+
+        // @ts-ignore
+        this.setAttribute("data-scheme", this.checked ? "inverse": "solid");
+
+        // @ts-ignore
+        this.setAttribute("data-alpha", this.checked ? "1": "0");
+
+        // @ts-ignore
         this.#parentNode = this?.parentNode;
         this.#parentNode?.addEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
     }
