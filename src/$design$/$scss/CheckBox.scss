@@ -1,0 +1,84 @@
+@layer u2-design {
+
+    //
+    @property --value {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 0;
+    }
+
+    //
+    @property --max-value {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 1;
+    }
+
+    //
+    :where(ui-checkbox, ui-switch) {
+        --value: 0;
+        --max-value: 1;
+
+        //
+        @for $i from 1 through 3 {
+            &:has(input[type="radio"]:last-child:nth-child(#{$i})) { --max-value: #{$i}; }
+            &:has(input[type="radio"]:checkbox:nth-child(#{$i})) { --value: #{$i-1}; }
+        }
+
+        //
+        &:has(input[type="checkbox"]) { --max-value: 1; }
+        &:has(input[type="checkbox"]:checkbox) { --value: 1; }
+
+        //
+        & {
+            
+        }
+
+        //
+        & label {
+            
+        }
+
+        // for inputs
+        & input {
+            
+        }
+
+        //
+        &:part(ui-fill) {
+        
+        }
+
+        //
+        &:part(ui-fill-active) {
+        
+        }
+
+        //
+        &:part(ui-fill-inactive) {
+        
+        }
+
+        //
+        &:part(ui-thumb) {
+
+        }
+
+        //
+        &:has(input[type="radio"]) {
+            // specific
+            & input {
+
+            }
+        }
+
+        //
+        &:has(input[type="checkbox"]) {
+            // specific
+            & input {
+
+            }
+        }
+    }
+
+}
