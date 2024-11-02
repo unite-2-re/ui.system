@@ -46,7 +46,7 @@ export class UIListRow extends LitElement {
 
     // theme style property
     @property({attribute: true}) value: string = "";
-    @property({attribute: true}) checked: boolean = false;
+    @property({attribute: true, state: true}) checked: boolean = false;
     @property() protected themeStyle?: HTMLStyleElement;
 
     //
