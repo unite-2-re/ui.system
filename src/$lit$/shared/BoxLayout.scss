@@ -13,6 +13,9 @@
     }
 
     //
+    & slot { display: contents !important; }
+
+    //
     & > label {
         container-type: size;
         container-name: ui-contain;
@@ -31,6 +34,14 @@
         place-items: center;
         place-content: center;
         background-color: transparent;
+
+        //
+        & > .ui-inputs {
+            display: flex;
+            flex-direction: row;
+            place-content: space-around;
+            place-items: stretch;
+        }
 
         //
         & > .ui-thumb { z-index: 99; }

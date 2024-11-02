@@ -1,17 +1,13 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { LitElement, html, css } from "../shared/LitUse";
+import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../shared/LitUse";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
 import styles from "../shared/BoxLayout.scss?inline";
-
-// @ts-ignore
-import html from "../shared/BoxLayout.html?raw";
-
 
 // @ts-ignore
 @customElement('ui-checkbox')
@@ -67,12 +63,19 @@ export class UICheckBox extends LitElement {
     }
 
     //
-    static styles = css`${styles}`
+    static styles = css`${unsafeCSS(styles)}`
 
     //
     render() {
         // use theme module if available
-        return html`${this.themeStyle}${html}`;
+        return html`${this.themeStyle}<label part="ui-contain" class="ui-contain">
+    <div part="ui-fill" class="ui-fill">
+        <div data-scheme="inverse" part="ui-fill-inactive" class="ui-fill-inactive"></div>
+        <div data-scheme="solid" part="ui-fill-active" class="ui-fill-active"></div>
+    </div>
+    <div part="ui-thumb" class="ui-thumb" data-scheme="inverse"></div>
+    <div part="ui-inputs" class="ui-inputs"><slot></slot></div>
+</label>`;
     }
 }
 

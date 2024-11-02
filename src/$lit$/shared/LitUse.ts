@@ -7,4 +7,7 @@
 export * from "lit";
 
 // @ts-ignore
+export { unsafeStatic, withStatic } from "lit/static-html.js";
+
+// @ts-ignore
 export * from "lit/decorators.js";
