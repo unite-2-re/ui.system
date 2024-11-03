@@ -1,8 +1,12 @@
 @layer u2-layout {
 
+    //
     :host {
         //
         & {
+            --thumb-content: "🔆";
+
+            //
             inline-size: 1rem;
             block-size: 1rem;
             display: inline flex;
@@ -92,7 +96,6 @@
                     place-content: center;
                     place-items: center;
                     flex-direction: row;
-                    pointer-events: none;
                     overflow: visible;
 
                     //
@@ -101,7 +104,7 @@
                     text-align: center;
 
                     // for example
-                    content: "🔆";
+                    content: var(--thumb-content, "🔆");
                     background-image: linear-gradient(var(--current-glyph-color, currentColor), var(--current-glyph-color, currentColor));
                     font-variant-emoji: text;
                     font-weight: bolder;
@@ -116,6 +119,7 @@
                     //
                     user-select: none;
                     touch-action: none;
+                    pointer-events: none;
                 }
             }
 
