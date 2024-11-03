@@ -9,6 +9,9 @@ import { customElement, property } from "lit/decorators.js";
 // @ts-ignore
 import { openContextMenu } from "/externals/wcomp/contextmenu.js";
 
+//
+import UILucideIcon from "../icon/index";
+
 // @ts-ignore
 @customElement('ui-dropmenu')
 export class UIDropMenu extends LitElement {
@@ -44,8 +47,8 @@ export class UIDropMenu extends LitElement {
 
         // TODO! better support of context menus
         openContextMenu?.(ev, [
-            {content: "Properties", callback: ()=>{console.log("Properties")}},
-            {content: "Clone", callback: ()=>{console.log("Clone")}}
+            {icon: new UILucideIcon({icon: "github", padding: "0.25rem"}), content: "Properties", callback: ()=>{console.log("Properties")}},
+            {icon: new UILucideIcon({icon: "youtube", padding: "0.25rem"}), content: "Clone", callback: ()=>{console.log("Clone")}}
         ], true);
     }
 
@@ -81,7 +84,7 @@ export class UIDropMenu extends LitElement {
     }
 
     //
-    static styles = css`:host { cursor: pointer; user-select: none; min-inline-size: 6rem; display: inline flex; overflow: hidden; pointer-events: auto; border-radius: 0.25rem; box-sizing: border-box; button { user-select: none; display: flex; flex-direction: row; align-content: center; align-items: center; justify-items: stretch; justify-content: space-between; pointer-events: none; border-radius: 0px; outline: none 0px transparent; border: none 0px transparent; background-color: transparent; inline-size: 100%; block-size: 100%; box-sizing: border-box; } }`
+    static styles = css`:host { text-align: center; padding: 0.25rem; cursor: pointer; user-select: none; min-inline-size: 6rem; display: inline flex; place-content: center; place-items: center; overflow: hidden; pointer-events: auto; border-radius: 0.25rem; box-sizing: border-box; button { gap: 0.25rem; text-align: start; padding: 0rem; user-select: none; display: flex; flex-direction: row; align-content: center; align-items: center; justify-items: stretch; justify-content: space-between; pointer-events: none; border-radius: 0px; outline: none 0px transparent; border: none 0px transparent; background-color: transparent; inline-size: 100%; block-size: 100%; box-sizing: border-box; } }`
 
     //
     render() {

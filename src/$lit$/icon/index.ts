@@ -41,7 +41,7 @@ const toCamelCase = (str: string) => {
 export class UILucideIcon extends LitElement {
 
     //
-    constructor() {
+    constructor(options = {icon: "", padding: ""}) {
         super();
 
         // @ts-ignore
@@ -49,6 +49,12 @@ export class UILucideIcon extends LitElement {
 
         // @ts-ignore
         this.classList?.add?.("u2-input");
+
+        //
+        if (options?.icon) { this.icon = options?.icon; };
+
+        // @ts-ignore
+        if (options?.padding) { this.style.setProperty("padding", options?.padding); };
     }
 
     //
@@ -103,7 +109,7 @@ export class UILucideIcon extends LitElement {
     }
 
     // also "display" may be "contents"
-    static styles = css`:host { pointer-events: none; user-select: none; touch-action: none; aspect-ratio: 1 / 1; inline-size: 2rem; block-size: 2rem; box-sizing: border-box; display: flex; place-items: center; place-content: center; & > * { box-sizing: border-box; inline-size: 100%; block-size: 100%; aspect-ratio: 1 / 1; }; }`
+    static styles = css`:host { pointer-events: none; user-select: none; touch-action: none; aspect-ratio: 1 / 1; inline-size: max-content; block-size: 100%; box-sizing: border-box; display: flex; place-items: center; place-content: center; & > * { box-sizing: border-box; inline-size: max-content; block-size: 100%; aspect-ratio: 1 / 1; }; }`
 
     //
     render() {
