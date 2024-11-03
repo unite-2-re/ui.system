@@ -103,7 +103,7 @@ export class UILucideIcon extends LitElement {
     }
 
     // also "display" may be "contents"
-    static styles = css`:host { aspect-ratio: 1 / 1; inline-size: 2rem; block-size: 2rem; box-sizing: border-box; display: flex; place-items: center; place-content: center; & > * { box-sizing: border-box; inline-size: 100%; block-size: 100%; aspect-ratio: 1 / 1; }; }`
+    static styles = css`:host { pointer-events: none; user-select: none; touch-action: none; aspect-ratio: 1 / 1; inline-size: 2rem; block-size: 2rem; box-sizing: border-box; display: flex; place-items: center; place-content: center; & > * { box-sizing: border-box; inline-size: 100%; block-size: 100%; aspect-ratio: 1 / 1; }; }`
 
     //
     render() {

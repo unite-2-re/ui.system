@@ -141,7 +141,7 @@ export class UIListRow extends LitElement {
     }
 
     // also "display" may be "contents"
-    static styles = css`:host { box-sizing: border-box; inline-size: 100%; block-size: max-content; pointer-events: auto; cursor: pointer; display: grid; grid-column: 1 / -1; grid-template-rows: minmax(0px, 1fr); grid-template-columns: subgrid; & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"]) { box-sizing: border-box; cursor: pointer; grid-row: 1 / 1 span; grid-column: 1 / -1; inline-size: 100%; block-size: 100%; min-block-size: appearance: none; opacity: 0; }; & .ui-columns { box-sizing: border-box; pointer-events: none; display: grid; grid-template-rows: minmax(0px, 1fr); grid-template-columns: subgrid; grid-row: 1 / 1 span; grid-column: 1 / -1; inline-size: 100%; block-size: 100%; ::slotted(*) {padding: 0.25rem;} } }`
+    static styles = css`:host { font-size: 0.9rem; box-sizing: border-box; inline-size: 100%; block-size: max-content; pointer-events: auto; cursor: pointer; display: grid; grid-column: 1 / -1; grid-template-rows: minmax(0px, 1fr); grid-template-columns: subgrid; & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"]) { box-sizing: border-box; cursor: pointer; grid-row: 1 / 1 span; grid-column: 1 / -1; inline-size: 100%; block-size: 100%; min-block-size: appearance: none; opacity: 0; }; & .ui-columns { box-sizing: border-box; pointer-events: none; display: grid; grid-template-rows: minmax(0px, 1fr); grid-template-columns: subgrid; grid-row: 1 / 1 span; grid-column: 1 / -1; inline-size: 100%; block-size: 100%; ::slotted(*) {padding: 0.25rem;} } }`
 
     //
     render() {

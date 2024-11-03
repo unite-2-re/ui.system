@@ -63,9 +63,7 @@
         body, html {
             padding: 0px;
             margin: 0px;
-        }
-
-        body, html {
+            font-family: Calibri, sans-serif;
             inline-size: 100dvi;
             block-size: 100dvb;
             max-inline-size: 100dvi;
@@ -90,18 +88,13 @@
     </ui-checkbox>
 
     <!-- -->
-    <div data-name="puk" style="display: grid; grid-auto-rows: max-content; grid-template-columns: minmax(0px, 1rem) minmax(0px, 1fr); block-size: max-content;">
+    <div data-name="puk" style="display: inline grid; grid-auto-rows: max-content; grid-template-columns: minmax(0px, 1rem) minmax(0px, 1fr); block-size: max-content; inline-size: stretch; inline-size: -webkit-fill-available; inline-size: -moz-available;">
         <ui-listrow value="f1"> <div class="u2-icon"></div> <span>Test Text 1</span> </ui-listrow>
         <ui-listrow value="f2"> <div class="u2-icon"></div> <span>Test Text 2</span> </ui-listrow>
     </div>
 
     <!-- -->
     <ui-icon icon="github" style="inline-size: 4rem; block-size: 4rem; padding: 1rem;"></ui-icon>
-
-    <!-- -->
-    <script>
-        
-    </script>
 
     <!-- -->
     <script src="./test/UITest.ts" type="module"></script>

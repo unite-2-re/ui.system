@@ -34,6 +34,56 @@ export class UISwitch extends LitElement {
 
         // @ts-ignore
         //this.style.setProperty("--checked", this.checked ? 1 : 0);
+
+        //
+        const sws = { pointerId: -1 };
+        const doExaction = (clientX, clientY)=>{
+            // @ts-ignore
+            const box = this.getBoundingClientRect?.();
+            const coord = [clientX - box.left, clientY - box.top];
+
+            // @ts-ignore
+            const radio = this.querySelectorAll?.("input[type=\"radio\"]");
+            const count = (radio?.length || 0);
+            const vary = [
+                (coord[0]/box.width) * count,
+                (coord[1]/box.height) * count
+            ];
+
+            //
+            const exact = Math.min(Math.max(Math.floor(vary[0]), 0), count-1);
+            if (!radio?.checked) { radio?.[exact]?.click(); };
+        }
+
+        // @ts-ignore
+        this.addEventListener("pointerdown", (e)=>{
+            if (sws.pointerId < 0) {
+                sws.pointerId = e.pointerId;
+
+                //
+                e.target?.setPointerCapture?.(e.pointerId);
+            }
+        });
+
+        //
+        document.addEventListener("pointermove", (e)=>{
+            if (sws.pointerId == e.pointerId) {
+                doExaction(e.clientX, e.clientY);
+            }
+        });
+
+        //
+        const stopMove = (e)=>{
+            if (sws.pointerId == e.pointerId) {
+                sws.pointerId = -1;
+                doExaction(e.clientX, e.clientY);
+                e.target?.releasePointerCapture?.(e.pointerId);
+            }
+        }
+
+        //
+        document.addEventListener("pointerup", stopMove);
+        document.addEventListener("pointercancel", stopMove);
     }
 
     //
