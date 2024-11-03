@@ -42,7 +42,7 @@ export class UICheckBox extends LitElement {
             this.checked = ev.target.checked;
 
             // @ts-ignore
-            //this.style.setProperty("--checked", this.checked ? 1 : 0);
+            this.style.setProperty("--value", this.checked ? 1 : 0);
         }
     }
 
@@ -75,10 +75,10 @@ export class UICheckBox extends LitElement {
         // use theme module if available
         return html`${this.themeStyle}<label part="ui-contain" class="ui-contain">
     <div part="ui-fill" class="ui-fill">
-        <div data-scheme="inverse" part="ui-fill-inactive" class="ui-fill-inactive"></div>
-        <div data-scheme="solid" part="ui-fill-active" class="ui-fill-active"></div>
+        <div inert data-highlight="4" data-chroma="0.2" data-scheme="inverse" part="ui-fill-inactive" class="ui-fill-inactive"></div>
+        <div inert data-highlight="4" data-chroma="0.2" data-scheme="solid" part="ui-fill-active" class="ui-fill-active"></div>
     </div>
-    <div part="ui-thumb" class="ui-thumb" data-scheme="inverse"></div>
+    <div data-highlight="4" data-chroma="0.4" part="ui-thumb" class="ui-thumb" data-scheme="inverse"></div>
     <div part="ui-inputs" class="ui-inputs"><slot></slot></div>
 </label>`;
     }

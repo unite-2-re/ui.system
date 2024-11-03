@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="utf-8">
     <base href="./" />
@@ -79,15 +79,20 @@
             aspect-ratio: 1 / 1;
             pointer-events: auto;
         }
+
+        body { /* for testing only */
+            padding: 1rem;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
 
-    <ui-checkbox style="inline-size: 2rem; block-size: 2rem;">
+    <ui-checkbox>
         <input type="checkbox" label="Checkbox-Test" placeholder="Test" name="test"/>
     </ui-checkbox>
 
-    <ui-switch style="inline-size: 2rem; block-size: 2rem;">
+    <ui-switch>
         <input type="radio" label=" " placeholder="Switch" name="switch" value="dark"/>
         <input type="radio" label=" " placeholder="Switch" name="switch" value="default"/>
         <input type="radio" label=" " placeholder="Switch" name="switch" value="light"/>

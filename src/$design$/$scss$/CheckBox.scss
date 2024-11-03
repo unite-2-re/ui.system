@@ -17,7 +17,11 @@
     //
     :where(ui-checkbox, ui-switch) {
         --value: 0;
-        --max-value: 1;
+        --max-value: 2;
+
+        //
+        block-size: 2rem;
+        inline-size: calc(0.5rem + 1.5rem * var(--max-value, 1));
 
         //
         @for $i from 1 through 3 {
@@ -27,7 +31,7 @@
         }
 
         //
-        &:has(input[type="checkbox"]) { --max-value: 1; }
+        &:has(input[type="checkbox"]) { --max-value: 2; }
         &:has(input[type="checkbox"]:checkbox) { --value: 1; }
 
         //
@@ -46,23 +50,42 @@
         }
 
         //
-        &:part(ui-fill) {
-        
+        &::part(ui-fill) {
+            border-radius: 50cqmin;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns:
+                [in-active] minmax(0px, calc(var(--value, 0) / (var(--max-value, 1) - 0.999) * 100%))
+                [on-active] minmax(0px, 1fr);
         }
 
         //
-        &:part(ui-fill-active) {
-        
+        &::part(ui-fill-active) {
+            grid-column: on-active;
+            border-radius: 0px;
         }
 
         //
-        &:part(ui-fill-inactive) {
-        
+        &::part(ui-fill-inactive) {
+            grid-column: in-active;
+            border-radius: 0px;
         }
 
         //
-        &:part(ui-thumb) {
+        &::part(ui-thumb) {
+            aspect-ratio: 1 / 1;
+            min-inline-size: 1px;
+            min-block-size: 1px;
+            inline-size: 2.5rem;
+            block-size: 2.5rem;
+            border-radius: 50%;
+            overflow: hidden;
 
+            max-inline-size: none;
+            max-block-size: none;
+
+            //
+            translate: calc(/*50% * ((var(--value, 0) / var(--max-value, 1)) * 2 - 1)*/ -0% + (100cqi - 100%) * (var(--value, 0) / (var(--max-value, 1) - 0.999))) calc(50cqb - 50%);
         }
 
         //
