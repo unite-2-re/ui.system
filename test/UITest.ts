@@ -1,5 +1,8 @@
 // DEBUG/DEV mode...
-import { UICheckBox, UIListRow, UILucideIcon } from "../src/index";
+import init, { UICheckBox, UIListRow, UILucideIcon, UISwitch } from "../src/index";
+
+//
+init();
 
 // @ts-ignore
 import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
@@ -14,3 +17,4 @@ import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
 console.log(UICheckBox);
 console.log(UIListRow);
 console.log(UILucideIcon);
+console.log(UISwitch);

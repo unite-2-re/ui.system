@@ -15,13 +15,17 @@
             //
             user-select: none;
             touch-action: none;
-            pointer-events: none;
+            pointer-events: auto;
+
+            //
+            overflow: visible;
         }
 
         //
         & slot {
             background-color: transparent !important;
             display: contents !important;
+            overflow: visible !important;
         }
 
         //
@@ -49,6 +53,7 @@
             //
             user-select: none;
             touch-action: none;
+            overflow: visible;
 
             //
             & > .ui-inputs {
@@ -74,6 +79,7 @@
                 min-block-size: max-content;
                 aspect-ratio: 1 / 1;
                 overflow: hidden;
+                cursor: pointer;
 
                 //
                 user-select: none;
@@ -164,7 +170,7 @@
         //
         ::slotted(input) {
             cursor: pointer;
-            pointer-events: auto;
+            pointer-events: none;
             box-sizing: border-box;
             padding: 0px;
             margin: 0px;
