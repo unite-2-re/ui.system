@@ -27,7 +27,7 @@ export class UICheckBox extends LitElement {
         this.addEventListener("change", this.onSelect.bind(this));
 
         // @ts-ignore
-        this.addEventListener("pointerdown", (e)=>{
+        this.addEventListener("click", (e)=>{
             if (!e.target?.matches?.("input[type=\"checkbox\"]")) {
                 // @ts-ignore
                 this.querySelector?.("input[type=\"checkbox\"]")?.click?.();
@@ -75,10 +75,10 @@ export class UICheckBox extends LitElement {
         // use theme module if available
         return html`${this.themeStyle}<label part="ui-contain" class="ui-contain">
     <div part="ui-fill" class="ui-fill">
-        <div inert data-highlight="4" data-chroma="0.2" data-scheme="inverse" part="ui-fill-inactive" class="ui-fill-inactive"></div>
-        <div inert data-highlight="4" data-chroma="0.2" data-scheme="solid" part="ui-fill-active" class="ui-fill-active"></div>
+        <div inert data-highlight="6" data-chroma="0.05" data-scheme="inverse" part="ui-fill-inactive" class="ui-fill-inactive"></div>
+        <div inert data-highlight="6" data-chroma="0.05" data-scheme="solid" part="ui-fill-active" class="ui-fill-active"></div>
     </div>
-    <div data-highlight="4" data-chroma="0.4" part="ui-thumb" class="ui-thumb" data-scheme="inverse"></div>
+    <div data-highlight="8" data-chroma="0.1" part="ui-thumb" class="ui-thumb" data-scheme="inverse"></div>
     <div part="ui-inputs" class="ui-inputs"><slot></slot></div>
 </label>`;
     }

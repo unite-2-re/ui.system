@@ -76,8 +76,8 @@
             aspect-ratio: 1 / 1;
             min-inline-size: 1px;
             min-block-size: 1px;
-            inline-size: 2.5rem;
-            block-size: 2.5rem;
+            inline-size: 2.25rem;
+            block-size: 2.25rem;
             border-radius: 50%;
             overflow: hidden;
 
@@ -85,7 +85,7 @@
             max-block-size: none;
 
             //
-            translate: calc(/*50% * ((var(--value, 0) / var(--max-value, 1)) * 2 - 1)*/ -0% + (100cqi - 100%) * (var(--value, 0) / (var(--max-value, 1) - 0.999))) calc(50cqb - 50%);
+            translate: calc(12.5% * ((var(--value, 0) / (var(--max-value, 1) - 0.999)) * 2 - 1) + (100cqi - 100%) * (var(--value, 0) / (var(--max-value, 1) - 0.999))) calc(50cqb - 50%);
         }
 
         //
