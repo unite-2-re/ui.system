@@ -1,5 +1,5 @@
 // DEBUG/DEV mode...
-import init, { UICheckBox, UIListRow, UILucideIcon, UISwitch } from "../src/index";
+import init, { UICheckBox, UIListRow, UILucideIcon, UISwitch, UIDropMenu } from "../src/index";
 
 //
 init();
@@ -18,3 +18,4 @@ console.log(UICheckBox);
 console.log(UIListRow);
 console.log(UILucideIcon);
 console.log(UISwitch);
+console.log(UIDropMenu);

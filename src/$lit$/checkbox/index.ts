@@ -27,9 +27,6 @@ export class UICheckBox extends LitElement {
         this.addEventListener("change", this.onSelect.bind(this));
 
         // @ts-ignore
-        this.addEventListener("input", this.onSelect.bind(this));
-
-        // @ts-ignore
         this.addEventListener("pointerdown", (e)=>{
             if (!e.target?.matches?.("input[type=\"checkbox\"]")) {
                 // @ts-ignore
