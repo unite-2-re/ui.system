@@ -98,6 +98,8 @@
 
         //
         &:has(input[type="checkbox"]) {
+            transition: --value 100ms linear;
+
             // specific
             & input {
 

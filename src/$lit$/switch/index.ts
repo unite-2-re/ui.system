@@ -37,7 +37,7 @@ export class UISwitch extends LitElement {
 
         //
         const sws = { pointerId: -1 };
-        const doExaction = (clientX, clientY)=>{
+        const doExaction = (clientX, clientY, confirm = false)=>{
             // @ts-ignore
             const box = this.getBoundingClientRect?.();
             const coord = [clientX - box.left, clientY - box.top];
@@ -51,13 +51,47 @@ export class UISwitch extends LitElement {
             ];
 
             //
+            const val = Math.min(Math.max(vary[0] - 0.5, 0), count-1);
             const exact = Math.min(Math.max(Math.floor(vary[0]), 0), count-1);
-            if (!radio?.[exact]?.checked) {
+            if (!radio?.[exact]?.checked && confirm) {
                 radio?.[exact]?.click?.();
-
-                // @ts-ignore
-                this.style.setProperty("--value", exact, "");
             };
+
+            //
+            if (confirm) {
+                // @ts-ignore
+                if (!matchMedia("(prefers-reduced-motion: reduce)").matches && this.animate != null) {
+                    let animation: any = null;
+
+                    // @ts-ignore
+                    (animation = this.animate?.([
+                        // @ts-ignore
+                        { "--value": this.style?.getPropertyValue?.("--value") ?? val },
+                        { "--value": exact },
+                    ], {
+                        duration: 100,
+                        iterations: 1,
+                        fillMode: "both"
+                    }))?.finished?.then(()=>{
+                        animation?.commitStyles?.();
+                        animation?.cancel?.();
+
+                        // @ts-ignore
+                        this.style.setProperty("--value", exact, "");
+                    });
+                } else {
+                    // @ts-ignore
+                    this.style.setProperty("--value", exact, "");
+                }
+            } else {
+                // @ts-ignore
+                this.style.setProperty("--value", val, "");
+            }
+
+            //
+            if (radio?.[exact]) {
+                this.onSelect?.({target: radio?.[exact]});
+            }
         }
 
         // @ts-ignore
@@ -82,7 +116,7 @@ export class UISwitch extends LitElement {
         const stopMove = (e)=>{
             if (sws.pointerId == e.pointerId) {
                 sws.pointerId = -1;
-                doExaction(e.clientX, e.clientY);
+                doExaction(e.clientX, e.clientY, true);
                 e.target?.releasePointerCapture?.(e.pointerId);
                 document.documentElement.style.removeProperty("cursor");
             }
@@ -100,7 +134,10 @@ export class UISwitch extends LitElement {
             this.value = ev.target.value;
 
             // @ts-ignore
-            this.style?.setProperty?.("--value", Array.from(this.querySelectorAll?.("input[type=\"radio\"]"))?.indexOf?.(ev.target.value));
+            const index = Array.from(this.querySelectorAll?.("input[type=\"radio\"]"))?.indexOf?.(ev.target.value);
+
+            // @ts-ignore
+            if (index >= 0) { this.style?.setProperty?.("--value", index); };
         }
     }
 
