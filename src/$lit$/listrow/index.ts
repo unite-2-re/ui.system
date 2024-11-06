@@ -65,16 +65,16 @@ export class UIListRow extends LitElement {
         if (this.checked) { this.setAttribute("checked", ""); } else { this.removeAttribute("checked"); }
 
         // @ts-ignore
-        if (!this.dataset?.chroma) this.dataset.chroma = "0.3";
+        if (!this.dataset?.chroma) this.dataset.chroma = "0.1";
 
         // @ts-ignore
-        if (!this.dataset?.highlightHover) this.dataset.highlightHover = "3";
+        if (!this.dataset?.highlightHover) this.dataset.highlightHover = "4";
 
         // @ts-ignore
         this.setAttribute("data-scheme", this.checked ? "inverse": "solid");
 
         // @ts-ignore
-        this.setAttribute("data-highlight", this.checked ? "3" : "0");
+        this.setAttribute("data-highlight", this.checked ? "8" : "0");
 
         // @ts-ignore
         this.setAttribute("data-alpha", this.checked ? "1": "0");

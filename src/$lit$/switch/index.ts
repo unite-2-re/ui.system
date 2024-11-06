@@ -10,9 +10,6 @@ import { customElement, property } from "lit/decorators.js";
 import styles from "../shared/BoxLayout.scss?inline";
 
 // @ts-ignore
-import htmlT from "../shared/BoxLayout.html?raw";
-
-// @ts-ignore
 @customElement('ui-switch')
 export class UISwitch extends LitElement {
 
@@ -173,7 +170,7 @@ export class UISwitch extends LitElement {
         <div inert data-highlight="6" data-chroma="0.05" data-scheme="inverse" part="ui-fill-inactive" class="ui-fill-inactive"></div>
         <div inert data-highlight="6" data-chroma="0.05" data-scheme="solid" part="ui-fill-active" class="ui-fill-active"></div>
     </div>
-    <div data-highlight="8" data-chroma="0.1" part="ui-thumb" class="ui-thumb" data-scheme="inverse"></div>
+    <div data-highlight-hover="10" data-highlight="8" data-chroma="0.1" part="ui-thumb" class="ui-thumb" data-scheme="inverse"></div>
     <div part="ui-inputs" class="ui-inputs"><slot></slot></div>
 </label>`;
     }
