@@ -2,6 +2,7 @@
 // later, design core will be excluded from main distribution
 // may be, some UI components will be dedicated from that project
 
+export * from "./$core$/Selection";
 export * from "./$lit$/index";
 export * from "./$design$/index";
 import init from "./$design$/index";

@@ -1,5 +1,5 @@
 // DEBUG/DEV mode...
-import init, { UICheckBox, UIListRow, UILucideIcon, UISwitch, UIDropMenu } from "../src/index";
+import init, { makeSelection, UICheckBox, UIListRow, UILucideIcon, UISwitch, UIDropMenu } from "../src/index";
 
 //
 init();
@@ -19,3 +19,11 @@ console.log(UIListRow);
 console.log(UILucideIcon);
 console.log(UISwitch);
 console.log(UIDropMenu);
+
+//
+makeSelection(document.body, "ui-checkbox, ui-switch");
+
+//
+document.body.addEventListener("ui-selected", (ev: any)=>{
+    console.log(ev.detail.selected);
+});
