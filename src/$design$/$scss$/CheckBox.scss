@@ -1,18 +1,8 @@
 @layer u2-design {
 
     //
-    @property --value {
-        syntax: "<number>";
-        inherits: true;
-        initial-value: 0;
-    }
-
-    //
-    @property --max-value {
-        syntax: "<number>";
-        inherits: true;
-        initial-value: 1;
-    }
+    @property --value     { syntax: "<number>"; inherits: true; initial-value: 0; }
+    @property --max-value { syntax: "<number>"; inherits: true; initial-value: 1; }
 
     //
     :where(ui-checkbox, ui-switch) {
@@ -33,21 +23,6 @@
         //
         &:has(input[type="checkbox"]) { --max-value: 2; }
         &:has(input[type="checkbox"]:checkbox) { --value: 1; }
-
-        //
-        & {
-            
-        }
-
-        //
-        & label {
-            
-        }
-
-        // for inputs
-        & input {
-            
-        }
 
         //
         &::part(ui-fill) {
@@ -89,21 +64,8 @@
         }
 
         //
-        &:has(input[type="radio"]) {
-            // specific
-            & input {
-
-            }
-        }
-
-        //
         &:has(input[type="checkbox"]) {
             transition: --value 100ms linear;
-
-            // specific
-            & input {
-
-            }
         }
     }
 
