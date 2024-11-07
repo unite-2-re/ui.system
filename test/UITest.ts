@@ -1,5 +1,8 @@
 // DEBUG/DEV mode...
-import init, { makeSelection, UICheckBox, UIListRow, UILucideIcon, UISwitch, UIDropMenu } from "../src/index";
+import init, { UICheckBox, UIListRow, UILucideIcon, UISwitch, UIDropMenu } from "../src/index";
+
+// @ts-ignore
+import {makeSelection} from /* @vite-ignore */ "/externals/lib/interact.js";
 
 //
 init();
@@ -24,6 +27,6 @@ console.log(UIDropMenu);
 makeSelection(document.body, "ui-checkbox, ui-switch");
 
 //
-document.body.addEventListener("ui-selected", (ev: any)=>{
+document.body.addEventListener("u2-selected", (ev: any)=>{
     console.log(ev.detail.selected);
 });
