@@ -47,8 +47,8 @@ export class UIDropMenu extends LitElement {
 
         // TODO! better support of context menus
         openContextMenu?.(ev, [
-            {icon: new UILucideIcon({icon: "github", padding: "0.25rem"}), content: "Properties", callback: ()=>{console.log("Properties")}},
-            {icon: new UILucideIcon({icon: "youtube", padding: "0.25rem"}), content: "Clone", callback: ()=>{console.log("Clone")}}
+            {icon: new UILucideIcon({icon: "github", padding: ""}), content: "Properties", callback: ()=>{console.log("Properties")}},
+            {icon: new UILucideIcon({icon: "youtube", padding: ""}), content: "Clone", callback: ()=>{console.log("Clone")}}
         ], true);
     }
 

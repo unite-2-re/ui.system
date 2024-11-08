@@ -39,7 +39,7 @@ export class UIShaped extends LitElement {
         if (!this.hasAttribute("data-scheme")) { this.setAttribute("data-scheme", "accent-inverse"); };
 
         // @ts-ignore
-        if (!this.hasAttribute("data-highlight")) { this.setAttribute("data-highlight", "0"); };
+        if (!this.hasAttribute("data-highlight")) { this.setAttribute("data-highlight", "5"); };
 
         // @ts-ignore
         this.setAttribute("data-alpha", "0");
@@ -69,12 +69,12 @@ export class UIShaped extends LitElement {
     }
 
     // also "display" may be "contents"
-    static styles = css`:host { --icon-size: 4rem; padding: 0.25rem; place-items: center; place-content: center; filter: drop-shadow(0 0 1rem #10101040); pointer-events: none; box-sizing: border-box; aspect-ratio: 1 / 1; max-inline-size: var(--icon-size, 4rem); max-block-size: var(--icon-size, 4rem); inline-size: 100%; block-size: 100%; overflow: visible; display: grid; grid-template-columns: minmax(0px, 1fr); grid-template-rows: minmax(0px, 1fr); ::slotted(*), & > * { --icon-size: 100%; aspect-ratio: 1 / 1; box-sizing: border-box; inline-size: 100%; block-size: 100%; grid-column: 1 / -1; grid-row: 1 / -1; }; ::slotted(*) { overflow: hidden; pointer-events: auto; scale: var(--corrector, 1); }; & > * { z-index: 99; }; };`
+    static styles = css`:host { --icon-size: 4rem; padding: 0.25rem; place-items: center; place-content: center; filter: drop-shadow(0 0 1rem #10101040); pointer-events: none; box-sizing: border-box; aspect-ratio: 1 / 1; max-inline-size: var(--icon-size, 4rem); max-block-size: var(--icon-size, 4rem); inline-size: 100%; block-size: 100%; overflow: visible; display: inline grid; grid-template-columns: minmax(0px, 1fr); grid-template-rows: minmax(0px, 1fr); ::slotted(*), & > * { --icon-size: 100%; aspect-ratio: 1 / 1; box-sizing: border-box; inline-size: 100%; block-size: 100%; grid-column: 1 / -1; grid-row: 1 / -1; }; ::slotted(*) { overflow: hidden; pointer-events: auto; scale: var(--corrector, 1); }; & > * { z-index: 99; }; };`
 
     //
     render() {
         // @ts-ignore
-        return html`${this.themeStyle}<slot></slot><ui-icon data-alpha="0" data-scheme="dynamic" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
+        return html`${this.themeStyle}<slot></slot><ui-icon data-chroma="0" data-alpha="0" data-scheme="dynamic" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
     }
 }
 

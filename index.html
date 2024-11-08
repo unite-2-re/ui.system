@@ -99,9 +99,9 @@
     </ui-switch>
 
     <!-- -->
-    <div data-name="puk" style="display: inline grid; grid-auto-rows: max-content; grid-template-columns: minmax(0px, 1rem) minmax(0px, 1fr); block-size: max-content; inline-size: stretch; inline-size: -webkit-fill-available; inline-size: -moz-available;">
-        <ui-listrow value="f1"> <div class="u2-icon"></div> <span>Test Text 1</span> </ui-listrow>
-        <ui-listrow value="f2"> <div class="u2-icon"></div> <span>Test Text 2</span> </ui-listrow>
+    <div data-name="puk" style="display: inline grid; grid-auto-rows: max-content; grid-template-columns: minmax(0px, max-content) minmax(0px, 1fr); block-size: max-content; inline-size: stretch; inline-size: -webkit-fill-available; inline-size: -moz-available;">
+        <ui-listrow value="f1"> <ui-icon icon="github" style="padding: 0.5rem; block-size: 2rem;"></ui-icon> <span>Test Text 1</span> </ui-listrow>
+        <ui-listrow value="f2"> <ui-icon icon="github" style="padding: 0.5rem; block-size: 2rem;"></ui-icon> <span>Test Text 2</span> </ui-listrow>
     </div>
 
     <!-- -->
@@ -109,14 +109,14 @@
 
     <!-- -->
     <ui-shaped icon="github" data-scheme="inverse" data-chroma="0.1">
-        <div class="u2-item-design" data-shape="wavy" data-alpha="1" chroma="0.1"></div>
+        <div class="u2-item-design" data-shape="wavy" data-alpha="1" data-highlight="5"></div>
     </ui-shaped>
 
     <!-- -->
     <script src="./test/UITest.ts" type="module"></script>
 
     <!-- -->
-    <ui-dropmenu style="inline-size: 8rem; block-size: 2rem;">
+    <ui-dropmenu style="inline-size: 8rem; block-size: 2rem;" data-scheme="inverse" data-highlight="8">
         <ui-icon icon="gitlab" style="padding: 0.25rem;"></ui-icon>
         <span style="flex-grow: 1;">Tribunal</span>
     </ui-dropmenu>
