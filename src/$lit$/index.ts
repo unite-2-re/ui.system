@@ -3,3 +3,4 @@ export * from "./switch/index";
 export * from "./listrow/index";
 export * from "./icon/index";
 export * from "./dropmenu/index";
+export * from "./shaped/index";

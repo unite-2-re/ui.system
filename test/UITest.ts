@@ -1,5 +1,5 @@
 // DEBUG/DEV mode...
-import init, { UICheckBox, UIListRow, UILucideIcon, UISwitch, UIDropMenu } from "../src/index";
+import init, { UICheckBox, UIListRow, UILucideIcon, UISwitch, UIDropMenu, UIShaped } from "../src/index";
 
 // @ts-ignore
 import {makeSelection} from /* @vite-ignore */ "/externals/lib/interact.js";
@@ -13,6 +13,12 @@ import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
     module?.default?.();
 }).catch(console.warn.bind(console));
 
+// @ts-ignore
+import(/* @vite-ignore */ "/externals/core/design.js").then((module)=>{
+    // @ts-ignore
+    module?.default?.();
+}).catch(console.warn.bind(console));
+
 // production mode...
 //import { UICheckBox } from "../dist/ui.js";
 
@@ -22,6 +28,7 @@ console.log(UIListRow);
 console.log(UILucideIcon);
 console.log(UISwitch);
 console.log(UIDropMenu);
+console.log(UIShaped);
 
 //
 makeSelection(document.body, "ui-checkbox, ui-switch");
