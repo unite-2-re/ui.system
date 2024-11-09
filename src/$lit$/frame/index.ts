@@ -81,13 +81,13 @@ export class UIFrame extends LitElement {
     //
     protected updateAttributes() {
         // @ts-ignore
-        if (!this.dataset.scheme) { this.dataset.scheme = "solid"; };
+        if (!this.dataset.scheme) { this.dataset.scheme = "inverse"; };
 
         // @ts-ignore
-        if (!this.dataset.chroma) { this.dataset.chroma = "0.8"; };
+        if (!this.dataset.chroma) { this.dataset.chroma = "0.2"; };
 
         // @ts-ignore
-        if (!this.dataset.highlight) { this.dataset.highlight = "8"; };
+        if (!this.dataset.highlight) { this.dataset.highlight = "6"; };
     }
 
     // theme style property
@@ -167,12 +167,13 @@ export class UIFrame extends LitElement {
 
         /* */
         box-sizing: border-box;
+        pointer-events: auto;
 
         /* */
         & .ui-title-bar {
             inline-size: 100%;
             block-size: 100%;
-            min-block-size: var(--title-bar-height, 4rem);
+            min-block-size: var(--title-bar-height, 2rem);
 
             overflow: hidden;
             box-sizing: border-box;
@@ -181,7 +182,7 @@ export class UIFrame extends LitElement {
             grid-template-rows: minmax(0px, 1fr);
             grid-template-columns:
                 [title] minmax(0px, 1fr)
-                [buttons] minmax(0px, max-content);
+                [buttons] minmax(var(--title-bar-height, 2rem), max-content);
 
             grid-column: 1 / -1;
             grid-row: 1 / 1 span;
@@ -191,9 +192,11 @@ export class UIFrame extends LitElement {
             place-content: center;
             align-items: center;
             align-content: center;
+            user-select: none;
+            pointer-events: none;
 
             /* */
-            & ::slotted(*) {
+            ::slotted(*) {
                 inline-size: 100%;
                 block-size: 100%;
                 place-items: center;
@@ -201,6 +204,12 @@ export class UIFrame extends LitElement {
                 align-items: center;
                 align-content: center;
                 pointer-events: none;
+                user-select: none;
+                padding-inline: 0.5rem;
+                box-sizing: border-box;
+
+                grid-column: 1 / -1;
+                grid-row: 1 / 1 span;
             }
 
             /* */
@@ -241,6 +250,56 @@ export class UIFrame extends LitElement {
             grid-row: content;
 
             pointer-events: none;
+            user-select: none;
+        }
+
+        /* */
+        & .ui-buttons {
+            display: flex;
+            place-items: center;
+            place-content: center;
+            inline-size: 100%;
+            block-size: 100%;
+            min-inline-size: max-content;
+
+            box-sizing: border-box;
+
+            grid-row: 1 / 1 span;
+            grid-column: buttons;
+            pointer-events: none;
+            user-select: none;
+            box-sizing: border-box;
+
+            /* */
+            & > * {
+                display: flex;
+                inline-size: max-content;
+                block-size: 100%;
+                aspect-ratio: 1 / 1;
+                background-image: transparent;
+                place-items: center;
+                place-content: center;
+                cursor: pointer;
+                pointer-events: auto;
+                box-sizing: border-box;
+                border: none 0px transparent;
+                outline: none 0px transparent;
+                padding: 0.25rem;
+                user-select: none;
+
+                /* */
+                & > * {
+                    display: flex;
+                    inline-size: max-content;
+                    block-size: 100%;
+                    aspect-ratio: 1 / 1;
+                    box-sizing: border-box;
+                    border: none 0px transparent;
+                    outline: none 0px transparent;
+                    pointer-events: none;
+                    user-select: none;
+                }
+            }
         }
 
         /* */
@@ -267,7 +326,13 @@ export class UIFrame extends LitElement {
     //
     render() {
         // @ts-ignore
-        return html`${this.themeStyle}<div class="ui-title-bar" part="ui-title-bar" data-alpha="0"> <div class="ui-title-handle" part="ui-title-handle" data-alpha="0"></div> <slot name="ui-title-bar"></slot></div> <div data-scheme="solid" data-alpha="1" data-chroma="0" class="ui-content" part="ui-content"><slot></slot></div> <div data-alpha="0" part="ui-resize" class="ui-resize"></div>`;
+        return html`${this.themeStyle}
+        <div class="ui-title-bar" part="ui-title-bar" data-alpha="0">
+            <div class="ui-title-handle" part="ui-title-handle" data-alpha="0"></div>
+            <slot name="ui-title-bar"></slot>
+            <div class="ui-buttons" data-alpha="0"><button data-alpha="0" class="ui-btn-close"><ui-icon data-alpha="0" icon="x" data-scheme="dynamic"/></button></div>
+        </div>
+        <div data-scheme="solid" data-alpha="1" data-chroma="0" class="ui-content" part="ui-content"><slot></slot></div> <div data-alpha="0" part="ui-resize" class="ui-resize"></div>`;
     }
 }
 
