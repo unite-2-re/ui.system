@@ -1,22 +1,22 @@
 
-// @ts-nocheck
-
 //
-const setElementContent = (selector, value)=>{
-    document.querySelectorAll(selector).forEach((element)=>{
-        if (element) { element.innerHTML = value; }
+const setElementContent = (selector, value, root = document)=>{
+    root.querySelectorAll(selector).forEach((element)=>{
+        //if (element) { element.innerHTML = value; }
+        element.innerHTML = value;
     });
 }
 
 //
-const setElementIcon = (selector, value)=>{
-    document.querySelectorAll(selector).forEach((element)=>{
-        if (element) { element.setAttribute("data-icon", value); }
+const setElementIcon = (selector, value, root = document)=>{
+    root.querySelectorAll(selector).forEach((element)=>{
+        //if (element) { element.setAttribute("data-icon", value); }
+        element.setAttribute("data-icon", value);
     });
 }
 
 //
-export const runTimeStatus = (async()=>{
+export const runTimeStatus = (async(root = document)=>{
     //
     const updateTime = ()=>{
         const date = new Date();
@@ -24,8 +24,8 @@ export const runTimeStatus = (async()=>{
         const timeHours = `${date.getHours()}`.padStart(2,"0");
 
         //
-        setElementContent(".ui-time-minute", timeMinutes);
-        setElementContent(".ui-time-hour", timeHours);
+        setElementContent(".ui-time-minute", timeMinutes, root);
+        setElementContent(".ui-time-hour", timeHours, root);
     }
 
     //
@@ -35,7 +35,7 @@ export const runTimeStatus = (async()=>{
 });
 
 //
-export const runSignalStatus = (async()=>{
+export const runSignalStatus = (async(root = document)=>{
     //
     const signalIcons = {
         "offline": "wifi-off",
@@ -47,9 +47,11 @@ export const runSignalStatus = (async()=>{
 
     //
     const changeSignal = ()=>{
+        // @ts-ignore
         const signal = navigator.onLine ? (navigator?.connection?.effectiveType || "4g") : "offline";
-        setElementIcon(".ui-network", signalIcons[signal]);
+        setElementIcon(".ui-network", signalIcons[signal], root);
     }
+    // @ts-ignore
     navigator.connection?.addEventListener("change", changeSignal);
 
     //
@@ -58,7 +60,8 @@ export const runSignalStatus = (async()=>{
 });
 
 //
-const runBatteryStatus = (async()=>{
+const runBatteryStatus = (async(root = document)=>{
+    // @ts-ignore
     const batteryStatus = navigator.getBattery?.();
     const batteryIcons = new Map([
         [0, "battery-warning"],
@@ -78,12 +81,12 @@ const runBatteryStatus = (async()=>{
         let battery = "battery-charging";
         batteryStatus?.then?.((btr)=>{
             if (btr.charging)
-                { battery = "battery-charging"; }  else
+                { battery = "battery-charging"; } else // @ts-ignore
                 { battery = byLevel(btr.level); };
-                setElementIcon(".ui-battery", battery);
+                setElementIcon(".ui-battery", battery, root);
         })?.catch?.(console.warn.bind(console));
         if (!batteryStatus) {
-            setElementIcon(".ui-battery", battery);
+            setElementIcon(".ui-battery", battery, root);
         }
     }
 
@@ -99,11 +102,11 @@ const runBatteryStatus = (async()=>{
 });
 
 //
-export const initialize = ()=>{
-    runBatteryStatus();
-    runSignalStatus();
-    runTimeStatus();
+export const initStatus = (root = document)=>{
+    runBatteryStatus(root);
+    runSignalStatus(root);
+    runTimeStatus(root);
 }
 
 //
-export default initialize;
+export default initStatus;
