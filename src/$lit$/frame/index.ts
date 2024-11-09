@@ -122,10 +122,18 @@ export class UIFrame extends LitElement {
 
         --safe-area-left : 0px;
         --safe-area-right: 0px;
-        --rx: calc(var(--drag-x, 0) * var(--zpx, 1px));
-        --ry: calc(var(--drag-y, 0) * var(--zpx, 1px));
+
+        /* */
         --translate-x: clamp(0px, var(--rx, 0px), var(--bound-inline-size, 100%));
         --translate-y: clamp(0px, var(--ry, 0px), var(--bound-block-size , 100%));
+
+        /* */
+        --inline-size: clamp(min(var(--initial-inline-size, 100%), var(--bound-inline-size, 100%)), calc(var(--initial-inline-size, 100%) + var(--resize-x, 0) * var(--zpx, 1px)), calc(var(--bound-inline-size, 100%) - calc(var(--drag-x, 0) * var(--zpx, 1px))));
+        --block-size : clamp(min(var(--initial-block-size , 100%), var(--bound-block-size , 100%)), calc(var(--initial-block-size , 100%) + var(--resize-y, 0) * var(--zpx, 1px)), calc(var(--bound-block-size , 100%) - calc(var(--drag-y, 0) * var(--zpx, 1px))));
+
+        /* */
+        --rx: clamp(0px, calc(var(--drag-x, 0) * var(--zpx, 1px)), calc(100cqi - var(--inline-size, 100%)));
+        --ry: clamp(0px, calc(var(--drag-y, 0) * var(--zpx, 1px)), calc(100cqb - var(--block-size , 100%)));
 
         /* */
         will-change:
@@ -137,15 +145,15 @@ export class UIFrame extends LitElement {
             contents;
 
         /* */
-        inline-size: clamp(min(var(--initial-inline-size, 100%), var(--bound-inline-size, 100%)), calc(var(--initial-inline-size, 100%) + var(--resize-x, 0) * var(--zpx, 1px)), calc(var(--bound-inline-size, 100%) - calc(var(--drag-x, 0) * var(--zpx, 1px))));
-        block-size : clamp(min(var(--initial-block-size , 100%), var(--bound-block-size , 100%)), calc(var(--initial-block-size , 100%) + var(--resize-y, 0) * var(--zpx, 1px)), calc(var(--bound-block-size , 100%) - calc(var(--drag-y, 0) * var(--zpx, 1px))));
+        inline-size: var(--inline-size, 100%);
+        block-size : var(--block-size , 100%);
 
         /* */
         position: fixed;
         inset-inline-start: var(--translate-x, 0px);
-        inset-block-start: var(--translate-y, 0px);
-        inset-inline-end: auto;
-        inset-block-end: auto;
+        inset-block-start : var(--translate-y, 0px);
+        inset-inline-end  : auto;
+        inset-block-end   : auto;
 
         /* */
         display: grid;
@@ -324,11 +332,11 @@ export class UIFrame extends LitElement {
             block-size: 1rem;
             box-sizing: border-box;
 
-            //
+            /* */
             background-color: transparent;
             cursor: nwse-resize;
 
-            //
+            /* */
             pointer-events: auto;
             user-select: none;
             touch-action: none;
