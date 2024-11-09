@@ -170,9 +170,13 @@ export class UIFrame extends LitElement {
         box-sizing: border-box;
         pointer-events: auto;
         z-index: calc(99 + var(--z-index, 0));
+        user-select: none;
 
         /* */
         & .ui-title-bar {
+            font-size: 0.9rem;
+            font-weight: bold;
+
             inline-size: 100%;
             block-size: 100%;
             min-block-size: var(--title-bar-height, 2rem);
@@ -242,7 +246,7 @@ export class UIFrame extends LitElement {
         }
 
         /* */
-        & .ui-content {
+        & .ui-content, ::slotted(.ui-content) {
             inline-size: 100%;
             block-size: 100%;
             box-sizing: border-box;
@@ -253,6 +257,12 @@ export class UIFrame extends LitElement {
 
             pointer-events: none;
             user-select: none;
+
+            /* */
+            container-type: size;
+            container-name: ui-content;
+            contain: strict;
+            overflow: hidden;
         }
 
         /* */
