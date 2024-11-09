@@ -164,10 +164,12 @@ export class UIFrame extends LitElement {
         /* */
         outline: solid 0.5px var(--current-surface-color);
         border-radius: 0.125rem;
+        box-shadow: 0rem 0rem 1rem #10101060;
 
         /* */
         box-sizing: border-box;
         pointer-events: auto;
+        z-index: calc(99 + var(--z-index, 0));
 
         /* */
         & .ui-title-bar {

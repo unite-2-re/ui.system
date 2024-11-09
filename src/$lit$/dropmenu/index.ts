@@ -12,6 +12,12 @@ import { openContextMenu } from "/externals/wcomp/contextmenu.js";
 //
 import UILucideIcon from "../icon/index";
 
+//
+const testMenu = [
+    {icon: new UILucideIcon({icon: "github", padding: ""}), content: "Properties", callback: ()=>{console.log("Properties")}},
+    {icon: new UILucideIcon({icon: "youtube", padding: ""}), content: "Clone", callback: ()=>{console.log("Clone")}}
+];
+
 // @ts-ignore
 @customElement('ui-dropmenu')
 export class UIDropMenu extends LitElement {
@@ -40,16 +46,16 @@ export class UIDropMenu extends LitElement {
         });
     }
 
+    //
+    @property({}) dropMenu?: any = testMenu;
+
     // test only!
     protected onClick(ev) {
         ev?.preventDefault?.();
         ev?.stopPropagation?.();
 
-        // TODO! better support of context menus
-        openContextMenu?.(ev, [
-            {icon: new UILucideIcon({icon: "github", padding: ""}), content: "Properties", callback: ()=>{console.log("Properties")}},
-            {icon: new UILucideIcon({icon: "youtube", padding: ""}), content: "Clone", callback: ()=>{console.log("Clone")}}
-        ], true);
+        //
+        openContextMenu?.(ev, this.dropMenu || testMenu, true);
     }
 
     //
