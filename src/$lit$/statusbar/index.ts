@@ -1,18 +1,12 @@
 
 //
 const setElementContent = (selector, value, root = document)=>{
-    root.querySelectorAll(selector).forEach((element)=>{
-        //if (element) { element.innerHTML = value; }
-        element.innerHTML = value;
-    });
+    root.querySelectorAll(selector).forEach((element)=>element.innerHTML = value);
 }
 
 //
 const setElementIcon = (selector, value, root = document)=>{
-    root.querySelectorAll(selector).forEach((element)=>{
-        //if (element) { element.setAttribute("data-icon", value); }
-        element.setAttribute("data-icon", value);
-    });
+    root.querySelectorAll(selector).forEach((element)=>element.setAttribute("data-icon", value));
 }
 
 //
@@ -51,6 +45,7 @@ export const runSignalStatus = (async(root = document)=>{
         const signal = navigator.onLine ? (navigator?.connection?.effectiveType || "4g") : "offline";
         setElementIcon(".ui-network", signalIcons[signal], root);
     }
+
     // @ts-ignore
     navigator.connection?.addEventListener("change", changeSignal);
 
@@ -72,11 +67,7 @@ const runBatteryStatus = (async(root = document)=>{
     ]);
 
     //
-    const byLevel = (lv = 1.0)=>{
-        return batteryIcons.get(Math.ceil(lv / 0.25) * 25);
-    }
-
-    //
+    const byLevel = (lv = 1.0)=>batteryIcons.get(Math.ceil(lv / 0.25) * 25);
     const changeBatteryStatus = ()=>{
         let battery = "battery-charging";
         batteryStatus?.then?.((btr)=>{

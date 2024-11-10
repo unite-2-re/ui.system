@@ -15,34 +15,25 @@ export class UICheckBox extends LitElement {
 
     //
     constructor() {
-        super();
+        super(); const self = this as unknown as HTMLElement;
 
-        // @ts-ignore
-        this.classList?.add?.("ui-checkbox");
-
-        // @ts-ignore
-        this.classList?.add?.("u2-input");
-
-        // @ts-ignore
-        this.addEventListener("change", this.onSelect.bind(this));
-
-        // @ts-ignore
-        this.addEventListener("click", (e)=>{
-            if (!e.target?.matches?.("input[type=\"checkbox\"]")) {
-                // @ts-ignore
-                this.querySelector?.("input[type=\"checkbox\"]")?.click?.();
+        //
+        self.classList?.add?.("ui-checkbox");
+        self.classList?.add?.("u2-input");
+        self.addEventListener("change", this.onSelect.bind(this));
+        self.addEventListener("click", (e)=>{
+            if (!(e.target as HTMLElement)?.matches?.("input[type=\"checkbox\"]")) {
+                self.querySelector?.<HTMLElement>("input[type=\"checkbox\"]")?.click?.();
             }
         });
     }
 
     //
-    protected onSelect(ev){
-        //
+    protected onSelect(ev) {
+        const self = this as unknown as HTMLElement;
         if (ev.target.checked != null) {
             this.checked = ev.target.checked;
-
-            // @ts-ignore
-            this.style.setProperty("--value", this.checked ? 1 : 0);
+            self.style.setProperty("--value", `${this.checked ? 1 : 0}`);
         }
     }
 
@@ -56,14 +47,10 @@ export class UICheckBox extends LitElement {
 
         // @ts-ignore
         import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            // @ts-ignore
-            if (root) {
-                // @ts-ignore
-                this.themeStyle = module?.default?.(root);
-            }
+            if (root) { this.themeStyle = module?.default?.(root); }
         }).catch(console.warn.bind(console));
 
-        // @ts-ignore
+        //
         return root;
     }
 

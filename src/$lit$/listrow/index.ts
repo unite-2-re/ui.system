@@ -7,12 +7,6 @@ import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../s
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-//import styles from "../shared/BoxLayout.scss?inline";
-
-// @ts-ignore
-//import htmlT from "../shared/BoxLayout.html?raw";
-
-// @ts-ignore
 @customElement('ui-listrow')
 export class UIListRow extends LitElement {
     #parentNode?: any;
@@ -20,26 +14,15 @@ export class UIListRow extends LitElement {
 
     //
     constructor() {
-        super();
+        super(); const self = this as unknown as HTMLElement;
 
-        // @ts-ignore
-        this.classList?.add?.("ui-listrow");
-
-        // @ts-ignore
-        this.classList?.add?.("u2-input");
-
-        // @ts-ignore
-        //this.addEventListener("change", this.onSelect.bind(this));
-
-        // @ts-ignore
-        //this.addEventListener("change", this.onSelect.bind(this));
-
-        // @ts-ignore
-        //this.style.setProperty("--checked", this.checked ? 1 : 0);
+        //
+        self.classList?.add?.("ui-listrow");
+        self.classList?.add?.("u2-input");
     }
 
     //
-    protected disconnectedCallback() {
+    public disconnectedCallback() {
         super.disconnectedCallback();
 
         //
@@ -48,11 +31,12 @@ export class UIListRow extends LitElement {
     }
 
     //
-    protected connectedCallback() {
+    public connectedCallback() {
         super.connectedCallback();
 
-        // @ts-ignore
-        this.#parentNode = this?.parentNode;
+        //
+        const self = this as unknown as HTMLElement;
+        this.#parentNode = self?.parentNode;
         this.#parentNode?.addEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
 
         //
@@ -61,39 +45,31 @@ export class UIListRow extends LitElement {
 
     //
     protected updateAttributes() {
-        // @ts-ignore
-        if (this.checked) { this.setAttribute("checked", ""); } else { this.removeAttribute("checked"); }
+        const self = this as unknown as HTMLElement;
 
-        // @ts-ignore
-        if (!this.dataset?.chroma) this.dataset.chroma = "0.1";
+        //
+        if (this.checked) { self.setAttribute("checked", ""); } else { self.removeAttribute("checked"); }
+        if (!self.dataset?.chroma) self.dataset.chroma = "0.1";
+        if (!self.dataset?.highlightHover) self.dataset.highlightHover = "4";
 
-        // @ts-ignore
-        if (!this.dataset?.highlightHover) this.dataset.highlightHover = "4";
+        //
+        self.setAttribute("data-scheme", this.checked ? "inverse": "solid");
+        self.setAttribute("data-highlight", this.checked ? "8" : "0");
+        self.setAttribute("data-alpha", this.checked ? "1": "0");
 
-        // @ts-ignore
-        this.setAttribute("data-scheme", this.checked ? "inverse": "solid");
-
-        // @ts-ignore
-        this.setAttribute("data-highlight", this.checked ? "8" : "0");
-
-        // @ts-ignore
-        this.setAttribute("data-alpha", this.checked ? "1": "0");
-
-        // @ts-ignore
-        const ownBox = this.shadowRoot?.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])") ?? this.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])");
+        //
+        const ownBox = self.shadowRoot?.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])") ?? self.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])");
         if (ownBox) {
             ownBox.setAttribute("value", this.value);
-
-            // @ts-ignore
-            ownBox.setAttribute("name", this.parentNode?.dataset?.name || "dummy-radio");
+            ownBox.setAttribute("name", (self.parentNode as HTMLElement)?.dataset?.name || "dummy-radio");
         };
     }
 
     //
     protected onSelect(ev){
         if (ev.target.checked != null) {
-            // @ts-ignore
-            const ownRadio = this.shadowRoot?.querySelector?.("input[type=\"radio\"]") ?? this.querySelector?.("input[type=\"radio\"]");
+            const self = this as unknown as HTMLElement;
+            const ownRadio: HTMLInputElement = (self.shadowRoot?.querySelector?.("input[type=\"radio\"]") ?? self.querySelector?.("input[type=\"radio\"]")) as HTMLInputElement;
             if (ownRadio?.name == ev.target?.name) {
                 // fix if was in internal DOM
                 ownRadio.checked = ev.target == ownRadio;
@@ -103,8 +79,8 @@ export class UIListRow extends LitElement {
                 this.updateAttributes();
             }
 
-            // @ts-ignore
-            const ownCheckbox = this.shadowRoot?.querySelector?.("input[type=\"checkbox\"]") ?? this.querySelector?.("input[type=\"checkbox\"]");
+            //
+            const ownCheckbox: HTMLInputElement = (self.shadowRoot?.querySelector?.("input[type=\"checkbox\"]") ?? self.querySelector?.("input[type=\"checkbox\"]")) as HTMLInputElement;
             if (ownCheckbox?.name == ev.target?.name && ownCheckbox == ev.target) {
                 this.checked = ownRadio.checked;
                 this.updateAttributes();
@@ -120,30 +96,21 @@ export class UIListRow extends LitElement {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-
-        // @ts-ignore
-        //root.addEventListener("change", this.onSelect.bind(this));
-
-        // @ts-ignore
-        //root.addEventListener("input", this.onSelect.bind(this));
+        const self = this as unknown as HTMLElement;
 
         // @ts-ignore
         import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            // @ts-ignore
-            if (root) {
-                // @ts-ignore
-                this.themeStyle = module?.default?.(root);
-            }
+            if (root) { this.themeStyle = module?.default?.(root); }
         }).catch(console.warn.bind(console));
 
-        // @ts-ignore
-        this.addEventListener("click", (ev)=>{
-            const input = root.querySelector("input[type=\"radio\"]");
-            if (ev.target != input || !ev.target?.matches?.("input")) { input?.click?.(); };
+        //
+        self.addEventListener("click", (ev)=>{
+            const input = root.querySelector("input[type=\"radio\"]") as HTMLInputElement;
+            if (ev.target != input || !(ev.target as HTMLElement)?.matches?.("input")) { input?.click?.(); };
         });
 
-        // @ts-ignore
-        this.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${this?.parentNode?.dataset?.name || "dummy-radio"}>`);
+        //
+        self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
 
         //
         return root;
@@ -154,7 +121,6 @@ export class UIListRow extends LitElement {
 
     //
     render() {
-        // @ts-ignore
         return html`${this.themeStyle}<slot name="radio"></slot><div part="ui-columns" data-alpha="0" class="ui-columns"><slot></slot></div>`;
     }
 }

@@ -14,42 +14,36 @@ export class UIShaped extends LitElement {
 
     //
     constructor(options = {icon: "", padding: ""}) {
-        super();
+        super(); const self = this as unknown as HTMLElement;
 
-        // @ts-ignore
-        this.classList?.add?.("ui-shaped");
-
-        // @ts-ignore
-        this.classList?.add?.("u2-shaped");
+        //
+        self.classList?.add?.("ui-shaped");
+        self.classList?.add?.("u2-shaped");
 
         //
         if (options?.icon) { this.icon = options?.icon; };
     }
 
     //
-    protected disconnectedCallback() {
+    public disconnectedCallback() {
         super.disconnectedCallback();
     }
 
     //
-    protected connectedCallback() {
+    public connectedCallback() {
         super.connectedCallback();
 
-        // @ts-ignore
-        if (!this.hasAttribute("data-scheme")) { this.setAttribute("data-scheme", "accent-inverse"); };
-
-        // @ts-ignore
-        if (!this.hasAttribute("data-highlight")) { this.setAttribute("data-highlight", "5"); };
-
-        // @ts-ignore
-        this.setAttribute("data-alpha", "0");
-
-        // @ts-ignore
-        if (!this.hasAttribute("data-chroma")) { this.setAttribute("data-chroma", "0.1"); };
+        //
+        const self = this as unknown as HTMLElement;
+        if (!self.hasAttribute("data-chroma")) { self.setAttribute("data-chroma", "0.1"); };
+        if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "accent-inverse"); };
+        if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "5"); };
+        self.setAttribute("data-alpha", "0");
     }
 
     // theme style property
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
+    @property() protected themeStyle?: HTMLStyleElement;
 
     //
     protected createRenderRoot() {
@@ -57,11 +51,7 @@ export class UIShaped extends LitElement {
 
         // @ts-ignore
         import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            // @ts-ignore
-            if (root) {
-                // @ts-ignore
-                this.themeStyle = module?.default?.(root);
-            }
+            if (root) { this.themeStyle = module?.default?.(root); }
         }).catch(console.warn.bind(console));
 
         //
@@ -73,7 +63,6 @@ export class UIShaped extends LitElement {
 
     //
     render() {
-        // @ts-ignore
         return html`${this.themeStyle}<slot></slot><ui-icon data-chroma="0" data-alpha="0" data-scheme="dynamic" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
     }
 }

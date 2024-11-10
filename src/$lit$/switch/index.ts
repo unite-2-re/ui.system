@@ -15,32 +15,19 @@ export class UISwitch extends LitElement {
 
     //
     constructor() {
-        super();
+        super(); const self = this as unknown as HTMLElement;
 
-        // @ts-ignore
-        this.classList?.add?.("ui-switch");
-
-        // @ts-ignore
-        this.classList?.add?.("u2-input");
-
-        // @ts-ignore
-        this.addEventListener("change", this.onSelect.bind(this));
-
-        // @ts-ignore
-        //this.addEventListener("input", this.onSelect.bind(this));
-
-        // @ts-ignore
-        //this.style.setProperty("--checked", this.checked ? 1 : 0);
+        //
+        self.classList?.add?.("ui-switch");
+        self.classList?.add?.("u2-input");
+        self.addEventListener("change", this.onSelect.bind(this));
 
         //
         const sws = { pointerId: -1 };
         const doExaction = (clientX, clientY, confirm = false)=>{
-            // @ts-ignore
-            const box = this.getBoundingClientRect?.();
+            const box = self.getBoundingClientRect?.();
             const coord = [clientX - box.left, clientY - box.top];
-
-            // @ts-ignore
-            const radio = this.querySelectorAll?.("input[type=\"radio\"]");
+            const radio = self.querySelectorAll?.("input[type=\"radio\"]") as unknown as HTMLInputElement[];
             const count = (radio?.length || 0);
             const vary = [
                 (coord[0]/box.width) * count,
@@ -56,33 +43,27 @@ export class UISwitch extends LitElement {
 
             //
             if (confirm) {
-                // @ts-ignore
-                if (!matchMedia("(prefers-reduced-motion: reduce)").matches && this.animate != null) {
+                if (!matchMedia("(prefers-reduced-motion: reduce)").matches && self.animate != null) {
                     let animation: any = null;
-
-                    // @ts-ignore
-                    (animation = this.animate?.([
-                        // @ts-ignore
-                        { "--value": this.style?.getPropertyValue?.("--value") ?? val },
+                    (animation = self.animate?.([
+                        { "--value": self.style?.getPropertyValue?.("--value") ?? val },
                         { "--value": exact },
                     ], {
                         duration: 100,
-                        iterations: 1,
+                        iterations: 1, // @ts-ignore
                         fillMode: "both"
                     }))?.finished?.then(()=>{
                         animation?.commitStyles?.();
                         animation?.cancel?.();
 
-                        // @ts-ignore
-                        this.style.setProperty("--value", exact, "");
+                        //
+                        self.style.setProperty("--value", `${exact}`, "");
                     });
                 } else {
-                    // @ts-ignore
-                    this.style.setProperty("--value", exact, "");
+                    self.style.setProperty("--value", `${exact}`, "");
                 }
             } else {
-                // @ts-ignore
-                this.style.setProperty("--value", val, "");
+                self.style.setProperty("--value", `${val}`, "");
             }
 
             //
@@ -91,13 +72,13 @@ export class UISwitch extends LitElement {
             }
         }
 
-        // @ts-ignore
-        this.addEventListener("pointerdown", (e)=>{
+        //
+        self.addEventListener("pointerdown", (e)=>{
             if (sws.pointerId < 0) {
                 sws.pointerId = e.pointerId;
 
                 //
-                e.target?.setPointerCapture?.(e.pointerId);
+                (e.target as HTMLElement)?.setPointerCapture?.(e.pointerId);
                 document.documentElement.style.cursor = "grabbing";
             }
         });
@@ -126,15 +107,11 @@ export class UISwitch extends LitElement {
 
     //
     protected onSelect(ev){
-        //
+        const self = this as unknown as HTMLElement;
         if (ev?.target?.checked) {
             this.value = ev.target.value;
-
-            // @ts-ignore
-            const index = Array.from(this.querySelectorAll?.("input[type=\"radio\"]"))?.indexOf?.(ev.target.value);
-
-            // @ts-ignore
-            if (index >= 0) { this.style?.setProperty?.("--value", index); };
+            const index = Array.from(self.querySelectorAll?.("input[type=\"radio\"]"))?.indexOf?.(ev.target.value);
+            if (index >= 0) { self.style?.setProperty?.("--value", `${index}`); };
         }
     }
 
@@ -148,14 +125,8 @@ export class UISwitch extends LitElement {
 
         // @ts-ignore
         import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            // @ts-ignore
-            if (root) {
-                // @ts-ignore
-                this.themeStyle = module?.default?.(root);
-            }
+            if (root) { this.themeStyle = module?.default?.(root); }
         }).catch(console.warn.bind(console));
-
-        // @ts-ignore
         return root;
     }
 

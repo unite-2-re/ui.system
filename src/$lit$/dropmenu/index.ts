@@ -24,29 +24,21 @@ export class UIDropMenu extends LitElement {
 
     //
     constructor() {
-        super();
+        super(); const self = this as unknown as HTMLElement;
 
-        // @ts-ignore
-        this.classList?.add?.("ui-dropmenu");
-
-        // @ts-ignore
-        this.classList?.add?.("u2-dropmenu");
-
-        // @ts-ignore
-        this.classList?.add?.("u2-input");
-
-        // test-only, may be removed...
-        // @ts-ignore
-        this.addEventListener("click", this.onClick.bind(this));
-
-        // @ts-ignore
-        this.addEventListener("contextmenu", (ev)=>{
+        //
+        self.classList?.add?.("ui-dropmenu");
+        self.classList?.add?.("u2-dropmenu");
+        self.classList?.add?.("u2-input");
+        self.addEventListener("click", this.onClick.bind(this));
+        self.addEventListener("contextmenu", (ev)=>{
             ev.stopPropagation();
             ev.preventDefault();
         });
     }
 
     //
+    @property() protected themeStyle?: HTMLStyleElement;
     @property({}) dropMenu?: any = testMenu;
 
     // test only!
@@ -59,17 +51,14 @@ export class UIDropMenu extends LitElement {
     }
 
     //
-    protected connectedCallback() {
+    public connectedCallback() {
         super.connectedCallback();
+        const self = this as unknown as HTMLElement;
 
-        // @ts-ignore
-        if (!this.dataset.scheme) { this.dataset.scheme = "solid"; };
-
-        // @ts-ignore
-        if (!this.dataset.highlight) { this.dataset.highlight = "1"; };
-
-        // @ts-ignore
-        if (!this.dataset.highlightHover) { this.dataset.highlightHover = "2"; };
+        //
+        if (!self.dataset.scheme) { self.dataset.scheme = "solid"; };
+        if (!self.dataset.highlight) { self.dataset.highlight = "1"; };
+        if (!self.dataset.highlightHover) { self.dataset.highlightHover = "2"; };
     }
 
     //
@@ -78,14 +67,8 @@ export class UIDropMenu extends LitElement {
 
         // @ts-ignore
         import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            // @ts-ignore
-            if (root) {
-                // @ts-ignore
-                this.themeStyle = module?.default?.(root);
-            }
+            if (root) { this.themeStyle = module?.default?.(root); }
         }).catch(console.warn.bind(console));
-
-        // @ts-ignore
         return root;
     }
 
@@ -95,7 +78,6 @@ export class UIDropMenu extends LitElement {
     //
     render() {
         // use theme module if available
-        // @ts-ignore
         return html`${this.themeStyle}<button type="button" class="ui-button" part="ui-button" data-alpha="0"><slot></slot></button>`;
     }
 }

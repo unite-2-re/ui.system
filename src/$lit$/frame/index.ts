@@ -17,7 +17,7 @@ import {zoomOf} from "/externals/lib/dom.js";
 const $control$ = Symbol("@control");
 
 //
-const makeControl = (frameElement)=>{
+const makeControl = (frameElement: HTMLElement)=>{
     let gestureControl: any = null;
     if (frameElement && !frameElement[$control$]) {
         gestureControl = new AxGesture(frameElement);
@@ -35,12 +35,10 @@ const makeControl = (frameElement)=>{
     }
 
     //
-    if (frameElement) {
-        // @ts-ignore
-        frameElement.style.setProperty("--drag-x", (frameElement.parentNode.clientWidth - Math.min(Math.max(frameElement.offsetWidth, 48*16/0.8), frameElement.parentNode.clientWidth)) * (zoomOf() / 2), "");
-
-        // @ts-ignore
-        frameElement.style.setProperty("--drag-y", (frameElement.parentNode.clientHeight - Math.min(Math.max(frameElement.offsetHeight, 24*16/0.8), frameElement.parentNode.clientHeight)) * (zoomOf() / 2), "");
+    if (frameElement && frameElement.parentNode) {
+        const pn = frameElement.parentNode as HTMLElement;
+        frameElement.style.setProperty("--drag-x", `${(pn.clientWidth - Math.min(Math.max(frameElement.offsetWidth, 48*16/0.8), pn.clientWidth)) * (zoomOf() / 2)}`, "");
+        frameElement.style.setProperty("--drag-y", `${(pn.clientHeight - Math.min(Math.max(frameElement.offsetHeight, 24*16/0.8), pn.clientHeight)) * (zoomOf() / 2)}`, "");
     }
 }
 
@@ -53,41 +51,31 @@ const makeControl = (frameElement)=>{
 export class UIFrame extends LitElement {
     //
     constructor() {
-        super();
-
-        // @ts-ignore
-        this.classList?.add?.("ui-frame");
-
-        // @ts-ignore
-        this.classList?.add?.("u2-frame");
+        super(); const self = this as unknown as HTMLElement;
+        self.classList?.add?.("ui-frame");
+        self.classList?.add?.("u2-frame");
     }
 
     //
-    protected disconnectedCallback() {
+    public disconnectedCallback() {
         super.disconnectedCallback();
     }
 
     //
-    protected connectedCallback() {
+    public connectedCallback() {
         super.connectedCallback();
-
-        //
         this.updateAttributes();
-
-        //
-        requestAnimationFrame(()=>makeControl(this));
+        requestAnimationFrame(()=>makeControl(this as unknown as HTMLElement));
     }
 
     //
     protected updateAttributes() {
-        // @ts-ignore
-        if (!this.dataset.scheme) { this.dataset.scheme = "inverse"; };
+        const self = this as unknown as HTMLElement;
 
-        // @ts-ignore
-        if (!this.dataset.chroma) { this.dataset.chroma = "0.2"; };
-
-        // @ts-ignore
-        if (!this.dataset.highlight) { this.dataset.highlight = "6"; };
+        //
+        if (!self.dataset.chroma) { self.dataset.chroma = "0.2"; };
+        if (!self.dataset.scheme) { self.dataset.scheme = "inverse"; };
+        if (!self.dataset.highlight) { self.dataset.highlight = "6"; };
     }
 
     // theme style property
@@ -99,9 +87,7 @@ export class UIFrame extends LitElement {
 
         // @ts-ignore
         import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            // @ts-ignore
             if (root) {
-                // @ts-ignore
                 this.themeStyle = module?.default?.(root);
             }
         }).catch(console.warn.bind(console));
@@ -345,7 +331,6 @@ export class UIFrame extends LitElement {
 
     //
     render() {
-        // @ts-ignore
         return html`${this.themeStyle}
         <div class="ui-title-bar" part="ui-title-bar" data-alpha="0">
             <div class="ui-title-handle" part="ui-title-handle" data-alpha="0"></div>

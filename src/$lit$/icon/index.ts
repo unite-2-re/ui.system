@@ -8,19 +8,8 @@ import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic, PropertyVal
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
-//
-//import { createIcons, icons } from 'lucide';
-
 // @ts-ignore
-//import styles from "../shared/BoxLayout.scss?inline";
-
-// @ts-ignore
-//import htmlT from "../shared/BoxLayout.html?raw";
-
-//
 const ICON_MODULE = import("lucide");
-
-//
 const toCamelCase = (str: string) => {
     return str
         .split(/[-_]/)
@@ -42,28 +31,24 @@ export class UILucideIcon extends LitElement {
 
     //
     constructor(options = {icon: "", padding: ""}) {
-        super();
+        super(); const self = this as unknown as HTMLElement;
 
-        // @ts-ignore
-        this.classList?.add?.("ui-icon");
-
-        // @ts-ignore
-        this.classList?.add?.("u2-icon");
+        //
+        self.classList?.add?.("ui-icon");
+        self.classList?.add?.("u2-icon");
 
         //
         if (options?.icon) { this.icon = options?.icon; };
-
-        // @ts-ignore
-        if (options?.padding) { this.style.setProperty("padding", options?.padding); };
+        if (options?.padding) { self.style.setProperty("padding", options?.padding); };
     }
 
     //
-    protected disconnectedCallback() {
+    public disconnectedCallback() {
         super.disconnectedCallback();
     }
 
     //
-    protected connectedCallback() {
+    public connectedCallback() {
         super.connectedCallback();
 
         //
@@ -71,15 +56,16 @@ export class UILucideIcon extends LitElement {
     }
 
     // theme style property
+    @property() protected themeStyle?: HTMLStyleElement;
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
-    @property() protected iconElement?: HTMLElement;
+    @property() protected iconElement?: SVGElement;
 
     //
     protected updateIcon() {
         ICON_MODULE.then((icons)=>{
             const ICON = toCamelCase(this.icon);
-            if (icons[ICON]) {
-                this.iconElement = icons.createElement(icons[ICON]);
+            if (icons?.[ICON]) {
+                this.iconElement = icons?.createElement?.(icons?.[ICON]);
                 if (this.iconElement) {
                     this.iconElement.setAttribute("width", "100%");
                     this.iconElement.setAttribute("height", "100%");
@@ -101,14 +87,8 @@ export class UILucideIcon extends LitElement {
 
         // @ts-ignore
         import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            // @ts-ignore
-            if (root) {
-                // @ts-ignore
-                this.themeStyle = module?.default?.(root);
-            }
+            if (root) { this.themeStyle = module?.default?.(root); }
         }).catch(console.warn.bind(console));
-
-        //
         return root;
     }
 
@@ -117,7 +97,6 @@ export class UILucideIcon extends LitElement {
 
     //
     render() {
-        // @ts-ignore
         return html`${this.themeStyle}${this.iconElement}`;
     }
 }
