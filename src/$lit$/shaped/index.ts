@@ -59,7 +59,7 @@ export class UIShaped extends LitElement {
     }
 
     // also "display" may be "contents"
-    static styles = css`:host { --icon-size: 4rem; padding: 0.25rem; place-items: center; place-content: center; filter: drop-shadow(0 0 1rem #10101040); pointer-events: none; box-sizing: border-box; aspect-ratio: 1 / 1; max-inline-size: var(--icon-size, 4rem); max-block-size: var(--icon-size, 4rem); inline-size: 100%; block-size: 100%; overflow: visible; display: inline grid; grid-template-columns: minmax(0px, 1fr); grid-template-rows: minmax(0px, 1fr); ::slotted(*), & > * { --icon-size: 100%; aspect-ratio: 1 / 1; box-sizing: border-box; inline-size: 100%; block-size: 100%; grid-column: 1 / -1; grid-row: 1 / -1; }; ::slotted(*) { overflow: hidden; pointer-events: auto; scale: var(--corrector, 1); }; & > * { z-index: 99; }; };`
+    static styles = css`:host { --icon-size: 4rem; padding: 0.25rem; place-items: safe center; place-content: safe center; filter: drop-shadow(0 0 1rem #10101040); pointer-events: none; box-sizing: border-box; aspect-ratio: 1 / 1; max-inline-size: var(--icon-size, 4rem); max-block-size: var(--icon-size, 4rem); inline-size: 100%; block-size: 100%; overflow: visible; display: inline grid; grid-template-columns: minmax(0px, 1fr); grid-template-rows: minmax(0px, 1fr); ::slotted(*), & > * { --icon-size: 100%; aspect-ratio: 1 / 1; box-sizing: border-box; inline-size: 100%; block-size: 100%; grid-column: 1 / -1; grid-row: 1 / -1; }; ::slotted(*) { overflow: hidden; pointer-events: auto; scale: var(--corrector, 1); }; & > * { z-index: 99; }; };`
 
     //
     render() {

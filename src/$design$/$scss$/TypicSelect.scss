@@ -81,8 +81,8 @@
                 //
                 & {
                     font-size: 0.8rem;
-                    place-content: start;
-                    place-items: start;
+                    place-content: safe start;
+                    place-items: safe start;
                     gap: 0.5rem;
                     padding: 0.75rem;
                     grid-row: 2 / 2 span;

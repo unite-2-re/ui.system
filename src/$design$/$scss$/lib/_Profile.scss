@@ -80,8 +80,8 @@
 
 //
 @mixin center {
-    place-content: center;
-    place-items: center;
+    place-content: safe center;
+    place-items: safe center;
 }
 
 //

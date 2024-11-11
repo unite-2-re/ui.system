@@ -188,10 +188,10 @@ export class UIFrame extends LitElement {
             grid-row: 1 / 1 span;
             grid-row: title-bar;
 
-            place-items: center;
-            place-content: center;
-            align-items: center;
-            align-content: center;
+            place-items: safe center;
+            place-content: safe center;
+            align-items: safe center;
+            align-content: safe center;
             user-select: none;
             pointer-events: none;
 
@@ -199,10 +199,10 @@ export class UIFrame extends LitElement {
             ::slotted(*) {
                 inline-size: 100%;
                 block-size: 100%;
-                place-items: center;
-                place-content: center;
-                align-items: center;
-                align-content: center;
+                place-items: safe center;
+                place-content: safe center;
+                align-items: safe center;
+                align-content: safe center;
                 pointer-events: none;
                 user-select: none;
                 padding-inline: 0.5rem;
@@ -231,8 +231,8 @@ export class UIFrame extends LitElement {
 
                 cursor: move;
 
-                place-content: center;
-                place-items: center;
+                place-content: safe center;
+                place-items: safe center;
 
                 &:active { cursor: move; };
                 &:hover  { cursor: move; };
@@ -262,8 +262,8 @@ export class UIFrame extends LitElement {
         /* */
         & .ui-buttons {
             display: flex;
-            place-items: center;
-            place-content: center;
+            place-items: safe center;
+            place-content: safe center;
             inline-size: 100%;
             block-size: 100%;
             min-inline-size: max-content;
@@ -283,8 +283,8 @@ export class UIFrame extends LitElement {
                 block-size: 100%;
                 aspect-ratio: 1 / 1;
                 background-image: transparent;
-                place-items: center;
-                place-content: center;
+                place-items: safe center;
+                place-content: safe center;
                 cursor: pointer;
                 pointer-events: auto;
                 box-sizing: border-box;
