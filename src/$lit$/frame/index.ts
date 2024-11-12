@@ -163,7 +163,7 @@ export class UIFrame extends LitElement {
         /* */
         box-sizing: border-box;
         pointer-events: auto;
-        z-index: calc(99 + var(--z-index, 0));
+        z-index: calc(999 + var(--z-index, 0));
         user-select: none;
 
         /* */
