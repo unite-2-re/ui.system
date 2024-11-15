@@ -36,9 +36,10 @@ const makeControl = (frameElement: HTMLElement)=>{
 
     //
     if (frameElement && frameElement.parentNode) {
-        const pn = frameElement.parentNode as HTMLElement;
-        frameElement.style.setProperty("--drag-x", `${(pn.clientWidth - Math.min(Math.max(frameElement.offsetWidth, 48*16/0.8), pn.clientWidth)) * (zoomOf() / 2)}`, "");
-        frameElement.style.setProperty("--drag-y", `${(pn.clientHeight - Math.min(Math.max(frameElement.offsetHeight, 24*16/0.8), pn.clientHeight)) * (zoomOf() / 2)}`, "");
+        // @ts-ignore
+        const pn = (frameElement.offsetParent ?? frameElement.host ?? document.documentElement) as HTMLElement;
+        frameElement.style.setProperty("--drag-x", `${(pn.clientWidth  - Math.min(Math.max(frameElement.offsetWidth , 48*16), pn.clientWidth)) * 0.5}`, "");
+        frameElement.style.setProperty("--drag-y", `${(pn.clientHeight - Math.min(Math.max(frameElement.offsetHeight, 24*16), pn.clientHeight)) * 0.5}`, "");
     }
 }
 
@@ -117,12 +118,16 @@ export class UIFrame extends LitElement {
             --translate-y: clamp(0px, var(--ry, 0px), var(--bound-block-size , 100%));
 
             /* */
-            --inline-size: clamp(min(var(--initial-inline-size, 100%), var(--bound-inline-size, 100%)), calc(var(--initial-inline-size, 100%) + var(--resize-x, 0) * var(--zpx, 1px)), calc(var(--bound-inline-size, 100%)));
-            --block-size : clamp(min(var(--initial-block-size , 100%), var(--bound-block-size , 100%)), calc(var(--initial-block-size , 100%) + var(--resize-y, 0) * var(--zpx, 1px)), calc(var(--bound-block-size , 100%)));
+            --rs-x: clamp(0px, calc(var(--resize-x, 0) * var(--zpx, 1px)), calc(var(--bound-inline-size, 0px) - var(--initial-inline-size, 100%)));
+            --rs-y: clamp(0px, calc(var(--resize-y, 0) * var(--zpx, 1px)), calc(var(--bound-block-size , 0px) - var(--initial-block-size , 100%)));
 
             /* */
-            --rx: clamp(0px, calc(var(--drag-x, 0) * var(--zpx, 1px)), max(calc(100cqi - var(--inline-size, 100%)), 0px));
-            --ry: clamp(0px, calc(var(--drag-y, 0) * var(--zpx, 1px)), max(calc(100cqb - var(--block-size , 100%)), 0px));
+            --inline-size: min(calc(var(--initial-inline-size, 100%) + var(--rs-x, 0px)), var(--bound-inline-size, 100%));
+            --block-size : min(calc(var(--initial-block-size , 100%) + var(--rs-y, 0px)), var(--bound-block-size , 100%));
+
+            /* */
+            --rx: clamp(0px, calc(var(--drag-x, 0) * var(--zpx, 1px)), max(calc(var(--bound-inline-size, 100%) - var(--inline-size, 100%)), 0px));
+            --ry: clamp(0px, calc(var(--drag-y, 0) * var(--zpx, 1px)), max(calc(var(--bound-block-size , 100%) - var(--block-size , 100%)), 0px));
         }
 
         /* */
@@ -136,8 +141,8 @@ export class UIFrame extends LitElement {
                 contents;
 
             /* */
-            inline-size: var(--inline-size, 100%);
-            block-size : var(--block-size , 100%);
+            inline-size: clamp(0px, var(--inline-size, 100%), calc(var(--bound-inline-size, 0px) - var(--rx, 0px)));
+            block-size : clamp(0px, var(--block-size , 100%), calc(var(--bound-block-size , 0px) - var(--ry, 0px)));
 
             /* */
             position: fixed;
