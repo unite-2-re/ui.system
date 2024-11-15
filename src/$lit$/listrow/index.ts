@@ -117,7 +117,81 @@ export class UIListRow extends LitElement {
     }
 
     // also "display" may be "contents"
-    static styles = css`:host { user-select: none; font-size: 0.9rem; box-sizing: border-box; inline-size: 100%; block-size: max-content; pointer-events: auto; cursor: pointer; display: grid; grid-column: 1 / -1; grid-template-rows: minmax(0px, 1fr); grid-template-columns: subgrid; & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"]) { box-sizing: border-box; cursor: pointer; grid-row: 1 / 1 span; grid-column: 1 / -1; inline-size: 100%; block-size: 100%; min-block-size: appearance: none; opacity: 0; }; & .ui-columns { box-sizing: border-box; pointer-events: none; display: grid; grid-template-rows: minmax(0px, 1fr); grid-template-columns: subgrid; grid-row: 1 / 1 span; grid-column: 1 / -1; inline-size: 100%; block-size: 100%; ::slotted(*) { grid-row: 1 / 1 span; user-select: none; padding: 0.25rem; display: inline flex; flex-wrap: wrap; flex-direction: row; align-content: safe center; align-items: safe center; } } }`
+    static styles = css`:host {
+
+        /* */
+        & {
+            user-select: none;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            inline-size: 100%;
+            block-size: max-content;
+            pointer-events: auto;
+            cursor: pointer;
+            display: grid;
+            grid-column: 1 / -1;
+            grid-template-rows: minmax(0px, 1fr);
+            grid-template-columns: subgrid;
+
+            /* */
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            touch-action: none;
+        }
+
+        /* */
+        & * {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            touch-action: none;
+        }
+
+        /* */
+        & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"]) {
+            box-sizing: border-box;
+            cursor: pointer;
+            grid-row: 1 / 1 span;
+            grid-column: 1 / -1;
+            inline-size: 100%;
+            block-size: 100%;
+            appearance: none;
+            opacity: 0;
+        };
+
+        /* */
+        & .ui-columns {
+            box-sizing: border-box;
+            pointer-events: none;
+            display: grid;
+            grid-template-rows: minmax(0px, 1fr);
+            grid-template-columns: subgrid;
+            grid-row: 1 / 1 span; grid-column: 1 / -1;
+            inline-size: 100%; block-size: 100%;
+
+            /* */
+            ::slotted(*) {
+                grid-row: 1 / 1 span;
+                user-select: none;
+                padding: 0.25rem;
+                display: inline flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+                align-content: safe center;
+                align-items: safe center;
+
+                /* */
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+                -webkit-tap-highlight-color: transparent;
+                user-drag: none;
+                user-select: none;
+                touch-action: none;
+            }
+        }
+    }`
 
     //
     render() {

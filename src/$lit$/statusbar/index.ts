@@ -141,7 +141,7 @@ export class UIStatusBar extends LitElement {
     }
 
     /* */
-    @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) { :host{display:none;} }`;
+    @media ((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)) { :host{display:none !important;} }`;
 
     //
     render() {
