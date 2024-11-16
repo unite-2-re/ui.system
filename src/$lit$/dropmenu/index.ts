@@ -78,7 +78,6 @@ export class UIDropMenu extends LitElement {
             text-align: center;
             padding: 0.25rem;
             cursor: pointer;
-            user-select: none;
             min-inline-size: 6rem;
             display: inline flex;
             place-content: safe center;
@@ -91,6 +90,8 @@ export class UIDropMenu extends LitElement {
             /* */
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
+
+            /* */
             user-drag: none;
             user-select: none;
             touch-action: none;
@@ -120,6 +121,8 @@ export class UIDropMenu extends LitElement {
             /* */
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
+
+            /* */
             user-drag: none;
             user-select: none;
             touch-action: none;
@@ -129,9 +132,17 @@ export class UIDropMenu extends LitElement {
         *, ::slotted(*) {
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
+
+            /* */
             user-drag: none;
             user-select: none;
             touch-action: none;
+        }
+
+        /* */
+        ::slotted(*) {
+            interactivity: inert;
+            pointer-events: none;
         }
     }`
 

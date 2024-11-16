@@ -174,15 +174,26 @@ export class UIFrame extends LitElement {
             box-sizing: border-box;
             pointer-events: auto;
             z-index: calc(999 + var(--z-index, 0));
+
+            /* */
+            user-drag: none;
             user-select: none;
+            touch-action: none;
+            resize: none;
+
+            /* */
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* */
         & * {
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
-            user-select: none;
+
+            /* */
             user-drag: none;
+            user-select: none;
             touch-action: none;
         }
 
@@ -214,6 +225,8 @@ export class UIFrame extends LitElement {
                 place-content: safe center;
                 align-items: safe center;
                 align-content: safe center;
+
+                /* */
                 user-select: none;
                 pointer-events: none;
             }
@@ -237,25 +250,26 @@ export class UIFrame extends LitElement {
 
             /* */
             & .ui-title-handle {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: no-wrap;
-                box-sizing: border-box;
+                & {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: no-wrap;
+                    box-sizing: border-box;
 
-                inline-size: 100%;
-                block-size: 100%;
+                    inline-size: 100%;
+                    block-size: 100%;
 
-                grid-column: title;
-                grid-row: 1 / 1 span;
+                    grid-column: title;
+                    grid-row: 1 / 1 span;
 
-                pointer-events: auto;
-                user-select: none;
-                touch-action: none;
+                    place-content: safe center;
+                    place-items: safe center;
 
-                cursor: move;
-
-                place-content: safe center;
-                place-items: safe center;
+                    cursor: move;
+                    pointer-events: auto;
+                    user-select: none;
+                    touch-action: none;
+                }
 
                 &:active { cursor: move; };
                 &:hover  { cursor: move; };
@@ -353,6 +367,7 @@ export class UIFrame extends LitElement {
             pointer-events: auto;
             user-select: none;
             touch-action: none;
+            resize: none;
         }
     }`
 

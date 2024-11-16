@@ -121,7 +121,6 @@ export class UIListRow extends LitElement {
 
         /* */
         & {
-            user-select: none;
             font-size: 0.9rem;
             box-sizing: border-box;
             inline-size: 100%;
@@ -136,6 +135,8 @@ export class UIListRow extends LitElement {
             /* */
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
+
+            /* */
             user-drag: none;
             user-select: none;
             touch-action: none;
@@ -145,6 +146,8 @@ export class UIListRow extends LitElement {
         & * {
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
+
+            /* */
             user-drag: none;
             user-select: none;
             touch-action: none;
@@ -164,18 +167,28 @@ export class UIListRow extends LitElement {
 
         /* */
         & .ui-columns {
-            box-sizing: border-box;
-            pointer-events: none;
-            display: grid;
-            grid-template-rows: minmax(0px, 1fr);
-            grid-template-columns: subgrid;
-            grid-row: 1 / 1 span; grid-column: 1 / -1;
-            inline-size: 100%; block-size: 100%;
+            & {
+                box-sizing: border-box;
+                display: grid;
+                grid-template-rows: minmax(0px, 1fr);
+                grid-template-columns: subgrid;
+                grid-row: 1 / 1 span; grid-column: 1 / -1;
+                inline-size: 100%; block-size: 100%;
+
+                /* */
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+                -webkit-tap-highlight-color: transparent;
+
+                /* */
+                user-drag: none;
+                user-select: none;
+                touch-action: none;
+                pointer-events: none;
+            }
 
             /* */
             ::slotted(*) {
                 grid-row: 1 / 1 span;
-                user-select: none;
                 padding: 0.25rem;
                 display: inline flex;
                 flex-wrap: wrap;
@@ -186,6 +199,8 @@ export class UIListRow extends LitElement {
                 /* */
                 -webkit-tap-highlight-color: rgba(0,0,0,0);
                 -webkit-tap-highlight-color: transparent;
+
+                /* */
                 user-drag: none;
                 user-select: none;
                 touch-action: none;

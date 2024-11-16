@@ -96,9 +96,6 @@ export class UILucideIcon extends LitElement {
     static styles = css`:host {
         /* */
         & {
-            pointer-events: none;
-            user-select: none;
-            touch-action: none;
             aspect-ratio: 1 / 1;
             inline-size: max-content;
             block-size: 100%;
@@ -110,14 +107,17 @@ export class UILucideIcon extends LitElement {
             /* */
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
-            user-drag: none;
+
+            /* */
+            interactivity: inert;
+            pointer-events: none;
             user-select: none;
+            user-drag: none;
             touch-action: none;
         }
 
         /* */
         & > * {
-            pointer-events: none;
             box-sizing: border-box;
             inline-size: max-content;
             block-size: 100%;
@@ -126,8 +126,12 @@ export class UILucideIcon extends LitElement {
             /* */
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
-            user-drag: none;
+
+            /* */
+            interactivity: inert;
+            pointer-events: none;
             user-select: none;
+            user-drag: none;
             touch-action: none;
         }
     }`

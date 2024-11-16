@@ -67,7 +67,6 @@ export class UIShaped extends LitElement {
             place-items: safe center;
             place-content: safe center;
             filter: drop-shadow(0 0 1rem #10101040);
-            pointer-events: none;
             box-sizing: border-box;
             aspect-ratio: 1 / 1;
             max-inline-size: var(--icon-size, 4rem);
@@ -82,9 +81,12 @@ export class UIShaped extends LitElement {
             /* */
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
+
+            /* */
             user-drag: none;
             user-select: none;
             touch-action: none;
+            pointer-events: none;
         };
 
         /* */
@@ -102,6 +104,8 @@ export class UIShaped extends LitElement {
             /* */
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
+
+            /* */
             user-drag: none;
             user-select: none;
             touch-action: none;
