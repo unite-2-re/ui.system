@@ -61,6 +61,9 @@ export class UIFrame extends LitElement {
     @property() protected themeStyle?: HTMLStyleElement;
     @property() protected nodes?: HTMLElement[];
 
+    // also "display" may be "contents"
+    static styles = css`${unsafeCSS(styles)}`
+
     //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
@@ -109,9 +112,6 @@ export class UIFrame extends LitElement {
         //
         return root;
     }
-
-    // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`
 
     //
     render() {

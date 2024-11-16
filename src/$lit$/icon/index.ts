@@ -9,14 +9,10 @@ import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic, PropertyVal
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import htmlCode from "./index.html?raw";
-
-// @ts-ignore
 import styles from "./index.scss?inline";
 
-
 // @ts-ignore
-const ICON_MODULE = import("lucide");
+const ICON_MODULE = import("/externals/vendor/lucide.min.js");
 const toCamelCase = (str: string) => {
     return str
         .split(/[-_]/)
@@ -40,6 +36,9 @@ export class UILucideIcon extends LitElement {
     @property() protected iconElement?: SVGElement;
     @property() protected themeStyle?: HTMLStyleElement;
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
+
+    // also "display" may be "contents"
+    static styles = css`${unsafeCSS(styles)}`
 
     //
     constructor(options = {icon: "", padding: ""}) {
@@ -71,6 +70,7 @@ export class UILucideIcon extends LitElement {
     protected updateIcon() {
         ICON_MODULE.then((icons)=>{
             const ICON = toCamelCase(this.icon);
+            console.log(icons);
             if (icons?.[ICON]) {
                 this.iconElement = icons?.createElement?.(icons?.[ICON]);
                 if (this.iconElement) {
@@ -98,9 +98,6 @@ export class UILucideIcon extends LitElement {
         }).catch(console.warn.bind(console));
         return root;
     }
-
-    // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`
 
     //
     render() {

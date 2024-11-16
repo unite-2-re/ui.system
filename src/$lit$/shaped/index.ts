@@ -9,14 +9,14 @@ import { LitElement, html, css, unsafeCSS, PropertyValues } from "../shared/LitU
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import htmlCode from "./index.html?raw";
-
-// @ts-ignore
 import styles from "./index.scss?inline";
 
 // @ts-ignore
 @customElement('ui-shaped')
 export class UIShaped extends LitElement {
+
+    // also "display" may be "contents"
+    static styles = css`${unsafeCSS(styles)}`;
 
     // theme style property
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
@@ -69,9 +69,6 @@ export class UIShaped extends LitElement {
         //
         return root;
     }
-
-    // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`
 
     //
     render() {

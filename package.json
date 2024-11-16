@@ -32,7 +32,7 @@
         "lucide": "^0.454.0",
         "postcss-discard-duplicates": "^7.0.1",
         "postcss-preset-env": "^10.0.8",
-        "sass": "^1.77.6",
+        "sass": "^1.81.0",
         "terser": "^5.34.1",
         "typescript": "^5.6.3",
         "vite": "^5.4.8",

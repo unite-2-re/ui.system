@@ -23,6 +23,9 @@ export class UICheckBox extends LitElement {
     @property() protected nodes?: HTMLElement[];
 
     //
+    static styles = css`${unsafeCSS(styles)}`
+
+    //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
 
@@ -63,9 +66,6 @@ export class UICheckBox extends LitElement {
         //
         return root;
     }
-
-    //
-    static styles = css`${unsafeCSS(styles)}`
 
     //
     render() {

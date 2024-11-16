@@ -25,6 +25,9 @@ export class UIListRow extends LitElement {
     @property() protected themeStyle?: HTMLStyleElement;
     @property() protected nodes?: HTMLElement[];
 
+    // also "display" may be "contents"
+    static styles = css`${unsafeCSS(styles)}`;
+
     //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
@@ -128,9 +131,6 @@ export class UIListRow extends LitElement {
         //
         return root;
     }
-
-    // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`
 
     //
     render() {

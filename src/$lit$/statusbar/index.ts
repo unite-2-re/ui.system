@@ -15,15 +15,17 @@ import styles from "./index.scss?inline";
 // @ts-ignore
 @customElement('ui-statusbar')
 export class UIStatusBar extends LitElement {
-    constructor() {
-        super(); const self = this as unknown as HTMLElement;
-    }
-
-    //
-    //@property() protected style?: HTMLStyleElement;
     @property() protected nodes?: HTMLElement[];
     @property() protected themeStyle?: HTMLStyleElement;
     @property() protected statusSW?: boolean = false;
+
+    //
+    static styles = css`${unsafeCSS(styles)}`;
+
+    //
+    constructor() {
+        super(); const self = this as unknown as HTMLElement;
+    }
 
     //
     protected createRenderRoot() {
@@ -61,9 +63,6 @@ export class UIStatusBar extends LitElement {
         if (!self.hasAttribute("data-chroma")) { self.setAttribute("data-chroma", "0"); };
         if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "dynamic"); };
     }
-
-    //
-    static styles = css`${unsafeCSS(styles)}`;
 
     //
     render() {

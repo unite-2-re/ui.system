@@ -1,6 +1,7 @@
 :host {
-    --icon-size: 4rem;
+    & { --icon-size: 4rem; };
 
+    /* */
     & {
         padding: 0.25rem;
         place-items: safe center;

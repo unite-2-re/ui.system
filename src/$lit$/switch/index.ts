@@ -17,6 +17,14 @@ import htmlCode from "../shared/BoxLayout.html?raw";
 @customElement('ui-switch')
 export class UISwitch extends LitElement {
 
+    // theme style property
+    @property() protected nodes?: HTMLElement[];
+    @property() protected themeStyle?: HTMLStyleElement;
+    @property() protected value: string = "";
+
+    //
+    static styles = css`${unsafeCSS(styles)}`
+
     //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
@@ -119,11 +127,6 @@ export class UISwitch extends LitElement {
         }
     }
 
-    // theme style property
-    @property() protected nodes?: HTMLElement[];
-    @property() protected themeStyle?: HTMLStyleElement;
-    @property() protected value: string = "";
-
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
@@ -139,9 +142,6 @@ export class UISwitch extends LitElement {
         }).catch(console.warn.bind(console));
         return root;
     }
-
-    //
-    static styles = css`${unsafeCSS(styles)}`
 
     //
     render() {
