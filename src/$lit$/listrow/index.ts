@@ -7,10 +7,23 @@ import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../s
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
+import htmlCode from "./index.html?raw";
+
+// @ts-ignore
+import styles from "./index.scss?inline";
+
+
+// @ts-ignore
 @customElement('ui-listrow')
 export class UIListRow extends LitElement {
     #parentNode?: any;
     #onSelect?: Function;
+
+    // theme style property
+    @property({attribute: true, reflect: true, type: String}) value: string = "";
+    @property({attribute: true, reflect: true, type: Boolean}) checked: boolean = false;
+    @property() protected themeStyle?: HTMLStyleElement;
+    @property() protected nodes?: HTMLElement[];
 
     //
     constructor() {
@@ -88,15 +101,15 @@ export class UIListRow extends LitElement {
         }
     }
 
-    // theme style property
-    @property({attribute: true, reflect: true, type: String}) value: string = "";
-    @property({attribute: true, reflect: true, type: Boolean}) checked: boolean = false;
-    @property() protected themeStyle?: HTMLStyleElement;
-
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
+
+        //
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(htmlCode, "text/html");
+        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
 
         // @ts-ignore
         import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
@@ -117,100 +130,11 @@ export class UIListRow extends LitElement {
     }
 
     // also "display" may be "contents"
-    static styles = css`:host {
-
-        /* */
-        & {
-            font-size: 0.9rem;
-            box-sizing: border-box;
-            inline-size: 100%;
-            block-size: max-content;
-            pointer-events: auto;
-            cursor: pointer;
-            display: grid;
-            grid-column: 1 / -1;
-            grid-template-rows: minmax(0px, 1fr);
-            grid-template-columns: subgrid;
-
-            /* */
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            /* */
-            user-drag: none;
-            user-select: none;
-            touch-action: none;
-        }
-
-        /* */
-        & * {
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            /* */
-            user-drag: none;
-            user-select: none;
-            touch-action: none;
-        }
-
-        /* */
-        & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"]) {
-            box-sizing: border-box;
-            cursor: pointer;
-            grid-row: 1 / 1 span;
-            grid-column: 1 / -1;
-            inline-size: 100%;
-            block-size: 100%;
-            appearance: none;
-            opacity: 0;
-        };
-
-        /* */
-        & .ui-columns {
-            & {
-                box-sizing: border-box;
-                display: grid;
-                grid-template-rows: minmax(0px, 1fr);
-                grid-template-columns: subgrid;
-                grid-row: 1 / 1 span; grid-column: 1 / -1;
-                inline-size: 100%; block-size: 100%;
-
-                /* */
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-                -webkit-tap-highlight-color: transparent;
-
-                /* */
-                user-drag: none;
-                user-select: none;
-                touch-action: none;
-                pointer-events: none;
-            }
-
-            /* */
-            ::slotted(*) {
-                grid-row: 1 / 1 span;
-                padding: 0.25rem;
-                display: inline flex;
-                flex-wrap: wrap;
-                flex-direction: row;
-                align-content: safe center;
-                align-items: safe center;
-
-                /* */
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-                -webkit-tap-highlight-color: transparent;
-
-                /* */
-                user-drag: none;
-                user-select: none;
-                touch-action: none;
-            }
-        }
-    }`
+    static styles = css`${unsafeCSS(styles)}`
 
     //
     render() {
-        return html`${this.themeStyle}<slot name="radio"></slot><div part="ui-columns" data-alpha="0" class="ui-columns"><slot></slot></div>`;
+        return html`${this.themeStyle}${this.nodes}`;
     }
 }
 

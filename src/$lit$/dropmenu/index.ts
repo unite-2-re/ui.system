@@ -12,6 +12,14 @@ import { openContextMenu } from "/externals/wcomp/contextmenu.js";
 //
 import UILucideIcon from "../icon/index";
 
+// @ts-ignore
+import htmlCode from "./index.html?raw";
+
+// @ts-ignore
+import styles from "./index.scss?inline";
+
+
+
 //
 const testMenu = [
     {icon: new UILucideIcon({icon: "github", padding: ""}), content: "Properties", callback: ()=>{console.log("Properties")}},
@@ -21,6 +29,11 @@ const testMenu = [
 // @ts-ignore
 @customElement('ui-dropmenu')
 export class UIDropMenu extends LitElement {
+
+    //
+    @property({}) dropMenu?: any = testMenu;
+    @property() protected themeStyle?: HTMLStyleElement;
+    @property() protected nodes?: HTMLElement[];
 
     //
     constructor() {
@@ -36,10 +49,6 @@ export class UIDropMenu extends LitElement {
             ev.preventDefault();
         });
     }
-
-    //
-    @property() protected themeStyle?: HTMLStyleElement;
-    @property({}) dropMenu?: any = testMenu;
 
     // test only!
     protected onClick(ev) {
@@ -65,6 +74,11 @@ export class UIDropMenu extends LitElement {
     protected createRenderRoot() {
         const root = super.createRenderRoot();
 
+        //
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(htmlCode, "text/html");
+        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
+
         // @ts-ignore
         import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
             if (root) { this.themeStyle = module?.default?.(root); }
@@ -73,83 +87,12 @@ export class UIDropMenu extends LitElement {
     }
 
     //
-    static styles = css`:host {
-        & {
-            text-align: center;
-            padding: 0.25rem;
-            cursor: pointer;
-            min-inline-size: 6rem;
-            display: inline flex;
-            place-content: safe center;
-            place-items: safe center;
-            overflow: hidden;
-            pointer-events: auto;
-            border-radius: 0.25rem;
-            box-sizing: border-box;
-
-            /* */
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            /* */
-            user-drag: none;
-            user-select: none;
-            touch-action: none;
-        }
-
-        /* */
-        & button {
-            gap: 0.25rem;
-            text-align: start;
-            padding: 0rem;
-            user-select: none;
-            display: flex;
-            flex-direction: row;
-            align-content: safe center;
-            align-items: safe center;
-            justify-items: stretch;
-            justify-content: space-between;
-            pointer-events: none;
-            border-radius: 0px;
-            outline: none 0px transparent;
-            border: none 0px transparent;
-            background-color: transparent;
-            inline-size: 100%;
-            block-size: 100%;
-            box-sizing: border-box;
-
-            /* */
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            /* */
-            user-drag: none;
-            user-select: none;
-            touch-action: none;
-        }
-
-        /* */
-        *, ::slotted(*) {
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            /* */
-            user-drag: none;
-            user-select: none;
-            touch-action: none;
-        }
-
-        /* */
-        ::slotted(*) {
-            interactivity: inert;
-            pointer-events: none;
-        }
-    }`
+    static styles = css`${unsafeCSS(styles)}`
 
     //
     render() {
         // use theme module if available
-        return html`${this.themeStyle}<button type="button" class="ui-button" part="ui-button" data-alpha="0"><slot></slot></button>`;
+        return html`${this.themeStyle}${this.nodes}`;
     }
 }
 

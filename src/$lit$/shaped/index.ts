@@ -3,14 +3,25 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { LitElement, html, css, PropertyValues } from "../shared/LitUse";
+import { LitElement, html, css, unsafeCSS, PropertyValues } from "../shared/LitUse";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
+import htmlCode from "./index.html?raw";
+
+// @ts-ignore
+import styles from "./index.scss?inline";
+
+// @ts-ignore
 @customElement('ui-shaped')
 export class UIShaped extends LitElement {
+
+    // theme style property
+    @property({attribute: true, reflect: true, type: String}) icon: string = "";
+    @property() protected themeStyle?: HTMLStyleElement;
+    @property() protected nodes?: HTMLElement[];
 
     //
     constructor(options = {icon: "", padding: ""}) {
@@ -41,14 +52,15 @@ export class UIShaped extends LitElement {
         self.setAttribute("data-alpha", "0");
     }
 
-    // theme style property
-    @property({attribute: true, reflect: true, type: String}) icon: string = "";
-    @property() protected themeStyle?: HTMLStyleElement;
-
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
 
+        //
+        /*const parser = new DOMParser();
+        const dom = parser.parseFromString(htmlCode, "text/html");
+        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
+*/
         // @ts-ignore
         import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
             if (root) { this.themeStyle = module?.default?.(root); }
@@ -59,68 +71,7 @@ export class UIShaped extends LitElement {
     }
 
     // also "display" may be "contents"
-    static styles = css`:host {
-        --icon-size: 4rem;
-
-        & {
-            padding: 0.25rem;
-            place-items: safe center;
-            place-content: safe center;
-            filter: drop-shadow(0 0 1rem #10101040);
-            box-sizing: border-box;
-            aspect-ratio: 1 / 1;
-            max-inline-size: var(--icon-size, 4rem);
-            max-block-size: var(--icon-size, 4rem);
-            inline-size: 100%;
-            block-size: 100%;
-            overflow: visible;
-            display: inline grid;
-            grid-template-columns: minmax(0px, 1fr);
-            grid-template-rows: minmax(0px, 1fr);
-
-            /* */
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            /* */
-            user-drag: none;
-            user-select: none;
-            touch-action: none;
-            pointer-events: none;
-        };
-
-        /* */
-        ::slotted(*), & > * {
-            --icon-size: 100%;
-
-            /* */
-            aspect-ratio: 1 / 1;
-            box-sizing: border-box;
-            inline-size: 100%;
-            block-size: 100%;
-            grid-column: 1 / -1;
-            grid-row: 1 / -1;
-
-            /* */
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            /* */
-            user-drag: none;
-            user-select: none;
-            touch-action: none;
-        };
-
-        /* */
-        ::slotted(*) {
-            overflow: hidden;
-            pointer-events: auto;
-            scale: var(--corrector, 1);
-        };
-
-        /* */
-        & > * { z-index: 99; };
-    }`
+    static styles = css`${unsafeCSS(styles)}`
 
     //
     render() {

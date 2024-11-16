@@ -9,6 +9,13 @@ import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic, PropertyVal
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
+import htmlCode from "./index.html?raw";
+
+// @ts-ignore
+import styles from "./index.scss?inline";
+
+
+// @ts-ignore
 const ICON_MODULE = import("lucide");
 const toCamelCase = (str: string) => {
     return str
@@ -28,6 +35,11 @@ const toCamelCase = (str: string) => {
 // @ts-ignore
 @customElement('ui-icon')
 export class UILucideIcon extends LitElement {
+
+    // theme style property
+    @property() protected iconElement?: SVGElement;
+    @property() protected themeStyle?: HTMLStyleElement;
+    @property({attribute: true, reflect: true, type: String}) icon: string = "";
 
     //
     constructor(options = {icon: "", padding: ""}) {
@@ -54,11 +66,6 @@ export class UILucideIcon extends LitElement {
         //
         this.updateIcon();
     }
-
-    // theme style property
-    @property() protected themeStyle?: HTMLStyleElement;
-    @property({attribute: true, reflect: true, type: String}) icon: string = "";
-    @property() protected iconElement?: SVGElement;
 
     //
     protected updateIcon() {
@@ -93,48 +100,7 @@ export class UILucideIcon extends LitElement {
     }
 
     // also "display" may be "contents"
-    static styles = css`:host {
-        /* */
-        & {
-            aspect-ratio: 1 / 1;
-            inline-size: max-content;
-            block-size: 100%;
-            box-sizing: border-box;
-            display: inline flex;
-            place-items: safe center;
-            place-content: safe center;
-
-            /* */
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            /* */
-            interactivity: inert;
-            pointer-events: none;
-            user-select: none;
-            user-drag: none;
-            touch-action: none;
-        }
-
-        /* */
-        & > * {
-            box-sizing: border-box;
-            inline-size: max-content;
-            block-size: 100%;
-            aspect-ratio: 1 / 1;
-
-            /* */
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            /* */
-            interactivity: inert;
-            pointer-events: none;
-            user-select: none;
-            user-drag: none;
-            touch-action: none;
-        }
-    }`
+    static styles = css`${unsafeCSS(styles)}`
 
     //
     render() {

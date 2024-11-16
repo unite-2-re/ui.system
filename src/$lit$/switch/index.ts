@@ -10,6 +10,10 @@ import { customElement, property } from "lit/decorators.js";
 import styles from "../shared/BoxLayout.scss?inline";
 
 // @ts-ignore
+import htmlCode from "../shared/BoxLayout.html?raw";
+
+
+// @ts-ignore
 @customElement('ui-switch')
 export class UISwitch extends LitElement {
 
@@ -116,12 +120,18 @@ export class UISwitch extends LitElement {
     }
 
     // theme style property
+    @property() protected nodes?: HTMLElement[];
     @property() protected themeStyle?: HTMLStyleElement;
     @property() protected value: string = "";
 
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
+
+        //
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(htmlCode, "text/html");
+        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
 
         // @ts-ignore
         import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
@@ -136,14 +146,7 @@ export class UISwitch extends LitElement {
     //
     render() {
         // use theme module if available
-        return html`${this.themeStyle}<label part="ui-contain" class="ui-contain">
-    <div part="ui-fill" class="ui-fill">
-        <div inert data-highlight="6" data-chroma="0.05" data-scheme="inverse" part="ui-fill-inactive" class="ui-fill-inactive"></div>
-        <div inert data-highlight="6" data-chroma="0.05" data-scheme="solid" part="ui-fill-active" class="ui-fill-active"></div>
-    </div>
-    <div data-highlight-hover="10" data-highlight="8" data-chroma="0.1" part="ui-thumb" class="ui-thumb" data-scheme="inverse"></div>
-    <div part="ui-inputs" class="ui-inputs"><slot></slot></div>
-</label>`;
+        return html`${this.themeStyle}${this.nodes}`;
     }
 }
 
