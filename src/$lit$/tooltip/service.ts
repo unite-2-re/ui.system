@@ -3,23 +3,29 @@ import AxGesture, {pointerMap} from "/externals/lib/interact.js";
 
 //
 export const runTooltip = async ()=>{
-
-    //
     const timer = Symbol("@disappear");
     const fixTooltip = (ev, initiator?: HTMLElement)=>{
         const tooltip = document.querySelector(".ui-tooltip") as HTMLElement;
-        if (tooltip && (ev?.target as HTMLElement)?.dataset?.tooltip) {
+        if (tooltip && ((initiator ?? ev?.target) as HTMLElement)?.dataset?.tooltip) {
+            const box = initiator?.getBoundingClientRect?.();
 
-            if (initiator) {
-                const box = initiator?.getBoundingClientRect();
+            //
+            if (box && box?.width < 240) {
                 tooltip.style.setProperty("--hover-x", ((box?.left + box?.right) * 0.5 || tooltip.style.getPropertyValue("--hover-x") || 0) as unknown as string, "");
+            } else {
+                tooltip.style.setProperty("--hover-x", (pointerMap?.get?.(ev.pointerId)?.current?.[0] || ev?.clientX || tooltip.style.getPropertyValue("--hover-x") || 0) as unknown as string, "");
+                requestAnimationFrame(()=>{
+                    tooltip.style.setProperty("--hover-x", (pointerMap?.get?.(ev.pointerId)?.current?.[0] || ev?.clientX || tooltip.style.getPropertyValue("--hover-x") || 0) as unknown as string, "");
+                });
+            }
+
+            //
+            if (box && box?.height < 60) {
                 tooltip.style.setProperty("--hover-y", (box?.top || tooltip.style.getPropertyValue("--hover-y") || 0) as unknown as string, "");
             } else {
-                tooltip.style.setProperty("--hover-x", (ev?.clientX || tooltip.style.getPropertyValue("--hover-x") || 0) as unknown as string, "");
-                tooltip.style.setProperty("--hover-y", (ev?.clientY || tooltip.style.getPropertyValue("--hover-y") || 0) as unknown as string, "");
+                tooltip.style.setProperty("--hover-y", (pointerMap?.get?.(ev.pointerId)?.current?.[1] || ev?.clientY || tooltip.style.getPropertyValue("--hover-y") || 0) as unknown as string, "");
                 requestAnimationFrame(()=>{
-                    tooltip.style.setProperty("--hover-x", (pointerMap.get(ev.pointerId)?.current?.[0] || ev?.clientX || tooltip.style.getPropertyValue("--hover-x") || 0) as unknown as string, "");
-                    tooltip.style.setProperty("--hover-y", (pointerMap.get(ev.pointerId)?.current?.[1] || ev?.clientY || tooltip.style.getPropertyValue("--hover-y") || 0) as unknown as string, "");
+                    tooltip.style.setProperty("--hover-y", (pointerMap?.get?.(ev.pointerId)?.current?.[1] || ev?.clientY || tooltip.style.getPropertyValue("--hover-y") || 0) as unknown as string, "");
                 });
             }
         }
@@ -35,9 +41,9 @@ export const runTooltip = async ()=>{
         selector: "*[data-tooltip]",
         holdTime: 500
     }, (ev)=>{
-        const initiator = ev.target;
+        const initiator = ev.target.matches("*[data-tooltip]") ? ev.target : ev.target.closest("*[data-tooltip]");
         const tooltip: HTMLElement | null = document.querySelector(".ui-tooltip");
-        if (tooltip) {
+        if (tooltip && initiator) {
             {
                 if (tooltip[timer]) clearTimeout(tooltip[timer]);
                 tooltip.dataset.hidden = "";
