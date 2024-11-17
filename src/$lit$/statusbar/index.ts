@@ -25,6 +25,7 @@ export class UIStatusBar extends LitElement {
     //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
+        self.style.setProperty("z-index", "999999", "important");
     }
 
     //
