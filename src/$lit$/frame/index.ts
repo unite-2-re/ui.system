@@ -10,9 +10,6 @@ import { customElement, property } from "lit/decorators.js";
 import {AxGesture} from "/externals/lib/interact.js";
 
 // @ts-ignore
-import {zoomOf} from "/externals/lib/dom.js";
-
-// @ts-ignore
 import htmlCode from "./index.html?raw";
 
 // @ts-ignore

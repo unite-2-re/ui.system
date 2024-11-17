@@ -40,7 +40,7 @@ export const runTooltip = async ()=>{
         if (tooltip) {
             {
                 if (tooltip[timer]) clearTimeout(tooltip[timer]);
-                tooltip.dataset.hidden = ""+true;
+                tooltip.dataset.hidden = "";
                 tooltip[timer] = null;
             }
 
@@ -49,7 +49,7 @@ export const runTooltip = async ()=>{
             fixTooltip(ev, initiator);
             delete tooltip.dataset.hidden;
             tooltip[timer] = setTimeout(()=>{
-                tooltip.dataset.hidden = ""+true;
+                tooltip.dataset.hidden = "";
             }, 1000);
         }
     });
@@ -65,9 +65,9 @@ export const runTooltip = async ()=>{
 
                 //
                 if (ev?.type == "pointerout" || ev?.type == "pointermove") {
-                    tooltip[timer] = setTimeout(()=>{ tooltip.dataset.hidden = "" + true; }, 100);
+                    tooltip[timer] = setTimeout(()=>{ tooltip.dataset.hidden = ""; }, 100);
                 } else {
-                    tooltip.dataset.hidden = "" + true;
+                    tooltip.dataset.hidden = "";
                 }
             }
         });
