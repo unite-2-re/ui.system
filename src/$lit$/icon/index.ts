@@ -41,6 +41,11 @@ export class UILucideIcon extends LitElement {
     static styles = css`${unsafeCSS(styles)}`
 
     //
+    protected render() {
+        return html`${this.themeStyle}${this.iconElement}`;
+    }
+
+    //
     constructor(options = {icon: "", padding: ""}) {
         super(); const self = this as unknown as HTMLElement;
 
@@ -97,11 +102,6 @@ export class UILucideIcon extends LitElement {
             if (root) { this.themeStyle = module?.default?.(root); }
         }).catch(console.warn.bind(console));
         return root;
-    }
-
-    //
-    render() {
-        return html`${this.themeStyle}${this.iconElement}`;
     }
 }
 

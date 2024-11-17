@@ -26,6 +26,12 @@ export class UISwitch extends LitElement {
     static styles = css`${unsafeCSS(styles)}`
 
     //
+    protected render() {
+        // use theme module if available
+        return html`${this.themeStyle}${this.nodes}`;
+    }
+
+    //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
 
@@ -141,12 +147,6 @@ export class UISwitch extends LitElement {
             if (root) { this.themeStyle = module?.default?.(root); }
         }).catch(console.warn.bind(console));
         return root;
-    }
-
-    //
-    render() {
-        // use theme module if available
-        return html`${this.themeStyle}${this.nodes}`;
     }
 }
 

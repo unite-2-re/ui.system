@@ -16,6 +16,20 @@ import runTooltip from "./service.js";
 // @ts-ignore
 @customElement('ui-tooltip')
 export class UITooltip extends LitElement {
+    // theme style property
+    @property() protected themeStyle?: HTMLStyleElement;
+    @property() protected current: string = "";
+
+    //
+    static styles = css`${unsafeCSS(styles)}`
+
+    //
+    protected render() {
+        // use theme module if available
+        return html`${this.themeStyle}<slot></slot>`;
+    }
+
+    //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         self.style.setProperty("z-index", "9999", "important");
@@ -33,13 +47,6 @@ export class UITooltip extends LitElement {
         if (!self.dataset?.chroma) self.dataset.scheme = "0.001";
     }
 
-    // theme style property
-    @property() protected themeStyle?: HTMLStyleElement;
-    @property() protected current: string = "";
-
-    //
-    static styles = css`${unsafeCSS(styles)}`
-
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
@@ -50,11 +57,4 @@ export class UITooltip extends LitElement {
         }).catch(console.warn.bind(console));
         return root;
     }
-
-    //
-    render() {
-        // use theme module if available
-        return html`${this.themeStyle}<slot></slot>`;
-    }
-
 }

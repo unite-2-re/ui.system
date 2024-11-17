@@ -26,6 +26,12 @@ export class UICheckBox extends LitElement {
     static styles = css`${unsafeCSS(styles)}`
 
     //
+    protected render() {
+        // use theme module if available
+        return html`${this.themeStyle}${this.nodes}`;
+    }
+
+    //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
 
@@ -65,12 +71,6 @@ export class UICheckBox extends LitElement {
 
         //
         return root;
-    }
-
-    //
-    render() {
-        // use theme module if available
-        return html`${this.themeStyle}${this.nodes}`;
     }
 }
 

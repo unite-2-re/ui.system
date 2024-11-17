@@ -15,13 +15,18 @@ import styles from "./index.scss?inline";
 @customElement('ui-shaped')
 export class UIShaped extends LitElement {
 
-    // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`;
-
     // theme style property
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
     @property() protected themeStyle?: HTMLStyleElement;
     @property() protected nodes?: HTMLElement[];
+
+    // also "display" may be "contents"
+    static styles = css`${unsafeCSS(styles)}`;
+
+    //
+    protected render() {
+        return html`${this.themeStyle}<slot></slot><ui-icon data-chroma="0" data-alpha="0" data-scheme="dynamic" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
+    }
 
     //
     constructor(options = {icon: "", padding: ""}) {
@@ -68,11 +73,6 @@ export class UIShaped extends LitElement {
 
         //
         return root;
-    }
-
-    //
-    render() {
-        return html`${this.themeStyle}<slot></slot><ui-icon data-chroma="0" data-alpha="0" data-scheme="dynamic" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
     }
 }
 

@@ -36,6 +36,15 @@ export class UIDropMenu extends LitElement {
     @property() protected nodes?: HTMLElement[];
 
     //
+    static styles = css`${unsafeCSS(styles)}`
+
+    //
+    protected render() {
+        // use theme module if available
+        return html`${this.themeStyle}${this.nodes}`;
+    }
+
+    //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
 
@@ -84,15 +93,6 @@ export class UIDropMenu extends LitElement {
             if (root) { this.themeStyle = module?.default?.(root); }
         }).catch(console.warn.bind(console));
         return root;
-    }
-
-    //
-    static styles = css`${unsafeCSS(styles)}`
-
-    //
-    render() {
-        // use theme module if available
-        return html`${this.themeStyle}${this.nodes}`;
     }
 }
 

@@ -23,6 +23,12 @@ export class UIStatusBar extends LitElement {
     static styles = css`${unsafeCSS(styles)}`;
 
     //
+    protected render() {
+        // use theme module if available
+        return html`${this.themeStyle}${this.nodes}`;
+    }
+
+    //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         self.style.setProperty("z-index", "999999", "important");
@@ -63,12 +69,6 @@ export class UIStatusBar extends LitElement {
         if (!self.hasAttribute("data-alpha")) { self.setAttribute("data-alpha", "1"); };
         if (!self.hasAttribute("data-chroma")) { self.setAttribute("data-chroma", "0"); };
         if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "dynamic"); };
-    }
-
-    //
-    render() {
-        // use theme module if available
-        return html`${this.themeStyle}${this.nodes}`;
     }
 };
 

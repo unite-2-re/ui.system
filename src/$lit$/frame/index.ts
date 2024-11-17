@@ -65,6 +65,11 @@ export class UIFrame extends LitElement {
     static styles = css`${unsafeCSS(styles)}`
 
     //
+    protected render() {
+        return html`${this.themeStyle}${this.nodes}`;
+    }
+
+    //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         self.classList?.add?.("ui-frame");
@@ -111,11 +116,6 @@ export class UIFrame extends LitElement {
 
         //
         return root;
-    }
-
-    //
-    render() {
-        return html`${this.themeStyle}${this.nodes}`;
     }
 }
 
