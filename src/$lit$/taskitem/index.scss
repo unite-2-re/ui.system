@@ -1,0 +1,21 @@
+@layer ui-task {
+    :host(ui-task) {
+
+        //
+        & {
+            pointer-events: auto;
+            padding: 0.75rem;
+            cursor: pointer;
+
+            //
+            inline-size: max-content;
+            block-size: 100%;
+        }
+
+        //
+        &.ui-focus { border-block-end: solid 0.125rem oklch(from var(--current-surface-color) l c h / 1.0); }
+
+        //
+        &:not(.ui-active) { opacity: 0.5; }
+    }
+}

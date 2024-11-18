@@ -1,0 +1,177 @@
+@layer ui-taskbar {
+
+    //
+    :host(ui-taskbar) {
+        & {
+            display: inline grid;
+            block-size: var(--taskbar-size, 4rem);
+
+            //
+            grid-template-rows   : minmax(0px, 1fr);
+            grid-template-columns:
+                [app-menu]  minmax(0px, var(--taskbar-size, 4rem))
+                [task-bar]  minmax(0px, 1fr)
+                [ui-status] minmax(0px, max-content);
+
+            //
+            --translate-y: var(--data-taskbar-shift, 0px);
+        }
+
+        //
+        & a {
+            display: inline;
+            pointer-events: auto;
+            inline-size: max-content;
+            block-size: max-content;
+            place-self: center;
+            place-content: center;
+            place-items: center;
+        }
+
+        //
+        & {
+            inline-size: 100%;
+            position: fixed;
+            inset: 0px;
+            inset-block-start: auto;
+            z-index: 9999;
+
+            //
+            transition-property: --data-taskbar-shift;
+            transition-duration: 0.25s;
+            transition-timing-function: linear;
+            transition-delay: 0.2s;
+
+            //
+            pointer-events: auto;
+            box-shadow: 0px 0px 1rem #00000070;
+
+            //
+            container-type: size;
+            contain: content;
+        }
+
+        //
+        &:active { transition-delay: 0s; }
+        & > :where(*) { inline-size: 100%; block-size: 100%; }
+
+        //
+        & .ui-app-menu {
+            padding: 0.5rem;
+            cursor: pointer;
+            pointer-events: auto;
+            grid-column: app-menu;
+        }
+
+        //
+        & .ui-task-bar {
+            place-content: center;
+            place-items: center;
+
+            display: flex;
+            flex-direction: row;
+
+            gap: 0.25rem;
+            pointer-events: none;
+            justify-content: start;
+            justify-items: start;
+
+            grid-column: task-bar;
+        }
+
+        //
+        & .ui-status {
+            & {
+                gap: 0.5rem;
+                padding: 1rem;
+                padding-block: 0.5rem;
+
+                grid-column: ui-status;
+
+                //
+                inline-size: 100%;
+                block-size: 100%;
+
+                //
+                display: inline flex;
+                flex-direction: row;
+            }
+
+            //
+            & ui-icon {
+                aspect-ratio: 1 / 1;
+                inline-size: max-content;
+                block-size: 100%;
+            }
+
+            //
+            & > * {
+                pointer-events: auto;
+
+                //
+                inline-size: 2rem;
+                block-size: 2rem;
+                padding: 0.125rem;
+
+                //
+                border-radius: 0.25rem;
+                cursor: pointer;
+            }
+
+            //
+            & .ui-indicator {
+
+                & {
+                    padding: 0.5rem;
+                    inline-size: max-content;
+                    block-size: 100%;
+                    pointer-events: auto;
+                    max-block-size: none;
+                    max-inline-size: none;
+                    place-self: center;
+                    place-content: center;
+                }
+
+                //
+                & a {
+                    display: inline;
+                    inline-size: max-content;
+                    block-size: 100%;
+                    place-self: center;
+                    place-content: center;
+                }
+            }
+
+            //
+            & .ui-time { padding-inline: 1rem; }
+        }
+    }
+
+    //
+    :host(body:has(.ui-app-frame:not([data-hidden])) ui-taskbar) {
+        & { --data-taskbar-shift: 2.5rem; }
+        &:hover, &:active { --data-taskbar-shift: 0px; }
+        &:not(:hover, :active) { --data-taskbar-shift: 2.5rem; }
+    }
+
+    //
+    :host(body:not(:has(.ui-app-frame:not([data-hidden]))) ui-taskbar) {
+        & {
+            --theme-surface-alpha: 0;
+            --theme-surface-chroma: 1;
+        }
+
+        //
+        & {
+            box-shadow: none;
+            pointer-events: none;
+        }
+    }
+
+
+
+    //
+    @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
+        :host(ui-taskbar) { display: none; };
+    }
+}
