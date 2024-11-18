@@ -1,58 +1,61 @@
-//
-:host {
+@layer ui-tooltip {
+
     //
-    & { // also, due policy of chrome, may used `min(max-content, 80cqi)`
+    :host {
         //
-        inline-size: max-content;
-        block-size: max-content;
+        & { // also, due policy of chrome, may used `min(max-content, 80cqi)`
+            //
+            inline-size: max-content;
+            block-size: max-content;
+
+            //
+            max-inline-size: 80cqi;
+            max-block-size: min(4rem, 80cqb);
+
+            //
+            z-index: 9999;
+
+            //
+            background-color: var(--current-surface-color, black);
+            outline: solid 0.5px oklch(from var(--current-glyph-color) l c h / 0.125);
+
+            //
+            user-select: none;
+            place-self: start;
+
+            //
+            position: fixed;
+            overflow: hidden;
+            border-radius: 0.125rem;
+
+            //
+            inset: 0px;
+            inset-inline-end: auto;
+            inset-block-end: auto;
+
+            //
+            pointer-events: none;
+
+            //
+            font-size: 0.8rem;
+
+            //
+            transform: translate(var(--translate-x), var(--translate-y)) scale(var(--scale, 1));
+            padding: 0.5rem;
+        }
 
         //
-        max-inline-size: 80cqi;
-        max-block-size: min(4rem, 80cqb);
+        & {
+            //
+            --rx: calc(var(--hover-x, 0) * var(--zpx, 1px) - 50cqi);
+            --ry: calc(var(--hover-y, 0) * var(--zpx, 1px) - 50cqb - 0.5rem);
 
-        //
-        z-index: 9999;
-
-        //
-        background-color: var(--current-surface-color, black);
-        outline: solid 0.5px oklch(from var(--current-glyph-color) l c h / 0.125);
-
-        //
-        user-select: none;
-        place-self: start;
-
-        //
-        position: fixed;
-        overflow: hidden;
-        border-radius: 0.125rem;
-
-        //
-        inset: 0px;
-        inset-inline-end: auto;
-        inset-block-end: auto;
-
-        //
-        pointer-events: none;
-
-        //
-        font-size: 0.8rem;
-
-        //
-        transform: translate(var(--translate-x), var(--translate-y)) scale(var(--scale, 1));
-        padding: 0.5rem;
+            //
+            --translate-x: clamp(0px, calc(calc(50cqi - 50%) + var(--rx)), calc(100cqi - 100%));
+            --translate-y: clamp(0px, calc(calc(50cqb - 50%) + var(--ry) - 0.5rem), calc(100cqb - 100%));
+        }
     }
 
     //
-    & {
-        //
-        --rx: calc(var(--hover-x, 0) * var(--zpx, 1px) - 50cqi);
-        --ry: calc(var(--hover-y, 0) * var(--zpx, 1px) - 50cqb - 0.5rem);
-
-        //
-        --translate-x: clamp(0px, calc(calc(50cqi - 50%) + var(--rx)), calc(100cqi - 100%));
-        --translate-y: clamp(0px, calc(calc(50cqb - 50%) + var(--ry) - 0.5rem), calc(100cqb - 100%));
-    }
+    :host([data-hidden]) { display: none !important; }
 }
-
-//
-:host([data-hidden]) { display: none !important; }

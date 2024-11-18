@@ -1,42 +1,45 @@
-:host {
+@layer ui-icon {
     /* */
-    & {
-        aspect-ratio: 1 / 1;
-        inline-size: max-content;
-        block-size: 100%;
-        box-sizing: border-box;
-        display: inline flex;
-        place-items: safe center;
-        place-content: safe center;
+    :host {
+        /* */
+        & {
+            aspect-ratio: 1 / 1;
+            inline-size: max-content;
+            block-size: 100%;
+            box-sizing: border-box;
+            display: inline flex;
+            place-items: safe center;
+            place-content: safe center;
+
+            /* */
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+
+            /* */
+            interactivity: inert;
+            pointer-events: none;
+            user-select: none;
+            user-drag: none;
+            touch-action: none;
+        }
 
         /* */
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
-        -webkit-tap-highlight-color: transparent;
+        & > * {
+            box-sizing: border-box;
+            inline-size: max-content;
+            block-size: 100%;
+            aspect-ratio: 1 / 1;
 
-        /* */
-        interactivity: inert;
-        pointer-events: none;
-        user-select: none;
-        user-drag: none;
-        touch-action: none;
-    }
+            /* */
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
 
-    /* */
-    & > * {
-        box-sizing: border-box;
-        inline-size: max-content;
-        block-size: 100%;
-        aspect-ratio: 1 / 1;
-
-        /* */
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
-        -webkit-tap-highlight-color: transparent;
-
-        /* */
-        interactivity: inert;
-        pointer-events: none;
-        user-select: none;
-        user-drag: none;
-        touch-action: none;
+            /* */
+            interactivity: inert;
+            pointer-events: none;
+            user-select: none;
+            user-drag: none;
+            touch-action: none;
+        }
     }
 }

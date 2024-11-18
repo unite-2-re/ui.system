@@ -71,6 +71,6 @@ export class UITaskItem extends LitElement {
         if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "solid"); };
         if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "0"    ); };
         if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "0"    ); };
-        if (!self.hasAttribute("data-highlight-hover")) { self.setAttribute("data-highlight-hover", "6"    ); };
+        if (!self.hasAttribute("data-highlight-hover")) { self.setAttribute("data-highlight-hover", "2"    ); };
     }
 }

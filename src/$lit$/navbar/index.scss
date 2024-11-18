@@ -117,5 +117,5 @@
 
     //
     :host(body:not(:has(.ui-app-frame:not([data-hidden]))):not(:has(.ui-task-panel:not([data-hidden]))) ui-navbar)
-    {& .ui-back-button { display: none; }}
+        {& .ui-back-button { display: none; }}
 }

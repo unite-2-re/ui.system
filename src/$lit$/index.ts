@@ -7,3 +7,6 @@ export * from "./shaped/index";
 export * from "./frame/index";
 export * from "./statusbar/index";
 export * from "./tooltip/index";
+export * from "./taskbar/index";
+export * from "./taskitem/index";
+export * from "./navbar/index";

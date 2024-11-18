@@ -1,5 +1,18 @@
 // DEBUG/DEV mode...
-import init, { UITooltip, UIStatusBar, UICheckBox, UIListRow, UILucideIcon, UISwitch, UIDropMenu, UIShaped, UIFrame } from "../src/index";
+import init, {
+    UITooltip,
+    UIStatusBar,
+    UICheckBox,
+    UIListRow,
+    UILucideIcon,
+    UISwitch,
+    UIDropMenu,
+    UIShaped,
+    UIFrame,
+    UINavBar,
+    UITaskBar,
+    UITaskItem
+} from "../src/index";
 
 // @ts-ignore
 import {makeSelection} from /* @vite-ignore */ "/externals/lib/interact.js";
@@ -32,6 +45,9 @@ console.log(UIShaped);
 console.log(UIFrame);
 console.log(UIStatusBar);
 console.log(UITooltip);
+console.log(UINavBar);
+console.log(UITaskBar);
+console.log(UITaskItem);
 
 //
 makeSelection(document.body, "ui-checkbox, ui-switch");

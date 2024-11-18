@@ -5,17 +5,28 @@
     {
         & {
             display: inline grid;
-            block-size: var(--taskbar-size, 4rem);
+            block-size: var(--taskbar-size, 3rem);
+            box-sizing: border-box;
 
             //
             grid-template-rows   : minmax(0px, 1fr);
             grid-template-columns:
-                [app-menu]  minmax(0px, var(--taskbar-size, 4rem))
+                [app-menu]  minmax(0px, var(--taskbar-size, 3rem))
                 [task-bar]  minmax(0px, 1fr)
-                [ui-status] minmax(0px, max-content);
+                [ui-status] minmax(4rem, max-content);
 
             //
             --translate-y: var(--data-taskbar-shift, 0px);
+        }
+
+        //
+        ::slotted(ui-icon), ui-icon
+        {
+            inline-size: max-content;
+            block-size: 100%;
+            box-sizing: border-box;
+            aspect-ratio: 1 / 1;
+            position: relative;
         }
 
         //
@@ -27,6 +38,7 @@
             place-self: center;
             place-content: center;
             place-items: center;
+            box-sizing: border-box;
         }
 
         //
@@ -36,6 +48,7 @@
             inset: 0px;
             inset-block-start: auto;
             z-index: 9999;
+            box-sizing: border-box;
 
             //
             transition-property: --data-taskbar-shift;
@@ -62,6 +75,7 @@
             cursor: pointer;
             pointer-events: auto;
             grid-column: app-menu;
+            box-sizing: border-box;
         }
 
         //
@@ -78,6 +92,7 @@
             justify-items: start;
 
             grid-column: task-bar;
+            box-sizing: border-box;
         }
 
         //
@@ -96,6 +111,7 @@
                 //
                 display: inline flex;
                 flex-direction: row;
+                box-sizing: border-box;
             }
 
             //
@@ -103,6 +119,8 @@
                 aspect-ratio: 1 / 1;
                 inline-size: max-content;
                 block-size: 100%;
+                box-sizing: border-box;
+                position: relative;
             }
 
             //
@@ -113,6 +131,7 @@
                 inline-size: 2rem;
                 block-size: 2rem;
                 padding: 0.125rem;
+                box-sizing: border-box;
 
                 //
                 border-radius: 0.25rem;
@@ -123,14 +142,17 @@
             & .ui-indicator {
 
                 & {
-                    padding: 0.5rem;
+                    padding: 0.25rem;
                     inline-size: max-content;
                     block-size: 100%;
+                    min-inline-size: 2rem;
                     pointer-events: auto;
                     max-block-size: none;
                     max-inline-size: none;
                     place-self: center;
                     place-content: center;
+                    box-sizing: border-box;
+                    contain: none;
                 }
 
                 //
@@ -140,11 +162,15 @@
                     block-size: 100%;
                     place-self: center;
                     place-content: center;
+                    box-sizing: border-box;
+                    user-select: none;
+                    -webkit-user-drag: none;
+                    -moz-user-drag: none;
                 }
             }
 
             //
-            & .ui-time { padding-inline: 1rem; }
+            & .ui-time { padding-inline: 1rem; box-sizing: border-box; }
         }
     }
 
@@ -172,7 +198,6 @@
     }
 
     //
-    @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
-        :host(ui-taskbar) { display: none; };
-    }
+    @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))
+        {:host(ui-taskbar) { display: none; }}
 }

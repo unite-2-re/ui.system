@@ -1,92 +1,97 @@
-:host {
-    & {
-        inline-size: 100%;
-        block-size: 2rem;
-        font-size: 0.9rem;
-
-        /* */
-        display: inline grid !important;
-        grid-template-columns: minmax(0px, max-content) minmax(0px, 1fr) minmax(6rem, max-content);
-        grid-template-rows: minmax(0px, 1fr);
-
-        /* */
-        position: fixed;
-        z-index: 999999;
-        overflow: hidden;
-        pointer-events: none;
-
-        /* */
-        justify-content: space-between;
-        padding-inline: 0.5rem;
-        gap: 0rem;
-        box-sizing: border-box;
-
-        inset: 0px;
-        inset-block-end: auto;
-        /*inset-inline-end: auto;*/
-    }
-
-    /* */
-    & > * {
-        inline-size: 100%;
-        block-size: 100%;
-        box-sizing: border-box;
-        flex-direction: row;
-
-        /* */
-        & { background-color: transparent; };
-        & { justify-content: space-between; }
-    }
-
-    /* */
-    & > div { display: inline flex; flex-direction: row; inline-size: 100%; block-size: 100%; }
-
-    /* */
-    & *             { background-color: transparent; gap: 0rem; place-items: safe center; place-content: safe center; }
-    & .left, .right { display: inline flex; flex-direction: row; }
-    & .left         { grid-column: 1 / 1 span; grid-row: 1 / 1 span; justify-self: safe start;  justify-items: safe start ; justify-content: safe start ; gap: 0rem; }
-    & .center       { grid-column: 2 / 2 span; grid-row: 1 / 1 span; justify-self: safe center; justify-items: safe center; justify-content: safe center; gap: 0rem; }
-    & .right        { grid-column: 3 / 3 span; grid-row: 1 / 1 span; justify-self: safe end;    justify-items: safe end   ; justify-content: safe end   ; gap: 0rem; }
-
-    /* */
-    .icon-wrap {
-        display: inline flex;
-        inline-size: max-content;
-        block-size: 100%;
-        aspect-ratio: 1 / 1;
-        box-sizing: border-box;
-        place-items: safe center;
-        place-content: safe center;
-    }
-
-    /* */
-    .ui-indicator {
+@layer ui-statusbar {
+    :host
+    {
         & {
-            padding: 0.5rem;
+            inline-size: 100%;
+            block-size: 2rem;
+            font-size: 0.9rem;
+
+            /* */
+            display: inline grid !important;
+            grid-template-columns: minmax(0px, max-content) minmax(0px, 1fr) minmax(6rem, max-content);
+            grid-template-rows: minmax(0px, 1fr);
+
+            /* */
+            position: fixed;
+            z-index: 999999;
+            overflow: hidden;
             pointer-events: none;
-            inline-size: max-content;
-            block-size: 100%;
-            place-items: safe center;
-            place-content: safe center;
+
+            /* */
+            justify-content: space-between;
+            padding-inline: 0.5rem;
+            gap: 0rem;
             box-sizing: border-box;
-            display: inline flex;
-            flex-direction: row;
+
+            inset: 0px;
+            inset-block-end: auto;
+            /*inset-inline-end: auto;*/
         }
 
         /* */
-        &.ui-icon { aspect-ratio: 1 / 1; }
+        & > *
+        {
+            inline-size: 100%;
+            block-size: 100%;
+            box-sizing: border-box;
+            flex-direction: row;
+
+            /* */
+            & { background-color: transparent; };
+            & { justify-content: space-between; }
+        }
 
         /* */
-        a {
-            box-sizing: border-box;
+        & > div { display: inline flex; flex-direction: row; inline-size: 100%; block-size: 100%; }
+
+        /* */
+        & *             { background-color: transparent; gap: 0rem; place-items: safe center; place-content: safe center; }
+        & .left, .right { display: inline flex; flex-direction: row; }
+        & .left         { grid-column: 1 / 1 span; grid-row: 1 / 1 span; justify-self: safe start;  justify-items: safe start ; justify-content: safe start ; gap: 0rem; }
+        & .center       { grid-column: 2 / 2 span; grid-row: 1 / 1 span; justify-self: safe center; justify-items: safe center; justify-content: safe center; gap: 0rem; }
+        & .right        { grid-column: 3 / 3 span; grid-row: 1 / 1 span; justify-self: safe end;    justify-items: safe end   ; justify-content: safe end   ; gap: 0rem; }
+
+        /* */
+        ui-icon, ::slotted(ui-icon) {
             display: inline flex;
             inline-size: max-content;
             block-size: 100%;
+            aspect-ratio: 1 / 1;
+            box-sizing: border-box;
             place-items: safe center;
             place-content: safe center;
+        }
+
+        /* */
+        .ui-indicator {
+            & {
+                padding: 0.5rem;
+                pointer-events: none;
+                inline-size: max-content;
+                block-size: 100%;
+                place-items: safe center;
+                place-content: safe center;
+                box-sizing: border-box;
+                display: inline flex;
+                flex-direction: row;
+            }
+
+            /* */
+            &.ui-icon { aspect-ratio: 1 / 1; }
+
+            /* */
+            a {
+                box-sizing: border-box;
+                display: inline flex;
+                inline-size: max-content;
+                block-size: 100%;
+                place-items: safe center;
+                place-content: safe center;
+            }
         }
     }
-}
 
-/* */
-@media ((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)) { :host{display:none !important;} }
+    /* */
+    @media ((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))
+        {:host{display:none !important;}}
+}
