@@ -35,6 +35,7 @@ export class UITaskBar extends LitElement {
 
         //
         self.classList?.add?.("ui-taskbar");
+        self.style.setProperty("z-index", "9998", "important");
     }
 
     //
@@ -61,6 +62,18 @@ export class UITaskBar extends LitElement {
 
         //
         return root;
+    }
+
+    //
+    public connectedCallback() {
+        super.connectedCallback();
+
+        //
+        const self = this as unknown as HTMLElement;
+        if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0.05" ); };
+        if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "solid"); };
+        if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "1"    ); };
+        if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "4"    ); };
     }
 
 }

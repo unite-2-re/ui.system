@@ -12,8 +12,6 @@ import htmlCode from "./index.html?raw";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
-/* class="ui-navbar" data-scheme="solid" data-highlight="2" */
-
 // @ts-ignore
 @customElement('ui-navbar')
 export class UINavBar extends LitElement {
@@ -42,6 +40,7 @@ export class UINavBar extends LitElement {
 
         //
         self.classList?.add?.("ui-navbar");
+        self.style.setProperty("z-index", "9999", "important");
     }
 
     //
@@ -60,6 +59,19 @@ export class UINavBar extends LitElement {
 
         //
         return root;
+    }
+
+    //
+    public connectedCallback() {
+        super.connectedCallback();
+
+        //
+        const self = this as unknown as HTMLElement;
+        if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0.05" ); };
+        if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "solid"); };
+        if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "1"    ); };
+        if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "4"    ); };
+        if (!self.hasAttribute("data-highlight-hover")) { self.setAttribute("data-highlight-hover", "6"    ); };
     }
 
 }

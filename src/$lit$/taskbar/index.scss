@@ -1,7 +1,8 @@
 @layer ui-taskbar {
 
     //
-    :host(ui-taskbar) {
+    :host(ui-taskbar)
+    {
         & {
             display: inline grid;
             block-size: var(--taskbar-size, 4rem);
@@ -98,7 +99,7 @@
             }
 
             //
-            & ui-icon {
+            ::slotted(ui-icon), ui-icon {
                 aspect-ratio: 1 / 1;
                 inline-size: max-content;
                 block-size: 100%;
@@ -148,14 +149,16 @@
     }
 
     //
-    :host(body:has(.ui-app-frame:not([data-hidden])) ui-taskbar) {
+    :host(body:has(.ui-app-frame:not([data-hidden])) ui-taskbar)
+    {
         & { --data-taskbar-shift: 2.5rem; }
         &:hover, &:active { --data-taskbar-shift: 0px; }
         &:not(:hover, :active) { --data-taskbar-shift: 2.5rem; }
     }
 
     //
-    :host(body:not(:has(.ui-app-frame:not([data-hidden]))) ui-taskbar) {
+    :host(body:not(:has(.ui-app-frame:not([data-hidden]))) ui-taskbar)
+    {
         & {
             --theme-surface-alpha: 0;
             --theme-surface-chroma: 1;
@@ -167,8 +170,6 @@
             pointer-events: none;
         }
     }
-
-
 
     //
     @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {

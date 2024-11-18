@@ -1,7 +1,8 @@
 @layer ui-task {
-    :host(ui-task) {
 
-        //
+    //
+    :host(ui-task)
+    {
         & {
             pointer-events: auto;
             padding: 0.75rem;
@@ -10,12 +11,27 @@
             //
             inline-size: max-content;
             block-size: 100%;
+
+            //
+            z-index: 9;
         }
 
         //
-        &.ui-focus { border-block-end: solid 0.125rem oklch(from var(--current-surface-color) l c h / 1.0); }
+        &.ui-focus
+        { border-block-end: solid 0.125rem oklch(from var(--current-surface-color) l c h / 1.0); }
 
         //
-        &:not(.ui-active) { opacity: 0.5; }
+        &:not(.ui-active)
+        { opacity: 0.5; }
+
+        //
+        ::slotted(ui-icon), ui-icon
+        {
+            padding: 20%;
+            inline-size: max-content;
+            block-size: 100%;
+            box-sizing: border-box;
+            aspect-ratio: 1 / 1;
+        }
     }
 }
