@@ -71,10 +71,32 @@ export class UIFrame extends LitElement {
     }
 
     //
+    protected fixZLayer() {
+        // if local/relative case
+        const self = this as unknown as HTMLElement;
+        const tasks  = this?.taskManager?.getTasks?.();
+        const zIndex = tasks?.findIndex?.(({id}, I)=>self.matches("ui-frame:has("+id+"), ui-frame"+id+""));
+        self.style.setProperty("--z-index", zIndex);
+
+        // if global case
+        /*
+        const tasks = this.taskManager.getTasks();
+        const winds: HTMLElement[] = tasks.map(({id}, index)=>{
+            return document.querySelector("ui-frame:has("+id+"), ui-frame"+id+"");
+        });
+
+        //
+        Array.from(winds).filter((w)=>!!w).forEach((e: HTMLElement, I)=>{
+            e.style.setProperty("--z-index", ""+I);
+        });*/
+    }
+
+    //
     constructor(options = {icon: "", padding: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
         self.classList?.add?.("ui-frame");
         self.classList?.add?.("u2-frame");
+        self.dataset.hidden = "";
 
         //
         this.taskManager ??= options?.taskManager || initTaskManager();
@@ -84,6 +106,7 @@ export class UIFrame extends LitElement {
             const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
             if (isInFocus) {
                 delete self.dataset.hidden;
+                this.fixZLayer();
             }
         });
 
@@ -92,6 +115,7 @@ export class UIFrame extends LitElement {
             const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
             if (isInFocus) {
                 delete self.dataset.hidden;
+                this.fixZLayer();
             }
         });
 
@@ -100,6 +124,7 @@ export class UIFrame extends LitElement {
             const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
             if (isInFocus) {
                 delete self.dataset.hidden;
+                this.fixZLayer();
             }
         });
 
@@ -108,6 +133,7 @@ export class UIFrame extends LitElement {
             const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
             if (isInFocus) {
                 delete self.dataset.hidden;
+                this.fixZLayer();
             }
         });
 
@@ -118,6 +144,9 @@ export class UIFrame extends LitElement {
                 self.dataset.hidden = "";
             }
         });
+
+        //
+        this.fixZLayer();
     }
 
     //
@@ -130,6 +159,16 @@ export class UIFrame extends LitElement {
         super.connectedCallback();
         this.updateAttributes();
         requestIdleCallback(()=>makeControl(this as unknown as HTMLElement), {timeout: 1000});
+
+        //
+        const self      = this as unknown as HTMLElement;
+        const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
+        if (isInFocus) {
+            delete self.dataset.hidden;
+        }
+
+        //
+        this.fixZLayer();
     }
 
     //
