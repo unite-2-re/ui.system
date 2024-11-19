@@ -15,6 +15,9 @@ import htmlCode from "./index.html?raw";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
+// @ts-ignore
+import {initTaskManager} from "/externals/core/core.js";
+
 
 
 //
@@ -57,6 +60,7 @@ export class UIFrame extends LitElement {
     // theme style property
     @property() protected themeStyle?: HTMLStyleElement;
     @property() protected nodes?: HTMLElement[];
+    protected taskManager?: any;
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`
@@ -67,10 +71,37 @@ export class UIFrame extends LitElement {
     }
 
     //
-    constructor() {
+    constructor(options = {icon: "", padding: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
         self.classList?.add?.("ui-frame");
         self.classList?.add?.("u2-frame");
+
+        //
+        this.taskManager ??= options?.taskManager || initTaskManager();
+
+        //
+        this.taskManager.on("focus", ({task, index})=>{
+            const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
+            if (isInFocus) {
+                delete self.dataset.hidden;
+            }
+        });
+
+        //
+        this.taskManager.on("activate", ({task, index})=>{
+            const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
+            if (isInFocus) {
+                delete self.dataset.hidden;
+            }
+        });
+
+        //
+        this.taskManager.on("deactivate", ({task, index})=>{
+            const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
+            if (isInFocus) {
+                self.dataset.hidden = "";
+            }
+        });
     }
 
     //
@@ -97,6 +128,7 @@ export class UIFrame extends LitElement {
 
     //
     protected createRenderRoot() {
+        const self = this as unknown as HTMLElement;
         const root = super.createRenderRoot();
 
         //
@@ -110,6 +142,15 @@ export class UIFrame extends LitElement {
                 this.themeStyle = module?.default?.(root);
             }
         }).catch(console.warn.bind(console));
+
+        //
+        root.addEventListener("click", (ev)=>{
+            if (ev.target.matches(".ui-btn-close")) {
+                const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;
+                this.taskManager?.deactivate?.(location.hash);
+                self.dataset.hidden = "";
+            }
+        });
 
         //
         return root;

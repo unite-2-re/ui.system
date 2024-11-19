@@ -95,9 +95,29 @@ export class UITaskItem extends LitElement {
 
         //
         if (this.taskManager = taskManager ?? this.taskManager) {
+            //
             this.taskManager.on("focus", ({task, index})=>{
                 const isInFocus = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
                 this.focused = isInFocus;
+                this.updateState();
+            });
+
+            //
+            this.taskManager.on("activate", ({task, index})=>{
+                const isInFocus = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
+                if (isInFocus) {
+                    this.active  = true;
+                }
+                this.updateState();
+            });
+
+            //
+            this.taskManager.on("deactivate", ({task, index})=>{
+                const isInFocus = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
+                if (isInFocus) {
+                    this.active  = false;
+                    this.focused = false;
+                }
                 this.updateState();
             });
         }

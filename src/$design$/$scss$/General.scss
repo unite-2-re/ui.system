@@ -1,0 +1,17 @@
+@layer ui-frame-fix {
+    ui-frame:where([data-hidden], :empty, :has(.ui-content[data-hidden]), :has(.ui-content:empty), :not(:has(.ui-content)))
+        { display: none; };
+
+    // if has identified, do top level
+    ui-frame:where(:has(*:target), :target)
+    {
+        --z-index: 0;
+        z-index: calc(1099 + var(--z-index, 0));
+        display: inline grid;
+
+        // revert visibility if hidden (may not help)
+        ::slotted(.ui-content[data-hidden]) {
+            display: revert-layer;
+        }
+    }
+}
