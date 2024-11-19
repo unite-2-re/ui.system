@@ -64,17 +64,23 @@ export class UITaskItem extends LitElement {
         self.addEventListener("click", () => focusTask(this.taskManager, self));
 
         //
-        const hash = "#" + (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
-        const task = this.taskManager?.get?.(hash);
-        if (location.hash == hash)        { this.focused = true; };
-        if (task?.active || this.focused) { this.active  = true; };
         this.updateState();
+
+        //
+        addEventListener("popstate"  , ()=>{ this.updateState(); });
+        addEventListener("hashchange", ()=>{ this.updateState(); });
     }
 
     //
     protected updateState(){
         //
         const self = this as unknown as HTMLElement;
+        const hash = "#" + (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
+        const task = this.taskManager?.get?.(hash);
+        if (location.hash == hash)        { this.focused = true; };
+        if (task?.active || this.focused) { this.active  = true; };
+
+        //
         if (this.focused && !self.classList.contains("ui-focus")) { self.classList.add("ui-focus"); };
         if (!this.focused && self.classList.contains("ui-focus")) { self.classList.remove("ui-focus"); };
 
@@ -92,20 +98,12 @@ export class UITaskItem extends LitElement {
             this.taskManager.on("focus", ({task, index})=>{
                 const isInFocus = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
                 this.focused = isInFocus;
-
-                //
-                if (isInFocus) { this.active  = true; };
                 this.updateState();
             });
         }
 
-        {   //
-            const hash = "#" + (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
-            const task = this.taskManager?.get?.(hash);
-            if (location.hash == hash)        { this.focused = true; };
-            if (task?.active || this.focused) { this.active  = true; };
-            this.updateState();
-        }
+        //
+        { this.updateState(); }
     }
 
     //
@@ -145,10 +143,6 @@ export class UITaskItem extends LitElement {
         if (!self.hasAttribute("data-highlight-hover")) { self.setAttribute("data-highlight-hover", "2"    ); };
 
         //
-        const hash = "#" + (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
-        const task = this.taskManager?.get?.(hash);
-        if (location.hash == hash)        { this.focused = true; };
-        if (task?.active || this.focused) { this.active  = true; };
         this.updateState();
     }
 }

@@ -54,7 +54,7 @@
             inset-block-end   : auto;
 
             /* */
-            display: grid;
+            display: inline grid;
             grid-template-columns: minmax(0px, 1fr);
             grid-template-rows:
                 [title-bar] minmax(0px, max-content)
@@ -213,9 +213,6 @@
                 inline-size: 100%;
                 block-size: 100%;
                 min-inline-size: max-content;
-
-                box-sizing: border-box;
-
                 grid-row: 1 / 1 span;
                 grid-column: buttons;
                 pointer-events: none;
@@ -278,6 +275,27 @@
             user-select: none;
             touch-action: none;
             resize: none;
+        }
+    }
+
+    //
+    :host(ui-frame:empty)  { display: none; };
+    :host(ui-frame:has(::slotted(.ui-content[data-hidden]))) { display: none; };
+    :host(ui-frame[data-hidden]) { display: none; };
+    :host(ui-frame:not(:has(.ui-content))) { display: none; };
+    :host(ui-frame:not(:has(::slotted(.ui-content)))) { display: none; };
+
+    // if has identified, do top level
+    :host(ui-frame:has(*:target)),
+    :host(ui-frame:target)
+    {
+        --z-index: 0;
+        z-index: calc(1099 + var(--z-index, 0));
+        display: inline grid;
+
+        // revert visibility if hidden (may not help)
+        ::slotted(.ui-content[data-hidden]) {
+            display: revert-layer;
         }
     }
 }
