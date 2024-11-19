@@ -80,6 +80,22 @@ export class UIFrame extends LitElement {
         this.taskManager ??= options?.taskManager || initTaskManager();
 
         //
+        addEventListener("hashchange", ()=>{
+            const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
+            if (isInFocus) {
+                delete self.dataset.hidden;
+            }
+        });
+
+        //
+        addEventListener("popstate", ()=>{
+            const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
+            if (isInFocus) {
+                delete self.dataset.hidden;
+            }
+        });
+
+        //
         this.taskManager.on("focus", ({task, index})=>{
             const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
             if (isInFocus) {

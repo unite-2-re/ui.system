@@ -183,16 +183,18 @@
         }
 
         /* */
-        & .ui-content, ::slotted(.ui-content)
+        & .ui-content-box, ::slotted(.ui-content)
         {
             inline-size: 100%;
             block-size: 100%;
             box-sizing: border-box;
 
+            /* */
             grid-column: 1 / -1;
             grid-row: 2 / 2 span;
             grid-row: content;
 
+            /* */
             pointer-events: none;
             user-select: none;
 
@@ -201,6 +203,12 @@
             container-name: ui-content;
             contain: strict;
             overflow: hidden;
+        }
+
+        /* */
+        & .ui-content-box {
+            background-color: transparent;
+            display: contents;
         }
 
         /* */

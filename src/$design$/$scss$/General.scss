@@ -1,7 +1,4 @@
 @layer ui-frame-fix {
-    ui-frame:where([data-hidden], :empty, :has(.ui-content[data-hidden]), :has(.ui-content:empty), :not(:has(.ui-content)))
-        { display: none; };
-
     // if has identified, do top level
     ui-frame:where(:has(*:target), :target)
     {
@@ -14,4 +11,8 @@
             display: revert-layer;
         }
     }
+
+    //
+    ui-frame:where([data-hidden], :empty, :has(.ui-content[data-hidden]), :has(.ui-content:empty), :not(:has(.ui-content)))
+        { display: none; };
 }
