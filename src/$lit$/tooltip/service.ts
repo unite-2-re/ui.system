@@ -14,7 +14,9 @@ export const runTooltip = async ()=>{
                 tooltip.style.setProperty("--hover-x", ((box?.left + box?.right) * 0.5 || tooltip.style.getPropertyValue("--hover-x") || 0) as unknown as string, "");
             } else {
                 tooltip.style.setProperty("--hover-x", (pointerMap?.get?.(ev.pointerId)?.current?.[0] || ev?.clientX || tooltip.style.getPropertyValue("--hover-x") || 0) as unknown as string, "");
-                requestAnimationFrame(()=>{
+
+                //
+                requestIdleCallback(()=>{
                     tooltip.style.setProperty("--hover-x", (pointerMap?.get?.(ev.pointerId)?.current?.[0] || ev?.clientX || tooltip.style.getPropertyValue("--hover-x") || 0) as unknown as string, "");
                 });
             }
@@ -24,7 +26,9 @@ export const runTooltip = async ()=>{
                 tooltip.style.setProperty("--hover-y", (box?.top || tooltip.style.getPropertyValue("--hover-y") || 0) as unknown as string, "");
             } else {
                 tooltip.style.setProperty("--hover-y", (pointerMap?.get?.(ev.pointerId)?.current?.[1] || ev?.clientY || tooltip.style.getPropertyValue("--hover-y") || 0) as unknown as string, "");
-                requestAnimationFrame(()=>{
+
+                //
+                requestIdleCallback(()=>{
                     tooltip.style.setProperty("--hover-y", (pointerMap?.get?.(ev.pointerId)?.current?.[1] || ev?.clientY || tooltip.style.getPropertyValue("--hover-y") || 0) as unknown as string, "");
                 });
             }
@@ -62,7 +66,7 @@ export const runTooltip = async ()=>{
 
     //
     const hideTooltip = (ev)=>{
-        requestAnimationFrame(()=>{
+        requestIdleCallback(()=>{
             const tooltip: HTMLElement | null = document.querySelector(".ui-tooltip");
             if (tooltip) {
                 if (tooltip[timer]) clearTimeout(tooltip[timer]);

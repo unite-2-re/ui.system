@@ -32,9 +32,9 @@
             box-sizing: border-box;
             aspect-ratio: 1 / 1;
         }
-
-        //
-        &.ui-focus { border-block-end: solid 0.125rem oklch(from var(--current-surface-color) l c h / 1.0); }
-        &:not(.ui-active) { opacity: 0.5; }
     }
+
+    //
+    :host(ui-task.ui-focus) { border-block-end: solid 0.125rem oklch(from var(--current-surface-color) l c h / 1.0); }
+    :host(ui-task:not(.ui-active))  { opacity: 0.5; }
 }

@@ -13,6 +13,16 @@ import htmlCode from "./index.html?raw";
 import styles from "./index.scss?inline";
 
 
+//
+const focusTask = (taskManager, target: HTMLElement)=>{
+    if (taskManager?.inFocus?.(target.dataset.id) && !matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= #{$mobileWidth}) or (orientation: landscape)))").matches) {
+        taskManager?.deactivate?.(target.dataset.id);
+    } else {
+        taskManager?.focus?.(target.dataset.id);
+    }
+    requestIdleCallback(()=>navigator?.vibrate?.([10]));
+}
+
 // @ts-ignore
 @customElement('ui-task')
 export class UITaskItem extends LitElement {
@@ -21,8 +31,16 @@ export class UITaskItem extends LitElement {
     @property() protected nodes?: HTMLElement[];
 
     //
+    @property({attribute: "data-id", reflect: true, type: String}) taskId: string = "";
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
     @property({attribute: true, reflect: true, type: String}) label: string = "";
+
+    //
+    @property({attribute: true, reflect: true, type: String}) active: boolean = false;
+    @property({attribute: true, reflect: true, type: String}) focused: boolean = false;
+
+    //
+    protected taskManager?: any;
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
@@ -33,14 +51,61 @@ export class UITaskItem extends LitElement {
     }
 
     //
-    constructor(options = {icon: "", padding: ""}) {
+    constructor(options = {icon: "", padding: "", id: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
 
         //
-        self.classList?.add?.("ui-task");
+        if (options?.id)          { this.taskId      = options?.id          ?? this.taskId; };
+        if (options?.icon)        { this.icon        = options?.icon        ?? this.icon; };
+        if (options?.taskManager) { this.bindTaskManager(options?.taskManager); };
 
         //
-        if (options?.icon) { this.icon = options?.icon; };
+        self.classList?.add?.("ui-task");
+        self.addEventListener("click", () => focusTask(this.taskManager, self));
+
+        //
+        const hash = "#" + (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
+        const task = this.taskManager?.get?.(hash);
+        if (location.hash == hash)        { this.focused = true; };
+        if (task?.active || this.focused) { this.active  = true; };
+        this.updateState();
+    }
+
+    //
+    protected updateState(){
+        //
+        const self = this as unknown as HTMLElement;
+        if (this.focused && !self.classList.contains("ui-focus")) { self.classList.add("ui-focus"); };
+        if (!this.focused && self.classList.contains("ui-focus")) { self.classList.remove("ui-focus"); };
+
+        //
+        if (this.active && !self.classList.contains("ui-active")) { self.classList.add("ui-active"); };
+        if (!this.active && self.classList.contains("ui-active")) { self.classList.remove("ui-active"); };
+    }
+
+    //
+    public bindTaskManager(taskManager: any) {
+        const self = this as unknown as HTMLElement;
+
+        //
+        if (this.taskManager = taskManager ?? this.taskManager) {
+            this.taskManager.on("focus", ({task, index})=>{
+                const isInFocus = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
+                this.focused = isInFocus;
+
+                //
+                if (isInFocus) { this.active  = true; };
+                this.updateState();
+            });
+        }
+
+        {   //
+            const hash = "#" + (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
+            const task = this.taskManager?.get?.(hash);
+            if (location.hash == hash)        { this.focused = true; };
+            if (task?.active || this.focused) { this.active  = true; };
+            this.updateState();
+        }
     }
 
     //
@@ -67,10 +132,18 @@ export class UITaskItem extends LitElement {
 
         //
         const self = this as unknown as HTMLElement;
+        if (!self.hasAttribute("data-id"))              { self.setAttribute("data-id"             , (self.dataset.id || this.taskId)); };
         if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0.05" ); };
         if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "solid"); };
         if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "0"    ); };
         if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "0"    ); };
         if (!self.hasAttribute("data-highlight-hover")) { self.setAttribute("data-highlight-hover", "2"    ); };
+
+        //
+        const hash = "#" + (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
+        const task = this.taskManager?.get?.(hash);
+        if (location.hash == hash)        { this.focused = true; };
+        if (task?.active || this.focused) { this.active  = true; };
+        this.updateState();
     }
 }

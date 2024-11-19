@@ -82,7 +82,7 @@ export class UIFrame extends LitElement {
     public connectedCallback() {
         super.connectedCallback();
         this.updateAttributes();
-        requestAnimationFrame(()=>makeControl(this as unknown as HTMLElement));
+        requestIdleCallback(()=>makeControl(this as unknown as HTMLElement), {timeout: 1000});
     }
 
     //
