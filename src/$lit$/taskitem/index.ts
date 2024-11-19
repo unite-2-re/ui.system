@@ -12,13 +12,13 @@ import htmlCode from "./index.html?raw";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
-
 //
 const focusTask = (taskManager, target: HTMLElement)=>{
-    if (taskManager?.inFocus?.(target.dataset.id) && !matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= #{$mobileWidth}) or (orientation: landscape)))").matches) {
-        taskManager?.deactivate?.(target.dataset.id);
+    const hash = "#" + (target.dataset.id || (target as any).taskId).trim?.()?.replace?.("#","")?.trim?.();
+    if (taskManager?.inFocus?.(hash) && !matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= #{$mobileWidth}) or (orientation: landscape)))").matches) {
+        taskManager?.deactivate?.(hash);
     } else {
-        taskManager?.focus?.(target.dataset.id);
+        taskManager?.focus?.(hash);
     }
     requestIdleCallback(()=>navigator?.vibrate?.([10]));
 }
@@ -132,6 +132,11 @@ export class UITaskItem extends LitElement {
 
         //
         const self = this as unknown as HTMLElement;
+        if ((self.parentNode as any).taskManager) {
+            this.bindTaskManager((self.parentNode as any).taskManager);
+        }
+
+        //
         if (!self.hasAttribute("data-id"))              { self.setAttribute("data-id"             , (self.dataset.id || this.taskId)); };
         if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0.05" ); };
         if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "solid"); };

@@ -12,14 +12,20 @@ import htmlCode from "./index.html?raw";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
+// @ts-ignore
+import {initTaskManager} from "/externals/core/core.js";
+
 
 // @ts-ignore
 @customElement('ui-taskbar')
 export class UITaskBar extends LitElement {
     // theme style property
     @property() protected themeStyle?: HTMLStyleElement;
-    @property() protected nodes?: HTMLElement[];
     @property() protected statusSW?: boolean = false;
+    @property() protected nodes?: HTMLElement[];
+
+    //
+    protected taskManager?: any;
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
@@ -30,12 +36,15 @@ export class UITaskBar extends LitElement {
     }
 
     //
-    constructor(options = {icon: "", padding: ""}) {
+    constructor(options = {icon: "", padding: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
 
         //
         self.classList?.add?.("ui-taskbar");
         self.style.setProperty("z-index", "9998", "important");
+
+        //
+        this.taskManager ??= options?.taskManager || initTaskManager();
     }
 
     //
