@@ -116,8 +116,48 @@
                     pointer-events: auto;
                 }
 
+                /* */
+                ::slotted(*) {
+                    display: none;
+                }
+
+                /* */
+                ::slotted(ui-icon:first-child) {
+                    //
+                    display: flex;
+                    place-content: safe center;
+                    place-items: safe center;
+                    flex-direction: row;
+                    overflow: visible;
+
+                    //
+                    aspect-ratio: 1 / 1;
+                    box-sizing: border-box;
+                    text-align: center;
+
+                    //
+                    padding: 0.5rem;
+
+                    // for example
+                    //color: transparent;
+                    //background-clip: text;
+                    //background-image: linear-gradient(var(--current-glyph-color, currentColor), var(--current-glyph-color, currentColor));
+                    //font-variant-emoji: text;
+                    //font-weight: bolder;
+
+                    //
+                    //vertical-align: middle;
+                    //line-height: 1;
+                    //font-size: calc(100cqmin * 0.6);
+
+                    //
+                    user-select: none;
+                    touch-action: none;
+                    pointer-events: none;
+                }
+
                 //
-                &::after
+                /*&::after
                 {
                     display: flex;
                     place-content: safe center;
@@ -147,7 +187,7 @@
                     user-select: none;
                     touch-action: none;
                     pointer-events: none;
-                }
+                }*/
             }
 
             //
