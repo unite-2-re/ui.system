@@ -18,7 +18,8 @@ import htmlCode from "./index.html?raw";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
-
+//
+import LitElementTheme from "../shared/LitElementTheme";
 
 //
 const testMenu = [
@@ -28,21 +29,9 @@ const testMenu = [
 
 // @ts-ignore
 @customElement('ui-dropmenu')
-export class UIDropMenu extends LitElement {
-
-    //
+export class UIDropMenu extends LitElementTheme {
     @property({}) dropMenu?: any = testMenu;
-    @property() protected themeStyle?: HTMLStyleElement;
-    @property() protected nodes?: HTMLElement[];
-
-    //
-    static styles = css`${unsafeCSS(styles)}`
-
-    //
-    protected render() {
-        // use theme module if available
-        return html`${this.themeStyle}${this.nodes}`;
-    }
+    static styles = css`${unsafeCSS(styles)}`;
 
     //
     constructor() {
@@ -82,16 +71,7 @@ export class UIDropMenu extends LitElement {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-
-        //
-        const parser = new DOMParser();
-        const dom = parser.parseFromString(htmlCode, "text/html");
-        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
-
-        // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            if (root) { this.themeStyle = module?.default?.(root); }
-        }).catch(console.warn.bind(console));
+        this.importFromTemplate(htmlCode);
         return root;
     }
 }

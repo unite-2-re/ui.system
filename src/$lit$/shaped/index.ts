@@ -11,14 +11,15 @@ import { customElement, property } from "lit/decorators.js";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
+//
+import LitElementTheme from "../shared/LitElementTheme";
+
 // @ts-ignore
 @customElement('ui-shaped')
-export class UIShaped extends LitElement {
+export class UIShaped extends LitElementTheme {
 
     // theme style property
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
-    @property() protected themeStyle?: HTMLStyleElement;
-    @property() protected nodes?: HTMLElement[];
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
@@ -41,11 +42,6 @@ export class UIShaped extends LitElement {
     }
 
     //
-    public disconnectedCallback() {
-        super.disconnectedCallback();
-    }
-
-    //
     public connectedCallback() {
         super.connectedCallback();
 
@@ -55,24 +51,6 @@ export class UIShaped extends LitElement {
         if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "accent-inverse"); };
         if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "5"); };
         self.setAttribute("data-alpha", "0");
-    }
-
-    //
-    protected createRenderRoot() {
-        const root = super.createRenderRoot();
-
-        //
-        /*const parser = new DOMParser();
-        const dom = parser.parseFromString(htmlCode, "text/html");
-        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
-*/
-        // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            if (root) { this.themeStyle = module?.default?.(root); }
-        }).catch(console.warn.bind(console));
-
-        //
-        return root;
     }
 }
 

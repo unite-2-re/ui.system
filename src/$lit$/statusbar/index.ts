@@ -12,21 +12,17 @@ import htmlCode from "./index.html?raw";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
+//
+import LitElementTheme from "../shared/LitElementTheme";
+
+
 // @ts-ignore
 @customElement('ui-statusbar')
-export class UIStatusBar extends LitElement {
-    @property() protected nodes?: HTMLElement[];
-    @property() protected themeStyle?: HTMLStyleElement;
+export class UIStatusBar extends LitElementTheme {
     @property() protected statusSW?: boolean = false;
 
     //
     static styles = css`${unsafeCSS(styles)}`;
-
-    //
-    protected render() {
-        // use theme module if available
-        return html`${this.themeStyle}${this.nodes}`;
-    }
 
     //
     constructor() {
@@ -37,16 +33,7 @@ export class UIStatusBar extends LitElement {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-
-        //
-        const parser = new DOMParser();
-        const dom = parser.parseFromString(htmlCode, "text/html");
-        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
-
-        // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            if (root) { this.themeStyle = module?.default?.(root); }
-        }).catch(console.warn.bind(console));
+        this.importFromTemplate(htmlCode);
 
         //
         import("./status").then((module)=>{

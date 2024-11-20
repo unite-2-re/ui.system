@@ -12,14 +12,12 @@ import htmlCode from "./index.html?raw";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
+//
+import LitElementTheme from "../shared/LitElementTheme";
+
 // @ts-ignore
 @customElement('ui-navbar')
-export class UINavBar extends LitElement {
-    // theme style property
-    @property() protected themeStyle?: HTMLStyleElement;
-    @property() protected nodes?: HTMLElement[];
-
-    //
+export class UINavBar extends LitElementTheme {
     @property({attribute: true, reflect: true, type: String}) icon : string = "";
     @property({attribute: true, reflect: true, type: String}) label: string = "";
 
@@ -46,18 +44,7 @@ export class UINavBar extends LitElement {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-
-        //
-        const parser = new DOMParser();
-        const dom = parser.parseFromString(htmlCode, "text/html");
-        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
-
-        // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            if (root) { this.themeStyle = module?.default?.(root); }
-        }).catch(console.warn.bind(console));
-
-        //
+        this.importFromTemplate(htmlCode);
         return root;
     }
 

@@ -11,6 +11,9 @@ import { customElement, property } from "lit/decorators.js";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
+//
+import LitElementTheme from "../shared/LitElementTheme";
+
 // @ts-ignore
 const ICON_MODULE = import("/externals/vendor/lucide.min.js");
 const toCamelCase = (str: string) => {
@@ -30,11 +33,10 @@ const toCamelCase = (str: string) => {
 
 // @ts-ignore
 @customElement('ui-icon')
-export class UILucideIcon extends LitElement {
+export class UILucideIcon extends LitElementTheme {
 
     // theme style property
     @property() protected iconElement?: SVGElement;
-    @property() protected themeStyle?: HTMLStyleElement;
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
 
     // also "display" may be "contents"
@@ -59,15 +61,8 @@ export class UILucideIcon extends LitElement {
     }
 
     //
-    public disconnectedCallback() {
-        super.disconnectedCallback();
-    }
-
-    //
     public connectedCallback() {
         super.connectedCallback();
-
-        //
         this.updateIcon();
     }
 
@@ -75,7 +70,6 @@ export class UILucideIcon extends LitElement {
     protected updateIcon() {
         ICON_MODULE.then((icons)=>{
             const ICON = toCamelCase(this.icon);
-            console.log(icons);
             if (icons?.[ICON]) {
                 this.iconElement = icons?.createElement?.(icons?.[ICON]);
                 if (this.iconElement) {
@@ -91,17 +85,6 @@ export class UILucideIcon extends LitElement {
         if (changedProperties.has("icon")) {
             this.updateIcon();
         }
-    }
-
-    //
-    protected createRenderRoot() {
-        const root = super.createRenderRoot();
-
-        // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            if (root) { this.themeStyle = module?.default?.(root); }
-        }).catch(console.warn.bind(console));
-        return root;
     }
 }
 

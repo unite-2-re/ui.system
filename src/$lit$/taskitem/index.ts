@@ -13,6 +13,9 @@ import htmlCode from "./index.html?raw";
 import styles from "./index.scss?inline";
 
 //
+import LitElementTheme from "../shared/LitElementTheme";
+
+//
 const focusTask = (taskManager, target: HTMLElement)=>{
     const hash = "#" + (target.dataset.id || (target as any).taskId).trim?.()?.replace?.("#","")?.trim?.();
     if (taskManager?.inFocus?.(hash) && !matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= #{$mobileWidth}) or (orientation: landscape)))").matches) {
@@ -25,17 +28,10 @@ const focusTask = (taskManager, target: HTMLElement)=>{
 
 // @ts-ignore
 @customElement('ui-task')
-export class UITaskItem extends LitElement {
-    // theme style property
-    @property() protected themeStyle?: HTMLStyleElement;
-    @property() protected nodes?: HTMLElement[];
-
-    //
+export class UITaskItem extends LitElementTheme {
     @property({attribute: "data-id", reflect: true, type: String}) taskId: string = "";
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
     @property({attribute: true, reflect: true, type: String}) label: string = "";
-
-    //
     @property({attribute: true, reflect: true, type: String}) active: boolean = false;
     @property({attribute: true, reflect: true, type: String}) focused: boolean = false;
 
@@ -129,18 +125,7 @@ export class UITaskItem extends LitElement {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-
-        //
-        const parser = new DOMParser();
-        const dom = parser.parseFromString(htmlCode, "text/html");
-        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
-
-        // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            if (root) { this.themeStyle = module?.default?.(root); }
-        }).catch(console.warn.bind(console));
-
-        //
+        this.importFromTemplate(htmlCode);
         return root;
     }
 

@@ -12,12 +12,13 @@ import { customElement, property } from "lit/decorators.js";
 import styles from "./index.scss?inline";
 import runTooltip from "./service.js";
 
+//
+import LitElementTheme from "../shared/LitElementTheme";
+
 
 // @ts-ignore
 @customElement('ui-tooltip')
-export class UITooltip extends LitElement {
-    // theme style property
-    @property() protected themeStyle?: HTMLStyleElement;
+export class UITooltip extends LitElementTheme {
     @property() protected current: string = "";
 
     //
@@ -45,16 +46,5 @@ export class UITooltip extends LitElement {
         if (!self.dataset?.alpha) self.dataset.alpha = "1";
         if (!self.dataset?.scheme) self.dataset.scheme = "solid";
         if (!self.dataset?.chroma) self.dataset.scheme = "0.001";
-    }
-
-    //
-    protected createRenderRoot() {
-        const root = super.createRenderRoot();
-
-        // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            if (root) { this.themeStyle = module?.default?.(root); }
-        }).catch(console.warn.bind(console));
-        return root;
     }
 }

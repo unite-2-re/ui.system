@@ -12,26 +12,22 @@ import htmlCode from "./index.html?raw";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
+//
+import LitElementTheme from "../shared/LitElementTheme";
+
 
 // @ts-ignore
 @customElement('ui-listrow')
-export class UIListRow extends LitElement {
+export class UIListRow extends LitElementTheme {
     #parentNode?: any;
     #onSelect?: Function;
 
     // theme style property
     @property({attribute: true, reflect: true, type: String}) value: string = "";
     @property({attribute: true, reflect: true, type: Boolean}) checked: boolean = false;
-    @property() protected themeStyle?: HTMLStyleElement;
-    @property() protected nodes?: HTMLElement[];
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
-
-    //
-    protected render() {
-        return html`${this.themeStyle}${this.nodes}`;
-    }
 
     //
     constructor() {
@@ -113,25 +109,14 @@ export class UIListRow extends LitElement {
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
+        this.importFromTemplate(htmlCode);
 
         //
-        const parser = new DOMParser();
-        const dom = parser.parseFromString(htmlCode, "text/html");
-        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
-
-        // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            if (root) { this.themeStyle = module?.default?.(root); }
-        }).catch(console.warn.bind(console));
-
-        //
+        self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
         self.addEventListener("click", (ev)=>{
             const input = root.querySelector("input[type=\"radio\"]") as HTMLInputElement;
             if (ev.target != input || !(ev.target as HTMLElement)?.matches?.("input")) { input?.click?.(); };
         });
-
-        //
-        self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
 
         //
         return root;

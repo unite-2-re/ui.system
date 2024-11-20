@@ -12,24 +12,15 @@ import styles from "../shared/BoxLayout.scss?inline";
 // @ts-ignore
 import htmlCode from "../shared/BoxLayout.html?raw";
 
+//
+import LitElementTheme from "../shared/LitElementTheme";
+
 
 // @ts-ignore
 @customElement('ui-checkbox')
-export class UICheckBox extends LitElement {
-
-    // theme style property
-    @property() protected themeStyle?: HTMLStyleElement;
+export class UICheckBox extends LitElementTheme {
     @property() protected checked: boolean = false;
-    @property() protected nodes?: HTMLElement[];
-
-    //
-    static styles = css`${unsafeCSS(styles)}`
-
-    //
-    protected render() {
-        // use theme module if available
-        return html`${this.themeStyle}${this.nodes}`;
-    }
+    static styles = css`${unsafeCSS(styles)}`;
 
     //
     constructor() {
@@ -58,18 +49,7 @@ export class UICheckBox extends LitElement {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-
-        //
-        const parser = new DOMParser();
-        const dom = parser.parseFromString(htmlCode, "text/html");
-        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
-
-        // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            if (root) { this.themeStyle = module?.default?.(root); }
-        }).catch(console.warn.bind(console));
-
-        //
+        this.importFromTemplate(htmlCode);
         return root;
     }
 }

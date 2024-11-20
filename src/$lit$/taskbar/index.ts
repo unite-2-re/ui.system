@@ -15,25 +15,20 @@ import styles from "./index.scss?inline";
 // @ts-ignore
 import {initTaskManager} from "/externals/core/core.js";
 
+//
+import LitElementTheme from "../shared/LitElementTheme";
 
 // @ts-ignore
 @customElement('ui-taskbar')
-export class UITaskBar extends LitElement {
+export class UITaskBar extends LitElementTheme {
     // theme style property
-    @property() protected themeStyle?: HTMLStyleElement;
     @property() protected statusSW?: boolean = false;
-    @property() protected nodes?: HTMLElement[];
 
     //
     protected taskManager?: any;
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
-
-    //
-    protected render() {
-        return html`${this.themeStyle}${this.nodes}`;
-    }
 
     //
     constructor(options = {icon: "", padding: "", taskManager: null}) {
@@ -50,16 +45,7 @@ export class UITaskBar extends LitElement {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-
-        //
-        const parser = new DOMParser();
-        const dom = parser.parseFromString(htmlCode, "text/html");
-        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
-
-        // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-            if (root) { this.themeStyle = module?.default?.(root); }
-        }).catch(console.warn.bind(console));
+        this.importFromTemplate(htmlCode);
 
         //
         import("../statusbar/status").then((module)=>{
