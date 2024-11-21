@@ -26,7 +26,7 @@ export class UIShaped extends LitElementTheme {
 
     //
     protected render() {
-        return html`${this.themeStyle}<slot></slot><ui-icon data-chroma="0" data-alpha="0" data-scheme="dynamic" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
+        return html`${this.themeStyle}<slot></slot><ui-icon data-transparent data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
     }
 
     //
@@ -47,9 +47,11 @@ export class UIShaped extends LitElementTheme {
 
         //
         const self = this as unknown as HTMLElement;
+        if (!self.hasAttribute("data-transparent")) { self.setAttribute("data-transparent", ""); };
+        if (!self.hasAttribute("data-alpha")) { self.setAttribute("data-alpha", "0"); };
         if (!self.hasAttribute("data-chroma")) { self.setAttribute("data-chroma", "0.1"); };
         if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "accent-inverse"); };
-        if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "5"); };
+        if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "0"); };
         self.setAttribute("data-alpha", "0");
     }
 }
