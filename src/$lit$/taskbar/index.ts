@@ -23,9 +23,8 @@ import LitElementTheme from "../shared/LitElementTheme";
 export class UITaskBar extends LitElementTheme {
     // theme style property
     @property() protected statusSW?: boolean = false;
-
-    //
-    protected taskManager?: any;
+    @property() public tasks?: any[] = [];
+    @property() public taskManager?: any;
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
@@ -40,6 +39,7 @@ export class UITaskBar extends LitElementTheme {
 
         //
         this.taskManager ??= options?.taskManager || initTaskManager();
+        this.taskManager.addTasks(this.tasks || []);
     }
 
     //
@@ -69,6 +69,14 @@ export class UITaskBar extends LitElementTheme {
         if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "solid"); };
         if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "1"    ); };
         if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "4"    ); };
+
+        //
+        this.taskManager?.addTasks?.(this.tasks || []);
+
+        //
+        /*requestIdleCallback(()=>{
+            this.taskManager?.addTasks?.(this.tasks || [])
+        }, {timeout: 1000});*/
     }
 
 }

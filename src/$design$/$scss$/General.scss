@@ -15,4 +15,11 @@
     //
     ui-frame:where([data-hidden], :empty, :has(.ui-content[data-hidden]), :has(.ui-content:empty), :not(:has(.ui-content)))
         { display: none; };
+
+    //
+    ui-frame .ui-content {
+        inline-size: 100%;
+        block-size: 100%;
+        overflow: hidden;
+    }
 }

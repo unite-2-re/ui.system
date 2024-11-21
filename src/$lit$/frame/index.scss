@@ -16,8 +16,8 @@
             --safe-area-right: 0px;
 
             /* */
-            --translate-x: clamp(0px, var(--rx, 0px), var(--bound-inline-size, 100%));
-            --translate-y: clamp(0px, var(--ry, 0px), var(--bound-block-size , 100%));
+            --ds-x: clamp(0px, var(--rx, 0px), var(--bound-inline-size, 100%));
+            --ds-y: clamp(0px, var(--ry, 0px), var(--bound-block-size , 100%));
 
             /* */
             --rs-x: clamp(0px, calc(var(--resize-x, 0) * var(--zpx, 1px)), calc(var(--bound-inline-size, 0px) - var(--initial-inline-size, 100%)));
@@ -48,8 +48,8 @@
 
             /* */
             position: fixed;
-            inset-inline-start: var(--translate-x, 0px);
-            inset-block-start : var(--translate-y, 0px);
+            inset-inline-start: var(--ds-x, 0px);
+            inset-block-start : var(--ds-y, 0px);
             inset-inline-end  : auto;
             inset-block-end   : auto;
 
@@ -191,8 +191,8 @@
 
             /* */
             grid-column: 1 / -1;
-            grid-row: 2 / 2 span;
             grid-row: content;
+            grid-row: 2 / 2 span;
 
             /* */
             pointer-events: none;

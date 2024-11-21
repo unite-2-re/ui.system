@@ -18,7 +18,7 @@ import LitElementTheme from "../shared/LitElementTheme";
 //
 const focusTask = (taskManager, target: HTMLElement)=>{
     const hash = "#" + (target.dataset.id || (target as any).taskId).trim?.()?.replace?.("#","")?.trim?.();
-    if (taskManager?.inFocus?.(hash) && !matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= #{$mobileWidth}) or (orientation: landscape)))").matches) {
+    if (taskManager?.inFocus?.(hash) && matchMedia("((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))").matches) {
         taskManager?.deactivate?.(hash);
     } else {
         taskManager?.focus?.(hash);
@@ -34,9 +34,7 @@ export class UITaskItem extends LitElementTheme {
     @property({attribute: true, reflect: true, type: String}) label: string = "";
     @property({attribute: true, reflect: true, type: String}) active: boolean = false;
     @property({attribute: true, reflect: true, type: String}) focused: boolean = false;
-
-    //
-    protected taskManager?: any;
+    @property() public taskManager?: any;
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
@@ -51,8 +49,8 @@ export class UITaskItem extends LitElementTheme {
         super(); const self = this as unknown as HTMLElement;
 
         //
-        if (options?.id)          { this.taskId      = options?.id          ?? this.taskId; };
-        if (options?.icon)        { this.icon        = options?.icon        ?? this.icon; };
+        if (options?.id)          { this.taskId = options?.id   ?? this.taskId; };
+        if (options?.icon)        { this.icon   = options?.icon ?? this.icon; };
         if (options?.taskManager) { this.bindTaskManager(options?.taskManager); };
 
         //
@@ -102,7 +100,7 @@ export class UITaskItem extends LitElementTheme {
             this.taskManager.on("activate", ({task, index})=>{
                 const isInFocus = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
                 if (isInFocus) {
-                    this.active  = true;
+                    this.active = true;
                 }
                 this.updateState();
             });
@@ -140,12 +138,13 @@ export class UITaskItem extends LitElementTheme {
         }
 
         //
-        if (!self.hasAttribute("data-id"))              { self.setAttribute("data-id"             , (self.dataset.id || this.taskId)); };
-        if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0.05" ); };
-        if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "solid"); };
-        if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "0"    ); };
-        if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "0"    ); };
-        if (!self.hasAttribute("data-highlight-hover")) { self.setAttribute("data-highlight-hover", "2"    ); };
+        if (!self.hasAttribute("data-id") && this.taskId) { self.setAttribute("data-id"             , (this.taskId || self.dataset.id || "")); };
+        if (!self.hasAttribute("data-chroma"))            { self.setAttribute("data-chroma"         , "0.05" ); };
+        if (!self.hasAttribute("data-scheme"))            { self.setAttribute("data-scheme"         , "solid"); };
+        if (!self.hasAttribute("data-alpha"))             { self.setAttribute("data-alpha"          , "0"    ); };
+        if (!self.hasAttribute("data-highlight"))         { self.setAttribute("data-highlight"      , "0"    ); };
+        if (!self.hasAttribute("data-highlight-hover"))   { self.setAttribute("data-highlight-hover", "2"    ); };
+        if (self.dataset.id && !this.taskId) { this.taskId = self.dataset.id; };
 
         //
         this.updateState();

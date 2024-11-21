@@ -25,12 +25,16 @@
         }
 
         //
-        ::slotted(ui-icon), ui-icon
+        ::slotted(*) { display: none; };
+        ::slotted(ui-icon:first-child), ui-icon:first-child
         {
             inline-size: max-content;
             block-size: 100%;
             box-sizing: border-box;
             aspect-ratio: 1 / 1;
+
+            pointer-events: none;
+            interactivity: inert;
         }
     }
 
