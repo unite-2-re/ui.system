@@ -23,6 +23,12 @@
             user-drag: none;
             user-select: none;
             touch-action: none;
+
+            /* */
+            white-space: nowrap;
+            white-space-collapse: collapse;
+            text-wrap: nowrap;
+            text-spacing-trim: trim-start;
         }
 
         /* */
@@ -35,6 +41,12 @@
             user-drag: none;
             user-select: none;
             touch-action: none;
+
+            /* */
+            white-space: nowrap;
+            white-space-collapse: collapse;
+            text-wrap: nowrap;
+            text-spacing-trim: trim-start;
         }
 
         /* */
@@ -90,6 +102,12 @@
                 user-drag: none;
                 user-select: none;
                 touch-action: none;
+
+                /* */
+                white-space: nowrap;
+                white-space-collapse: collapse;
+                text-wrap: nowrap;
+                text-spacing-trim: trim-start;
             }
         }
     }
