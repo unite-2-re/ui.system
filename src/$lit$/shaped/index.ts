@@ -32,12 +32,6 @@ export class UIShaped extends LitElementTheme {
     //
     constructor(options = {icon: "", padding: ""}) {
         super(); const self = this as unknown as HTMLElement;
-
-        //
-        self.classList?.add?.("ui-shaped");
-        self.classList?.add?.("u2-shaped");
-
-        //
         if (options?.icon) { this.icon = options?.icon; };
     }
 
@@ -53,6 +47,10 @@ export class UIShaped extends LitElementTheme {
         if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "accent-inverse"); };
         if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "0"); };
         self.setAttribute("data-alpha", "0");
+
+        //
+        if (!self.classList?.contains?.("ui-shaped")) self.classList?.add?.("ui-shaped");
+        if (!self.classList?.contains?.("u2-shaped")) self.classList?.add?.("u2-shaped");
     }
 }
 

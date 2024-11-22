@@ -52,10 +52,6 @@ export class UILucideIcon extends LitElementTheme {
         super(); const self = this as unknown as HTMLElement;
 
         //
-        self.classList?.add?.("ui-icon");
-        self.classList?.add?.("u2-icon");
-
-        //
         if (options?.icon) { this.icon = options?.icon; };
         if (options?.padding) { self.style.setProperty("padding", options?.padding); };
     }
@@ -64,6 +60,11 @@ export class UILucideIcon extends LitElementTheme {
     public connectedCallback() {
         super.connectedCallback();
         this.updateIcon();
+
+        //
+        const self = this as unknown as HTMLElement;
+        if (!self.classList?.contains?.("ui-icon")) self.classList?.add?.("ui-icon");
+        if (!self.classList?.contains?.("u2-icon")) self.classList?.add?.("u2-icon");
     }
 
     //
