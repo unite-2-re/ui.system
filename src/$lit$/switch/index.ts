@@ -119,11 +119,11 @@ export class UISwitch extends LitElementTheme {
     }
 
     //
-    protected onSelect(ev){
+    protected onSelect(ev?: any){
         const self = this as unknown as HTMLElement;
-        if (ev?.target?.checked) {
-            this.value = ev.target.value;
-            const index = Array.from(self.querySelectorAll?.("input[type=\"radio\"]"))?.indexOf?.(ev.target.value);
+        if ((ev?.target ?? self)?.checked) {
+            this.value = (ev?.target ?? self)?.value;
+            const index = Array.from(self.querySelectorAll?.("input[type=\"radio\"]"))?.indexOf?.((ev?.target ?? self)?.value);
             if (index >= 0) { self.style?.setProperty?.("--value", `${index}`); };
         }
     }
@@ -133,6 +133,12 @@ export class UISwitch extends LitElementTheme {
         const root = super.createRenderRoot();
         this.importFromTemplate(htmlCode);
         return root;
+    }
+
+    //
+    public connectedCallback() {
+        super.connectedCallback();
+        requestIdleCallback(()=>this.onSelect(), {timeout: 1000});
     }
 }
 

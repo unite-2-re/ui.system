@@ -38,12 +38,21 @@ export class UICheckBox extends LitElementTheme {
     }
 
     //
-    protected onSelect(ev) {
+    protected onSelect(ev?: any) {
         const self = this as unknown as HTMLElement;
-        if (ev.target.checked != null) {
-            this.checked = ev.target.checked;
+        if ((ev?.target ?? self)?.checked != null) {
+            this.checked = (ev?.target ?? self)?.checked;
             self.style.setProperty("--value", `${this.checked ? 1 : 0}`);
         }
+
+        //
+        const icon = self.querySelector("ui-icon");
+        if (icon) { icon.setAttribute("icon", ev?.target?.checked ? "badge-check" : "badge"); }
+
+        //
+        const thumb = self.shadowRoot?.querySelector?.(".ui-thumb");
+        thumb?.setAttribute?.("data-highlight", ev?.target?.checked ? "2" : "8");
+        //data-highlight-op="min"
     }
 
     //
@@ -51,6 +60,12 @@ export class UICheckBox extends LitElementTheme {
         const root = super.createRenderRoot();
         this.importFromTemplate(htmlCode);
         return root;
+    }
+
+    //
+    public connectedCallback() {
+        super.connectedCallback();
+        requestIdleCallback(()=>this.onSelect(), {timeout: 1000});
     }
 }
 
