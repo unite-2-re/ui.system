@@ -51,7 +51,8 @@ export class UICheckBox extends LitElementTheme {
 
         //
         const thumb = self.shadowRoot?.querySelector?.(".ui-thumb");
-        thumb?.setAttribute?.("data-highlight", ev?.target?.checked ? "2" : "8");
+        thumb?.setAttribute?.("data-highlight", ev?.target?.checked ? "3" : "8");
+        thumb?.setAttribute?.("data-highlight-hover", ev?.target?.checked ? "0" : "5");
         //data-highlight-op="min"
     }
 

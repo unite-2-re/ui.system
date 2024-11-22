@@ -4,6 +4,9 @@
     :host(ui-task)
     {
         & {
+            border-block-start: solid 0.25rem transparent;
+
+            //
             pointer-events: auto;
             padding: 0.75rem;
             cursor: pointer;
@@ -25,9 +28,10 @@
         }
 
         //
-        ::slotted(*) { display: none; };
-        ::slotted(ui-icon:first-child), ui-icon:first-child
-        {
+        &::slotted(*) { display: none; };
+
+        //
+        &::slotted(ui-icon:first-child), ui-icon {
             inline-size: max-content;
             block-size: 100%;
             box-sizing: border-box;
@@ -35,10 +39,12 @@
 
             pointer-events: none;
             interactivity: inert;
+
+            translate: 0px -0.125rem;
         }
     }
 
     //
-    :host(ui-task.ui-focus) { border-block-end: solid 0.125rem oklch(from var(--current-surface-color) l c h / 1.0); }
+    :host(ui-task.ui-focus) { border-block-start: solid 0.25rem oklch(from var(--current-surface-color) l c h / 1.0); }
     :host(ui-task:not(.ui-active))  { opacity: 0.5; }
 }

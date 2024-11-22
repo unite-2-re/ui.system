@@ -71,7 +71,7 @@ export class UITaskItem extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         const hash = "#" + (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
         const task = this.taskManager?.get?.(hash);
-        if (location.hash == hash)        { this.focused = true; };
+        this.focused = location.hash == hash;
         if (task?.active || this.focused) { this.active  = true; };
 
         //
@@ -91,8 +91,9 @@ export class UITaskItem extends LitElementTheme {
         if (this.taskManager = taskManager ?? this.taskManager) {
             //
             this.taskManager.on("focus", ({task, index})=>{
-                const isInFocus = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
-                this.focused = isInFocus;
+                const hash = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
+                const isInFocus = hash == task.id.trim?.()?.replace?.("#","")?.trim?.();
+                this.focused = isInFocus && location.hash == ("#"+hash);
                 this.updateState();
             });
 
