@@ -15,6 +15,8 @@ import htmlCode from "../shared/BoxLayout.html?raw";
 //
 import LitElementTheme from "../shared/LitElementTheme";
 
+// avoid memory leaking...
+//const refMap = new WeakSet([]);
 
 // @ts-ignore
 @customElement('ui-switch')
@@ -29,17 +31,20 @@ export class UISwitch extends LitElementTheme {
     //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
+        const weak = new WeakRef(self);
 
         //
         self.classList?.add?.("ui-switch");
         self.classList?.add?.("u2-input");
-        self.addEventListener("change", this.onSelect.bind(this));
 
         //
         const sws = { pointerId: -1 };
-        const doExaction = (clientX, clientY, confirm = false)=>{
-            const box = self.getBoundingClientRect?.();
-            const coord = [clientX - box.left, clientY - box.top];
+        const doExaction = (self, clientX, clientY, confirm = false)=>{
+            if (!self) return;
+
+            //
+            const box   = self?.getBoundingClientRect?.();
+            const coord = [clientX - box?.left, clientY - box?.top];
             const radio = self.querySelectorAll?.("input[type=\"radio\"]") as unknown as HTMLInputElement[];
             const count = (radio?.length || 0);
             const vary = [
@@ -86,6 +91,7 @@ export class UISwitch extends LitElementTheme {
         }
 
         //
+        self.addEventListener("change", this.onSelect.bind(this));
         self.addEventListener("pointerdown", (e)=>{
             if (sws.pointerId < 0) {
                 sws.pointerId = e.pointerId;
@@ -99,7 +105,7 @@ export class UISwitch extends LitElementTheme {
         //
         document.addEventListener("pointermove", (e)=>{
             if (sws.pointerId == e.pointerId) {
-                doExaction(e.clientX, e.clientY);
+                doExaction(weak?.deref?.(), e.clientX, e.clientY);
             }
         });
 
@@ -107,7 +113,7 @@ export class UISwitch extends LitElementTheme {
         const stopMove = (e)=>{
             if (sws.pointerId == e.pointerId) {
                 sws.pointerId = -1;
-                doExaction(e.clientX, e.clientY, true);
+                doExaction(weak?.deref?.(), e.clientX, e.clientY, true);
                 e.target?.releasePointerCapture?.(e.pointerId);
                 document.documentElement.style.removeProperty("cursor");
             }

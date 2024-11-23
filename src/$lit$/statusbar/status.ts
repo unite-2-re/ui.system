@@ -25,7 +25,7 @@ export const runTimeStatus = (async(root = document)=>{
     //
     updateTime();
     setInterval(updateTime, 500);
-    document.addEventListener("DOMContentLoaded", updateTime);
+    document.addEventListener("DOMContentLoaded", updateTime, { once: true });
 });
 
 //

@@ -29,12 +29,19 @@ export class UICheckBox extends LitElementTheme {
         //
         self.classList?.add?.("ui-checkbox");
         self.classList?.add?.("u2-input");
+
+        //
         self.addEventListener("change", this.onSelect.bind(this));
-        self.addEventListener("click", (e)=>{
-            if (!(e.target as HTMLElement)?.matches?.("input[type=\"checkbox\"]")) {
-                self.querySelector?.<HTMLElement>("input[type=\"checkbox\"]")?.click?.();
-            }
-        });
+        self.addEventListener("click", this.onClick.bind(this));
+    }
+
+    //
+    protected onClick(e) {
+        const self = this as unknown as HTMLElement;
+        const selector = "input[type=\"checkbox\"]";
+        if (!(e.target as HTMLElement)?.matches?.(selector)) {
+            self.querySelector?.<HTMLElement>(selector)?.click?.();
+        }
     }
 
     //
