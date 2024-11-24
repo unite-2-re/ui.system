@@ -36,7 +36,7 @@ export class UIStatusBar extends LitElementTheme {
         this.importFromTemplate(htmlCode);
 
         //
-        import("./status").then((module)=>{
+        import("../shared/Status").then((module)=>{
             if (root) {
                 module?.default?.(root);
                 this.statusSW = true;

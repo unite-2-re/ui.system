@@ -48,7 +48,7 @@ export class UITaskBar extends LitElementTheme {
         this.importFromTemplate(htmlCode);
 
         //
-        import("../statusbar/status").then((module)=>{
+        import("../shared/Status").then((module)=>{
             if (root) {
                 module?.default?.(root);
                 this.statusSW = true;
