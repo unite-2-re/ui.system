@@ -54,6 +54,9 @@ export class UILucideIcon extends LitElementTheme {
         //
         if (options?.icon) { this.icon = options?.icon; };
         if (options?.padding) { self.style.setProperty("padding", options?.padding); };
+
+        //
+        self.inert = true;
     }
 
     //
@@ -76,6 +79,7 @@ export class UILucideIcon extends LitElementTheme {
                 if (this.iconElement) {
                     this.iconElement.setAttribute("width", "100%");
                     this.iconElement.setAttribute("height", "100%");
+                    this.iconElement.setAttribute("inert", "");
                 }
             }
         }).catch(console.warn.bind(console));

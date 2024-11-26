@@ -21,7 +21,7 @@
         }
 
         //
-        ::slotted(*:not([inert])) { pointer-events: auto; }
+        ::slotted(*:not([inert], span, ui-icon)) { pointer-events: auto; }
 
         //
         & {
