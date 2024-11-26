@@ -11,7 +11,8 @@ import init, {
     UIFrame,
     UINavBar,
     UITaskBar,
-    UITaskItem
+    UITaskItem,
+    UIBlock
 } from "../src/index";
 
 // @ts-ignore
@@ -48,6 +49,7 @@ console.log(UITooltip);
 console.log(UINavBar);
 console.log(UITaskBar);
 console.log(UITaskItem);
+console.log(UIBlock);
 
 //
 makeSelection(document.body, "ui-checkbox, ui-switch");

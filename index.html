@@ -98,18 +98,6 @@
     <ui-statusbar></ui-statusbar>
     <ui-tooltip></ui-tooltip>
 
-    <ui-checkbox>
-        <ui-icon icon="sun" slot="icon"/>
-        <input type="checkbox" label="Checkbox-Test" placeholder="Test" name="test"/>
-    </ui-checkbox>
-
-    <ui-switch>
-        <ui-icon icon="sun" slot="icon"/>
-        <input type="radio" label=" " placeholder="Switch" name="switch" value="dark"/>
-        <input type="radio" label=" " placeholder="Switch" name="switch" value="default"/>
-        <input type="radio" label=" " placeholder="Switch" name="switch" value="light"/>
-    </ui-switch>
-
     <!-- -->
     <div data-name="puk" style="display: inline grid; grid-auto-rows: max-content; grid-template-columns: minmax(0px, max-content) minmax(0px, 1fr); block-size: max-content; inline-size: stretch; inline-size: -webkit-fill-available; inline-size: -moz-available;">
         <ui-listrow value="f1"> <ui-icon icon="github" style="padding: 0.5rem; block-size: 2rem;"></ui-icon> <span>Test Text 1</span> </ui-listrow>
@@ -145,6 +133,33 @@
     <ui-taskbar>
         <ui-task icon="settings" data-id="settings"></ui-task>
     </ui-taskbar>
+
+    <!-- -->
+    <form
+        data-highlight="2" data-scheme="solid"
+        style="inline-size: 100%; block-size: max-content; border-radius: 0.5rem;"
+    >
+        <ui-block>
+            <ui-icon slot="icon" icon="settings"></ui-icon>
+            <span slot="label">Checkbox Test</span>
+            <ui-checkbox>
+                <ui-icon icon="sun" slot="icon"/>
+                <input type="checkbox" label="Checkbox-Test" placeholder="Test" name="test"/>
+            </ui-checkbox>
+        </ui-block>
+
+        <!-- -->
+        <ui-block>
+            <ui-icon slot="icon" icon="settings"></ui-icon>
+            <span slot="label">Switch Test</span>
+            <ui-switch>
+                <ui-icon icon="sun" slot="icon"/>
+                <input type="radio" label=" " placeholder="Switch" name="switch" value="dark"/>
+                <input type="radio" label=" " placeholder="Switch" name="switch" value="default"/>
+                <input type="radio" label=" " placeholder="Switch" name="switch" value="light"/>
+            </ui-switch>
+        </ui-block>
+    </form>
 
 </body>
 </html>

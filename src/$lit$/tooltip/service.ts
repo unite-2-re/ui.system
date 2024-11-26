@@ -5,8 +5,11 @@ import AxGesture, {pointerMap} from "/externals/lib/interact.js";
 export const runTooltip = async ()=>{
     const timer = Symbol("@disappear");
     const fixTooltip = (ev, initiator?: HTMLElement)=>{
-        const tooltip = document.querySelector(".ui-tooltip") as HTMLElement;
-        if (tooltip && ((initiator ?? ev?.target) as HTMLElement)?.dataset?.tooltip) {
+        const tooltip = document.querySelector("ui-tooltip") as HTMLElement;
+        initiator ??= ev?.target;
+
+        //
+        if (tooltip && (initiator as HTMLElement)?.dataset?.tooltip) {
             const box = initiator?.getBoundingClientRect?.();
 
             //
@@ -46,7 +49,7 @@ export const runTooltip = async ()=>{
         holdTime: 500
     }, (ev)=>{
         const initiator = ev.target.matches("*[data-tooltip]") ? ev.target : ev.target.closest("*[data-tooltip]");
-        const tooltip: HTMLElement | null = document.querySelector(".ui-tooltip");
+        const tooltip: HTMLElement | null = document.querySelector("ui-tooltip");
         if (tooltip && initiator) {
             {
                 if (tooltip[timer]) clearTimeout(tooltip[timer]);
@@ -67,7 +70,7 @@ export const runTooltip = async ()=>{
     //
     const hideTooltip = (ev)=>{
         requestIdleCallback(()=>{
-            const tooltip: HTMLElement | null = document.querySelector(".ui-tooltip");
+            const tooltip: HTMLElement | null = document.querySelector("ui-tooltip");
             if (tooltip) {
                 if (tooltip[timer]) clearTimeout(tooltip[timer]);
                 //tooltip.dataset.delayHide = "" + (["click", "pointerdown", "contextmenu"].indexOf(ev?.type) >= 0 ? 0 : 400);

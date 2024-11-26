@@ -10,3 +10,4 @@ export * from "./tooltip/index";
 export * from "./taskbar/index";
 export * from "./taskitem/index";
 export * from "./navbar/index";
+export * from "./block/index";
