@@ -15,7 +15,13 @@
             //
             place-content: center;
             place-items: center;
+
+            //
+            pointer-events: none;
         }
+
+        //
+        ::slotted(*:not([inert])) { pointer-events: auto; }
 
         //
         & {
@@ -60,6 +66,7 @@
         //
         & :where(script, link, style) {
             display: none !important;
+            pointer-events: none !important;
         }
 
         //
@@ -68,6 +75,7 @@
             & {
                 inline-size: 100%;
                 block-size: max-content;
+                pointer-events: none;
             }
 
             //
@@ -88,6 +96,7 @@
                 flex-shrink: 0;
                 z-index: 99;
 
+                //
                 inset-inline-end: auto;
                 inset-block-end: auto;
 
