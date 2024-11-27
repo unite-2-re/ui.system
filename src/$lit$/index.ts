@@ -11,3 +11,4 @@ export * from "./taskbar/index";
 export * from "./taskitem/index";
 export * from "./navbar/index";
 export * from "./block/index";
+export * from "./menuitem/index";

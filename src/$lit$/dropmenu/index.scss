@@ -27,7 +27,6 @@
         /* */
         & button {
             gap: 0.25rem;
-            text-align: start;
             padding: 0rem;
             user-select: none;
             display: flex;
@@ -35,7 +34,7 @@
             align-content: safe center;
             align-items: safe center;
             justify-items: stretch;
-            justify-content: space-between;
+            justify-content: stretch;//start;//space-between;
             pointer-events: none;
             border-radius: 0px;
             outline: none 0px transparent;
@@ -53,6 +52,9 @@
             user-drag: none;
             user-select: none;
             touch-action: none;
+
+            /* */
+            text-align: start;
         }
 
         /* */
@@ -65,6 +67,12 @@
             user-drag: none;
             user-select: none;
             touch-action: none;
+            text-align: start;
+
+            /* */
+            place-self: safe center;
+            place-content: safe center;
+            place-items: safe center;
         }
 
         /* */
@@ -72,6 +80,12 @@
         {
             interactivity: inert;
             pointer-events: none;
+            text-align: start;
+        }
+
+        /* */
+        ::slotted(input) {
+            display: none !important;
         }
     }
 }

@@ -116,9 +116,13 @@
     <script src="./test/UITest.ts" type="module"></script>
 
     <!-- -->
-    <ui-dropmenu style="inline-size: 8rem; block-size: 2rem;" data-scheme="inverse" data-highlight="8">
-        <ui-icon icon="gitlab" style="padding: 0.25rem;"></ui-icon>
-        <span style="flex-grow: 1;">Tribunal</span>
+    <ui-dropmenu data-name="drop-box" style="inline-size: 8rem; block-size: 2rem;" data-scheme="inverse" data-highlight="8">
+        <ui-menuitem checked value="github"> <ui-icon icon="github"></ui-icon> <span>Github</span> </ui-menuitem>
+        <ui-menuitem value="gitlab"> <ui-icon icon="gitlab"></ui-icon> <span>Gitlab</span> </ui-menuitem>
+        <!--<label>
+            <ui-icon icon="gitlab" style="padding: 0.25rem;"></ui-icon>
+            <span style="flex-grow: 1;">Tribunal</span>
+        </label>-->
     </ui-dropmenu>
 
     <ui-contextmenu style="--inline-size: 8rem;"></ui-contextmenu>

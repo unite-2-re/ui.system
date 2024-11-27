@@ -21,16 +21,14 @@ import styles from "./index.scss?inline";
 //
 import LitElementTheme from "../shared/LitElementTheme";
 
-//
-const testMenu = [
-    {icon: new UILucideIcon({icon: "github", padding: ""}), content: "Properties", callback: ()=>{console.log("Properties")}},
-    {icon: new UILucideIcon({icon: "youtube", padding: ""}), content: "Clone", callback: ()=>{console.log("Clone")}}
-];
-
 // @ts-ignore
 @customElement('ui-dropmenu')
 export class UIDropMenu extends LitElementTheme {
-    @property({}) dropMenu?: any = testMenu;
+    @property({}) dropMenu?: any = null;
+    @property({attribute: true, reflect: true, type: String}) value = "";
+    @property({attribute: true, reflect: true, type: String}) icon = "";
+
+    //
     static styles = css`${unsafeCSS(styles)}`;
 
     //
@@ -54,7 +52,25 @@ export class UIDropMenu extends LitElementTheme {
         ev?.stopPropagation?.();
 
         //
-        openContextMenu?.(ev, this.dropMenu || testMenu, true);
+        const self = this as unknown as HTMLElement;
+        const dropMenuEl = Array.from(self?.querySelectorAll?.("ui-menuitem"));
+        const dropMenu = dropMenuEl.map((el: any)=>{
+            const dub = el?.cloneNode?.(true);
+            dub?.querySelectorAll?.("input")?.forEach?.((el)=>el?.remove?.());
+            const icon = dub?.querySelector?.("ui-icon");
+            const input = el?.querySelector?.("input") ?? el;
+            return {
+                icon: icon?.cloneNode?.(true) || new UILucideIcon({icon: icon?.icon || el?.icon || el?.dataset?.icon, padding: ""}),
+                content: dub?.innerHTML,
+                callback() {
+                    input?.click?.();
+                    self.setAttribute("value", this.value = input?.value);
+                }
+            }
+        });
+
+        //
+        openContextMenu?.(ev, dropMenu, true);
     }
 
     //
