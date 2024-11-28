@@ -108,8 +108,8 @@
                 & {
                     z-index: 99;
                     display: flex;
-                    place-content: safe center;
-                    place-items: safe center;
+                    place-content: center;
+                    place-items: center;
                     box-sizing: border-box;
                     min-inline-size: max-content;
                     min-block-size: max-content;
@@ -123,13 +123,25 @@
                     pointer-events: auto;
                 }
 
+                //
+                & {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    word-break: keep-all;
+                    word-wrap: normal;
+                    flex-wrap: nowrap;
+                    line-height: 0;
+                }
+
                 /* */
                 ::slotted(*) {
                     display: none;
                 }
 
                 /* */
-                ::slotted(ui-icon:first-child) {
+                ::slotted(ui-icon:first-child),
+                ::slotted(.ui-indicator:first-child:first-child)
+                {
                     //
                     display: flex;
                     place-content: safe center;
@@ -144,6 +156,15 @@
 
                     //
                     padding: 0.25rem;
+                    font-size: 0.9rem;
+
+                    //
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    word-break: keep-all;
+                    word-wrap: normal;
+                    flex-wrap: nowrap;
+                    line-height: 0;
 
                     // for example
                     //color: transparent;

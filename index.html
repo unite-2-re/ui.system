@@ -155,6 +155,17 @@
                     <input type="radio" label=" " placeholder="Switch" name="switch" value="light"/>
                 </ui-switch>
             </ui-block>
+
+            <!-- -->
+            <ui-block>
+                <ui-icon slot="icon" icon="settings"></ui-icon>
+                <span slot="label">Volume Test</span>
+                <ui-volume>
+                    <!--<ui-icon icon="sun" slot="icon"></ui-icon>-->
+                    <span slot="icon" class="ui-indicator"></span>
+                    <input type="number" label=" " placeholder="Number" name="number" value="0" min="-2" max="2" step="1"/>
+                </ui-volume>
+            </ui-block>
         </form>
     </div>
 

@@ -19,11 +19,11 @@ import LitElementTheme from "../shared/LitElementTheme";
 //const refMap = new WeakSet([]);
 
 // @ts-ignore
-@customElement('ui-switch')
-export class UISwitch extends LitElementTheme {
+@customElement('ui-volume')
+export class UIVolume extends LitElementTheme {
 
     // theme style property
-    @property() protected value: string = "";
+    @property() protected value: number = 0;
 
     //
     static styles = css`${unsafeCSS(styles)}`;
@@ -34,7 +34,7 @@ export class UISwitch extends LitElementTheme {
         const weak = new WeakRef(self);
 
         //
-        self.classList?.add?.("ui-switch");
+        self.classList?.add?.("ui-volume");
         self.classList?.add?.("u2-input");
 
         //
@@ -43,21 +43,19 @@ export class UISwitch extends LitElementTheme {
             if (!self) return;
 
             //
-            const box   = self?.getBoundingClientRect?.();
-            const coord = [clientX - box?.left, clientY - box?.top];
-            const radio = self.querySelectorAll?.("input[type=\"radio\"]") as unknown as HTMLInputElement[];
-            const count = (radio?.length || 0); //+ 1;
-            const vary = [
-                (coord[0]/box.width) * count,
+            const box    = self?.getBoundingClientRect?.();
+            const coord  = [clientX - box?.left, clientY - box?.top];
+            const number = self.querySelector?.("input[type=\"number\"]") as unknown as HTMLInputElement
+            const count  = ((parseFloat(number?.max) || 0) - (parseFloat(number?.min) || 0));
+            const vary   = [
+                (coord[0]/box.width) * (count + 1),
                 (coord[1]/box.height) * 1
             ];
 
             //
-            const val = Math.min(Math.max(vary[0] - 0.5, 0), count-1);
-            const exact = Math.min(Math.max(Math.floor(vary[0]), 0), count-1);
-            if (!radio?.[exact]?.checked && confirm) {
-                radio?.[exact]?.click?.();
-            };
+            const val = Math.min(Math.max(vary[0] - 0.5, 0), count);
+            const step = parseFloat(number?.step ?? 1) ?? 1;
+            const exact = Math.min(Math.max(Math.round(val / step) * step, 0), count);
 
             //
             if (confirm) {
@@ -85,14 +83,26 @@ export class UISwitch extends LitElementTheme {
             }
 
             //
-            //if (radio?.[exact]) {
-                // triggers anyways
-                //this.onSelect?.({target: radio?.[exact]});
-            //}
+            if (number) {
+                self.style.setProperty("--max-value", `${count}`, "");
+                number.valueAsNumber = (parseFloat(number.min) || 0) + exact;
+
+                // anyways triggers...
+                //this.onSelect?.({target: number});
+
+                //
+                number.dispatchEvent(new Event(confirm ? "change" : "input", {
+                    bubbles: true,
+                    cancelable: true
+                }));
+            }
         }
 
         //
+        self.addEventListener("input", this.onSelect.bind(this));
         self.addEventListener("change", this.onSelect.bind(this));
+
+        //
         self.addEventListener("pointerdown", (e)=>{
             if (sws.pointerId < 0) {
                 sws.pointerId = e.pointerId;
@@ -128,10 +138,29 @@ export class UISwitch extends LitElementTheme {
     //
     protected onSelect(ev?: any){
         const self = this as unknown as HTMLElement;
-        if ((ev?.target ?? self)?.checked) {
-            this.value = (ev?.target ?? self)?.value;
-            const index = Array.from(self.querySelectorAll?.("input[type=\"radio\"]"))?.indexOf?.((ev?.target ?? self)?.value);
-            if (index >= 0) { self.style?.setProperty?.("--value", `${index}`); };
+        const element = ev?.target ?? self;
+        if (element) {
+            const input = ((element.matches("input[type=\"number\"]") ? element : element.querySelector?.("input[type=\"number\"]")) as HTMLInputElement);
+            const value = input?.valueAsNumber || parseFloat(input?.value) || 0;
+
+            //
+            this.value = value;
+
+            //
+            const index = value - (parseFloat(input?.min) || 0);
+            if (index >= 0 && ev?.type != "input") { self.style?.setProperty?.("--value", `${index}`); };
+
+            //
+            self.style.setProperty("--max-value", `${((parseFloat(input?.max)||0) - (parseFloat(input?.min)||0))}`, "");
+
+            //
+            const indicator = self?.querySelector?.(".ui-indicator");
+            if (indicator) {
+                indicator.innerHTML = "" + value?.toLocaleString('en-US', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 1
+                });
+            }
         }
     }
 
@@ -150,4 +179,4 @@ export class UISwitch extends LitElementTheme {
 }
 
 //
-export default UISwitch;
+export default UIVolume;
