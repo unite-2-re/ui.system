@@ -50,6 +50,7 @@
         }
 
         /* */
+        & input[type="checkbox"], slot[name="radio"]::slotted(input[type="checkbox"]),
         & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"])
         {
             box-sizing: border-box;

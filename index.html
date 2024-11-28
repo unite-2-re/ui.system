@@ -71,6 +71,12 @@
             overflow-x: hidden;
         }
 
+        body {
+            box-sizing: border-box;
+            container-type: size;
+            contain: strict;
+        }
+
         .u2-test-handler {
             cursor: grab;
             inline-size: var(--icon-size);
@@ -80,51 +86,83 @@
             pointer-events: auto;
         }
 
-        body { /* for testing only */
-            padding: 1rem;
-            box-sizing: border-box;
-        }
-
         * {
             box-sizing: border-box;
             transition-behavior: allow-discrete;
             interpolate-size: allow-keywords;
         }
+
+        #root {
+            inline-size: calc(100% - 2rem);
+            margin-inline: 1rem;
+            margin-block: 1rem;
+            block-size: max-content;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
+
+    <div id="root">
+
+        <!-- -->
+        <div data-name="puk" style="display: inline grid; grid-auto-rows: max-content; grid-template-columns: minmax(0px, max-content) minmax(0px, 1fr); block-size: max-content; inline-size: stretch; inline-size: -webkit-fill-available; inline-size: -moz-available;">
+            <ui-listrow value="f1"> <ui-icon icon="github" style="padding: 0.5rem; block-size: 2rem;"></ui-icon> <span>Test Text 1</span> </ui-listrow>
+            <ui-listrow value="f2"> <ui-icon icon="github" style="padding: 0.5rem; block-size: 2rem;"></ui-icon> <span>Test Text 2</span> </ui-listrow>
+        </div>
+
+        <!-- -->
+        <ui-icon icon="github" style="inline-size: 4rem; block-size: 4rem; padding: 1rem;"></ui-icon>
+
+        <!-- -->
+        <ui-shaped icon="github" data-scheme="inverse" data-chroma="0.1" data-tooltip="Github">
+            <div class="u2-item-design" data-shape="wavy" data-alpha="1" data-highlight="4" data-highlight-hover="6"></div>
+        </ui-shaped>
+
+        <!-- -->
+        <ui-dropmenu data-name="drop-box" style="inline-size: 8rem; block-size: 2rem;" data-scheme="inverse" data-highlight="8">
+            <ui-menuitem checked value="github"> <ui-icon icon="github"></ui-icon> <span>Github</span> </ui-menuitem>
+            <ui-menuitem value="gitlab"> <ui-icon icon="gitlab"></ui-icon> <span>Gitlab</span> </ui-menuitem>
+            <!--<label>
+                <ui-icon icon="gitlab" style="padding: 0.25rem;"></ui-icon>
+                <span style="flex-grow: 1;">Tribunal</span>
+            </label>-->
+        </ui-dropmenu>
+
+        <!-- -->
+        <form
+            data-highlight="2" data-scheme="solid"
+            style="inline-size: 100%; block-size: max-content; border-radius: 0.5rem;"
+        >
+            <ui-block>
+                <ui-icon slot="icon" icon="settings"></ui-icon>
+                <span slot="label">Checkbox Test</span>
+                <ui-checkbox>
+                    <ui-icon icon="sun" slot="icon"/>
+                    <input type="checkbox" label="Checkbox-Test" placeholder="Test" name="test"/>
+                </ui-checkbox>
+            </ui-block>
+
+            <!-- -->
+            <ui-block>
+                <ui-icon slot="icon" icon="settings"></ui-icon>
+                <span slot="label">Switch Test</span>
+                <ui-switch>
+                    <ui-icon icon="sun" slot="icon"/>
+                    <input type="radio" label=" " placeholder="Switch" name="switch" value="dark"/>
+                    <input type="radio" label=" " placeholder="Switch" name="switch" value="default"/>
+                    <input type="radio" label=" " placeholder="Switch" name="switch" value="light"/>
+                </ui-switch>
+            </ui-block>
+        </form>
+    </div>
 
     <!-- -->
     <ui-statusbar></ui-statusbar>
     <ui-tooltip></ui-tooltip>
 
     <!-- -->
-    <div data-name="puk" style="display: inline grid; grid-auto-rows: max-content; grid-template-columns: minmax(0px, max-content) minmax(0px, 1fr); block-size: max-content; inline-size: stretch; inline-size: -webkit-fill-available; inline-size: -moz-available;">
-        <ui-listrow value="f1"> <ui-icon icon="github" style="padding: 0.5rem; block-size: 2rem;"></ui-icon> <span>Test Text 1</span> </ui-listrow>
-        <ui-listrow value="f2"> <ui-icon icon="github" style="padding: 0.5rem; block-size: 2rem;"></ui-icon> <span>Test Text 2</span> </ui-listrow>
-    </div>
-
-    <!-- -->
-    <ui-icon icon="github" style="inline-size: 4rem; block-size: 4rem; padding: 1rem;"></ui-icon>
-
-    <!-- -->
-    <ui-shaped icon="github" data-scheme="inverse" data-chroma="0.1" data-tooltip="Github">
-        <div class="u2-item-design" data-shape="wavy" data-alpha="1" data-highlight="4" data-highlight-hover="6"></div>
-    </ui-shaped>
-
-    <!-- -->
-    <script src="./test/UITest.ts" type="module"></script>
-
-    <!-- -->
-    <ui-dropmenu data-name="drop-box" style="inline-size: 8rem; block-size: 2rem;" data-scheme="inverse" data-highlight="8">
-        <ui-menuitem checked value="github"> <ui-icon icon="github"></ui-icon> <span>Github</span> </ui-menuitem>
-        <ui-menuitem value="gitlab"> <ui-icon icon="gitlab"></ui-icon> <span>Gitlab</span> </ui-menuitem>
-        <!--<label>
-            <ui-icon icon="gitlab" style="padding: 0.25rem;"></ui-icon>
-            <span style="flex-grow: 1;">Tribunal</span>
-        </label>-->
-    </ui-dropmenu>
-
     <ui-contextmenu style="--inline-size: 8rem;"></ui-contextmenu>
 
     <!-- -->
@@ -139,31 +177,7 @@
     </ui-taskbar>
 
     <!-- -->
-    <form
-        data-highlight="2" data-scheme="solid"
-        style="inline-size: 100%; block-size: max-content; border-radius: 0.5rem;"
-    >
-        <ui-block>
-            <ui-icon slot="icon" icon="settings"></ui-icon>
-            <span slot="label">Checkbox Test</span>
-            <ui-checkbox>
-                <ui-icon icon="sun" slot="icon"/>
-                <input type="checkbox" label="Checkbox-Test" placeholder="Test" name="test"/>
-            </ui-checkbox>
-        </ui-block>
-
-        <!-- -->
-        <ui-block>
-            <ui-icon slot="icon" icon="settings"></ui-icon>
-            <span slot="label">Switch Test</span>
-            <ui-switch>
-                <ui-icon icon="sun" slot="icon"/>
-                <input type="radio" label=" " placeholder="Switch" name="switch" value="dark"/>
-                <input type="radio" label=" " placeholder="Switch" name="switch" value="default"/>
-                <input type="radio" label=" " placeholder="Switch" name="switch" value="light"/>
-            </ui-switch>
-        </ui-block>
-    </form>
+    <script src="./test/UITest.ts" type="module"></script>
 
 </body>
 </html>
