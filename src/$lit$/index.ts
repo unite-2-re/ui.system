@@ -13,3 +13,4 @@ export * from "./navbar/index";
 export * from "./block/index";
 export * from "./menuitem/index";
 export * from "./volume/index";
+export * from "./number/index";

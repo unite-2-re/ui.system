@@ -5,6 +5,13 @@
     @property --max-value { syntax: "<number>"; inherits: true; initial-value: 1; }
 
     //
+    ui-number input::-webkit-outer-spin-button,
+    ui-number input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    //
     :where(ui-checkbox, ui-switch, ui-volume) {
         --value: 0;
         --max-value: 1;
