@@ -140,11 +140,12 @@ export class UITaskItem extends LitElementTheme {
 
         //
         if (!self.hasAttribute("data-id") && this.taskId) { self.setAttribute("data-id"             , (this.taskId || self.dataset.id || "")); };
+        if (!self.hasAttribute("data-transparent"))       { self.setAttribute("data-transparent"    , ""     ); };
         if (!self.hasAttribute("data-chroma"))            { self.setAttribute("data-chroma"         , "0.05" ); };
-        if (!self.hasAttribute("data-scheme"))            { self.setAttribute("data-scheme"         , "solid"); };
+        if (!self.hasAttribute("data-scheme"))            { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
         if (!self.hasAttribute("data-alpha"))             { self.setAttribute("data-alpha"          , "0"    ); };
         if (!self.hasAttribute("data-highlight"))         { self.setAttribute("data-highlight"      , "0"    ); };
-        if (!self.hasAttribute("data-highlight-hover"))   { self.setAttribute("data-highlight-hover", "2"    ); };
+        if (!self.hasAttribute("data-highlight-hover"))   { self.setAttribute("data-highlight-hover", "3"    ); };
         if (self.dataset.id && !this.taskId) { this.taskId = self.dataset.id; };
 
         //

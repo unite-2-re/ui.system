@@ -18,15 +18,15 @@
             display: inline grid;
             grid-template-rows: minmax(0px, 1fr);
             grid-template-columns:
-                [menu-button] minmax(var(--taskbar-size), max-content)
+                [menu-button] minmax(var(--taskbar-size, 3rem), max-content)
                 [title-label] minmax(0px, 1fr)
-                [back-button] minmax(var(--taskbar-size), max-content);
+                [back-button] minmax(var(--taskbar-size, 3rem), max-content);
         }
 
         //
         & {
             inline-size: 100cqi;
-            block-size: var(--taskbar-size, 4rem);
+            block-size: var(--taskbar-size, 3rem);
             min-block-size: max-content;
         }
 
@@ -40,6 +40,14 @@
             place-self: center;
             place-content: center;
             place-items: center;
+
+            //
+            outline: none 0px transparent;
+            border: none 0px transparent;
+
+            //
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
         }
 
         //
@@ -72,6 +80,14 @@
             pointer-events: none;
             padding: 1rem;
             grid-row: 1 / 1 span;
+
+            //
+            outline: none 0px transparent;
+            border: none 0px transparent;
+
+            //
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
         }
 
         //
@@ -89,6 +105,25 @@
             padding: 0.75rem;
             cursor: pointer;
             pointer-events: auto;
+
+            //
+            outline: none 0px transparent;
+            border: none 0px transparent;
+        }
+
+        //
+        & > :where(.ui-back-button) {
+            grid-column: back-button;
+        }
+
+        //
+        & > :where(.ui-title-handle) {
+            grid-column: title-label;
+        }
+
+        //
+        & > :where(.ui-menu-button) {
+            grid-column: menu-button;
         }
 
         //

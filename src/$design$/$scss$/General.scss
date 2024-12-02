@@ -22,4 +22,53 @@
         block-size: 100%;
         overflow: hidden;
     }
+
+    //
+    body:not(:has(ui-frame:not([data-hidden]))) ui-navbar
+    {
+        //
+        & {
+            --theme-surface-alpha: 0;
+            --theme-surface-chroma: 1;
+            --highlight-coefficient: 0;
+        }
+
+        //
+        & {
+            box-shadow: none;
+            pointer-events: none;
+        }
+
+        //
+        &, & * { --highlight-coefficient: 0; }
+        &::part(ui-title-handle) { pointer-events: none; }
+    }
+
+    //
+    body:not(:has(ui-frame:not([data-hidden]))):not(:has(ui-taskbar:not([data-hidden]))) ui-navbar
+        {&::part(ui-back-button) { display: none; }}
+
+    //
+    body:has(ui-frame:not([data-hidden])) ui-taskbar
+    {
+        & { --data-taskbar-shift: 2.5rem; }
+        &:hover, &:active { --data-taskbar-shift: 0px; }
+        &:not(:hover, :active) { --data-taskbar-shift: 2.5rem; }
+    }
+
+    //
+    body:not(:has(ui-frame:not([data-hidden]))) ui-taskbar
+    {
+        & {
+            --theme-surface-alpha: 0;
+            --theme-surface-chroma: 1;
+            --highlight-coefficient: 0;
+        }
+
+        //
+        & {
+            box-shadow: none;
+            pointer-events: none;
+        }
+    }
 }

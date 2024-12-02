@@ -27,9 +27,9 @@ export class UINavBar extends LitElementTheme {
     //
     protected render() {
         return html`${this.themeStyle}
-            <button class="ui-back-button"  data-transparent data-scheme="dynamic-transparent" style="grid-column: back-button;"><ui-icon icon="chevron-down"/></button>
-            <button class="ui-title-handle" data-transparent data-scheme="dynamic-transparent" style="grid-column: title-label;"><ui-icon icon=${this.icon}/>${this.label}</button>
-            <button class="ui-menu-button"  data-transparent data-scheme="dynamic-transparent" style="grid-column: menu-button;"><ui-icon icon="menu"/></button>`;
+            <button class="ui-back-button"  part="ui-back-button"  data-transparent data-scheme="dynamic-transparent"><ui-icon icon="chevron-down"/></button>
+            <button class="ui-title-handle" part="ui-title-handle" data-transparent data-scheme="dynamic-transparent"><ui-icon icon=${this.icon}/>${this.label}</button>
+            <button class="ui-menu-button"  part="ui-menu-button"  data-transparent data-scheme="dynamic-transparent"><ui-icon icon="menu"/></button>`;
     }
 
     //

@@ -132,7 +132,7 @@
 
         <!-- -->
         <form
-            data-highlight="2" data-scheme="solid"
+            data-chroma="0" data-highlight="1" data-scheme="solid"
             style="inline-size: 100%; block-size: max-content; border-radius: 0.5rem;"
         >
             <ui-block>
@@ -189,13 +189,17 @@
     <!-- -->
     <ui-frame>
         <div slot="ui-title-bar">Ochko</div>
-        <div class="ui-content" id="settings" data-scheme="solid">RX</div>
+        <div class="ui-content" id="settings" data-alpha="1" data-scheme="solid" data-chroma="0" data-highlight="0">RX</div>
     </ui-frame>
 
     <!-- -->
     <ui-taskbar>
         <ui-task icon="settings" data-id="settings"></ui-task>
     </ui-taskbar>
+
+    <!-- -->
+    <ui-navbar>
+    </ui-navbar>
 
     <!-- -->
     <script src="./test/UITest.ts" type="module"></script>
