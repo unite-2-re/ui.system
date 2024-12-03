@@ -108,8 +108,8 @@
 
         <!-- -->
         <div data-name="puk" style="display: inline grid; grid-auto-rows: max-content; grid-template-columns: minmax(0px, max-content) minmax(0px, 1fr); block-size: max-content; inline-size: stretch; inline-size: -webkit-fill-available; inline-size: -moz-available;">
-            <ui-listrow value="f1"> <ui-icon icon="github" style="padding: 0.5rem; block-size: 2rem;"></ui-icon> <span>Test Text 1</span> </ui-listrow>
-            <ui-listrow value="f2"> <ui-icon icon="github" style="padding: 0.5rem; block-size: 2rem;"></ui-icon> <span>Test Text 2</span> </ui-listrow>
+            <ui-select-row value="f1"> <ui-icon icon="github" style="padding: 0.5rem; block-size: 2rem;"></ui-icon> <span>Test Text 1</span> </ui-select-row>
+            <ui-select-row value="f2"> <ui-icon icon="github" style="padding: 0.5rem; block-size: 2rem;"></ui-icon> <span>Test Text 2</span> </ui-select-row>
         </div>
 
         <!-- -->
@@ -175,6 +175,22 @@
                     <span slot="icon" class="ui-indicator"></span>
                     <input type="number" inputmode="numeric" pattern="[0-9]*" size="5" label=" " placeholder="Number" name="number" value="0" min="-2" max="2" step="1"/>
                 </ui-number>
+            </ui-block>
+
+            <!-- -->
+            <ui-block class="layout-alt">
+                <ui-icon slot="icon" icon="settings"></ui-icon>
+                <span slot="label">Shape Select Test</span>
+                <div data-name="shape">
+                    <ui-select-shape value="f1">
+                        <div data-scheme="solid" data-alpha="1" data-highlight="4" data-highlight-hover="6" slot="bg"></div>
+                        <div data-scheme="inverse" class="u2-item-design" data-shape="wavy" data-alpha="1" data-highlight="4" data-highlight-hover="6"></div>
+                    </ui-select-shape>
+                    <ui-select-shape value="f2">
+                        <div data-scheme="solid" data-alpha="1" data-highlight="4" data-highlight-hover="6" slot="bg"></div>
+                        <div data-scheme="inverse" class="u2-item-design" data-shape="circle" data-alpha="1" data-highlight="4" data-highlight-hover="6"></div>
+                    </ui-select-shape>
+                </div>
             </ui-block>
         </form>
     </div>

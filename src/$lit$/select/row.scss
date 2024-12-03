@@ -1,12 +1,15 @@
-@layer ui-listow {
-    :host
+@layer ui-select-row
+{
+    //
+    :host(ui-select-row)
     {
-        &, :where(*), ::slotted(*) {
-            /* */
+        &, :where(*), ::slotted(*)
+        {
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
             user-drag: none;
             user-select: none;
+            touch-action: none;
             -webkit-user-drag: none;
             -moz-user-drag: none;
 
@@ -40,13 +43,6 @@
         }
 
         /* */
-        & :where(*)
-        {
-            user-select: none;
-            touch-action: none;
-        }
-
-        /* */
         & input[type="checkbox"], slot[name="radio"]::slotted(input[type="checkbox"]),
         & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"])
         {
@@ -58,6 +54,7 @@
             block-size: 100%;
             appearance: none;
             opacity: 0;
+            margin: 0px;
         };
 
         /* */
@@ -80,7 +77,8 @@
             }
 
             /* */
-            ::slotted(*) {
+            ::slotted(*)
+            {
                 grid-row: 1 / 1 span;
                 padding: 0.25rem;
 

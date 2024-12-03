@@ -6,19 +6,12 @@ import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../s
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
-// @ts-ignore
-import htmlCode from "./index.html?raw";
-
-// @ts-ignore
-import styles from "./index.scss?inline";
-
 //
 import LitElementTheme from "../shared/LitElementTheme";
 
-
 // @ts-ignore
-@customElement('ui-listrow')
-export class UIListRow extends LitElementTheme {
+@customElement('ui-select-item')
+export class UISelectBase extends LitElementTheme {
     #parentNode?: any;
     #onSelect?: Function;
 
@@ -27,12 +20,11 @@ export class UIListRow extends LitElementTheme {
     @property({attribute: true, reflect: true, type: Boolean}) checked: boolean = false;
 
     // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`;
+    //static styles = css`${unsafeCSS(styles)}`;
 
     //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
-        self.classList?.add?.("ui-listrow");
         self.classList?.add?.("u2-input");
     }
 
@@ -55,6 +47,7 @@ export class UIListRow extends LitElementTheme {
     }
 
     //
+    protected updateStyles() {};
     protected updateAttributes() {
         const self = this as unknown as HTMLElement;
 
@@ -62,11 +55,7 @@ export class UIListRow extends LitElementTheme {
         if (this.checked) { self.setAttribute("checked", ""); } else { self.removeAttribute("checked"); }
         if (!self.dataset?.chroma) self.dataset.chroma = "0.1";
         if (!self.dataset?.highlightHover) self.dataset.highlightHover = "4";
-
-        //
-        self.setAttribute("data-scheme", this.checked ? "inverse": "solid");
-        self.setAttribute("data-highlight", this.checked ? "8" : "0");
-        self.setAttribute("data-alpha", this.checked ? "1": "0");
+        this.updateStyles?.();
 
         //
         const ownBox = self.shadowRoot?.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])") ?? self.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])");
@@ -81,41 +70,36 @@ export class UIListRow extends LitElementTheme {
         if (ev.target.checked != null) {
             const self = this as unknown as HTMLElement;
             const ownRadio: HTMLInputElement = (self.shadowRoot?.querySelector?.("input[type=\"radio\"]") ?? self.querySelector?.("input[type=\"radio\"]")) as HTMLInputElement;
+            const ownCheckbox: HTMLInputElement = (self.shadowRoot?.querySelector?.("input[type=\"checkbox\"]") ?? self.querySelector?.("input[type=\"checkbox\"]")) as HTMLInputElement;
+
+            //
             if (ownRadio?.name == ev.target?.name) {
                 // fix if was in internal DOM
-                ownRadio.checked = ev.target == ownRadio;
-
-                //
-                this.checked = ownRadio.checked;
-                this.updateAttributes();
+                this.checked = (ownRadio.checked /*= ev.target == ownRadio*/);
             }
 
             //
-            const ownCheckbox: HTMLInputElement = (self.shadowRoot?.querySelector?.("input[type=\"checkbox\"]") ?? self.querySelector?.("input[type=\"checkbox\"]")) as HTMLInputElement;
-            if (ownCheckbox?.name == ev.target?.name && ownCheckbox == ev.target) {
+            if (ownCheckbox?.name == ev.target?.name && ev.target == ownCheckbox) {
                 this.checked = ownRadio.checked;
-                this.updateAttributes();
             }
+
+            //
+            this.updateAttributes();
         }
     }
 
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        this.importFromTemplate(htmlCode);
-
-        //
         const self = this as unknown as HTMLElement;
         self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
         self.addEventListener("click", (ev)=>{
             const input = root.querySelector("input[type=\"radio\"]") as HTMLInputElement;
             if (ev.target != input || !(ev.target as HTMLElement)?.matches?.("input")) { input?.click?.(); };
         });
-
-        //
         return root;
     }
 }
 
 //
-export default UIListRow;
+export default UISelectBase;

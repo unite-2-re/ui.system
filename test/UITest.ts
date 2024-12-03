@@ -3,7 +3,6 @@ import init, {
     UITooltip,
     UIStatusBar,
     UICheckBox,
-    UIListRow,
     UILucideIcon,
     UISwitch,
     UIDropMenu,
@@ -15,7 +14,9 @@ import init, {
     UIBlock,
     UIMenuItem,
     UIVolume,
-    UINumber
+    UINumber,
+    UISelectShape,
+    UISelectRow
 } from "../src/index";
 
 // @ts-ignore
@@ -41,7 +42,8 @@ import(/* @vite-ignore */ "/externals/core/design.js").then((module)=>{
 
 //
 console.log(UICheckBox);
-console.log(UIListRow);
+console.log(UISelectRow);
+console.log(UISelectShape);
 console.log(UILucideIcon);
 console.log(UISwitch);
 console.log(UIDropMenu);

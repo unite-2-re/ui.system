@@ -205,28 +205,28 @@
             grid-column: 2 / 2 span;
             grid-row: 1 / 1 span;
         }
+    };
+
+    //
+    :host(ui-block.layout-alt)
+    {
+        & { //
+            grid-template-columns: minmax(var(--decor-size), max-content) minmax(0px, 1fr);
+            grid-template-rows: minmax(var(--decor-size), max-content) minmax(var(--decor-size), max-content);
+        }
+
+        & { //
+            overflow: visible;
+            block-size: max-content;
+        }
 
         //
-        &.layout-alt
-        {
-            & { //
-                grid-template-columns: minmax(var(--decor-size), max-content) minmax(0px, 1fr);
-                grid-template-rows: minmax(var(--decor-size), max-content) minmax(var(--decor-size), max-content);
-            }
-
-            & { //
-                overflow: visible;
-                block-size: max-content;
-            }
-
-            //
-            & > *[data-place="icon"]    { grid-column: 1 / 1 span; grid-row: 1 / 1 span; justify-self: start;}
-            & > *[data-place="element"] { grid-column: 1 / 2 span; grid-row: 2 / 2 span; justify-self: start; align-self: start; }
-            & > *:where([data-place="label"], :not([data-place])) {
-                grid-column: 2 / 2 span;
-                grid-row: 1 / 1 span;
-                justify-self: start;
-            }
+        & > *[data-place="icon"]    { grid-column: 1 / 1 span; grid-row: 1 / 1 span; justify-self: start;}
+        & > *[data-place="element"] { grid-column: 1 / 2 span; grid-row: 2 / 2 span; justify-self: start; align-self: start; justify-content: start; }
+        & > *:where([data-place="label"], :not([data-place])) {
+            grid-column: 2 / 2 span;
+            grid-row: 1 / 1 span;
+            justify-self: start;
         }
-    };
+    }
 };
