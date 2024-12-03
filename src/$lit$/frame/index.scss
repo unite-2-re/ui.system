@@ -1,6 +1,22 @@
 @layer ui-frame {
     :host
     {
+        &, :where(*), ::slotted(*) {
+            /* */
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            box-sizing: border-box;
+
+            /* */
+            white-space: nowrap;
+            white-space-collapse: collapse;
+            text-wrap: nowrap;
+            text-spacing-trim: trim-start;
+        }
+
+        //
         & {
             --initial-inline-size: 48rem;
             --initial-block-size : 32rem;
@@ -78,24 +94,14 @@
             z-index: calc(999 + var(--z-index, 0));
 
             /* */
-            user-drag: none;
             user-select: none;
             touch-action: none;
             resize: none;
-
-            /* */
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
         }
 
         /* */
-        & *
+        & :where(*)
         {
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            /* */
-            user-drag: none;
             user-select: none;
             touch-action: none;
         }

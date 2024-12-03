@@ -3,6 +3,15 @@
     //
     :host(ui-task)
     {
+        /* */
+        &, :where(*), ::slotted(*) {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+        }
+
+        //
         & {
             border-block-start: solid 0.25rem transparent;
 
@@ -34,11 +43,11 @@
             block-size: 100%;
             box-sizing: border-box;
             aspect-ratio: 1 / 1;
+            translate: 0px -0.125rem;
 
+            //
             pointer-events: none;
             interactivity: inert;
-
-            translate: 0px -0.125rem;
         }
     }
 

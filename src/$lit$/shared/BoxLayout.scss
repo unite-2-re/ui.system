@@ -3,6 +3,14 @@
     //
     :host
     {
+        /* */
+        &, :where(*), ::slotted(*) {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+        }
+
         //
         & {
             --thumb-content: "🔆";
@@ -22,31 +30,14 @@
             overflow: visible;
 
             //
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            //
-            user-drag: none;
             user-select: none;
             touch-action: none;
             pointer-events: none;
         }
 
         //
-        /*
-        &        .ui-thumb { --highlight-coefficient: 8; };
-        &:hover  .ui-thumb { --highlight-coefficient: 0; };
-        &:active .ui-thumb { --highlight-coefficient: 0; };
-        */
-
-        //
-        & *
+        & :where(*)
         {
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            //
-            user-drag: none;
             user-select: none;
             touch-action: none;
         }
@@ -134,11 +125,7 @@
                 }
 
                 /* */
-                ::slotted(*) {
-                    display: none;
-                }
-
-                /* */
+                ::slotted(*) { display: none; }
                 ::slotted(ui-icon:first-child),
                 ::slotted(.ui-indicator:first-child:first-child)
                 {
@@ -166,56 +153,11 @@
                     flex-wrap: nowrap;
                     line-height: 0;
 
-                    // for example
-                    //color: transparent;
-                    //background-clip: text;
-                    //background-image: linear-gradient(var(--current-glyph-color, currentColor), var(--current-glyph-color, currentColor));
-                    //font-variant-emoji: text;
-                    //font-weight: bolder;
-
-                    //
-                    //vertical-align: middle;
-                    //line-height: 1;
-                    //font-size: calc(100cqmin * 0.6);
-
                     //
                     user-select: none;
                     touch-action: none;
                     pointer-events: none;
                 }
-
-                //
-                /*&::after
-                {
-                    display: flex;
-                    place-content: safe center;
-                    place-items: safe center;
-                    flex-direction: row;
-                    overflow: visible;
-
-                    //
-                    aspect-ratio: 1 / 1;
-                    box-sizing: border-box;
-                    text-align: center;
-
-                    // for example
-                    content: var(--thumb-content, "🔆");
-                    background-image: linear-gradient(var(--current-glyph-color, currentColor), var(--current-glyph-color, currentColor));
-                    font-variant-emoji: text;
-                    font-weight: bolder;
-
-                    //
-                    color: transparent;
-                    background-clip: text;
-                    vertical-align: middle;
-                    line-height: 1;
-                    font-size: calc(100cqmin * 0.6);
-
-                    //
-                    user-select: none;
-                    touch-action: none;
-                    pointer-events: none;
-                }*/
             }
 
             //
@@ -295,12 +237,7 @@
             cursor: pointer;
 
             //
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-
-            //
             pointer-events: none;
-            user-drag: none;
             user-select: none;
             touch-action: none;
         }

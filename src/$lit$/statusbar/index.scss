@@ -1,19 +1,26 @@
 @layer ui-statusbar {
     :host
     {
+        /* */
+        &, :where(*), ::slotted(*) {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+        }
+
+        /* */
         & {
             inline-size: 100%;
             block-size: 2rem;
             font-size: 0.9rem;
 
             /* */
-            display: inline grid !important;
+            display: inline grid;
             grid-template-columns: minmax(0px, max-content) minmax(0px, 1fr) minmax(6rem, max-content);
             grid-template-rows: minmax(0px, 1fr);
 
             /* */
-            position: fixed;
-            z-index: 999999;
             overflow: hidden;
             pointer-events: none;
 
@@ -23,18 +30,22 @@
             gap: 0rem;
             box-sizing: border-box;
 
+            /* */
             inset: 0px;
             inset-block-end: auto;
-            /*inset-inline-end: auto;*/
+            position: fixed;
+            z-index: 999999;
         }
 
         /* */
-        & > *
+        & > :where(*)
         {
-            inline-size: 100%;
-            block-size: 100%;
-            box-sizing: border-box;
-            flex-direction: row;
+            & {
+                inline-size: 100%;
+                block-size: 100%;
+                box-sizing: border-box;
+                flex-direction: row;
+            }
 
             /* */
             & { background-color: transparent; };
@@ -43,8 +54,6 @@
 
         /* */
         & > div { display: inline flex; flex-direction: row; inline-size: 100%; block-size: 100%; }
-
-        /* */
         & *             { background-color: transparent; gap: 0rem; place-items: safe center; place-content: safe center; }
         & .left, .right { display: inline flex; flex-direction: row; }
         & .left         { grid-column: 1 / 1 span; grid-row: 1 / 1 span; justify-self: safe start;  justify-items: safe start ; justify-content: safe start ; gap: 0rem; }
@@ -52,7 +61,8 @@
         & .right        { grid-column: 3 / 3 span; grid-row: 1 / 1 span; justify-self: safe end;    justify-items: safe end   ; justify-content: safe end   ; gap: 0rem; }
 
         /* */
-        ui-icon, ::slotted(ui-icon) {
+        ui-icon, ::slotted(ui-icon)
+        {
             display: inline flex;
             inline-size: max-content;
             block-size: 100%;

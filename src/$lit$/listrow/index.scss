@@ -1,28 +1,13 @@
 @layer ui-listow {
     :host
     {
-
-        /* */
-        & {
-            font-size: 0.9rem;
-            box-sizing: border-box;
-            inline-size: 100%;
-            block-size: max-content;
-            pointer-events: auto;
-            cursor: pointer;
-            display: grid;
-            grid-column: 1 / -1;
-            grid-template-rows: minmax(0px, 1fr);
-            grid-template-columns: subgrid;
-
+        &, :where(*), ::slotted(*) {
             /* */
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
-
-            /* */
             user-drag: none;
             user-select: none;
-            touch-action: none;
+            box-sizing: border-box;
 
             /* */
             white-space: nowrap;
@@ -32,21 +17,29 @@
         }
 
         /* */
-        & *
-        {
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
+        & {
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            inline-size: 100%;
+            block-size: max-content;
 
             /* */
-            user-drag: none;
+            display: grid;
+            grid-column: 1 / -1;
+            grid-template-rows: minmax(0px, 1fr);
+            grid-template-columns: subgrid;
+
+            /* */
+            touch-action: none;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        /* */
+        & :where(*)
+        {
             user-select: none;
             touch-action: none;
-
-            /* */
-            white-space: nowrap;
-            white-space-collapse: collapse;
-            text-wrap: nowrap;
-            text-spacing-trim: trim-start;
         }
 
         /* */
@@ -68,18 +61,15 @@
         {
             & {
                 box-sizing: border-box;
-                display: grid;
-                grid-template-rows: minmax(0px, 1fr);
-                grid-template-columns: subgrid;
                 grid-row: 1 / 1 span; grid-column: 1 / -1;
                 inline-size: 100%; block-size: 100%;
 
-                /* */
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-                -webkit-tap-highlight-color: transparent;
+                //
+                display: grid;
+                grid-template-rows: minmax(0px, 1fr);
+                grid-template-columns: subgrid;
 
                 /* */
-                user-drag: none;
                 user-select: none;
                 touch-action: none;
                 pointer-events: none;
@@ -89,26 +79,19 @@
             ::slotted(*) {
                 grid-row: 1 / 1 span;
                 padding: 0.25rem;
+
+                /* */
                 display: inline flex;
-                flex-wrap: wrap;
                 flex-direction: row;
+                flex-wrap: wrap;
+
+                /* */
                 align-content: safe center;
                 align-items: safe center;
 
                 /* */
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-                -webkit-tap-highlight-color: transparent;
-
-                /* */
-                user-drag: none;
                 user-select: none;
                 touch-action: none;
-
-                /* */
-                white-space: nowrap;
-                white-space-collapse: collapse;
-                text-wrap: nowrap;
-                text-spacing-trim: trim-start;
             }
         }
     }

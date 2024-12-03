@@ -3,6 +3,15 @@
     //
     :host(ui-navbar)
     {
+        &, :where(*), ::slotted(*) {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            box-sizing: border-box;
+        }
+
+        //
         & {
             white-space: nowrap;
             overflow: hidden;
@@ -11,6 +20,11 @@
             word-wrap: normal;
             flex-wrap: nowrap;
             line-height: 0;
+
+            /* */
+            white-space-collapse: collapse;
+            text-wrap: nowrap;
+            text-spacing-trim: trim-start;
         }
 
         //
@@ -44,10 +58,6 @@
             //
             outline: none 0px transparent;
             border: none 0px transparent;
-
-            //
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
         }
 
         //
@@ -84,20 +94,16 @@
             //
             outline: none 0px transparent;
             border: none 0px transparent;
-
-            //
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
         }
 
         //
         & > :where(.ui-back-button, .ui-menu-button)
         {
-            inline-size: 100%;
+            inline-size: max-content;
             block-size: 100%;
+            aspect-ratio: 1 / 1;
 
             //
-            aspect-ratio: 1 / 1;
             max-inline-size: 100cqmin;
             max-block-size: 100cqmin;
 
@@ -112,19 +118,9 @@
         }
 
         //
-        & > :where(.ui-back-button) {
-            grid-column: back-button;
-        }
-
-        //
-        & > :where(.ui-title-handle) {
-            grid-column: title-label;
-        }
-
-        //
-        & > :where(.ui-menu-button) {
-            grid-column: menu-button;
-        }
+        & > :where(.ui-back-button)  { grid-column: back-button; }
+        & > :where(.ui-title-handle) { grid-column: title-label; }
+        & > :where(.ui-menu-button)  { grid-column: menu-button; }
 
         //
         @media ((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)) { display: none; }

@@ -1,30 +1,13 @@
 @layer ui-menuitem {
     :host(ui-menuitem)
     {
-
-        /* */
-        & {
-            font-size: 0.9rem;
-            box-sizing: border-box;
-            inline-size: 100%;
-            block-size: 100%;
-            pointer-events: auto;
-            cursor: pointer;
-            display: contents;
-            grid-column: 1 / -1;
-            grid-row: 1 / 1;
-            grid-template-rows: subgrid;
-            grid-template-columns: minmax(0px, max-content);
-            text-align: start;
-
+        &, :where(*), ::slotted(*) {
             /* */
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
-
-            /* */
             user-drag: none;
             user-select: none;
-            touch-action: none;
+            box-sizing: border-box;
 
             /* */
             white-space: nowrap;
@@ -34,21 +17,34 @@
         }
 
         /* */
-        & *
-        {
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
+        & {
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            inline-size: 100%;
+            block-size: 100%;
+            pointer-events: auto;
+            cursor: pointer;
 
             /* */
-            user-drag: none;
+            grid-column: 1 / -1;
+            grid-row: 1 / 1;
+
+            /* */
+            display: contents;
+            grid-template-rows: subgrid;
+            grid-template-columns: minmax(0px, max-content);
+            text-align: start;
+
+            /* */
             user-select: none;
             touch-action: none;
+        }
 
-            /* */
-            white-space: nowrap;
-            white-space-collapse: collapse;
-            text-wrap: nowrap;
-            text-spacing-trim: trim-start;
+        /* */
+        & :where(*)
+        {
+            user-select: none;
+            touch-action: none;
         }
 
         /* */
@@ -76,20 +72,17 @@
         & .ui-columns
         {
             & {
-                box-sizing: border-box;
-                display: contents;//grid;
+                display: contents;
                 grid-template-rows: minmax(0px, 1fr);
                 grid-template-columns: subgrid;
+
+                /* */
+                box-sizing: border-box;
                 grid-row: 1 / 1 span; grid-column: 1 / -1;
                 inline-size: 100%; block-size: 100%;
                 text-align: start;
 
                 /* */
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-                -webkit-tap-highlight-color: transparent;
-
-                /* */
-                user-drag: none;
                 user-select: none;
                 touch-action: none;
                 pointer-events: none;
@@ -107,19 +100,8 @@
                 text-align: start;
 
                 /* */
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-                -webkit-tap-highlight-color: transparent;
-
-                /* */
-                user-drag: none;
                 user-select: none;
                 touch-action: none;
-
-                /* */
-                white-space: nowrap;
-                white-space-collapse: collapse;
-                text-wrap: nowrap;
-                text-spacing-trim: trim-start;
             }
         }
     }

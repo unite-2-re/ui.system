@@ -2,26 +2,38 @@
 
     //
     :host(ui-number) {
-        inline-size: 4rem;
-        min-inline-size: max-content;
-        box-sizing: border-box;
-        block-size: 2rem;
-        overflow: hidden;
-        border-radius: 0.25rem;
 
         //
-        pointer-events: none;
-        user-select: none;
-        touch-action: none;
-        cursor: default;
+        &, :where(*), ::slotted(*) {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+        }
 
         //
-        display: inline grid;
-        grid-template-columns:
-            [down] minmax(2rem, max-content)
-            [content] minmax(0px, 1fr)
-            [up] minmax(2rem, max-content);
-        grid-template-rows: minmax(0px, 1fr);
+        & {
+            inline-size: 4rem;
+            min-inline-size: max-content;
+            box-sizing: border-box;
+            block-size: 2rem;
+            overflow: hidden;
+            border-radius: 0.25rem;
+
+            //
+            pointer-events: none;
+            user-select: none;
+            touch-action: none;
+            cursor: default;
+
+            //
+            display: inline grid;
+            grid-template-columns:
+                [down] minmax(2rem, max-content)
+                [content] minmax(0px, 1fr)
+                [up] minmax(2rem, max-content);
+            grid-template-rows: minmax(0px, 1fr);
+        }
 
         //
         & ::where(*) {
@@ -51,17 +63,19 @@
 
         //
         & > :where(.ui-step-up, .ui-step-down) {
-            aspect-ratio: 1 / 1;
-            pointer-events: auto;
-            cursor: pointer;
-            border-radius: 0.25rem;
-            padding: 0.25rem;
-            box-sizing: border-box;
-            overflow: hidden;
+            & {
+                aspect-ratio: 1 / 1;
+                pointer-events: auto;
+                cursor: pointer;
+                border-radius: 0.25rem;
+                padding: 0.25rem;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
 
             //
             ::slotted(*) {
-                inline-size: auto;
+                inline-size: max-content;
                 block-size: 100%;
                 aspect-ratio: 1 / 1;
                 pointer-events: none;
@@ -83,11 +97,13 @@
 
         //
         ::slotted(input) {
-            text-align: center;
-            pointer-events: none;
-            user-select: none;
-            touch-action: none;
-            background-color: transparent;
+            & {
+                text-align: center;
+                pointer-events: none;
+                user-select: none;
+                touch-action: none;
+                background-color: transparent;
+            }
 
             //
             &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
