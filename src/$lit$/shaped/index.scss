@@ -39,6 +39,7 @@
             place-content: center;
 
             /* */
+            min-block-size: 8cqmin;
             box-sizing: border-box;
             aspect-ratio: 1 / 1;
             max-inline-size: min(var(--icon-size, 4rem), 100cqmin);
