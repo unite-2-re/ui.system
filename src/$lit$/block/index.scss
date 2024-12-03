@@ -1,13 +1,19 @@
 @layer ui-block {
 
     //
-    :host(ui-block) {
-        &, :where(*), ::slotted(*) {
+    :host(ui-block)
+    {
+        &, :where(*), ::slotted(*)
+        {
             /* */
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
             user-drag: none;
             user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
             box-sizing: border-box;
 
             /* */
@@ -18,7 +24,8 @@
         }
 
         //
-        &, & > :where(*) {
+        &, & > :where(*)
+        {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -34,9 +41,6 @@
             //
             pointer-events: none;
         }
-
-        //
-        ::slotted(*:not([inert], span, ui-icon)) { pointer-events: auto; }
 
         //
         & {
@@ -85,7 +89,8 @@
         }
 
         //
-        & > :where(*:not(script, link, style)) {
+        & > :where(*:not(script, link, style))
+        {
             //
             & {
                 inline-size: 100%;
@@ -135,7 +140,9 @@
         }
 
         //
-        & > *:where([data-place="label"], :not([data-place])) {
+        ::slotted(*:not([inert], span, ui-icon)) { pointer-events: auto; }
+        & > *:where([data-place="label"], :not([data-place]))
+        {
             & { inline-size: 100%; };
 
             //
@@ -154,7 +161,8 @@
         }
 
         //
-        & > *[data-place="element"] {
+        & > *[data-place="element"]
+        {
             & { inline-size: max-content; };
             & { min-inline-size: 100%; };
 
@@ -167,7 +175,8 @@
         }
 
         //
-        & > *[data-place="icon"] {
+        & > *[data-place="icon"]
+        {
             & {
                 inline-size: var(--decor-size, 100%);
                 block-size: var(--decor-size, 100%);
@@ -198,13 +207,14 @@
         }
 
         //
-        &.layout-alt {
-            //
-            grid-template-columns: minmax(var(--decor-size), max-content) minmax(0px, 1fr);
-            grid-template-rows: minmax(var(--decor-size), max-content) minmax(var(--decor-size), max-content);
+        &.layout-alt
+        {
+            & { //
+                grid-template-columns: minmax(var(--decor-size), max-content) minmax(0px, 1fr);
+                grid-template-rows: minmax(var(--decor-size), max-content) minmax(var(--decor-size), max-content);
+            }
 
-            //
-            & {
+            & { //
                 overflow: visible;
                 block-size: max-content;
             }

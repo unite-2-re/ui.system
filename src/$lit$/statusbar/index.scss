@@ -7,6 +7,12 @@
             -webkit-tap-highlight-color: transparent;
             user-drag: none;
             user-select: none;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
         }
 
         /* */
@@ -19,16 +25,13 @@
             display: inline grid;
             grid-template-columns: minmax(0px, max-content) minmax(0px, 1fr) minmax(6rem, max-content);
             grid-template-rows: minmax(0px, 1fr);
-
-            /* */
-            overflow: hidden;
-            pointer-events: none;
+            gap: 0rem;
 
             /* */
             justify-content: space-between;
             padding-inline: 0.5rem;
-            gap: 0rem;
             box-sizing: border-box;
+            overflow: hidden;
 
             /* */
             inset: 0px;
@@ -53,8 +56,8 @@
         }
 
         /* */
-        & > div { display: inline flex; flex-direction: row; inline-size: 100%; block-size: 100%; }
-        & *             { background-color: transparent; gap: 0rem; place-items: safe center; place-content: safe center; }
+        & > div         { display: inline flex; flex-direction: row; inline-size: 100%; block-size: 100%; }
+        & :where(*)     { background-color: transparent; gap: 0rem; place-items: center; place-content: center; }
         & .left, .right { display: inline flex; flex-direction: row; }
         & .left         { grid-column: 1 / 1 span; grid-row: 1 / 1 span; justify-self: safe start;  justify-items: safe start ; justify-content: safe start ; gap: 0rem; }
         & .center       { grid-column: 2 / 2 span; grid-row: 1 / 1 span; justify-self: safe center; justify-items: safe center; justify-content: safe center; gap: 0rem; }
@@ -68,35 +71,21 @@
             block-size: 100%;
             aspect-ratio: 1 / 1;
             box-sizing: border-box;
-            place-items: safe center;
-            place-content: safe center;
+            place-items: center;
+            place-content: center;
         }
 
         /* */
         .ui-indicator {
-            & {
-                padding: 0.5rem;
-                pointer-events: none;
+            & { padding: 0.5rem; }
+            &, a {
+                display: inline flex;
+                place-items: center;
+                place-content: center;
+                box-sizing: border-box;
                 inline-size: max-content;
                 block-size: 100%;
-                place-items: safe center;
-                place-content: safe center;
-                box-sizing: border-box;
-                display: inline flex;
                 flex-direction: row;
-            }
-
-            /* */
-            &.ui-icon { aspect-ratio: 1 / 1; }
-
-            /* */
-            a {
-                box-sizing: border-box;
-                display: inline flex;
-                inline-size: max-content;
-                block-size: 100%;
-                place-items: safe center;
-                place-content: safe center;
             }
         }
     }

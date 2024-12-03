@@ -1,12 +1,16 @@
 @layer ui-icon {
     /* */
     :host {
+        /* */
         &, :where(*), ::slotted(*) {
-            /* */
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
             user-drag: none;
             user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
             box-sizing: border-box;
 
             /* */
@@ -17,34 +21,31 @@
         }
 
         /* */
-        & {
-            aspect-ratio: 1 / 1;
-            inline-size: max-content;
-            block-size: 100%;
-            box-sizing: border-box;
-            display: inline flex;
-            place-items: center;
-            place-content: center;
-
-            /* */
+        &, & > :where(*)
+        {
             interactivity: inert;
             pointer-events: none;
             user-select: none;
             touch-action: none;
+
+            /* */
+            box-sizing: border-box;
+            inline-size: max-content;
+            block-size: 100%;
+            aspect-ratio: 1 / 1;
         }
 
         /* */
-        & > * {
-            box-sizing: border-box;
-            inline-size: max-content;
-            block-size: 100%;
-            aspect-ratio: 1 / 1;
+        & {
+            display: inline flex;
+            place-items: center;
+            place-content: center;
+        }
 
-            /* */
-            interactivity: inert;
-            pointer-events: none;
-            user-select: none;
-            touch-action: none;
+        /* */
+        :where(style, script, link) {
+            display: none !important;
+            pointer-events: none !important;
         }
     }
 }

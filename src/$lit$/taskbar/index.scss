@@ -9,6 +9,11 @@
             -webkit-tap-highlight-color: transparent;
             user-drag: none;
             user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
         }
 
         //
@@ -150,33 +155,25 @@
 
             //
             & .ui-indicator {
+                &, & a {
+                    inline-size: max-content;
+                    block-size: 100%;
+                    place-self: center;
+                    place-content: center;
+                    box-sizing: border-box;
+                }
 
                 & {
                     padding: 0.25rem;
-                    inline-size: max-content;
-                    block-size: 100%;
                     min-inline-size: 2rem;
                     pointer-events: auto;
                     max-block-size: none;
                     max-inline-size: none;
-                    place-self: center;
-                    place-content: center;
-                    box-sizing: border-box;
                     contain: none;
                 }
 
                 //
-                & a {
-                    display: inline;
-                    inline-size: max-content;
-                    block-size: 100%;
-                    place-self: center;
-                    place-content: center;
-                    box-sizing: border-box;
-                    user-select: none;
-                    -webkit-user-drag: none;
-                    -moz-user-drag: none;
-                }
+                a { display: inline; }
             }
 
             //

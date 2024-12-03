@@ -9,6 +9,13 @@
             -webkit-tap-highlight-color: transparent;
             user-drag: none;
             user-select: none;
+            touch-action: none;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
         }
 
         //
@@ -28,11 +35,6 @@
 
             //
             overflow: visible;
-
-            //
-            user-select: none;
-            touch-action: none;
-            pointer-events: none;
         }
 
         //
@@ -69,8 +71,8 @@
                 position: relative;
                 padding: 0px;
                 box-sizing: border-box;
-                place-items: safe center;
-                place-content: safe center;
+                place-items: center;
+                place-content: center;
                 background-color: transparent;
 
                 //
@@ -84,8 +86,8 @@
             {
                 display: flex;
                 flex-direction: row;
-                place-content: safe space-around;
-                place-items: safe stretch;
+                place-content: space-around;
+                place-items: stretch;
                 box-sizing: border-box;
 
                 //
@@ -107,11 +109,6 @@
                     aspect-ratio: 1 / 1;
                     overflow: hidden;
                     cursor: pointer;
-
-                    //
-                    user-select: none;
-                    touch-action: none;
-                    pointer-events: auto;
                 }
 
                 //
@@ -131,8 +128,8 @@
                 {
                     //
                     display: flex;
-                    place-content: safe center;
-                    place-items: safe center;
+                    place-content: center;
+                    place-items: center;
                     flex-direction: row;
                     overflow: visible;
 
@@ -152,11 +149,6 @@
                     word-wrap: normal;
                     flex-wrap: nowrap;
                     line-height: 0;
-
-                    //
-                    user-select: none;
-                    touch-action: none;
-                    pointer-events: none;
                 }
             }
 
@@ -170,10 +162,6 @@
                     grid-template-columns: minmax(0px, 1fr);
                     grid-template-rows: minmax(0px, 1fr);
                     box-sizing: border-box;
-
-                    //
-                    user-select: none;
-                    touch-action: none;
                     pointer-events: auto;
                 }
 
@@ -188,9 +176,6 @@
                     //
                     grid-column: 1 / -1;
                     grid-row: 1 / -1;
-
-                    //
-                    pointer-events: none;
                 }
             }
 
@@ -206,11 +191,6 @@
                 block-size: 100%;
                 box-sizing: border-box;
                 border-radius: 0px;
-
-                //
-                user-select: none;
-                touch-action: none;
-                pointer-events: none;
 
                 //
                 translate: calc(50cqi - 50%) calc(50cqb - 50%);
@@ -235,11 +215,6 @@
             -webkit-appearance: none;
             appearance: none;
             cursor: pointer;
-
-            //
-            pointer-events: none;
-            user-select: none;
-            touch-action: none;
         }
     }
 

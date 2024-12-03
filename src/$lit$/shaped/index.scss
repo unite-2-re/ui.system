@@ -6,7 +6,30 @@
             -webkit-tap-highlight-color: transparent;
             user-drag: none;
             user-select: none;
+            touch-action: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
         }
+
+        /* */
+        ::slotted(*), & > :where(*) {
+            --icon-size: 100%;
+
+            /* */
+            pointer-events: none;
+            aspect-ratio: 1 / 1;
+            box-sizing: border-box;
+            inline-size: max-content;
+            block-size: 100%;
+            grid-column: 1 / -1;
+            grid-row: 1 / -1;
+
+            /* */
+            cursor: pointer;
+        };
 
         //
         & { --icon-size: 4rem; };
@@ -27,11 +50,6 @@
             /* */
             background-color: transparent;
             filter: drop-shadow(0 0 1rem #10101040);
-
-            /* */
-            user-select: none;
-            touch-action: none;
-            pointer-events: none;
         };
 
         /* */
@@ -42,26 +60,6 @@
         }
 
         /* */
-        ::slotted(*), & > * {
-            --icon-size: 100%;
-
-            /* */
-            aspect-ratio: 1 / 1;
-            box-sizing: border-box;
-            inline-size: max-content;
-            block-size: 100%;
-            grid-column: 1 / -1;
-            grid-row: 1 / -1;
-
-            /* */
-            user-select: none;
-            touch-action: none;
-
-            /* */
-            cursor: pointer;
-        };
-
-        /* */
         ::slotted(*) {
             overflow: hidden;
             pointer-events: auto;
@@ -69,6 +67,6 @@
         };
 
         /* */
-        & > * { z-index: 99; };
+        & > :where(*) { z-index: 99; };
     }
 }

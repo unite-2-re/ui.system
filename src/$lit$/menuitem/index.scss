@@ -7,6 +7,10 @@
             -webkit-tap-highlight-color: transparent;
             user-drag: none;
             user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
             box-sizing: border-box;
 
             /* */
@@ -48,6 +52,7 @@
         }
 
         /* */
+        & input, ::slotted(input) { display: none !important; }
         & input[type="checkbox"], slot[name="radio"]::slotted(input[type="checkbox"]),
         & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"])
         {
@@ -62,11 +67,6 @@
             pointer-events: none;
             display: none;
         };
-
-        /* */
-        & input, ::slotted(input) {
-            display: none !important;
-        }
 
         /* */
         & .ui-columns
@@ -89,8 +89,11 @@
             }
 
             /* */
-            ::slotted(*) {
+            ::slotted(*)
+            {
                 grid-row: 1 / 1 span;
+
+                /* */
                 padding: 0.25rem;
                 display: inline flex;
                 flex-wrap: wrap;
