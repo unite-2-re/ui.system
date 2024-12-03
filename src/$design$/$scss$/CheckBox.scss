@@ -13,12 +13,16 @@
 
     //
     :where(ui-checkbox, ui-switch, ui-volume) {
-        --value: 0;
-        --max-value: 1;
+        & {
+            --value: 0;
+            --max-value: 1;
+        }
 
         //
-        block-size: 2rem;
-        inline-size: calc(0.5rem + 1.5rem * (var(--max-value, 1) + 1));
+        & {
+            block-size: 2rem;
+            inline-size: calc(0.5rem + 1.5rem * (var(--max-value, 1) + 1));
+        }
 
         //
         @for $i from 1 through 3 {
