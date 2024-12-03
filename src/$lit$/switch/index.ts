@@ -15,9 +15,6 @@ import htmlCode from "../shared/BoxLayout.html?raw";
 //
 import LitElementTheme from "../shared/LitElementTheme";
 
-// avoid memory leaking...
-//const refMap = new WeakSet([]);
-
 // @ts-ignore
 @customElement('ui-switch')
 export class UISwitch extends LitElementTheme {
@@ -27,17 +24,9 @@ export class UISwitch extends LitElementTheme {
 
     //
     static styles = css`${unsafeCSS(styles)}`;
-
-    //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         const weak = new WeakRef(self);
-
-        //
-        self.classList?.add?.("ui-switch");
-        self.classList?.add?.("u2-input");
-
-        //
         const sws = { pointerId: -1 };
         const doExaction = (self, clientX, clientY, confirm = false)=>{
             if (!self) return;
@@ -83,15 +72,11 @@ export class UISwitch extends LitElementTheme {
             } else {
                 self.style.setProperty("--value", `${val}`, "");
             }
-
-            //
-            //if (radio?.[exact]) {
-                // triggers anyways
-                //this.onSelect?.({target: radio?.[exact]});
-            //}
         }
 
         //
+        self.classList?.add?.("ui-switch");
+        self.classList?.add?.("u2-input");
         self.addEventListener("change", this.onSelect.bind(this));
         self.addEventListener("pointerdown", (e)=>{
             if (sws.pointerId < 0) {
@@ -100,13 +85,6 @@ export class UISwitch extends LitElementTheme {
                 //
                 (e.target as HTMLElement)?.setPointerCapture?.(e.pointerId);
                 document.documentElement.style.cursor = "grabbing";
-            }
-        });
-
-        //
-        document.addEventListener("pointermove", (e)=>{
-            if (sws.pointerId == e.pointerId) {
-                doExaction(weak?.deref?.(), e.clientX, e.clientY);
             }
         });
 
@@ -121,8 +99,14 @@ export class UISwitch extends LitElementTheme {
         }
 
         //
-        document.addEventListener("pointerup", stopMove);
-        document.addEventListener("pointercancel", stopMove);
+        const ROOT = document.documentElement;
+        ROOT.addEventListener("pointerup", stopMove);
+        ROOT.addEventListener("pointercancel", stopMove);
+        ROOT.addEventListener("pointermove", (e)=>{
+            if (sws.pointerId == e.pointerId) {
+                doExaction(weak?.deref?.(), e.clientX, e.clientY);
+            }
+        });
     }
 
     //

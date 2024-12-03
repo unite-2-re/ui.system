@@ -28,28 +28,15 @@ export class UIMenuItem extends LitElementTheme {
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
-
-    //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
-
-        //
         self.classList?.add?.("ui-menuitem");
         self.classList?.add?.("u2-menuitem");
-
-        //
-        //self.classList?.add?.("ui-input");
-        //self.classList?.add?.("u2-input");
-
-        //
-        self.style.setProperty("display", "none", "important");
     }
 
     //
     public disconnectedCallback() {
         super.disconnectedCallback();
-
-        //
         this.#parentNode?.removeEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
         this.#parentNode = null;
     }
@@ -65,22 +52,19 @@ export class UIMenuItem extends LitElementTheme {
         this.#parentNode?.addEventListener("click", this.#onSelect ??= this.onSelect.bind(this));
 
         //
+        self.style.setProperty("display", "none", "important");
+        self.setAttribute("data-scheme", "dynamic-transparent");
+        self.setAttribute("data-highlight", "0");
+        self.setAttribute("data-alpha", "0");
+        self.setAttribute("data-transparent", "");
         this.updateAttributes();
     }
 
     //
     protected updateAttributes() {
         const self = this as unknown as HTMLElement;
-
-        //
-        if (this.checked) { self.setAttribute("checked", ""); } else { self.removeAttribute("checked"); }
         if (!self.dataset?.chroma) self.dataset.chroma = "0.1";
         if (!self.dataset?.highlightHover) self.dataset.highlightHover = "4";
-
-        //
-        self.setAttribute("data-scheme", this.checked ? "inverse": "solid");
-        self.setAttribute("data-highlight", this.checked ? "8" : "0");
-        self.setAttribute("data-alpha", this.checked ? "1": "0");
 
         //
         const ownBox = self.shadowRoot?.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])") ?? self.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])");
@@ -90,7 +74,13 @@ export class UIMenuItem extends LitElementTheme {
         };
 
         //
-        if (this.checked) { self.style.removeProperty("display"); } else { self.style.setProperty("display", "none", "important"); }
+        if (this.checked) {
+            self.setAttribute("checked", "");
+            self.style.removeProperty("display");
+        } else {
+            self.removeAttribute("checked");
+            self.style.setProperty("display", "none", "important");
+        }
     }
 
     //
@@ -120,9 +110,9 @@ export class UIMenuItem extends LitElementTheme {
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
-        this.importFromTemplate(htmlCode);
 
         //
+        this.importFromTemplate(htmlCode);
         self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as any)?.name || (self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
         self.addEventListener("click", (ev)=>{
             const input = root.querySelector("input[type=\"radio\"]") as HTMLInputElement;

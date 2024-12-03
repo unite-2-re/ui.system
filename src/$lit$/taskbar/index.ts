@@ -14,8 +14,6 @@ import styles from "./index.scss?inline";
 
 // @ts-ignore
 import {initTaskManager} from "/externals/core/core.js";
-
-//
 import LitElementTheme from "../shared/LitElementTheme";
 
 // @ts-ignore
@@ -28,14 +26,8 @@ export class UITaskBar extends LitElementTheme {
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
-
-    //
     constructor(options = {icon: "", padding: "", taskManager: null}) {
-        super(); const self = this as unknown as HTMLElement;
-
-        //
-        self.classList?.add?.("ui-taskbar");
-        self.style.setProperty("z-index", "9998", "important");
+        super();
 
         //
         this.taskManager ??= options?.taskManager || initTaskManager();
@@ -65,6 +57,10 @@ export class UITaskBar extends LitElementTheme {
 
         //
         const self = this as unknown as HTMLElement;
+        self.style.setProperty("z-index", "9998", "important");
+        self.classList?.add?.("ui-taskbar");
+
+        //
         if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0.05" ); };
         if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "solid"); };
         if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "1"    ); };
@@ -72,11 +68,6 @@ export class UITaskBar extends LitElementTheme {
 
         //
         this.taskManager?.addTasks?.(this.tasks || []);
-
-        //
-        /*requestIdleCallback(()=>{
-            this.taskManager?.addTasks?.(this.tasks || [])
-        }, {timeout: 1000});*/
     }
 
 }

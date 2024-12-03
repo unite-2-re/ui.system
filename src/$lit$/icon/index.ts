@@ -34,28 +34,18 @@ const toCamelCase = (str: string) => {
 // @ts-ignore
 @customElement('ui-icon')
 export class UILucideIcon extends LitElementTheme {
-
-    // theme style property
     @property() protected iconElement?: SVGElement;
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
 
     // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`
-
-    //
-    protected render() {
-        return html`${this.themeStyle}${this.iconElement}`;
-    }
+    static styles = css`${unsafeCSS(styles)}`;
+    protected render() { return html`${this.themeStyle}${this.iconElement}`; }
 
     //
     constructor(options = {icon: "", padding: ""}) {
         super(); const self = this as unknown as HTMLElement;
-
-        //
         if (options?.icon) { this.icon = options?.icon; };
         if (options?.padding) { self.style.setProperty("padding", options?.padding); };
-
-        //
         self.inert = true;
     }
 

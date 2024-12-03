@@ -54,7 +54,17 @@ const makeControl = (frameElement: HTMLElement)=>{
 }
 
 
+// if global case
+/*
+const tasks = this.taskManager.getTasks();
+const winds: HTMLElement[] = tasks.map(({id}, index)=>{
+    return document.querySelector("ui-frame:has("+id+"), ui-frame"+id+"");
+});
 
+//
+Array.from(winds).filter((w)=>!!w).forEach((e: HTMLElement, I)=>{
+    e.style.setProperty("--z-index", ""+I);
+});*/
 
 
 // @ts-ignore
@@ -64,38 +74,18 @@ export class UIFrame extends LitElementTheme {
     protected taskManager?: any;
 
     // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`
-
-    //
-    protected fixZLayer() {
-        // if local/relative case
-        const self = this as unknown as HTMLElement;
-        const tasks  = this?.taskManager?.getTasks?.();
-        const zIndex = tasks?.findIndex?.(({id}, I)=>self.matches("ui-frame:has("+id+"), ui-frame"+id+""));
-        self.style.setProperty("--z-index", zIndex);
-
-        // if global case
-        /*
-        const tasks = this.taskManager.getTasks();
-        const winds: HTMLElement[] = tasks.map(({id}, index)=>{
-            return document.querySelector("ui-frame:has("+id+"), ui-frame"+id+"");
-        });
-
-        //
-        Array.from(winds).filter((w)=>!!w).forEach((e: HTMLElement, I)=>{
-            e.style.setProperty("--z-index", ""+I);
-        });*/
-    }
-
-    //
+    static styles = css`${unsafeCSS(styles)}`;
     constructor(options = {icon: "", padding: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
         self.classList?.add?.("ui-frame");
         self.classList?.add?.("u2-frame");
         self.dataset.hidden = "";
+        this.initTaskManager(options);
+    }
 
-        //
-        this.taskManager ??= options?.taskManager || initTaskManager();
+    //
+    protected initTaskManager(options = {icon: "", padding: "", taskManager: null}) {
+        const self = this as unknown as HTMLElement;
 
         //
         addEventListener("hashchange", ()=>{
@@ -116,6 +106,7 @@ export class UIFrame extends LitElementTheme {
         });
 
         //
+        this.taskManager ??= options?.taskManager || initTaskManager();
         this.taskManager.on("focus", ({task, index})=>{
             const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
             if (isInFocus) {
@@ -146,6 +137,15 @@ export class UIFrame extends LitElementTheme {
     }
 
     //
+    protected fixZLayer() {
+        // if local/relative case
+        const self = this as unknown as HTMLElement;
+        const tasks  = this?.taskManager?.getTasks?.();
+        const zIndex = tasks?.findIndex?.(({id}, I)=>self.matches("ui-frame:has("+id+"), ui-frame"+id+""));
+        self.style.setProperty("--z-index", zIndex);
+    }
+
+    //
     public disconnectedCallback() {
         super.disconnectedCallback();
     }
@@ -159,9 +159,7 @@ export class UIFrame extends LitElementTheme {
         //
         const self      = this as unknown as HTMLElement;
         const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
-        if (isInFocus) {
-            delete self.dataset.hidden;
-        }
+        if (isInFocus) { delete self.dataset.hidden; };
 
         //
         this.fixZLayer();
@@ -170,8 +168,6 @@ export class UIFrame extends LitElementTheme {
     //
     protected updateAttributes() {
         const self = this as unknown as HTMLElement;
-
-        //
         if (!self.dataset.chroma) { self.dataset.chroma = "0.2"; };
         if (!self.dataset.scheme) { self.dataset.scheme = "inverse"; };
         if (!self.dataset.highlight) { self.dataset.highlight = "6"; };
@@ -182,8 +178,6 @@ export class UIFrame extends LitElementTheme {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
         this.importFromTemplate(htmlCode);
-
-        //
         root.addEventListener("click", (ev)=>{
             if (ev.target.matches(".ui-btn-close")) {
                 const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;
@@ -191,8 +185,6 @@ export class UIFrame extends LitElementTheme {
                 self.dataset.hidden = "";
             }
         });
-
-        //
         return root;
     }
 }

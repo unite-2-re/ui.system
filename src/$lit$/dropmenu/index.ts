@@ -24,18 +24,14 @@ import LitElementTheme from "../shared/LitElementTheme";
 // @ts-ignore
 @customElement('ui-dropmenu')
 export class UIDropMenu extends LitElementTheme {
-    @property({}) dropMenu?: any = null;
     @property({attribute: true, reflect: true, type: String}) value = "";
     @property({attribute: true, reflect: true, type: String}) icon = "";
+    @property({}) dropMenu?: any = null;
 
     //
     static styles = css`${unsafeCSS(styles)}`;
-
-    //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
-
-        //
         self.classList?.add?.("ui-dropmenu");
         self.classList?.add?.("u2-dropmenu");
         self.classList?.add?.("u2-input");

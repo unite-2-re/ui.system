@@ -35,8 +35,6 @@ export class UINavBar extends LitElementTheme {
     //
     constructor(options = {icon: "", padding: ""}) {
         super(); const self = this as unknown as HTMLElement;
-
-        //
         self.classList?.add?.("ui-navbar");
         self.style.setProperty("z-index", "9999", "important");
     }

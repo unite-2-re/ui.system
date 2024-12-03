@@ -23,8 +23,6 @@ export class UIShaped extends LitElementTheme {
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
-
-    //
     protected render() {
         return html`${this.themeStyle}<slot></slot><ui-icon data-transparent data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
     }
@@ -46,11 +44,9 @@ export class UIShaped extends LitElementTheme {
         if (!self.hasAttribute("data-chroma")) { self.setAttribute("data-chroma", "0.1"); };
         if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "accent-inverse"); };
         if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "0"); };
-        self.setAttribute("data-alpha", "0");
-
-        //
-        if (!self.classList?.contains?.("ui-shaped")) self.classList?.add?.("ui-shaped");
-        if (!self.classList?.contains?.("u2-shaped")) self.classList?.add?.("u2-shaped");
+        if (!self.hasAttribute("data-alpha")) { self.setAttribute("data-alpha", "0"); };
+        if (!self.classList?.contains?.("ui-shaped")) { self.classList?.add?.("ui-shaped"); };
+        if (!self.classList?.contains?.("u2-shaped")) { self.classList?.add?.("u2-shaped"); };
     }
 }
 

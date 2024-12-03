@@ -32,8 +32,6 @@ export class UIListRow extends LitElementTheme {
     //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
-
-        //
         self.classList?.add?.("ui-listrow");
         self.classList?.add?.("u2-input");
     }
@@ -41,8 +39,6 @@ export class UIListRow extends LitElementTheme {
     //
     public disconnectedCallback() {
         super.disconnectedCallback();
-
-        //
         this.#parentNode?.removeEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
         this.#parentNode = null;
     }
@@ -55,8 +51,6 @@ export class UIListRow extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         this.#parentNode = self?.parentNode;
         this.#parentNode?.addEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
-
-        //
         this.updateAttributes();
     }
 
@@ -108,10 +102,10 @@ export class UIListRow extends LitElementTheme {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        const self = this as unknown as HTMLElement;
         this.importFromTemplate(htmlCode);
 
         //
+        const self = this as unknown as HTMLElement;
         self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
         self.addEventListener("click", (ev)=>{
             const input = root.querySelector("input[type=\"radio\"]") as HTMLInputElement;

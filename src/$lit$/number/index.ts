@@ -31,23 +31,8 @@ export class UINumber extends LitElementTheme {
     //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
-        const weak = new WeakRef(self);
-
-        //
         self.classList?.add?.("ui-number");
         self.classList?.add?.("u2-input");
-
-        //
-        //const sws = { pointerId: -1 };
-
-        //
-        /*number.valueAsNumber = (parseFloat(number.min) || 0) + exact;
-        number.dispatchEvent(new Event(confirm ? "change" : "input", {
-            bubbles: true,
-            cancelable: true
-        }));*/
-
-        //
         self.addEventListener("input", this.onSelect.bind(this));
         self.addEventListener("change", this.onSelect.bind(this));
     }
@@ -56,22 +41,19 @@ export class UINumber extends LitElementTheme {
     protected onSelect(ev?: any){
         const self = this as unknown as HTMLElement;
         const element = ev?.target ?? self;
+
+        //
         if (element) {
             const input = ((element.matches("input[type=\"number\"]") ? element : element.querySelector?.("input[type=\"number\"]")) as HTMLInputElement);
-            const value = input?.valueAsNumber || parseFloat(input?.value) || 0;
-
-            //
-            this.value = value;
-
-            //
+            const value = input?.valueAsNumber || parseFloat(input?.value) || 0; this.value = value;
             const index = value - (parseFloat(input?.min) || 0);
-            if (index >= 0 && ev?.type != "input") { self.style?.setProperty?.("--value", `${index}`); };
+            const indicator = self?.querySelector?.(".ui-indicator");
 
             //
+            if (index >= 0 && ev?.type != "input") { self.style?.setProperty?.("--value", `${index}`); };
             self.style.setProperty("--max-value", `${((parseFloat(input?.max)||0) - (parseFloat(input?.min)||0))}`, "");
 
             //
-            const indicator = self?.querySelector?.(".ui-indicator");
             if (indicator) {
                 indicator.innerHTML = "" + value?.toLocaleString('en-US', {
                     minimumFractionDigits: 0,

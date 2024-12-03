@@ -38,8 +38,6 @@ export class UITaskItem extends LitElementTheme {
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
-
-    //
     protected render() {
         return html`${this.themeStyle}  <ui-icon inert icon=${this.icon} data-alpha="0" data-transparent></ui-icon>`;
     }
@@ -56,8 +54,6 @@ export class UITaskItem extends LitElementTheme {
         //
         self.classList?.add?.("ui-task");
         self.addEventListener("click", () => focusTask(this.taskManager, self));
-
-        //
         this.updateState();
 
         //
@@ -66,20 +62,16 @@ export class UITaskItem extends LitElementTheme {
     }
 
     //
-    protected updateState(){
-        //
+    protected updateState() {
         const self = this as unknown as HTMLElement;
         const hash = "#" + (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
         const task = this.taskManager?.get?.(hash);
-        this.focused = location.hash == hash;
-        if (task?.active || this.focused) { this.active  = true; };
 
         //
+        if (task?.active || (this.focused = location.hash == hash)) { this.active  = true; };
         if (this.focused && !self.classList.contains("ui-focus")) { self.classList.add("ui-focus"); };
-        if (!this.focused && self.classList.contains("ui-focus")) { self.classList.remove("ui-focus"); };
-
-        //
         if (this.active && !self.classList.contains("ui-active")) { self.classList.add("ui-active"); };
+        if (!this.focused && self.classList.contains("ui-focus")) { self.classList.remove("ui-focus"); };
         if (!this.active && self.classList.contains("ui-active")) { self.classList.remove("ui-active"); };
     }
 
