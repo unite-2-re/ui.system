@@ -128,7 +128,9 @@ export class UIVolume extends LitElementTheme {
     //
     protected onSelect(ev?: any){
         const self = this as unknown as HTMLElement;
-        const element = ev?.target ?? self;
+        const element = ev?.target ?? self?.querySelector?.("input");
+
+        //
         if (element) {
             const input = ((element.matches("input[type=\"number\"]") ? element : element.querySelector?.("input[type=\"number\"]")) as HTMLInputElement);
             const value = input?.valueAsNumber || parseFloat(input?.value) || 0; this.value = value;

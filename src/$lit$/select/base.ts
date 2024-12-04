@@ -43,7 +43,7 @@ export class UISelectBase extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         this.#parentNode = self?.parentNode;
         this.#parentNode?.addEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
-        this.updateAttributes();
+        requestIdleCallback(()=>this.onSelect(), {timeout: 1000});
     }
 
     //
@@ -66,21 +66,25 @@ export class UISelectBase extends LitElementTheme {
     }
 
     //
-    protected onSelect(ev){
-        if (ev.target.checked != null) {
+    protected onSelect(ev?: any) {
+        if (ev?.target?.checked != null || ev == null) {
             const self = this as unknown as HTMLElement;
             const ownRadio: HTMLInputElement = (self.shadowRoot?.querySelector?.("input[type=\"radio\"]") ?? self.querySelector?.("input[type=\"radio\"]")) as HTMLInputElement;
             const ownCheckbox: HTMLInputElement = (self.shadowRoot?.querySelector?.("input[type=\"checkbox\"]") ?? self.querySelector?.("input[type=\"checkbox\"]")) as HTMLInputElement;
 
             //
-            if (ownRadio?.name == ev.target?.name) {
-                // fix if was in internal DOM
-                this.checked = (ownRadio.checked /*= ev.target == ownRadio*/);
+            if (ownRadio) {
+                if (ownRadio?.name == ev?.target?.name || ev == null) {
+                    // fix if was in internal DOM
+                    this.checked = (ownRadio?.checked /*= ev.target == ownRadio*/);
+                }
             }
 
             //
-            if (ownCheckbox?.name == ev.target?.name && ev.target == ownCheckbox) {
-                this.checked = ownRadio.checked;
+            if (ownCheckbox) {
+                if (ownCheckbox?.name == ev?.target?.name && ev?.target == ownCheckbox || ev == null) {
+                    this.checked = ownCheckbox?.checked;
+                }
             }
 
             //

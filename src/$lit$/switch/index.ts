@@ -112,9 +112,10 @@ export class UISwitch extends LitElementTheme {
     //
     protected onSelect(ev?: any){
         const self = this as unknown as HTMLElement;
-        if ((ev?.target ?? self)?.checked) {
-            this.value = (ev?.target ?? self)?.value;
-            const index = Array.from(self.querySelectorAll?.("input[type=\"radio\"]"))?.indexOf?.((ev?.target ?? self)?.value);
+        const input = (ev?.target ?? self?.querySelector?.("input:checked"));
+        if (input?.checked) {
+            this.value = input?.value;
+            const index = Array.from(self.querySelectorAll?.("input[type=\"radio\"]"))?.indexOf?.(input);
             if (index >= 0) { self.style?.setProperty?.("--value", `${index}`); };
         }
     }

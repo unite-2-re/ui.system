@@ -40,7 +40,7 @@ export class UINumber extends LitElementTheme {
     //
     protected onSelect(ev?: any){
         const self = this as unknown as HTMLElement;
-        const element = ev?.target ?? self;
+        const element = ev?.target ?? self?.querySelector?.("input");
 
         //
         if (element) {
@@ -77,6 +77,7 @@ export class UINumber extends LitElementTheme {
                 const self  = weak?.deref?.() as (HTMLElement | undefined);
                 const input = self?.querySelector?.("input") as (HTMLInputElement | undefined);
                 input?.stepUp?.();
+                input?.dispatchEvent?.(new Event('change', {bubbles: true, cancelable: true}));
             });
 
             //
@@ -85,6 +86,7 @@ export class UINumber extends LitElementTheme {
                 const self = weak?.deref?.() as (HTMLElement | undefined);
                 const input = self?.querySelector?.("input") as (HTMLInputElement | undefined);
                 input?.stepDown?.();
+                input?.dispatchEvent?.(new Event('change', {bubbles: true, cancelable: true}));
             });
         });
 
