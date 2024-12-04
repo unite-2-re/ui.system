@@ -66,6 +66,12 @@ Array.from(winds).filter((w)=>!!w).forEach((e: HTMLElement, I)=>{
     e.style.setProperty("--z-index", ""+I);
 });*/
 
+//
+const focusTask = (taskManager, target: HTMLElement)=>{
+    const hash = "#" + (target.dataset.id || (target.querySelector(".ui-content")?.id || target.id || target.querySelector(location.hash)?.id || "") || (target as any).taskId).trim?.()?.replace?.("#","")?.trim?.();
+    taskManager?.focus?.(hash);
+    requestIdleCallback(()=>navigator?.vibrate?.([10]));
+}
 
 // @ts-ignore
 @customElement('ui-frame')
@@ -88,18 +94,20 @@ export class UIFrame extends LitElementTheme {
         const self = this as unknown as HTMLElement;
 
         //
-        addEventListener("hashchange", ()=>{
-            const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
+        addEventListener("hashchange", (ev)=>{
+            const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == (ev?.newURL || location.hash);
             if (isInFocus) {
+                focusTask(this.taskManager, self);
                 delete self.dataset.hidden;
                 this.fixZLayer();
             }
         });
 
         //
-        addEventListener("popstate", ()=>{
+        addEventListener("popstate", (ev)=>{
             const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
             if (isInFocus) {
+                focusTask(this.taskManager, self);
                 delete self.dataset.hidden;
                 this.fixZLayer();
             }
