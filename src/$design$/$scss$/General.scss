@@ -1,6 +1,7 @@
 @layer ui-frame-fix {
     // if has identified, do top level
-    ui-frame:where(:has(*:target), :target)
+    ui-frame:has(:target),
+    ui-frame:target
     {
         & {
             --z-index: 0;

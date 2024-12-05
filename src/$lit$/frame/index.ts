@@ -87,6 +87,9 @@ export class UIFrame extends LitElementTheme {
         self.classList?.add?.("u2-frame");
         self.dataset.hidden = "";
         this.initTaskManager(options);
+        self.addEventListener("pointerdown", (ev)=>{
+            focusTask(this?.taskManager, self);
+        });
     }
 
     //
@@ -190,7 +193,7 @@ export class UIFrame extends LitElementTheme {
             if (ev.target.matches(".ui-btn-close")) {
                 const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;
                 this.taskManager?.deactivate?.(location.hash);
-                self.dataset.hidden = "";
+                //self.dataset.hidden = "";
             }
         });
         return root;

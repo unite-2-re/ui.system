@@ -27,11 +27,16 @@ export class UITaskBar extends LitElementTheme {
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
     constructor(options = {icon: "", padding: "", taskManager: null}) {
-        super();
+        super(); const self = this as unknown as HTMLElement;
 
         //
         this.taskManager ??= options?.taskManager || initTaskManager();
         this.taskManager.addTasks(this.tasks || []);
+
+        // cupola
+        matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").addEventListener("change", ({matches}) => {
+            if (matches) { delete self.dataset.hidden; } else { self.dataset.hidden = ""; };
+        });
     }
 
     //
