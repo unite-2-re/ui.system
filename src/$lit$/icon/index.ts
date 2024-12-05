@@ -47,6 +47,19 @@ export class UILucideIcon extends LitElementTheme {
         if (options?.icon) { this.icon = options?.icon; };
         if (options?.padding) { self.style.setProperty("padding", options?.padding); };
         self.inert = true;
+
+        // vacuum issue
+        setInterval(()=>{
+            const icon = (self as any).shadowRoot?.querySelector?.("svg");
+            const computed = getComputedStyle(self);
+            const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
+            icon?.style?.setProperty?.("stroke", color, "");
+            icon?.style?.setProperty?.("color", color, "");
+
+            //
+            //(self as any)?.setAttribute("data-scheme", (self as any)?.closest("[data-scheme]")?.getAttribute?.("data-scheme") || (self as any)?.getAttribute?.("data-scheme"));
+            //(icon as any)?.setAttribute("data-scheme", (self as any)?.getAttribute?.("data-scheme"));
+        }, 100);
     }
 
     //
@@ -58,6 +71,7 @@ export class UILucideIcon extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         if (!self.classList?.contains?.("ui-icon")) self.classList?.add?.("ui-icon");
         if (!self.classList?.contains?.("u2-icon")) self.classList?.add?.("u2-icon");
+        //self.setAttribute("data-scheme", "dynamic-transparent");
     }
 
     //
@@ -67,6 +81,16 @@ export class UILucideIcon extends LitElementTheme {
             if (icons?.[ICON]) {
                 this.iconElement = icons?.createElement?.(icons?.[ICON]);
                 if (this.iconElement) {
+                    this.iconElement.dataset.highlight = "0";
+                    this.iconElement.dataset.alpha  = "0";
+
+                    //
+                    //const computed = getComputedStyle(this as unknown as HTMLElement);
+                    //const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
+                    //this.iconElement.style.setProperty("stroke", color, "");
+                    //this.iconElement.style.setProperty("color", color, "");
+
+                    //
                     this.iconElement.setAttribute("width", "100%");
                     this.iconElement.setAttribute("height", "100%");
                     this.iconElement.setAttribute("inert", "");

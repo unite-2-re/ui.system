@@ -24,13 +24,26 @@ export class UIShaped extends LitElementTheme {
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
     protected render() {
-        return html`${this.themeStyle}<slot></slot><ui-icon data-transparent data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
+        return html`${this.themeStyle}<slot></slot> <ui-icon data-scheme="dynamic-transparent" data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
     }
 
     //
     constructor(options = {icon: "", padding: ""}) {
         super(); const self = this as unknown as HTMLElement;
         if (options?.icon) { this.icon = options?.icon; };
+
+        // vacuum issue
+        //setInterval(()=>{
+            //const icon = (self as any).shadowRoot?.querySelector?.("ui-icon");
+            ///const computed = getComputedStyle(self);
+            //const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
+            //icon?.style?.setProperty?.("stroke", color, "");
+            //icon?.style?.setProperty?.("color", color, "");
+
+            //
+            //(self as any)?.setAttribute("data-scheme", (self as any)?.closest("[data-scheme]")?.getAttribute?.("data-scheme") || (self as any)?.getAttribute?.("data-scheme"));
+            //(icon as any)?.setAttribute("data-scheme", (self as any)?.getAttribute?.("data-scheme"));
+        //}, 100);
     }
 
     //
@@ -39,10 +52,8 @@ export class UIShaped extends LitElementTheme {
 
         //
         const self = this as unknown as HTMLElement;
-        if (!self.hasAttribute("data-transparent")) { self.setAttribute("data-transparent", ""); };
-        if (!self.hasAttribute("data-alpha")) { self.setAttribute("data-alpha", "0"); };
         if (!self.hasAttribute("data-chroma")) { self.setAttribute("data-chroma", "0.1"); };
-        if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "accent-inverse"); };
+        if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "solid"); };
         if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "0"); };
         if (!self.hasAttribute("data-alpha")) { self.setAttribute("data-alpha", "0"); };
         if (!self.classList?.contains?.("ui-shaped")) { self.classList?.add?.("ui-shaped"); };

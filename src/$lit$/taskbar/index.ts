@@ -48,7 +48,19 @@ export class UITaskBar extends LitElementTheme {
         }).catch(console.warn.bind(console));
 
         //
+        this.adaptiveTheme();
+
+        //
         return root;
+    }
+
+    //
+    protected adaptiveTheme() {
+        const self = this as unknown as HTMLElement;
+        const setTheme = ()=>{
+            self.setAttribute("data-scheme", document.body.matches(":has(ui-frame:not([data-hidden]))") ? "solid" : "accent-inverse");
+        }
+        setInterval(setTheme, 1000);
     }
 
     //
