@@ -294,6 +294,22 @@
             touch-action: none;
             resize: none;
         }
+
+        //
+        @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))
+        {
+            & {
+                inline-size: 100%;
+                block-size: 100%;
+                inset-inline-start: 0px;
+                inset-block-start : 0px;
+            }
+
+            .ui-title-bar :where(*),
+            .ui-title-bar ::slotted(*) {
+                display: none !important;
+            }
+        }
     }
 
     //

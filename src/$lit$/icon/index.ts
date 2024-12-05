@@ -53,12 +53,11 @@ export class UILucideIcon extends LitElementTheme {
             const icon = (self as any).shadowRoot?.querySelector?.("svg");
             const computed = getComputedStyle(self);
             const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
-            icon?.style?.setProperty?.("stroke", color, "");
-            icon?.style?.setProperty?.("color", color, "");
-
-            //
-            //(self as any)?.setAttribute("data-scheme", (self as any)?.closest("[data-scheme]")?.getAttribute?.("data-scheme") || (self as any)?.getAttribute?.("data-scheme"));
-            //(icon as any)?.setAttribute("data-scheme", (self as any)?.getAttribute?.("data-scheme"));
+            icon?.querySelectorAll?.("path").forEach((p)=>{
+                if (p.style.getPropertyValue("stroke") != color) p.style.setProperty("stroke", color, "");
+                if (p.style.getPropertyValue("color") != color) p.style.setProperty("color", color, "");
+                if (p.style.getPropertyValue("accent-color") != color) p.style.setProperty("accent-color", color, "");
+            });
         }, 100);
     }
 
@@ -85,10 +84,13 @@ export class UILucideIcon extends LitElementTheme {
                     this.iconElement.dataset.alpha  = "0";
 
                     //
-                    //const computed = getComputedStyle(this as unknown as HTMLElement);
-                    //const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
-                    //this.iconElement.style.setProperty("stroke", color, "");
-                    //this.iconElement.style.setProperty("color", color, "");
+                    const computed = getComputedStyle(this as unknown as HTMLElement);
+                    const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
+                    this.iconElement.querySelectorAll("path").forEach((p)=>{
+                        p.style.setProperty("stroke", color, "");
+                        p.style.setProperty("color", color, "");
+                        p.style.setProperty("accent-color", color, "");
+                    });
 
                     //
                     this.iconElement.setAttribute("width", "100%");

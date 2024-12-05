@@ -1,54 +1,40 @@
 <template>
-    <div class="left">
+    <div class="left" data-scheme="dynamic-transparent">
         <div
             class="ui-indicator ui-time"
-            data-scheme="dynamic-transparent"
-            data-transparent
-            data-alpha="0">
-            <span class="ui-time-hour" inert>00</span>:<span class="ui-time-minute" inert>00</span>
+            data-scheme="dynamic-transparent">
+            <span data-scheme="dynamic-transparent" class="ui-time-hour" inert>00</span>:<span data-scheme="dynamic-transparent" class="ui-time-minute" inert>00</span>
         </div>
     </div>
-    <div class="center"><slot></slot></div>
-    <div class="right">
+    <div class="center" data-scheme="dynamic-transparent"><slot></slot></div>
+    <div class="right" data-scheme="dynamic-transparent">
         <slot name="status"></slot>
         <a
             draggable="false"
             class="ui-indicator ui-icon ui-github" style="pointer-events: auto;" href="https://github.com/orgs/unite-2-re"
             data-scheme="dynamic-transparent"
-            data-transparent
             data-tooltip="Our Github Repository"
-            data-alpha="0"
             data-action="open-link"
             data-href="https://github.com/orgs/unite-2-re">
             <ui-icon inert
                 icon="github" class="icon-wrap ui-icon-state ui-github"
-                data-alpha="0"
                 data-scheme="dynamic-transparent"
-                data-transparent
             ></ui-icon>
         </a>
         <div
             class="ui-indicator ui-icon"
-            data-scheme="dynamic-transparent"
-            data-transparent
-            data-alpha="0">
+            data-scheme="dynamic-transparent">
             <ui-icon inert
                 icon="wifi-off" class="icon-wrap ui-icon-state ui-network"
                 data-scheme="dynamic-transparent"
-                data-alpha="0"
-                data-transparent
             ></ui-icon>
         </div>
         <div
             ref="target" class="ui-indicator ui-icon"
-            data-scheme="dynamic-transparent"
-            data-transparent
-            data-alpha="0">
+            data-scheme="dynamic-transparent">
             <ui-icon inert
                 icon="battery" class="icon-wrap ui-icon-state ui-battery"
-                data-alpha="0"
                 data-scheme="dynamic-transparent"
-                data-transparent
             ></ui-icon>
         </div>
     </div>

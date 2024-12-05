@@ -38,6 +38,7 @@
             inset-block-end: auto;
             position: fixed;
             z-index: 999999;
+            pointer-events: none;
         }
 
         /* */
@@ -73,6 +74,11 @@
             box-sizing: border-box;
             place-items: center;
             place-content: center;
+        }
+
+        /* */
+        .right {
+            gap: 1rem;
         }
 
         /* */

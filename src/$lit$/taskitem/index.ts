@@ -23,6 +23,14 @@ const focusTask = (taskManager, target: HTMLElement)=>{
     } else {
         taskManager?.focus?.(hash);
     }
+
+    //
+    const navbar = document.querySelector("ui-taskbar") as HTMLElement;
+    if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
+        if (navbar) { navbar.dataset.hidden = ""; };
+    }
+
+    //
     requestIdleCallback(()=>navigator?.vibrate?.([10]));
 }
 
@@ -39,7 +47,7 @@ export class UITaskItem extends LitElementTheme {
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
     protected render() {
-        return html`${this.themeStyle}  <ui-icon data-scheme="dynamic-transparent" inert icon=${this.icon} data-highlight="0" data-alpha="0"></ui-icon>`;
+        return html`${this.themeStyle} <ui-icon data-scheme="dynamic-transparent" inert icon=${this.icon} data-highlight="0" data-alpha="0"></ui-icon> <span>${this.label}</span>`;
         //return html`${this.themeStyle}<slot></slot>`;
     }
 

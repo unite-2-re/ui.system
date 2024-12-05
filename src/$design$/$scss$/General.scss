@@ -51,26 +51,31 @@
         {&::part(ui-back-button) { display: none; }}
 
     //
-    body:has(ui-frame:not([data-hidden])) ui-taskbar
-    {
-        & { --data-taskbar-shift: 2.5rem; }
-        &:hover, &:active { --data-taskbar-shift: 0px; }
-        &:not(:hover, :active) { --data-taskbar-shift: 2.5rem; }
-    }
+    @media (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
 
-    //
-    body:not(:has(ui-frame:not([data-hidden]))) ui-taskbar
-    {
-        & {
-            --theme-surface-alpha: 0;
-            --theme-surface-chroma: 1;
-            --highlight-coefficient: 0;
+        //
+        body:has(ui-frame:not([data-hidden])) ui-taskbar
+        {
+            & { --data-taskbar-shift: 2.5rem; }
+            &:hover, &:active { --data-taskbar-shift: 0px; }
+            &:not(:hover, :active) { --data-taskbar-shift: 2.5rem; }
         }
 
         //
-        & {
-            box-shadow: none;
-            pointer-events: none;
+        body:not(:has(ui-frame:not([data-hidden]))) ui-taskbar
+        {
+            & {
+                --theme-surface-alpha: 0;
+                --theme-surface-chroma: 1;
+                --highlight-coefficient: 0;
+            }
+
+            //
+            & {
+                box-shadow: none;
+                pointer-events: none;
+            }
         }
+
     }
 }

@@ -206,5 +206,35 @@
 
     //
     @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))
-        {:host(ui-taskbar) { display: none; }}
+    {:host(ui-taskbar) {
+        & {
+            flex-direction: column;
+            inline-size: 100%;
+            block-size: 100%;
+            padding-block-start: 2rem;
+        }
+
+        //
+        .ui-app-menu, .ui-status {
+            display: none !important;
+        }
+
+        //
+        .ui-task-bar {
+            grid-column: 1 / -1;
+            inline-size: 100%;
+            block-size: 100%;
+            flex-direction: column;
+            gap: 0px;
+        }
+    }}
+
+    //
+    :host(ui-taskbar[data-hidden]) {
+        display: none !important;
+    }
+
+    //
+    //@media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))
+        //{:host(ui-taskbar) { display: none; }}
 }

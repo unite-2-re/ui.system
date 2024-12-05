@@ -58,7 +58,11 @@ export class UITaskBar extends LitElementTheme {
     protected adaptiveTheme() {
         const self = this as unknown as HTMLElement;
         const setTheme = ()=>{
-            self.setAttribute("data-scheme", document.body.matches(":has(ui-frame:not([data-hidden]))") ? "solid" : "accent-inverse");
+            if (matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
+                self.setAttribute("data-scheme", document.body.matches(":has(ui-frame:not([data-hidden]))") ? "solid" : "accent-inverse");
+            } else {
+                self.setAttribute("data-scheme", "solid");
+            }
         }
         setInterval(setTheme, 1000);
     }
@@ -80,6 +84,11 @@ export class UITaskBar extends LitElementTheme {
 
         //
         this.taskManager?.addTasks?.(this.tasks || []);
+
+        //
+        if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
+            self.dataset.hidden = "";
+        }
     }
 
 }

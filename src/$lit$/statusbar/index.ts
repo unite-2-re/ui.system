@@ -38,7 +38,7 @@ export class UIStatusBar extends LitElementTheme {
             }
         }).catch(console.warn.bind(console));
 
-
+        //
         return root;
     }
 
