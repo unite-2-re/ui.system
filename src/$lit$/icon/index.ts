@@ -76,7 +76,7 @@ export class UILucideIcon extends LitElementTheme {
                     if (self.dataset.scheme == "dynamic" || self.dataset.scheme == "dynamic-transparent") {
                         const computed = getComputedStyle(this as unknown as HTMLElement);
                         const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
-                        this.iconElement.querySelectorAll("path").forEach((p)=>{
+                        this.iconElement.querySelectorAll("path, rect, line, circle, ellipse").forEach((p: any)=>{
                             p.style.setProperty("stroke", color, "");
                             p.style.setProperty("color", color, "");
                             p.style.setProperty("accent-color", color, "");

@@ -29,9 +29,23 @@ export class UINavBar extends LitElementTheme {
     //
     protected render() {
         return html`${this.themeStyle}
-            <button type="button" class="ui-back-button"  part="ui-back-button"  data-transparent data-scheme="dynamic-transparent" @click=${this.backAction.bind(this)}><ui-icon icon="chevron-down"/></button>
-            <button type="button" class="ui-title-handle" part="ui-title-handle" data-transparent data-scheme="dynamic-transparent"><ui-icon icon=${this.icon}/>${this.label}</button>
-            <button type="button" class="ui-menu-button"  part="ui-menu-button"  data-transparent data-scheme="dynamic-transparent" @click=${this.menuAction.bind(this)}><ui-icon icon="menu"/></button>`;
+            <button type="button" class="ui-menu-button"  part="ui-menu-button"  data-transparent data-scheme="dynamic-transparent" @click=${this.menuAction.bind(this)}><ui-icon inert data-transparent data-scheme="dynamic-transparent" icon="menu"></ui-icon></button>
+            <button type="button" class="ui-back-button"  part="ui-back-button"  data-transparent data-scheme="dynamic-transparent" @click=${this.backAction.bind(this)}><ui-icon inert data-transparent data-scheme="dynamic-transparent" icon="chevron-down"></ui-icon></button>
+            <button type="button" class="ui-title-handle" part="ui-title-handle" data-transparent data-scheme="dynamic-transparent" @click=${this.menuAction.bind(this)}><ui-icon inert data-transparent data-scheme="dynamic-transparent" icon=${this.icon}></ui-icon><span data-transparent data-scheme="dynamic-transparent">${this.label}</span></button>
+        `;
+    }
+
+    //
+    protected adaptiveTheme() {
+        const self = this as unknown as HTMLElement;
+        const setTheme = ()=>{
+            //if (matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
+                self.setAttribute("data-scheme", document.body.matches(":has(ui-frame:not([data-hidden]))") ? "solid" : "accent-inverse");
+            //} else {
+                //self.setAttribute("data-scheme", "solid");
+            //}
+        }
+        setInterval(setTheme, 1000);
     }
 
     //
@@ -68,6 +82,7 @@ export class UINavBar extends LitElementTheme {
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         this.importFromTemplate(htmlCode);
+        this.adaptiveTheme();
         return root;
     }
 

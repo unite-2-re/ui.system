@@ -1,4 +1,12 @@
 @layer ui-frame-fix {
+    //
+    @property --data-taskbar-shift
+    {
+        inherits: true;
+        syntax: "<length-percentage>";
+        initial-value: 0px;
+    }
+
     // if has identified, do top level
     ui-frame:has(:target),
     ui-frame:target
@@ -32,7 +40,7 @@
         //
         & {
             --theme-surface-alpha: 0;
-            --theme-surface-chroma: 1;
+            --theme-surface-chroma: 0;
             --highlight-coefficient: 0;
         }
 
@@ -67,7 +75,7 @@
         {
             & {
                 --theme-surface-alpha: 0;
-                --theme-surface-chroma: 1;
+                --theme-surface-chroma: 0;
                 --highlight-coefficient: 0;
             }
 

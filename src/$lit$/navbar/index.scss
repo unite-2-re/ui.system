@@ -13,10 +13,14 @@
 
             /* */
             box-sizing: border-box;
+            //background-color: transparent;
         }
 
         //
         & {
+            --data-taskbar-shift: 0px;
+
+            //
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -29,23 +33,31 @@
             white-space-collapse: collapse;
             text-wrap: nowrap;
             text-spacing-trim: trim-start;
-        }
+            pointer-events: auto;
 
-        //
-        & {
+            /* */
+            z-index: calc(9999 + var(--z-index, 0));
+
+            /* */
+            inline-size: 100cqi;
+            block-size: var(--taskbar-size, 3rem);
+            min-block-size: max-content;
+
+            /* */
             display: inline grid;
             grid-template-rows: minmax(0px, 1fr);
             grid-template-columns:
                 [menu-button] minmax(var(--taskbar-size, 3rem), max-content)
                 [title-label] minmax(0px, 1fr)
                 [back-button] minmax(var(--taskbar-size, 3rem), max-content);
+
+            /* */
+            translate: 0px var(--data-taskbar-shift, 0px);
         }
 
         //
-        & {
-            inline-size: 100cqi;
-            block-size: var(--taskbar-size, 3rem);
-            min-block-size: max-content;
+        :where(*), ::slotted(*) {
+            background-color: transparent;
         }
 
         //
@@ -66,7 +78,7 @@
 
         //
         & {
-            position: fixed;
+            position: fixed !important;
             inset: 0px;
             inset-block-start: auto;
             z-index: 9999;
@@ -101,6 +113,18 @@
         }
 
         //
+        ::slotted(ui-icon), ui-icon {
+            aspect-ratio: 1 / 1;
+            inline-size: max-content;
+            block-size: 100%;
+            box-sizing: border-box;
+            position: relative;
+            z-index: calc(1 + var(--z-index, 0));
+            pointer-events: none;
+            //padding: 0.125rem;
+        }
+
+        //
         & > :where(.ui-back-button, .ui-menu-button)
         {
             inline-size: max-content;
@@ -119,6 +143,9 @@
             //
             outline: none 0px transparent;
             border: none 0px transparent;
+
+            //
+            z-index: calc(9999 + var(--z-index, 0));
         }
 
         //
@@ -136,7 +163,7 @@
         //
         & {
             --theme-surface-alpha: 0;
-            --theme-surface-chroma: 1;
+            --theme-surface-chroma: 0;
         }
 
         //

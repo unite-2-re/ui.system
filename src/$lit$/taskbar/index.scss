@@ -1,6 +1,14 @@
 @layer ui-taskbar {
 
     //
+    @property --data-taskbar-shift
+    {
+        inherits: true;
+        syntax: "<length-percentage>";
+        initial-value: 0px;
+    }
+
+    //
     :host(ui-taskbar)
     {
         /* */
@@ -14,13 +22,18 @@
 
             /* */
             box-sizing: border-box;
+            //pointer-events: none;
         }
 
         //
         & {
+            --data-taskbar-shift: 0px;
+
+            //
             display: inline grid;
             block-size: var(--taskbar-size, 3rem);
             box-sizing: border-box;
+            pointer-events: auto;
 
             //
             grid-template-rows   : minmax(0px, 1fr);
@@ -30,7 +43,8 @@
                 [ui-status] minmax(4rem, max-content);
 
             //
-            --translate-y: var(--data-taskbar-shift, 0px);
+            //--translate-y: var(--data-taskbar-shift, 0px);
+            //translate: 0px var(--data-taskbar-shift, 0px) !important;
         }
 
         //
@@ -58,10 +72,10 @@
         //
         & {
             inline-size: 100%;
-            position: fixed;
+            position: fixed !important;
             inset: 0px;
             inset-block-start: auto;
-            z-index: 9999;
+            z-index: calc(9999 + var(--z-index, 0));
             box-sizing: border-box;
 
             //
