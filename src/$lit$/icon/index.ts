@@ -47,18 +47,6 @@ export class UILucideIcon extends LitElementTheme {
         if (options?.icon) { this.icon = options?.icon; };
         if (options?.padding) { self.style.setProperty("padding", options?.padding); };
         self.inert = true;
-
-        // vacuum issue
-        setInterval(()=>{
-            const icon = (self as any).shadowRoot?.querySelector?.("svg");
-            const computed = getComputedStyle(self);
-            const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
-            icon?.querySelectorAll?.("path").forEach((p)=>{
-                if (p.style.getPropertyValue("stroke") != color) p.style.setProperty("stroke", color, "");
-                if (p.style.getPropertyValue("color") != color) p.style.setProperty("color", color, "");
-                if (p.style.getPropertyValue("accent-color") != color) p.style.setProperty("accent-color", color, "");
-            });
-        }, 100);
     }
 
     //
@@ -84,13 +72,16 @@ export class UILucideIcon extends LitElementTheme {
                     this.iconElement.dataset.alpha  = "0";
 
                     //
-                    const computed = getComputedStyle(this as unknown as HTMLElement);
-                    const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
-                    this.iconElement.querySelectorAll("path").forEach((p)=>{
-                        p.style.setProperty("stroke", color, "");
-                        p.style.setProperty("color", color, "");
-                        p.style.setProperty("accent-color", color, "");
-                    });
+                    const self = this as unknown as HTMLElement;
+                    if (self.dataset.scheme == "dynamic" || self.dataset.scheme == "dynamic-transparent") {
+                        const computed = getComputedStyle(this as unknown as HTMLElement);
+                        const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
+                        this.iconElement.querySelectorAll("path").forEach((p)=>{
+                            p.style.setProperty("stroke", color, "");
+                            p.style.setProperty("color", color, "");
+                            p.style.setProperty("accent-color", color, "");
+                        });
+                    };
 
                     //
                     this.iconElement.setAttribute("width", "100%");
