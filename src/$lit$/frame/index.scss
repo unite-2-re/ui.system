@@ -128,6 +128,7 @@
                 inline-size: 100%;
                 block-size: 100%;
                 min-block-size: var(--title-bar-height, 2rem);
+                text-align: start;
 
                 overflow: hidden;
                 box-sizing: border-box;
@@ -163,11 +164,12 @@
                 align-content: safe center;
                 pointer-events: none;
                 user-select: none;
-                padding-inline: 0.5rem;
                 box-sizing: border-box;
+                text-align: start;
 
                 grid-column: 1 / -1;
                 grid-row: 1 / 1 span;
+                padding-inline: 1rem;
             }
 
             /* */
@@ -178,6 +180,7 @@
                     flex-direction: row;
                     flex-wrap: no-wrap;
                     box-sizing: border-box;
+                    text-align: start;
 
                     inline-size: 100%;
                     block-size: 100%;
@@ -314,6 +317,7 @@
 
             .ui-title-bar :where(*),
             .ui-title-bar ::slotted(*) {
+                text-align: start;
                 display: none !important;
             }
         }
