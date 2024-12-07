@@ -24,7 +24,7 @@
         & {
             --initial-inline-size: 48rem;
             --initial-block-size : 32rem;
-            --title-bar-height   : 2rem;
+            --title-bar-height   : 2.5rem;
             --height-adjust      : 0px;
 
             /* */
@@ -127,7 +127,7 @@
 
                 inline-size: 100%;
                 block-size: 100%;
-                min-block-size: var(--title-bar-height, 2rem);
+                min-block-size: var(--title-bar-height, 2.5rem);
                 text-align: start;
 
                 overflow: hidden;
@@ -137,7 +137,7 @@
                 grid-template-rows: minmax(0px, 1fr);
                 grid-template-columns:
                     [title] minmax(0px, 1fr)
-                    [buttons] minmax(var(--title-bar-height, 2rem), max-content);
+                    [buttons] minmax(var(--title-bar-height, 2.5rem), max-content);
 
                 grid-column: 1 / -1;
                 grid-row: 1 / 1 span;
@@ -264,7 +264,7 @@
                     box-sizing: border-box;
                     border: none 0px transparent;
                     outline: none 0px transparent;
-                    padding: 0.25rem;
+                    padding: 0.5rem;
                     user-select: none;
                 }
 
@@ -313,8 +313,13 @@
                 block-size: 100%;
                 inset-inline-start: 0px;
                 inset-block-start : 0px;
+
+                //
+                --title-bar-height: 2rem;
             }
 
+            //
+            .ui-title-bar {  min-block-size: var(--title-bar-height, 2rem); }
             .ui-title-bar :where(*),
             .ui-title-bar ::slotted(*) {
                 text-align: start;
