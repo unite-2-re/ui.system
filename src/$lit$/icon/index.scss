@@ -10,14 +10,19 @@
             -webkit-user-drag: none;
             -moz-user-drag: none;
 
-            /* */
+            //
             box-sizing: border-box;
 
-            /* */
+            //
             white-space: nowrap;
             white-space-collapse: collapse;
             text-wrap: nowrap;
             text-spacing-trim: trim-start;
+        }
+
+        /* temporary workaround */
+        ::slotted(*) {
+            display: none !important;
         }
 
         /* */
@@ -40,6 +45,24 @@
             display: inline flex;
             place-items: center;
             place-content: center;
+
+            //
+            background-size: contain;
+            background-attachment: local;
+            background-repeat: no-repeat;
+            background-clip: content-box;
+            background-origin: content-box;
+            background-color: var(--current-glyph-color, currentColor);
+            color: var(--current-glyph-color, currentColor);
+
+            //
+            mask-image: var(--mask-image);
+            mask-origin: content-box;
+            mask-clip: content-box;
+            mask-mode: alpha;
+            mask-position: center;
+            mask-repeat: no-repeat;
+            mask-size: contain;
         }
 
         /* */

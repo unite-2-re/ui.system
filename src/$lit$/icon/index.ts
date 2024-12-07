@@ -31,6 +31,25 @@ const toCamelCase = (str: string) => {
         .join("");
 }
 
+//
+const iconMap = new Map<string, string>();
+const loadAsImage = (name: string, creator?: (name: string)=>any)=>{
+    if (iconMap.has(name)) {
+        return iconMap.get(name);
+    };
+
+    //
+    const element = creator ? creator(name) : null;
+    //const serializer = new XMLSerializer();
+    const text = element.outerHTML;//element ? serializer.serializeToString(element) : "";
+    const file = new Blob([`<?xml version=\"1.0\" encoding=\"UTF-8\"?>`, text], {
+        type: "image/svg+xml"
+    });
+    const url = URL.createObjectURL(file);
+    iconMap.set(name, url);
+    return url;
+};
+
 // @ts-ignore
 @customElement('ui-icon')
 export class UILucideIcon extends LitElementTheme {
@@ -39,7 +58,7 @@ export class UILucideIcon extends LitElementTheme {
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
-    protected render() { return html`${this.themeStyle}${this.iconElement}`; }
+    protected render() { return html`${this.themeStyle}`; }
 
     //
     constructor(options = {icon: "", padding: ""}) {
@@ -66,7 +85,11 @@ export class UILucideIcon extends LitElementTheme {
         ICON_MODULE.then((icons)=>{
             const ICON = toCamelCase(this.icon);
             if (icons?.[ICON]) {
-                this.iconElement = icons?.createElement?.(icons?.[ICON]);
+                const url = loadAsImage(ICON, (U)=>icons?.createElement?.(icons?.[U]));
+                const self = this as unknown as HTMLElement;
+                self.style.setProperty("--mask-image", `url(\"${url}\")`);
+
+                /*this.iconElement = icons?.createElement?.(icons?.[ICON]);
                 if (this.iconElement) {
                     this.iconElement.dataset.highlight = "0";
                     this.iconElement.dataset.alpha  = "0";
@@ -87,7 +110,7 @@ export class UILucideIcon extends LitElementTheme {
                     this.iconElement.setAttribute("width", "100%");
                     this.iconElement.setAttribute("height", "100%");
                     this.iconElement.setAttribute("inert", "");
-                }
+                }*/
             }
         }).catch(console.warn.bind(console));
     }
