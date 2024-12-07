@@ -40,6 +40,9 @@
             position: fixed;
             z-index: 999999;
             pointer-events: none;
+
+            /* design v1 */
+            background-color: transparent !important;
         }
 
         /* */
@@ -71,20 +74,8 @@
         & .right        { grid-column: 3 / 3 span; grid-row: 1 / 1 span; justify-self: safe end;    justify-items: safe end   ; justify-content: safe end   ; gap: 0rem; }
 
         /* */
-        ui-icon, ::slotted(ui-icon)
-        {
-            display: inline flex;
-            inline-size: max-content;
-            block-size: 100%;
-            aspect-ratio: 1 / 1;
-            box-sizing: border-box;
-            place-items: center;
-            place-content: center;
-        }
-
-        /* */
         .right {
-            gap: 1rem;
+            gap: 0.5rem;
         }
 
         /* */
@@ -99,6 +90,19 @@
                 block-size: 100%;
                 flex-direction: row;
             }
+        }
+
+        /* */
+        ui-icon, ::slotted(ui-icon)
+        {
+            display: inline flex;
+            inline-size: max-content;
+            block-size: 100%;
+            aspect-ratio: 1 / 1;
+            box-sizing: border-box;
+            place-items: center;
+            place-content: center;
+            background-color: var(--current-glyph-color, currentColor);
         }
     }
 
