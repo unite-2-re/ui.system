@@ -42,6 +42,9 @@
 
         /* */
         & {
+            --mask-image: linear-gradient(#0000, #0000);
+
+            //
             display: inline flex;
             place-items: center;
             place-content: center;
