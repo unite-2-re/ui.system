@@ -114,14 +114,15 @@
 
         //
         ::slotted(ui-icon), ui-icon {
+            pointer-events: none;
             aspect-ratio: 1 / 1;
             inline-size: max-content;
             block-size: 100%;
             box-sizing: border-box;
             position: relative;
+            background-color: var(--current-glyph-color, currentColor);
             z-index: calc(1 + var(--z-index, 0));
-            pointer-events: none;
-            //padding: 0.125rem;
+            padding: 0.75rem;
         }
 
         //
@@ -136,7 +137,8 @@
             max-block-size: 100cqmin;
 
             //
-            padding: 0.75rem;
+            //padding: 0.75rem;
+            padding: 0px;
             cursor: pointer;
             pointer-events: auto;
 
