@@ -53,7 +53,7 @@ export class UIMenuItem extends LitElementTheme {
 
         //
         self.style.setProperty("display", "none", "important");
-        self.setAttribute("data-scheme", "dynamic-transparent");
+        //self.setAttribute("data-scheme", "dynamic-transparent");
         self.setAttribute("data-highlight", "0");
         self.setAttribute("data-alpha", "0");
         self.setAttribute("data-transparent", "");

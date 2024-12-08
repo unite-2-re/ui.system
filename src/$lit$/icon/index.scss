@@ -18,6 +18,9 @@
             white-space-collapse: collapse;
             text-wrap: nowrap;
             text-spacing-trim: trim-start;
+
+            //
+            will-change: contents, background-color, image-mask;
         }
 
         /* temporary workaround */

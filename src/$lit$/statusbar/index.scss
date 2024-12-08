@@ -13,6 +13,7 @@
 
             /* */
             box-sizing: border-box;
+            will-change: contents;
             //background-color: transparent;
         }
 
@@ -80,7 +81,11 @@
 
         /* */
         .ui-indicator {
-            & { padding: 0.5rem; }
+            & {
+                padding: 0.5rem;
+                background-color: transparent;
+                pointer-events: none;
+            }
             &, a {
                 display: inline flex;
                 place-items: center;

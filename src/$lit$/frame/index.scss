@@ -18,6 +18,47 @@
             white-space-collapse: collapse;
             text-wrap: nowrap;
             text-spacing-trim: trim-start;
+
+            //
+            -webkit-font-smoothing: none;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeSpeed;
+            font-smooth: 0px;
+            font-smooth: never;
+
+            //
+            //-webkit-perspective: 1000px;
+            //-moz-perspective: 1000px;
+            //-ms-perspective: 1000px;
+            //perspective: 1000px;
+
+            //
+            -webkit-backface-visibility: visible;
+            -moz-backface-visibility: visible;
+            -ms-backface-visibility: visible;
+            backface-visibility: visible;
+
+            /* Enable hardware acceleration */
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+
+            //
+            transform-origin: 50% 50%;
+
+            /* Some filter hack */
+            filter: grayscale(0%);
+
+            //
+            //scrollbar-width: none;
+            //overflow: hidden;
+
+            /* Disable transition by default */
+            -webkit-transition: none;
+            -moz-transition: none;
+            -o-transition: none;
+            transition: none;
         }
 
         //
@@ -54,24 +95,14 @@
 
         /* */
         ::slotted(.ui-content) {
-            will-change: transform, contents;
+            //will-change: transform, contents;
         }
 
         /* */
         & {
-            will-change:
-                position,
-                transform,
-                left, top,
-                inset-inline-start,
-                inset-block-start,
-                inline-size,
-                block-size
-                !important;
-
             /* */
-            inline-size: clamp(0px, var(--inline-size, 100%), calc(var(--bound-inline-size, 0px) - var(--rx, 0px)));
-            block-size : clamp(0px, var(--block-size , 100%), calc(var(--bound-block-size , 0px) - var(--ry, 0px)));
+            inline-size: clamp(0px, var(--inline-size, 100%), calc(var(--bound-inline-size, 0px) /*- var(--rx, 0px)*/));
+            block-size : clamp(0px, var(--block-size , 100%), calc(var(--bound-block-size , 0px) /*- var(--ry, 0px)*/));
 
             /* */
             position: fixed;

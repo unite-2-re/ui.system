@@ -24,7 +24,7 @@ export class UIShaped extends LitElementTheme {
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
     protected render() {
-        return html`${this.themeStyle}<slot></slot> <ui-icon data-scheme="dynamic-transparent" data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
+        return html`${this.themeStyle}<slot></slot> <ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
     }
 
     //

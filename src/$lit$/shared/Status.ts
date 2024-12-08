@@ -6,7 +6,9 @@ const setElementContent = (selector, value, root = document)=>{
 
 //
 const setElementIcon = (selector, value, root = document)=>{
-    root.querySelectorAll(selector).forEach((element)=>element.setAttribute("icon", value));
+    root.querySelectorAll(selector).forEach((element)=>{
+        if (element?.getAttribute?.("icon") != value) { element?.setAttribute?.("icon", value); };
+    });
 }
 
 //
@@ -24,7 +26,7 @@ export const runTimeStatus = (async(root = document)=>{
 
     //
     updateTime();
-    setInterval(updateTime, 500);
+    setInterval(updateTime, 15000);
     document.addEventListener("DOMContentLoaded", updateTime, { once: true });
 });
 

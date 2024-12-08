@@ -1,10 +1,10 @@
 <template>
-    <div class="ui-app-menu" data-transparent data-scheme="dynamic-transparent">
+    <div class="ui-app-menu" data-transparent>
         <!--<ui-icon inert icon="layout-grid"></ui-icon>-->
         <!--<slot name="menu"></slot>-->
     </div>
 
-    <div class="ui-task-bar" data-transparent data-scheme="dynamic-transparent">
+    <div class="ui-task-bar" data-transparent>
         <!--<div v-for="task in tasks"
             :class="{'ui-focus': task.id == currentHash, 'ui-active': task.active}"
             :key="task.id"
@@ -20,7 +20,7 @@
 
         <slot></slot>
     </div>
-    <div class="ui-status" data-transparent data-scheme="dynamic-transparent">
+    <div class="ui-status" data-transparent>
         <!-- -->
         <slot name="status"></slot>
 
@@ -28,7 +28,6 @@
         <a
             draggable="false"
             class="ui-indicator ui-icon ui-github" style="pointer-events: auto;" href="https://github.com/orgs/unite-2-re"
-            data-scheme="dynamic-transparent"
             data-tooltip="Our Github Repository"
             data-alpha="0"
             data-transparent
@@ -38,7 +37,6 @@
             <ui-icon inert
                 icon="github" class="icon-wrap ui-icon-state ui-github"
                 data-alpha="0"
-                data-scheme="dynamic-transparent"
                 data-transparent
             ></ui-icon>
         </a>
@@ -46,13 +44,11 @@
         <!-- -->
         <div
             class="ui-indicator ui-icon"
-            data-scheme="dynamic-transparent"
             data-transparent
             data-alpha="0"
             data-highlight-hover="2">
             <ui-icon inert
                 icon="wifi-off" class="icon-wrap ui-icon-state ui-network"
-                data-scheme="dynamic-transparent"
                 data-alpha="0"
                 data-transparent
             ></ui-icon>
@@ -61,7 +57,6 @@
         <!-- -->
         <div
             ref="target" class="ui-indicator ui-icon"
-            data-scheme="dynamic-transparent"
             data-transparent
             data-alpha="0"
             data-highlight-hover="2">
@@ -69,14 +64,12 @@
                 icon="battery" class="icon-wrap ui-icon-state ui-battery"
                 data-alpha="0"
                 data-transparent
-                data-scheme="dynamic-transparent"
             ></ui-icon>
         </div>
 
         <!-- -->
         <div
             class="ui-indicator ui-time"
-            data-scheme="dynamic-transparent"
             data-transparent
             data-alpha="0"
             data-highlight-hover="2">

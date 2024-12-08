@@ -29,9 +29,9 @@ export class UINavBar extends LitElementTheme {
     //
     protected render() {
         return html`${this.themeStyle}
-            <button type="button" class="ui-menu-button"  part="ui-menu-button"  data-transparent data-scheme="dynamic-transparent" @click=${this.menuAction.bind(this)}><ui-icon inert data-transparent data-scheme="dynamic-transparent" icon="menu"></ui-icon></button>
-            <button type="button" class="ui-back-button"  part="ui-back-button"  data-transparent data-scheme="dynamic-transparent" @click=${this.backAction.bind(this)}><ui-icon inert data-transparent data-scheme="dynamic-transparent" icon="chevron-down"></ui-icon></button>
-            <button type="button" class="ui-title-handle" part="ui-title-handle" data-transparent data-scheme="dynamic-transparent" @click=${this.menuAction.bind(this)}><ui-icon inert data-transparent data-scheme="dynamic-transparent" icon=${this.icon}></ui-icon><span data-transparent data-scheme="dynamic-transparent">${this.label}</span></button>
+            <button type="button" class="ui-menu-button"  part="ui-menu-button"  data-transparent @click=${this.menuAction.bind(this)}><ui-icon inert data-transparent icon="menu"></ui-icon></button>
+            <button type="button" class="ui-back-button"  part="ui-back-button"  data-transparent @click=${this.backAction.bind(this)}><ui-icon inert data-transparent icon="chevron-down"></ui-icon></button>
+            <button type="button" class="ui-title-handle" part="ui-title-handle" data-transparent @click=${this.menuAction.bind(this)}><ui-icon inert data-transparent icon=${this.icon}></ui-icon><span data-transparent>${this.label}</span></button>
         `;
     }
 
