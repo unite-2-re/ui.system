@@ -50,8 +50,8 @@ const makeControl = (frameElement: HTMLElement)=>{
     if (frameElement && frameElement.parentNode) {
         // @ts-ignore
         const pn = (frameElement.offsetParent ?? frameElement.host ?? document.documentElement) as HTMLElement;
-        frameElement.style.setProperty("--drag-x", `${(pn.clientWidth  - Math.min(Math.max(frameElement.offsetWidth , 48*16), pn.clientWidth)) * 0.5}`, "");
-        frameElement.style.setProperty("--drag-y", `${(pn.clientHeight - Math.min(Math.max(frameElement.offsetHeight, 24*16), pn.clientHeight)) * 0.5}`, "");
+        frameElement.style.setProperty("--shift-x", `${(pn.clientWidth  - Math.min(Math.max(frameElement.offsetWidth , 48*16), pn.clientWidth)) * 0.5}`, "");
+        frameElement.style.setProperty("--shift-y", `${(pn.clientHeight - Math.min(Math.max(frameElement.offsetHeight, 24*16), pn.clientHeight)) * 0.5}`, "");
 
         //
         /*frameElement?.shadowRoot?.querySelector(".ui-title-handle")?.addEventListener?.("pointerdown", ()=>{

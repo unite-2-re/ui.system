@@ -1,4 +1,124 @@
 @layer ui-frame {
+
+    //
+    @property --rx {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --ry {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+
+    //
+    @property --sp-x {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --sp-y {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+
+    //
+    @property --inline-size {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --block-size {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --bound-inline-size {
+        initial-value: 100cqi;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --bound-block-size {
+        initial-value: 100cqb;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+
+    //
+    @property --limit-drag-x {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --limit-drag-y {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+
+
+    //
+    @property --ds-x {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --ds-y {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --rs-x {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --rs-y {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+
+    //
+    @property --initial-inline-size {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --initial-block-size {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
     :host
     {
         &, :where(*), ::slotted(*) {
@@ -68,29 +188,38 @@
             --title-bar-height   : 2.5rem;
             --height-adjust      : 0px;
 
-            /* */
-            --bound-inline-size: calc(100cqi);
-            --bound-block-size : calc(100cqb - var(--height-adjust, 0px));
 
             /* */
             --safe-area-left : 0px;
             --safe-area-right: 0px;
 
-            /* */
-            --ds-x: clamp(0px, var(--rx, 0px), var(--bound-inline-size, 100%));
-            --ds-y: clamp(0px, var(--ry, 0px), var(--bound-block-size , 100%));
+            /* maximum available size */
+            --bound-inline-size: calc(100cqi);
+            --bound-block-size : calc(100cqb - var(--height-adjust, 0px));
 
-            /* */
-            --rs-x: clamp(0px, calc(var(--resize-x, 0) * var(--zpx, 1px)), calc(var(--bound-inline-size, 0px) - var(--initial-inline-size, 100%)));
-            --rs-y: clamp(0px, calc(var(--resize-y, 0) * var(--zpx, 1px)), calc(var(--bound-block-size , 0px) - var(--initial-block-size , 100%)));
+            /* resizing relation */
+            --rs-x: clamp(0px, calc(var(--resize-x, 0) * var(--zpx, 1px)), calc(var(--bound-inline-size, 100cqi) - var(--initial-inline-size, 100%)));
+            --rs-y: clamp(0px, calc(var(--resize-y, 0) * var(--zpx, 1px)), calc(var(--bound-block-size , 100cqb) - var(--initial-block-size , 100%)));
 
-            /* */
-            --inline-size: min(calc(var(--initial-inline-size, 100%) + var(--rs-x, 0px)), var(--bound-inline-size, 100%));
-            --block-size : min(calc(var(--initial-block-size , 100%) + var(--rs-y, 0px)), var(--bound-block-size , 100%));
+            /* resized window size */
+            --inline-size: min(calc(var(--initial-inline-size, 100%) + var(--rs-x, 0px)), calc(var(--bound-inline-size, 100cqi) - (var(--shift-x, 0) * var(--zpx, 1px))));
+            --block-size : min(calc(var(--initial-block-size , 100%) + var(--rs-y, 0px)), calc(var(--bound-block-size , 100cqb) - (var(--shift-y, 0) * var(--zpx, 1px))));
 
-            /* */
-            --rx: clamp(0px, calc(var(--drag-x, 0) * var(--zpx, 1px)), max(calc(var(--bound-inline-size, 100%) - var(--inline-size, 100%)), 0px));
-            --ry: clamp(0px, calc(var(--drag-y, 0) * var(--zpx, 1px)), max(calc(var(--bound-block-size , 100%) - var(--block-size , 100%)), 0px));
+            /* shifting point */
+            --sp-x: clamp(0px, calc(var(--shift-x, 0) * var(--zpx, 1px)), calc(var(--bound-inline-size, 100cqi) - var(--inline-size, 100%)));
+            --sp-y: clamp(0px, calc(var(--shift-y, 0) * var(--zpx, 1px)), calc(var(--bound-block-size , 100cqb) - var(--block-size , 100%)));
+
+            /* for transform drag limit */
+            --limit-drag-x: max(calc(var(--bound-inline-size, 100cqi) - 100%), 0px);
+            --limit-drag-y: max(calc(var(--bound-block-size , 100cqb) - 100%), 0px);
+
+            /* inbound drag position */
+            --rx: clamp(0px, calc(var(--sp-x, 0px) + var(--drag-x, 0) * var(--zpx, 1px)), var(--limit-drag-x, 100%));
+            --ry: clamp(0px, calc(var(--sp-y, 0px) + var(--drag-y, 0) * var(--zpx, 1px)), var(--limit-drag-y, 100%));
+
+            /* logically correct drag... */
+            --ds-x: calc(var(--rx, 0px) - var(--sp-x, 0px));
+            --ds-y: calc(var(--ry, 0px) - var(--sp-y, 0px));
         }
 
         /* */
@@ -106,10 +235,13 @@
 
             /* */
             position: fixed;
-            inset-inline-start: var(--ds-x, 0px);
-            inset-block-start : var(--ds-y, 0px);
+            inset-inline-start: var(--sp-x, 0px);//var(--ds-x, 0px);
+            inset-block-start : var(--sp-y, 0px);//var(--ds-y, 0px);
             inset-inline-end  : auto;
             inset-block-end   : auto;
+
+            /* */
+            translate: 0px 0px 0px;//var(--ds-x, 0px) var(--ds-y, 0px) 0px !important;
 
             /* */
             display: inline grid;
@@ -418,12 +550,10 @@
     //
     :host(ui-frame[data-dragging]) {
         & { will-change: transform, inset !important; }
+        & { translate: var(--ds-x) var(--ds-y) 0px !important; }
 
-        /*& ::slotted(.ui-content) {
-            display: none !important;
-        }*/
-
-        /*:where(*), ::slotted(*)
+        //
+        :where(*), ::slotted(*)
         {
             will-change: transform, inset !important;
             animation: none !important;
@@ -433,7 +563,11 @@
             box-shadow: none !important;
         }
 
-        :where(svg, input, .u2-input, span, ui-icon),
+        /*& ::slotted(.ui-content) {
+            display: none !important;
+        }*/
+
+        /*:where(svg, input, .u2-input, span, ui-icon),
         ::slotted(svg, input, .u2-input, span, ui-icon)
         {
             content-visibility: hidden !important;
