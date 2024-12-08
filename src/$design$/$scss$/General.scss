@@ -7,28 +7,25 @@
         initial-value: 0px;
     }
 
-    //
-    ui-frame[data-dragging], ui-frame[data-dragging] * {
-        will-change: transform, inset !important;
-        animation: none !important;
-        animation-duration: 0ms !important;
-        transition: none !important;
-        transition-duration: 0ms !important;
-    }
+    ui-frame[data-dragging] {
+        & { will-change: transform, inset !important; };
 
-    //
-    ui-frame[data-dragging] * {
-        box-shadow: none !important;
-    }
+        /*:where(*) {
+            will-change: transform, inset !important;
+            animation: none !important;
+            animation-duration: 0ms !important;
+            transition: none !important;
+            transition-duration: 0ms !important;
+            box-shadow: none !important;
+        }
 
-    //
-    ui-frame[data-dragging] :where(svg, input, .u2-input, span, ui-icon) {
-        content-visibility: hidden !important;
-    }
+        :where(svg, input, .u2-input, span, ui-icon) {
+            content-visibility: hidden !important;
+        }
 
-    //
-    ui-frame[data-dragging] :where(ui-icon) {
-        visibility: hidden !important;
+        :where(ui-icon) {
+            visibility: hidden !important;
+        }*/
     }
 
     // if has identified, do top level

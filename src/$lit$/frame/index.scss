@@ -120,9 +120,12 @@
                 [status]    minmax(1px, max-content);
 
             /* */
-            container-type: size;
-            container-name: ui-frame;
             contain: strict;
+            container-type: size;
+            isolation: isolate;
+
+            /* */
+            container-name: ui-frame;
             overflow: hidden;
 
             /* */
@@ -222,14 +225,14 @@
                     place-content: safe center;
                     place-items: safe center;
 
-                    cursor: move;
+                    //cursor: move;
                     pointer-events: auto;
                     user-select: none;
                     touch-action: none;
                 }
 
-                &:active { cursor: move; };
-                &:hover  { cursor: move; };
+                //&:active { cursor: move; };
+                //&:hover  { cursor: move; };
             }
         }
 
@@ -413,22 +416,33 @@
     }
 
     //
-    :host(ui-frame[data-dragging]) * {
-        will-change: transform, inset !important;
-        animation: none !important;
-        animation-duration: 0ms !important;
-        transition: none !important;
-        transition-duration: 0ms !important;
-        box-shadow: none !important;
-    }
+    :host(ui-frame[data-dragging]) {
+        & { will-change: transform, inset !important; }
 
-    //
-    :host(ui-frame[data-dragging]) :where(svg, input, .u2-input, span, ui-icon) {
-        content-visibility: hidden !important;
-    }
+        /*& ::slotted(.ui-content) {
+            display: none !important;
+        }*/
 
-    //
-    :host(ui-frame[data-dragging]) :where(ui-icon) {
-        visibility: hidden !important;
+        /*:where(*), ::slotted(*)
+        {
+            will-change: transform, inset !important;
+            animation: none !important;
+            animation-duration: 0ms !important;
+            transition: none !important;
+            transition-duration: 0ms !important;
+            box-shadow: none !important;
+        }
+
+        :where(svg, input, .u2-input, span, ui-icon),
+        ::slotted(svg, input, .u2-input, span, ui-icon)
+        {
+            content-visibility: hidden !important;
+        }
+
+        :where(ui-icon),
+        ::slotted(ui-icon)
+        {
+            visibility: hidden !important;
+        }*/
     }
 }

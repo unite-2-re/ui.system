@@ -32,7 +32,23 @@ const toCamelCase = (str: string) => {
 }
 
 //
-const iconMap = new Map<string, string>();
+const rasterizeSVG = async (blob)=>{
+    /*const img = new Image();
+    img.decoding = "async";
+    img.src = URL.createObjectURL(blob);
+    await img.decode();
+    const raster = await createImageBitmap(img, {
+        resizeWidth: 24 * devicePixelRatio,
+        resizeHeight: 24 * devicePixelRatio,
+    });
+    const canvas = new OffscreenCanvas(raster.width, raster.height);
+    canvas?.getContext?.('bitmaprenderer')?.transferFromImageBitmap?.(raster);
+    return URL.createObjectURL(await canvas.convertToBlob({ type: 'image/png' }));*/
+    return URL.createObjectURL(blob);
+}
+
+//
+const iconMap = new Map<string, Promise<string>>();
 const loadAsImage = (name: string, creator?: (name: string)=>any)=>{
     if (iconMap.has(name)) {
         return iconMap.get(name);
@@ -45,7 +61,7 @@ const loadAsImage = (name: string, creator?: (name: string)=>any)=>{
     const file = new Blob([`<?xml version=\"1.0\" encoding=\"UTF-8\"?>`, text], {
         type: "image/svg+xml"
     });
-    const url = URL.createObjectURL(file);
+    const url = rasterizeSVG(file);//URL.createObjectURL(file);
     iconMap.set(name, url);
     return url;
 };
@@ -87,11 +103,12 @@ export class UILucideIcon extends LitElementTheme {
         ICON_MODULE.then((icons)=>{
             const ICON = toCamelCase(this.icon);
             if (icons?.[ICON]) {
-                const url = loadAsImage(ICON, (U)=>icons?.createElement?.(icons?.[U]));
                 const self = this as unknown as HTMLElement;
-                self.style.setProperty("--mask-image", `url(\"${url}\")`);
-                self.style.setProperty("opacity", "1");
-                self.style.removeProperty("display");
+                loadAsImage(ICON, (U)=>icons?.createElement?.(icons?.[U]))?.then?.((url)=>{
+                    self.style.setProperty("--mask-image", `url(\"${url}\")`);
+                    self.style.setProperty("opacity", "1");
+                    self.style.removeProperty("display");
+                });
 
                 /*this.iconElement = icons?.createElement?.(icons?.[ICON]);
                 if (this.iconElement) {
