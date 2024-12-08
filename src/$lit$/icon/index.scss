@@ -20,8 +20,9 @@
             text-spacing-trim: trim-start;
 
             //
-            will-change: contents, background-color, image-mask;
-            opacity: 0;
+            //will-change: contents, background-color, image-mask;
+            //will-change: inset, transform;
+            //opacity: 0;
 
             //
             -webkit-font-smoothing: none;
@@ -35,6 +36,7 @@
             image-rendering: crisp-edges;
             image-rendering: optimizeSpeed;
             image-rendering: pixelated;
+            translate: 0px 0px 0px;
         }
 
         /* temporary workaround */
@@ -76,16 +78,14 @@
             color: var(--current-glyph-color, currentColor);
 
             //
-            mask-image: var(--mask-image);
+            //mask-image: linear-gradient(#0000, #0000);
+            mask-image: var(--mask-image, linear-gradient(#0000, #0000));
             mask-origin: content-box;
             mask-clip: content-box;
             mask-mode: alpha;
             mask-position: center;
             mask-repeat: no-repeat;
             mask-size: contain;
-
-            //
-            opacity: 0;
         }
 
         /* */
@@ -93,5 +93,14 @@
             display: none !important;
             pointer-events: none !important;
         }
+    }
+
+    //
+    :host(ui-icon:not([icon])),
+    :host(ui-icon[icon=""])
+    {
+        visibility: hidden !important;
+        content-visibility: hidden !important;
+        opacity: 0 !important;
     }
 }

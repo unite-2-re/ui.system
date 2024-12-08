@@ -85,11 +85,7 @@ const makeControl = (frameElement: HTMLElement)=>{
 
                 //
                 frameElement?.setAttribute?.("data-dragging", "");
-                frameElement?.style?.setProperty?.("will-change", "transform, inset", "important");
-
-                //
-                //content.style.display = "none";
-                //phantom.style.removeProperty("display");
+                frameElement?.style?.setProperty?.("will-change", "transform", "important");
             }
         });
 

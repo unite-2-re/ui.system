@@ -82,8 +82,6 @@ export class UILucideIcon extends LitElementTheme {
         if (options?.icon) { this.icon = options?.icon; };
         if (options?.padding) { self.style.setProperty("padding", options?.padding); };
         self.inert = true;
-        self.style.setProperty("opacity", "0");
-        self.style.setProperty("display", "none");
     }
 
     //
@@ -105,9 +103,8 @@ export class UILucideIcon extends LitElementTheme {
             if (icons?.[ICON]) {
                 const self = this as unknown as HTMLElement;
                 loadAsImage(ICON, (U)=>icons?.createElement?.(icons?.[U]))?.then?.((url)=>{
-                    self.style.setProperty("--mask-image", `url(\"${url}\")`);
-                    self.style.setProperty("opacity", "1");
-                    self.style.removeProperty("display");
+                    const src = `url(\"${url}\")`;
+                    if (self.style.getPropertyValue("--mask-image") != src) self.style.setProperty("--mask-image", src);
                 });
 
                 /*this.iconElement = icons?.createElement?.(icons?.[ICON]);

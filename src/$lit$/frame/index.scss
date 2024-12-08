@@ -352,7 +352,7 @@
             overflow: hidden;
 
             /* */
-            will-change: contents, display;
+            //will-change: contents, display;
         }
 
         /* */
@@ -379,7 +379,7 @@
             overflow: hidden;
 
             /* */
-            will-change: contents, display;
+            //will-change: contents, display;
         }
 
         /* */
@@ -508,13 +508,13 @@
 
     //
     :host(ui-frame[data-dragging]) {
-        & { will-change: transform, inset !important; }
+        & { will-change: transform !important; }
         & { translate: var(--ds-x) var(--ds-y) 0px !important; }
 
         //
         :where(*), ::slotted(*)
         {
-            will-change: transform, inset !important;
+            //will-change: transform !important;
             animation: none !important;
             animation-duration: 0ms !important;
             transition: none !important;

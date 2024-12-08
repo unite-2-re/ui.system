@@ -7,12 +7,132 @@
         initial-value: 0px;
     }
 
+    //
+    @property --rx {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --ry {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+
+    //
+    @property --sp-x {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --sp-y {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+
+    //
+    @property --inline-size {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --block-size {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --bound-inline-size {
+        initial-value: 100cqi;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --bound-block-size {
+        initial-value: 100cqb;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+
+    //
+    @property --limit-drag-x {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --limit-drag-y {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+
+
+    //
+    @property --ds-x {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --ds-y {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --rs-x {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --rs-y {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+
+    //
+    @property --initial-inline-size {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --initial-block-size {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+
+    //
     ui-frame[data-dragging] {
-        & { will-change: transform, inset !important; };
+        & { will-change: transform !important; };
 
         //
-        /*:where(*) {
-            will-change: transform, inset !important;
+        :where(*) {
+            //will-change: transform !important;
             animation: none !important;
             animation-duration: 0ms !important;
             transition: none !important;
@@ -20,6 +140,7 @@
             box-shadow: none !important;
         }
 
+        /*
         :where(svg, input, .u2-input, span, ui-icon) {
             content-visibility: hidden !important;
         }
