@@ -21,7 +21,9 @@ import {initTaskManager} from "/externals/core/core.js";
 //
 import LitElementTheme from "../shared/LitElementTheme";
 
-
+// for phantom image when dragging
+// @ts-ignore
+//import html2canvas from 'html2canvas-pro';
 
 //
 const $control$ = Symbol("@control");
@@ -50,6 +52,61 @@ const makeControl = (frameElement: HTMLElement)=>{
         const pn = (frameElement.offsetParent ?? frameElement.host ?? document.documentElement) as HTMLElement;
         frameElement.style.setProperty("--drag-x", `${(pn.clientWidth  - Math.min(Math.max(frameElement.offsetWidth , 48*16), pn.clientWidth)) * 0.5}`, "");
         frameElement.style.setProperty("--drag-y", `${(pn.clientHeight - Math.min(Math.max(frameElement.offsetHeight, 24*16), pn.clientHeight)) * 0.5}`, "");
+
+        //
+        /*frameElement?.shadowRoot?.querySelector(".ui-title-handle")?.addEventListener?.("pointerdown", ()=>{
+            const content = frameElement?.querySelector?.(".ui-content") as HTMLElement;
+            const phantom = frameElement?.shadowRoot?.querySelector?.(".ui-phantom") as HTMLCanvasElement;
+            if (phantom && content) {
+                const bbox = content?.getBoundingClientRect?.();
+                phantom.width = content.offsetWidth * (devicePixelRatio || 1);
+                phantom.height = content.offsetHeight * (devicePixelRatio || 1);
+                html2canvas?.(content, {
+                    x: -(bbox?.left || 0) + 0.5,
+                    y: -(bbox?.top || 0) + 0.5,
+                    width: phantom.width,
+                    height: phantom.height,
+                    allowTaint: true,
+                    canvas: phantom,
+                    imageTimeout: 10,
+                    foreignObjectRendering: true,
+                    windowWidth: content.offsetWidth,
+                    windowHeight: content.offsetHeight,
+                    ignoreElements: (element)=>element.matches("canvas, ui-icon, .ui-phantom, [data-hidden]")
+                });
+            }
+        })*/
+
+        //
+        frameElement.addEventListener("m-dragstart", (ev)=>{
+            if (ev.detail.holding.propertyName == "drag") {
+                //const content = frameElement?.querySelector?.(".ui-content") as HTMLElement;
+                //const phantom = frameElement?.shadowRoot?.querySelector?.(".ui-phantom") as HTMLCanvasElement;
+
+                //
+                frameElement?.setAttribute?.("data-dragging", "");
+                frameElement?.style?.setProperty?.("will-change", "transform, inset", "important");
+
+                //
+                //content.style.display = "none";
+                //phantom.style.removeProperty("display");
+            }
+        });
+
+        //
+        frameElement.addEventListener("m-dragend", (ev)=>{
+            if (ev.detail.holding.propertyName == "drag") {
+                const content = frameElement?.querySelector?.(".ui-content") as HTMLElement;
+                frameElement?.style?.removeProperty?.("will-change");
+                frameElement?.removeAttribute?.("data-dragging");
+
+                const phantom = frameElement?.shadowRoot?.querySelector?.(".ui-phantom") as HTMLCanvasElement;
+                requestIdleCallback(()=>{
+                    content?.style?.removeProperty?.("display");
+                    if (phantom) { phantom.style.display = "none"; };
+                }, {timeout: 100});
+            }
+        });
     }
 }
 

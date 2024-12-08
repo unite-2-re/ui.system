@@ -234,11 +234,40 @@
         }
 
         /* */
+        & .ui-phantom, ::slotted(.ui-phantom)
+        {
+            object-fit: cover;
+            object-position: center;
+            background-color: transparent;
+            position: relative;
+
+            /* */
+            inline-size: 100%;
+            block-size: 100%;
+            box-sizing: border-box;
+            display: block;
+
+            /* */
+            grid-column: 1 / -1;
+            grid-row: content;
+            grid-row: 2 / 2 span;
+
+            /* */
+            pointer-events: none;
+            user-select: none;
+            overflow: hidden;
+
+            /* */
+            will-change: contents, display;
+        }
+
+        /* */
         & .ui-content-box, ::slotted(.ui-content)
         {
             inline-size: 100%;
             block-size: 100%;
             box-sizing: border-box;
+            position: relative;
 
             /* */
             grid-column: 1 / -1;
@@ -254,6 +283,9 @@
             container-name: ui-content;
             contain: strict;
             overflow: hidden;
+
+            /* */
+            will-change: contents, display;
         }
 
         /* */
@@ -378,5 +410,25 @@
         ::slotted(.ui-content[data-hidden]) {
             display: revert-layer;
         }
+    }
+
+    //
+    :host(ui-frame[data-dragging]) * {
+        will-change: transform, inset !important;
+        animation: none !important;
+        animation-duration: 0ms !important;
+        transition: none !important;
+        transition-duration: 0ms !important;
+        box-shadow: none !important;
+    }
+
+    //
+    :host(ui-frame[data-dragging]) :where(svg, input, .u2-input, span, ui-icon) {
+        content-visibility: hidden !important;
+    }
+
+    //
+    :host(ui-frame[data-dragging]) :where(ui-icon) {
+        visibility: hidden !important;
     }
 }

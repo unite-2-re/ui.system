@@ -21,6 +21,7 @@
 
             //
             will-change: contents, background-color, image-mask;
+            opacity: 0;
         }
 
         /* temporary workaround */
@@ -69,6 +70,9 @@
             mask-position: center;
             mask-repeat: no-repeat;
             mask-size: contain;
+
+            //
+            opacity: 0;
         }
 
         /* */
