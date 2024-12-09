@@ -29,9 +29,9 @@ export class UINavBar extends LitElementTheme {
     //
     protected render() {
         return html`${this.themeStyle}
-            <button data-scheme="dynamic-transparent" type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}><ui-icon inert icon="menu"></ui-icon></button>
-            <button data-scheme="dynamic-transparent" type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-down"></ui-icon></button>
-            <button data-scheme="dynamic-transparent" type="button" class="ui-title-handle" part="ui-title-handle" @click=${this.menuAction.bind(this)}><ui-icon inert icon=${this.icon}></ui-icon><span>${this.label}</span></button>
+            <button type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}><ui-icon inert icon="menu"></ui-icon></button>
+            <button type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-down"></ui-icon></button>
+            <button type="button" class="ui-title-handle" part="ui-title-handle" @click=${this.menuAction.bind(this)}><ui-icon inert icon=${this.icon}></ui-icon><span>${this.label}</span></button>
         `;
     }
 
@@ -40,7 +40,7 @@ export class UINavBar extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         const setTheme = ()=>{
             //if (matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
-                self.setAttribute("data-scheme", document.body.matches(":has(ui-frame:not([data-hidden]))") ? "solid" : "accent");
+                self.setAttribute("data-scheme", document.body.matches(":has(ui-frame:not([data-hidden]))") ? "solid" : "dynamic-transparent");
             //} else {
                 //self.setAttribute("data-scheme", "solid");
             //}
@@ -93,8 +93,7 @@ export class UINavBar extends LitElementTheme {
         //
         const self = this as unknown as HTMLElement;
         if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0.05" ); };
-        if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "accent"); };
-        if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "1"    ); };
+        if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
         if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "4"    ); };
         if (!self.hasAttribute("data-highlight-hover")) { self.setAttribute("data-highlight-hover", "6"    ); };
     }

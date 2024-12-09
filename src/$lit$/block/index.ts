@@ -34,7 +34,6 @@ export class UIBlock extends LitElementTheme {
         if (!self.hasAttribute("data-chroma")) { self.setAttribute("data-chroma", "0.1"); };
         if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "solid"); };
         if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "0"); };
-        if (!self.hasAttribute("data-alpha")) { self.setAttribute("data-alpha", "0"); };
         if (!self.classList?.contains?.("ui-block")) self.classList?.add?.("ui-block");
         if (!self.classList?.contains?.("u2-block")) self.classList?.add?.("u2-block");
     }

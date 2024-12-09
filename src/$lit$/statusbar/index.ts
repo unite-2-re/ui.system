@@ -49,9 +49,8 @@ export class UIStatusBar extends LitElementTheme {
         //
         const self = this as unknown as HTMLElement;
         self.style.setProperty("z-index", "999999", "important");
-        if (!self.hasAttribute("data-alpha")) { self.setAttribute("data-alpha", "1"); };
         if (!self.hasAttribute("data-chroma")) { self.setAttribute("data-chroma", "0"); };
-        if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "dynamic"); };
+        if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "dynamic-transparent"); };
     }
 };
 

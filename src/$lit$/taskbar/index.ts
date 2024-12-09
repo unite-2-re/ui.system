@@ -64,11 +64,9 @@ export class UITaskBar extends LitElementTheme {
         const setTheme = ()=>{
             if (matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
                 const hasFrame = document.body.matches(":has(ui-frame:not([data-hidden]))");
-                self.setAttribute("data-scheme", hasFrame ? "solid" : "accent");
-                self.setAttribute("data-alpha", hasFrame ? "1" : "0");
+                self.setAttribute("data-scheme", hasFrame ? "solid" : "dynamic-transparent");
             } else {
                 self.setAttribute("data-scheme", "solid");
-                self.setAttribute("data-alpha", "1");
             }
         }
         setInterval(setTheme, 1000);
@@ -86,8 +84,7 @@ export class UITaskBar extends LitElementTheme {
 
         //
         if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0.05" ); };
-        //if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "accent"); };
-        if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "1"    ); };
+        if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
         if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "4"    ); };
 
         //

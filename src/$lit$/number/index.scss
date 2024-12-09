@@ -15,6 +15,7 @@
 
             /* */
             box-sizing: border-box;
+            pointer-events: none;
             //will-change: contents;
 
             //
@@ -34,7 +35,6 @@
         //
         &, & ::where(*)
         {
-            pointer-events: none;
             user-select: none;
             touch-action: none;
         }
@@ -81,7 +81,7 @@
         & > .ui-step-down { grid-column: down; }
 
         //
-        & > :where(.ui-step-up, .ui-step-down)
+        & :where(.ui-step-up, .ui-step-down)
         {
             & {
                 aspect-ratio: 1 / 1;

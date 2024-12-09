@@ -155,8 +155,8 @@ export class UITaskItem extends LitElementTheme {
 
         //
         //if (!self.hasAttribute("data-scheme"))            { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
+        //if (!self.hasAttribute("data-transparent"))       { self.setAttribute("data-transparent"    , ""     ); };
         if (!self.hasAttribute("data-id") && this.taskId) { self.setAttribute("data-id"             , (this.taskId || self.dataset.id || "")); };
-        if (!self.hasAttribute("data-transparent"))       { self.setAttribute("data-transparent"    , ""     ); };
         if (!self.hasAttribute("data-chroma"))            { self.setAttribute("data-chroma"         , "0.05" ); };
         if (!self.hasAttribute("data-alpha"))             { self.setAttribute("data-alpha"          , "0"    ); };
         if (!self.hasAttribute("data-highlight"))         { self.setAttribute("data-highlight"      , "0"    ); };

@@ -113,6 +113,7 @@
             & > .ui-thumb
             {
                 & {
+                    pointer-events: auto;
                     z-index: 99;
                     display: flex;
                     place-content: center;
@@ -171,7 +172,7 @@
                 //
                 & {
                     overflow: hidden;
-                    background-color: transparent;
+                    //background-color: transparent;
                     display: grid;
                     grid-template-columns: minmax(0px, 1fr);
                     grid-template-rows: minmax(0px, 1fr);
