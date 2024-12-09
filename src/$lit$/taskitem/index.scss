@@ -14,6 +14,7 @@
 
             /* */
             box-sizing: border-box;
+            pointer-events: none;
         }
 
         //
@@ -90,12 +91,18 @@
 
     //
     @media (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
-        :host(ui-task.ui-focus) { border-block-start: solid 0.25rem oklch(from var(--current-surface-color) l c h / 1.0); }
+        :host(ui-task.ui-focus) { border-block-start: solid 0.25rem oklch(from var(--current-surface-color, currentColor) l c h / 1.0); }
     }
 
     //
     @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
-        :host(ui-task.ui-focus) { background-color: oklch(from var(--current-surface-color) l c h / 1.0) !important; }
+        /*:host(ui-task.ui-focus) {
+            background-color: oklch(from var(--current-surface-color, currentColor) l c h / 1.0) !important;
+        }
+
+        :host(ui-task.ui-focus), :host(ui-task.ui-focus) :where(*) {
+            color: var(--current-glyph-color, currentColor) !important;
+        }*/
     }
 
     :host(ui-task:not(.ui-active))  { opacity: 0.5; }

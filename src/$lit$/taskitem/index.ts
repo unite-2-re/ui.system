@@ -47,7 +47,7 @@ export class UITaskItem extends LitElementTheme {
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
     protected render() {
-        return html`${this.themeStyle} <ui-icon data-scheme="dynamic-transparent" inert icon=${this.icon} data-highlight="0" data-alpha="0"></ui-icon> <span data-scheme="dynamic-transparent" data-highlight="0" data-alpha="0">${this.label}</span>`;
+        return html`${this.themeStyle} <ui-icon inert icon=${this.icon} data-highlight="0" data-alpha="0"></ui-icon> <span inert data-highlight="0" data-alpha="0">${this.label}</span>`;
         //return html`${this.themeStyle}<slot></slot>`;
     }
 
@@ -154,6 +154,7 @@ export class UITaskItem extends LitElementTheme {
         }
 
         //
+        //if (!self.hasAttribute("data-scheme"))            { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
         if (!self.hasAttribute("data-id") && this.taskId) { self.setAttribute("data-id"             , (this.taskId || self.dataset.id || "")); };
         if (!self.hasAttribute("data-transparent"))       { self.setAttribute("data-transparent"    , ""     ); };
         if (!self.hasAttribute("data-chroma"))            { self.setAttribute("data-chroma"         , "0.05" ); };
