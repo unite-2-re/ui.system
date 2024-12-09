@@ -200,7 +200,7 @@
             inset-block-end   : auto;
 
             /* */
-            translate: 0px 0px 0px;//var(--ds-x, 0px) var(--ds-y, 0px) 0px !important;
+            translate: var(--ds-x, 0px) var(--ds-y, 0px) 0px;
 
             /* */
             display: inline grid;
