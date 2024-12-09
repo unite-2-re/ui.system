@@ -91,7 +91,7 @@ export class UITaskItem extends LitElementTheme {
         const task = this.taskManager?.get?.(hash);
 
         //
-        if (task?.active || (this.focused = location.hash == hash)) { this.active  = true; };
+        if (task?.active || (this.focused = location.hash == hash)) { this.active = true; };
         if (this.focused && !self.classList.contains("ui-focus")) { self.classList.add("ui-focus"); };
         if (this.active && !self.classList.contains("ui-active")) { self.classList.add("ui-active"); };
         if (!this.focused && self.classList.contains("ui-focus")) { self.classList.remove("ui-focus"); };

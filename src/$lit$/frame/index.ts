@@ -150,26 +150,6 @@ export class UIFrame extends LitElementTheme {
         const self = this as unknown as HTMLElement;
 
         //
-        addEventListener("hashchange", (ev)=>{
-            const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == (ev?.newURL || location.hash);
-            if (isInFocus) {
-                focusTask(this.taskManager, self);
-                delete self.dataset.hidden;
-                this.fixZLayer();
-            }
-        });
-
-        //
-        addEventListener("popstate", (ev)=>{
-            const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
-            if (isInFocus) {
-                focusTask(this.taskManager, self);
-                delete self.dataset.hidden;
-                this.fixZLayer();
-            }
-        });
-
-        //
         this.taskManager ??= options?.taskManager || initTaskManager();
         this.taskManager.on("focus", ({task, index})=>{
             const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
