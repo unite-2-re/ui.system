@@ -65,8 +65,8 @@ export class UINumber extends LitElementTheme {
 
     //
     protected createRenderRoot() {
-        const weak = new WeakRef(this);
         const root = super.createRenderRoot();
+        const weak = new WeakRef(this);
         this.importFromTemplate(htmlCode);
 
         //
