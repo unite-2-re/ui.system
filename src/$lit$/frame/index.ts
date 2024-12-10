@@ -106,7 +106,6 @@ const makeControl = (frameElement: HTMLElement)=>{
     }
 }
 
-
 // if global case
 /*
 const tasks = this.taskManager.getTasks();
@@ -153,27 +152,22 @@ export class UIFrame extends LitElementTheme {
         this.taskManager ??= options?.taskManager || initTaskManager();
         this.taskManager.on("focus", ({task, index})=>{
             const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
-            if (isInFocus) {
-                delete self.dataset.hidden;
-                this.fixZLayer();
-            }
+            if (isInFocus) { delete self.dataset.hidden; };
+            this.fixZLayer();
         });
 
         //
         this.taskManager.on("activate", ({task, index})=>{
             const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
-            if (isInFocus) {
-                delete self.dataset.hidden;
-                this.fixZLayer();
-            }
+            if (isInFocus) { delete self.dataset.hidden; };
+            this.fixZLayer();
         });
 
         //
         this.taskManager.on("deactivate", ({task, index})=>{
             const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
-            if (isInFocus) {
-                self.dataset.hidden = "";
-            }
+            if (isInFocus) { self.dataset.hidden = ""; };
+            this.fixZLayer();
         });
 
         //
@@ -186,7 +180,8 @@ export class UIFrame extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         const tasks  = this?.taskManager?.getTasks?.();
         const zIndex = tasks?.findIndex?.(({id}, I)=>self.matches("ui-frame:has("+id+"), ui-frame"+id+""));
-        self.style.setProperty("--z-index", zIndex);
+        const exists = self.style.getPropertyValue("--z-index");
+        if (exists != zIndex || !exists) { self.style.setProperty("--z-index", zIndex); };
     }
 
     //
@@ -224,8 +219,8 @@ export class UIFrame extends LitElementTheme {
         this.importFromTemplate(htmlCode);
         root.addEventListener("click", (ev)=>{
             if (ev.target.matches(".ui-btn-close")) {
-                const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;
-                this.taskManager?.deactivate?.(location.hash);
+                //const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;
+                this.taskManager?.deactivate?.("#" + (self.querySelector(".ui-content")?.id || self?.id || location.hash));
                 //self.dataset.hidden = "";
             }
         });
