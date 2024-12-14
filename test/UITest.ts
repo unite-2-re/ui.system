@@ -26,6 +26,12 @@ import {makeSelection} from /* @vite-ignore */ "/externals/lib/interact.js";
 init();
 
 // @ts-ignore
+import(/* @vite-ignore */ "/externals/lib/agate.js").then((module)=>{
+    // @ts-ignore
+    module?.default?.();
+}).catch(console.warn.bind(console));
+
+// @ts-ignore
 import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
     // @ts-ignore
     module?.default?.();

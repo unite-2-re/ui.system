@@ -129,6 +129,7 @@
     //
     ui-frame[data-dragging] {
         & { will-change: transform !important; };
+        //& { pointer-events: none !important; };
 
         //
         :where(*) {
@@ -138,6 +139,7 @@
             transition: none !important;
             transition-duration: 0ms !important;
             box-shadow: none !important;
+            //pointer-events: none !important;
         }
 
         /*

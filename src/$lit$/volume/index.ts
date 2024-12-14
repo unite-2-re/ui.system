@@ -12,6 +12,9 @@ import styles from "../shared/BoxLayout.scss?inline";
 // @ts-ignore
 import htmlCode from "../shared/BoxLayout.html?raw";
 
+// @ts-ignore
+import { getBoundingOrientRect } from "/externals/lib/agate.js";
+
 //
 import LitElementTheme from "../shared/LitElementTheme";
 
@@ -35,12 +38,12 @@ export class UIVolume extends LitElementTheme {
         //
         const weak = new WeakRef(self);
         const sws = { pointerId: -1 };
-        const doExaction = (self, clientX, clientY, confirm = false)=>{
+        const doExaction = (self, x, y, confirm = false)=>{
             if (!self) return;
 
             //
-            const box    = self?.getBoundingClientRect?.();
-            const coord  = [clientX - box?.left, clientY - box?.top];
+            const box    = getBoundingOrientRect(self);
+            const coord  = [x - box?.left, y - box?.top];
             const number = self.querySelector?.("input[type=\"number\"]") as unknown as HTMLInputElement
             const count  = ((parseFloat(number?.max) || 0) - (parseFloat(number?.min) || 0));
             const vary   = [
@@ -90,10 +93,11 @@ export class UIVolume extends LitElementTheme {
         }
 
         //
-        const stopMove = (e)=>{
+        const stopMove = (ev)=>{
+            const e = ev?.detail || ev;
             if (sws.pointerId == e.pointerId) {
                 sws.pointerId = -1;
-                doExaction(weak?.deref?.(), e.clientX, e.clientY, true);
+                doExaction(weak?.deref?.(), e.orient[0], e.orient[1], true);
                 e.target?.releasePointerCapture?.(e.pointerId);
                 document.documentElement.style.removeProperty("cursor");
             }
@@ -104,7 +108,8 @@ export class UIVolume extends LitElementTheme {
         self.classList?.add?.("u2-input");
         self.addEventListener("input", this.onSelect.bind(this));
         self.addEventListener("change", this.onSelect.bind(this));
-        self.addEventListener("pointerdown", (e)=>{
+        self.addEventListener("ag-pointerdown", (ev)=>{
+            const e = ev?.detail || ev;
             if (sws.pointerId < 0) {
                 sws.pointerId = e.pointerId;
 
@@ -116,11 +121,12 @@ export class UIVolume extends LitElementTheme {
 
         //
         const ROOT = document.documentElement;
-        ROOT.addEventListener("pointerup", stopMove);
-        ROOT.addEventListener("pointercancel", stopMove);
-        ROOT.addEventListener("pointermove", (e)=>{
+        ROOT.addEventListener("ag-pointerup", stopMove);
+        ROOT.addEventListener("ag-pointercancel", stopMove);
+        ROOT.addEventListener("ag-pointermove", (ev)=>{
+            const e = ev?.detail || ev;
             if (sws.pointerId == e.pointerId) {
-                doExaction(weak?.deref?.(), e.clientX, e.clientY);
+                doExaction(weak?.deref?.(), e.orient[0], e.orient[1]);
             }
         });
     }
@@ -128,7 +134,8 @@ export class UIVolume extends LitElementTheme {
     //
     protected onSelect(ev?: any){
         const self = this as unknown as HTMLElement;
-        const element = ev?.target ?? self?.querySelector?.("input");
+        const e = ev?.detail || ev;
+        const element = e?.target ?? self?.querySelector?.("input");
 
         //
         if (element) {
@@ -138,7 +145,7 @@ export class UIVolume extends LitElementTheme {
             const indicator = self?.querySelector?.(".ui-indicator");
 
             //
-            if (index >= 0 && ev?.type != "input") { self.style?.setProperty?.("--value", `${index}`); };
+            if (index >= 0 && e?.type != "input") { self.style?.setProperty?.("--value", `${index}`); };
             self.style.setProperty("--max-value", `${((parseFloat(input?.max)||0) - (parseFloat(input?.min)||0))}`, "");
 
             //

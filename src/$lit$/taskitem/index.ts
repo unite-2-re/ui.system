@@ -62,7 +62,7 @@ export class UITaskItem extends LitElementTheme {
 
         //
         self.classList?.add?.("ui-task");
-        self.addEventListener("click", () => focusTask(this.taskManager, self));
+        self.addEventListener("ag-click", () => focusTask(this.taskManager, self));
         this.updateState();
 
         //

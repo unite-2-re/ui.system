@@ -1,6 +1,9 @@
 /// <reference types="lit" />
 
 // @ts-ignore
+import { getBoundingOrientRect } from "/externals/lib/agate.js";
+
+// @ts-ignore
 import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../shared/LitUse";
 
 // @ts-ignore
@@ -28,12 +31,12 @@ export class UISwitch extends LitElementTheme {
         super(); const self = this as unknown as HTMLElement;
         const weak = new WeakRef(self);
         const sws = { pointerId: -1 };
-        const doExaction = (self, clientX, clientY, confirm = false)=>{
+        const doExaction = (self, x, y, confirm = false)=>{
             if (!self) return;
 
             //
-            const box   = self?.getBoundingClientRect?.();
-            const coord = [clientX - box?.left, clientY - box?.top];
+            const box   = getBoundingOrientRect?.(self);
+            const coord = [x - box?.left, y - box?.top];
             const radio = self.querySelectorAll?.("input[type=\"radio\"]") as unknown as HTMLInputElement[];
             const count = (radio?.length || 0); //+ 1;
             const vary = [
@@ -78,7 +81,8 @@ export class UISwitch extends LitElementTheme {
         self.classList?.add?.("ui-switch");
         self.classList?.add?.("u2-input");
         self.addEventListener("change", this.onSelect.bind(this));
-        self.addEventListener("pointerdown", (e)=>{
+        self.addEventListener("ag-pointerdown", (ev)=>{
+            const e = ev?.detail || ev;
             if (sws.pointerId < 0) {
                 sws.pointerId = e.pointerId;
 
@@ -89,10 +93,11 @@ export class UISwitch extends LitElementTheme {
         });
 
         //
-        const stopMove = (e)=>{
+        const stopMove = (ev)=>{
+            const e = ev?.detail || ev;
             if (sws.pointerId == e.pointerId) {
                 sws.pointerId = -1;
-                doExaction(weak?.deref?.(), e.clientX, e.clientY, true);
+                doExaction(weak?.deref?.(), e.orient[0], e.orient[1], true);
                 e.target?.releasePointerCapture?.(e.pointerId);
                 document.documentElement.style.removeProperty("cursor");
             }
@@ -100,11 +105,12 @@ export class UISwitch extends LitElementTheme {
 
         //
         const ROOT = document.documentElement;
-        ROOT.addEventListener("pointerup", stopMove);
-        ROOT.addEventListener("pointercancel", stopMove);
-        ROOT.addEventListener("pointermove", (e)=>{
+        ROOT.addEventListener("ag-pointerup", stopMove);
+        ROOT.addEventListener("ag-pointercancel", stopMove);
+        ROOT.addEventListener("ag-pointermove", (ev)=>{
+            const e = ev?.detail || ev;
             if (sws.pointerId == e.pointerId) {
-                doExaction(weak?.deref?.(), e.clientX, e.clientY);
+                doExaction(weak?.deref?.(), e.orient[0], e.orient[1]);
             }
         });
     }

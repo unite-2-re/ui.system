@@ -37,8 +37,8 @@ export class UIDropMenu extends LitElementTheme {
         self.classList?.add?.("u2-input");
         self.addEventListener("click", this.onClick.bind(this));
         self.addEventListener("contextmenu", (ev)=>{
-            ev.stopPropagation();
-            ev.preventDefault();
+            ev?.stopPropagation?.();
+            ev?.preventDefault?.();
         });
     }
 

@@ -32,7 +32,7 @@ export class UICheckBox extends LitElementTheme {
 
         //
         self.addEventListener("change", this.onSelect.bind(this));
-        self.addEventListener("click", this.onClick.bind(this));
+        self.addEventListener("ag-click", this.onClick.bind(this));
     }
 
     //
@@ -46,6 +46,7 @@ export class UICheckBox extends LitElementTheme {
 
     //
     protected onSelect(ev?: any) {
+        const e = ev?.detail || ev;
         const self = this as unknown as HTMLElement;
         if ((ev?.target ?? self)?.checked != null) {
             this.checked = (ev?.target ?? self)?.checked;

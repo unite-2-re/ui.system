@@ -97,7 +97,7 @@ export class UISelectBase extends LitElementTheme {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
         self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
-        self.addEventListener("click", (ev)=>{
+        self.addEventListener("ag-click", (ev)=>{
             const input = root.querySelector("input[type=\"radio\"]") as HTMLInputElement;
             if (ev.target != input || !(ev.target as HTMLElement)?.matches?.("input")) { input?.click?.(); };
         });

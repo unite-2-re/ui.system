@@ -52,32 +52,6 @@ const makeControl = (frameElement: HTMLElement)=>{
         const pn = (frameElement.offsetParent ?? frameElement.host ?? document.documentElement) as HTMLElement;
         frameElement.style.setProperty("--shift-x", `${(pn.clientWidth  - Math.min(Math.max(frameElement.offsetWidth , 48*16), pn.clientWidth)) * 0.5}`, "");
         frameElement.style.setProperty("--shift-y", `${(pn.clientHeight - Math.min(Math.max(frameElement.offsetHeight, 24*16), pn.clientHeight)) * 0.5}`, "");
-
-        //
-        /*frameElement?.shadowRoot?.querySelector(".ui-title-handle")?.addEventListener?.("pointerdown", ()=>{
-            const content = frameElement?.querySelector?.(".ui-content") as HTMLElement;
-            const phantom = frameElement?.shadowRoot?.querySelector?.(".ui-phantom") as HTMLCanvasElement;
-            if (phantom && content) {
-                const bbox = content?.getBoundingClientRect?.();
-                phantom.width = content.offsetWidth * (devicePixelRatio || 1);
-                phantom.height = content.offsetHeight * (devicePixelRatio || 1);
-                html2canvas?.(content, {
-                    x: -(bbox?.left || 0) + 0.5,
-                    y: -(bbox?.top || 0) + 0.5,
-                    width: phantom.width,
-                    height: phantom.height,
-                    allowTaint: true,
-                    canvas: phantom,
-                    imageTimeout: 10,
-                    foreignObjectRendering: true,
-                    windowWidth: content.offsetWidth,
-                    windowHeight: content.offsetHeight,
-                    ignoreElements: (element)=>element.matches("canvas, ui-icon, .ui-phantom, [data-hidden]")
-                });
-            }
-        })*/
-
-        //
         frameElement.addEventListener("m-dragstart", (ev)=>{
             if (ev.detail.holding.propertyName == "drag") {
                 //const content = frameElement?.querySelector?.(".ui-content") as HTMLElement;
@@ -137,9 +111,9 @@ export class UIFrame extends LitElementTheme {
         super(); const self = this as unknown as HTMLElement;
         self.classList?.add?.("ui-frame");
         self.classList?.add?.("u2-frame");
-        self.dataset.hidden = "";
+        //self.dataset.hidden = "";
         this.initTaskManager(options);
-        self.addEventListener("pointerdown", (ev)=>{
+        self.addEventListener("ag-pointerdown", (ev)=>{
             focusTask(this?.taskManager, self);
         });
     }
@@ -217,7 +191,7 @@ export class UIFrame extends LitElementTheme {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
         this.importFromTemplate(htmlCode);
-        root.addEventListener("click", (ev)=>{
+        root.addEventListener("ag-click", (ev)=>{
             if (ev.target.matches(".ui-btn-close")) {
                 //const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;
                 this.taskManager?.deactivate?.("#" + (self.querySelector(".ui-content")?.id || self?.id || location.hash));

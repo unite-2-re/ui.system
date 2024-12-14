@@ -49,7 +49,7 @@ export class UIMenuItem extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         this.#parentNode = self?.parentNode;
         this.#parentNode?.addEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
-        this.#parentNode?.addEventListener("click", this.#onSelect ??= this.onSelect.bind(this));
+        this.#parentNode?.addEventListener("ag-click", this.#onSelect ??= this.onSelect.bind(this));
 
         //
         self.style.setProperty("display", "none", "important");
@@ -114,7 +114,7 @@ export class UIMenuItem extends LitElementTheme {
         //
         this.importFromTemplate(htmlCode);
         self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as any)?.name || (self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
-        self.addEventListener("click", (ev)=>{
+        self.addEventListener("ag-click", (ev)=>{
             const input = root.querySelector("input[type=\"radio\"]") as HTMLInputElement;
             if (ev.target != input || !(ev.target as HTMLElement)?.matches?.("input")) { input?.click?.(); };
         });

@@ -18,8 +18,8 @@
         //
         & {
             //
-            --rx: calc(var(--hover-x, 0) * var(--zpx, 1px) - 50cqi);
-            --ry: calc(var(--hover-y, 0) * var(--zpx, 1px) - 50cqb - 0.5rem);
+            --rx: calc(var(--hover-x, 0) * 1px - 50cqi);
+            --ry: calc(var(--hover-y, 0) * 1px - 50cqb - 0.5rem);
 
             //
             --translate-x: clamp(0px, calc(calc(50cqi - 50%) + var(--rx)), calc(100cqi - 100%));
