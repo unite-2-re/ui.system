@@ -19,39 +19,6 @@
 }
 
 //
-@mixin vp-vars {
-    & {
-        --vp-i-size: 100dvi;
-        --vp-b-size: 100dvb;
-    }
-
-    //
-    @media screen and ((display-mode: fullscreen) or (display-mode: standalone)) {
-        --vp-i-size: min(var(--avail-width), 100dvi);
-        --vp-b-size: min(var(--avail-height), 100dvb);
-    }
-
-    //
-    @at-root :fullscreen & {
-        --vp-i-size: min(var(--avail-width), 100dvi);
-        --vp-b-size: min(var(--avail-height), 100dvb);
-    }
-};
-
-// depends from virtual keyboards
-@mixin fit-viewport {
-    @include vp-vars;
-
-    //
-    inline-size: min(var(--vp-i-size, 100dvi), 100dvi);
-    block-size: min(var(--vp-b-size, 100dvb), 100dvb);
-
-    //
-    max-inline-size: min(var(--vp-i-size, 100dvi), 100dvi);
-    max-block-size: min(var(--vp-b-size, 100dvb), 100dvb);
-};
-
-//
 @mixin flex($dir: row) {
     display: inline flex;
     flex-direction: #{$dir};
