@@ -111,7 +111,7 @@ export class UIFrame extends LitElementTheme {
         super(); const self = this as unknown as HTMLElement;
         self.classList?.add?.("ui-frame");
         self.classList?.add?.("u2-frame");
-        //self.dataset.hidden = "";
+        self.dataset.hidden = "";
         this.initTaskManager(options);
         self.addEventListener("ag-pointerdown", (ev)=>{
             focusTask(this?.taskManager, self);
@@ -191,7 +191,7 @@ export class UIFrame extends LitElementTheme {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
         this.importFromTemplate(htmlCode);
-        root.addEventListener("ag-click", (ev)=>{
+        root.addEventListener("click", (ev)=>{
             if (ev.target.matches(".ui-btn-close")) {
                 //const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;
                 this.taskManager?.deactivate?.("#" + (self.querySelector(".ui-content")?.id || self?.id || location.hash));
