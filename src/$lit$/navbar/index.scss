@@ -110,6 +110,14 @@
             //
             outline: none 0px transparent;
             border: none 0px transparent;
+
+            //
+            --theme-surface-alpha: 0;
+        }
+
+        //
+        ::slotted(*) {
+            --theme-surface-alpha: 0;
         }
 
         //
