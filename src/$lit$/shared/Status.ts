@@ -63,35 +63,37 @@ const runBatteryStatus = (async(root = document)=>{
     const batteryIcons = new Map([
         [0, "battery-warning"],
         [25, "battery"],
-        [50, " battery-low"],
+        [50, "battery-low"],
         [75, "battery-medium"],
         [100, "battery-full"],
     ]);
 
     //
-    const byLevel = (lv = 1.0)=>batteryIcons.get(Math.ceil(lv / 0.25) * 25);
+    const byLevel = (lv = 1.0)=>(batteryIcons.get(Math.max(Math.min(Math.ceil(lv * 4) * 25, 100), 0))||"battery");
     const changeBatteryStatus = ()=>{
         let battery = "battery-charging";
-        batteryStatus?.then?.((btr)=>{
-            if (btr.charging)
-                { battery = "battery-charging"; } else // @ts-ignore
-                { battery = byLevel(btr.level); };
-                setElementIcon(".ui-battery", battery, root);
-        })?.catch?.(console.warn.bind(console));
         if (!batteryStatus) {
             setElementIcon(".ui-battery", battery, root);
+        } else {
+            batteryStatus?.then?.((btr)=>{
+                if (btr.charging)
+                    { battery = "battery-charging"; } else // @ts-ignore
+                    { battery = byLevel(btr.level)||"battery"; };
+                    setElementIcon(".ui-battery", battery, root);
+            })?.catch?.(console.warn.bind(console));
         }
     }
+
+    //
+    changeBatteryStatus();
+    setInterval(changeBatteryStatus, 1000);
 
     //
     batteryStatus?.then?.((btr)=>{
         btr.addEventListener("chargingchange", changeBatteryStatus);
         btr.addEventListener("levelchange", changeBatteryStatus);
+        changeBatteryStatus();
     });
-
-    //
-    changeBatteryStatus();
-    setInterval(changeBatteryStatus, 1000);
 });
 
 //
