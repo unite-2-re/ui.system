@@ -69,7 +69,7 @@ const runBatteryStatus = (async(root = document)=>{
     ]);
 
     //
-    const byLevel = (lv = 1.0)=>(batteryIcons.get(Math.max(Math.min(Math.ceil(lv * 4) * 25, 100), 0))||"battery");
+    const byLevel = (lv = 1.0)=>(batteryIcons.get(Math.max(Math.min(Math.round(lv * 4) * 25, 100), 0))||"battery");
     const changeBatteryStatus = ()=>{
         let battery = "battery-charging";
         if (!batteryStatus) {
