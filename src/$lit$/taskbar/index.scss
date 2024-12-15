@@ -65,6 +65,12 @@
         }
 
         //
+        :where(*), ::slotted(*)
+        {
+            --theme-surface-alpha: 0;
+        }
+
+        //
         ::slotted(ui-task), ui-task {
             pointer-events: auto;
         }
@@ -206,6 +212,7 @@
         & {
             --theme-surface-alpha: 0;
             --theme-surface-chroma: 0;
+            --highlight-coefficient: 0;
         }
 
         //
