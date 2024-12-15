@@ -38,11 +38,11 @@ export class UIVolume extends LitElementTheme {
         //
         const weak = new WeakRef(self);
         const sws = { pointerId: -1 };
-        const doExaction = (self, x, y, confirm = false)=>{
+        const doExaction = (self, x, y, confirm = false, boundingBox?)=>{
             if (!self) return;
 
             //
-            const box    = getBoundingOrientRect(self);
+            const box    = boundingBox || getBoundingOrientRect(self);
             const coord  = [x - box?.left, y - box?.top];
             const number = self.querySelector?.("input[type=\"number\"]") as unknown as HTMLInputElement
             const count  = ((parseFloat(number?.max) || 0) - (parseFloat(number?.min) || 0));
@@ -97,7 +97,7 @@ export class UIVolume extends LitElementTheme {
             const e = ev?.detail || ev;
             if (sws.pointerId == e.pointerId) {
                 sws.pointerId = -1;
-                doExaction(weak?.deref?.(), e.orient[0], e.orient[1], true);
+                doExaction(weak?.deref?.(), e.orient[0], e.orient[1], true, e?.boundingBox);
                 e.target?.releasePointerCapture?.(e.pointerId);
                 document.documentElement.style.removeProperty("cursor");
             }
@@ -126,7 +126,7 @@ export class UIVolume extends LitElementTheme {
         ROOT.addEventListener("ag-pointermove", (ev)=>{
             const e = ev?.detail || ev;
             if (sws.pointerId == e.pointerId) {
-                doExaction(weak?.deref?.(), e.orient[0], e.orient[1]);
+                doExaction(weak?.deref?.(), e.orient[0], e.orient[1], false, e?.boundingBox);
             }
         });
     }
