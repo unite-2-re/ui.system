@@ -13,7 +13,7 @@ import styles from "../shared/BoxLayout.scss?inline";
 import htmlCode from "../shared/BoxLayout.html?raw";
 
 // @ts-ignore
-import { getBoundingOrientRect } from "/externals/lib/agate.js";
+import { getBoundingOrientRect } from "/externals/core/agate.js";
 
 //
 import LitElementTheme from "../shared/LitElementTheme";

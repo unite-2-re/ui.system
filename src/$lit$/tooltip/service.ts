@@ -1,8 +1,8 @@
 /* @vite-ignore */ // @ts-ignore
-import AxGesture, {pointerMap} from "/externals/lib/interact.js";
+import AxGesture, {pointerMap} from "/externals/core/interact.js";
 
 // @ts-ignore
-import { getBoundingOrientRect } from "/externals/lib/agate.js";
+import { getBoundingOrientRect } from "/externals/core/agate.js";
 
 //
 const ROOT = document.documentElement;

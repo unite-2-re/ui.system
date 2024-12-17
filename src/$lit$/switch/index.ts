@@ -1,7 +1,7 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { getBoundingOrientRect } from "/externals/lib/agate.js";
+import { getBoundingOrientRect } from "/externals/core/agate.js";
 
 // @ts-ignore
 import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../shared/LitUse";

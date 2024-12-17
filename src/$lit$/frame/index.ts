@@ -7,7 +7,7 @@ import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../s
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import {AxGesture} from "/externals/lib/interact.js";
+import {AxGesture} from "/externals/core/interact.js";
 
 // @ts-ignore
 import htmlCode from "./index.html?raw";
