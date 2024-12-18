@@ -28,11 +28,7 @@ export class UINavBar extends LitElementTheme {
 
     //
     protected render() {
-        return html`${this.themeStyle}
-            <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}><ui-icon inert icon="menu"></ui-icon></button>
-            <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-down"></ui-icon></button>
-            <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle" part="ui-title-handle" @click=${this.menuAction.bind(this)}><ui-icon inert icon=${this.icon}></ui-icon><span>${this.label}</span></button>
-        `;
+        return html`${this.themeStyle}<button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}><ui-icon inert icon="menu"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-down"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle" part="ui-title-handle" @click=${this.menuAction.bind(this)}><ui-icon inert icon=${this.icon}></ui-icon><span>${this.label}</span></button>`;
     }
 
     //

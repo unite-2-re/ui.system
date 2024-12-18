@@ -48,7 +48,6 @@ export class UITaskItem extends LitElementTheme {
     static styles = css`${unsafeCSS(styles)}`;
     protected render() {
         return html`${this.themeStyle} <ui-icon inert icon=${this.icon} data-highlight="0" data-alpha="0"></ui-icon> <span inert data-highlight="0" data-alpha="0">${this.label}</span>`;
-        //return html`${this.themeStyle}<slot></slot>`;
     }
 
     //
