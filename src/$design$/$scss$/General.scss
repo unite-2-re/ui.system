@@ -184,9 +184,9 @@
     {
         //
         & {
-            --theme-surface-alpha: 0;
-            --theme-surface-chroma: 0;
-            --highlight-coefficient: 0;
+            --tm-bg-alpha: 0;
+            --tm-chroma: 0;
+            --hl-co: 0;
         }
 
         //
@@ -196,7 +196,7 @@
         }
 
         //
-        &, & * { --highlight-coefficient: 0; }
+        &, & * { --hl-co: 0; }
         &::part(ui-title-handle) { pointer-events: none; }
     }
 
@@ -219,9 +219,9 @@
         body:not(:has(ui-frame:not([data-hidden]))) ui-taskbar
         {
             & {
-                --theme-surface-alpha: 0;
-                --theme-surface-chroma: 0;
-                --highlight-coefficient: 0;
+                --tm-bg-alpha: 0;
+                --tm-chroma: 0;
+                --hl-co: 0;
             }
 
             //

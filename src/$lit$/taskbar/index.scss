@@ -67,7 +67,7 @@
         //
         :where(*), ::slotted(*)
         {
-            --theme-surface-alpha: 0;
+            --tm-bg-alpha: 0;
         }
 
         //
@@ -210,9 +210,9 @@
     :host(body:not(:has(.ui-app-frame:not([data-hidden]))) ui-taskbar)
     {
         & {
-            --theme-surface-alpha: 0;
-            --theme-surface-chroma: 0;
-            --highlight-coefficient: 0;
+            --tm-bg-alpha: 0;
+            --tm-chroma: 0;
+            --hl-co: 0;
         }
 
         //

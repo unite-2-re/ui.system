@@ -91,13 +91,13 @@
 
     //
     @media (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
-        :host(ui-task.ui-focus) { --theme-surface-alpha: 1; border-block-start: solid 0.25rem oklch(from var(--current-glyph-color, currentColor) l c h / 1); }
+        :host(ui-task.ui-focus) { --tm-bg-alpha: 1; border-block-start: solid 0.25rem oklch(from var(--current-glyph-color, currentColor) l c h / 1); }
     }
 
     //
     @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
         :host(ui-task.ui-focus) {
-            & { --theme-surface-alpha: 1; };
+            & { --tm-bg-alpha: 1; };
             & { background-color: var(--current-glyph-color, currentColor) !important; };
             &, & :where(*) { color: oklch(from var(--theme-surface-color, currentColor) l c h / 1) !important; };
             & :where(ui-icon) { background-color: oklch(from var(--theme-surface-color, currentColor) l c h / 1) !important; }
