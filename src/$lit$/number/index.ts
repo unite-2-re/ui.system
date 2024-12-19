@@ -101,9 +101,9 @@ export class UINumber extends LitElementTheme {
 
         //
         const self = this as unknown as HTMLElement;
+        if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "0"); };
         if (!self.hasAttribute("data-alpha")) { self.setAttribute("data-alpha", "0"); };
-        if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "solid"); };
-        if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "2"); };
+        //if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "solid"); };
     }
 }
 

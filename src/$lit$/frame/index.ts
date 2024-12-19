@@ -181,9 +181,9 @@ export class UIFrame extends LitElementTheme {
     //
     protected updateAttributes() {
         const self = this as unknown as HTMLElement;
-        if (!self.dataset.chroma) { self.dataset.chroma = "0.2"; };
+        if (!self.dataset.chroma) { self.dataset.chroma = "0"; };
         if (!self.dataset.scheme) { self.dataset.scheme = "inverse"; };
-        if (!self.dataset.highlight) { self.dataset.highlight = "6"; };
+        if (!self.dataset.highlight) { self.dataset.highlight = "0"; };
     }
 
     //
