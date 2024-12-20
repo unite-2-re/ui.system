@@ -220,7 +220,7 @@
             overflow: hidden;
 
             /* */
-            outline: solid 0.5px var(--current-surface-color);
+            outline: solid 0.5px var(--rv-bg-color, currentColor);
             border-radius: 0.125rem;
             box-shadow: 0rem 0rem 1rem #10101060;
 

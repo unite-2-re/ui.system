@@ -115,6 +115,6 @@
     //:host(ui-select-shape:has(:checked)),
     :host(ui-select-shape[checked])
     {
-        outline: solid 0.125rem oklch(from var(--current-surface-color, currentColor) l c h / 1);
+        outline: solid 0.125rem oklch(from var(--rv-bg-color, currentColor) l c h / 1);
     }
 }

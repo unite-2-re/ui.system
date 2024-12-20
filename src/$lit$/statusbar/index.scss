@@ -105,7 +105,8 @@
         }
 
         /* */
-        ui-icon, ::slotted(ui-icon)
+        ui-icon,
+        ::slotted(ui-icon)
         {
             display: inline flex;
             inline-size: max-content;
@@ -114,7 +115,7 @@
             box-sizing: border-box;
             place-items: center;
             place-content: center;
-            background-color: var(--current-glyph-color, currentColor);
+            background-color: var(--rv-color, currentColor);
         }
     }
 

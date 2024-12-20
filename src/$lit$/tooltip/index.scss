@@ -43,8 +43,8 @@
             border-radius: 0.125rem;
 
             //
-            background-color: var(--current-surface-color, black);
-            outline: solid 0.5px oklch(from var(--current-glyph-color) l c h / 0.125);
+            background-color: var(--rv-bg-color, currentColor);
+            outline: solid 0.5px oklch(from var(--rv-color, currentColor) l c h / 0.125);
 
             //
             pointer-events: none;

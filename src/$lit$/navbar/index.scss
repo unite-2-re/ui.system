@@ -56,7 +56,8 @@
         }
 
         //
-        :where(*), ::slotted(*) {
+        :where(*), ::slotted(*)
+        {
             background-color: transparent;
         }
 
@@ -116,19 +117,21 @@
         }
 
         //
-        ::slotted(*) {
+        ::slotted(*)
+        {
             --tm-bg-alpha: 0;
         }
 
         //
-        ::slotted(ui-icon), ui-icon {
+        ::slotted(ui-icon), ui-icon
+        {
             pointer-events: none;
             aspect-ratio: 1 / 1;
             inline-size: max-content;
             block-size: 100%;
             box-sizing: border-box;
             position: relative;
-            background-color: var(--current-glyph-color, currentColor);
+            background-color: var(--rv-color, currentColor);
             z-index: calc(1 + var(--z-index, 0));
             padding: 0.75rem;
         }

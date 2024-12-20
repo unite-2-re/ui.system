@@ -147,7 +147,8 @@
             }
 
             //
-            ::slotted(ui-icon), ui-icon {
+            ::slotted(ui-icon), ui-icon
+            {
                 aspect-ratio: 1 / 1;
                 inline-size: max-content;
                 block-size: 100%;
