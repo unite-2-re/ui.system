@@ -83,9 +83,9 @@ export class UITaskBar extends LitElementTheme {
         self.classList?.add?.("ui-taskbar");
 
         //
-        if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0.05" ); };
-        if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
-        if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "0"    ); };
+        if (!self.hasAttribute("data-chroma"))    { self.setAttribute("data-chroma"         , "0.05" ); };
+        if (!self.hasAttribute("data-scheme"))    { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
+        if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight"      , "0"    ); };
 
         //
         this.taskManager?.addTasks?.(this.tasks || []);
@@ -94,9 +94,6 @@ export class UITaskBar extends LitElementTheme {
         if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
             self.dataset.hidden = "";
         }
-
-        //
-        //this.adaptiveTheme();
     }
 
 }
