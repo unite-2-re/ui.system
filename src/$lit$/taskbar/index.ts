@@ -54,6 +54,15 @@ export class UITaskBar extends LitElementTheme {
 
         //
         this.adaptiveTheme();
+
+        //
+        root.addEventListener("click", (ev)=>{
+            if (ev?.target?.matches(".ui-time") || ev?.target?.closest?.(".ui-time")) { (document.querySelector("ui-popup[data-name=\"calendar\"]") as any)?.showPopup?.( (ev?.target?.matches(".ui-time") ? ev?.target : ev?.target?.closest(".ui-time")) ); }
+            if (ev?.target?.matches(".ui-indicator:has(.ui-network)") || ev?.target?.closest?.(".ui-indicator:has(.ui-network)")) { (document.querySelector("ui-popup[data-name=\"quick-settings\"]") as any)?.showPopup?.( (ev?.target?.matches(".ui-indicator:has(.ui-network)") ? ev?.target : ev?.target?.closest(".ui-indicator:has(.ui-network)")) ); }
+            if (ev?.target?.matches(".ui-indicator:has(.ui-battery)") || ev?.target?.closest?.(".ui-indicator:has(.ui-battery)")) { (document.querySelector("ui-popup[data-name=\"power-settings\"]") as any)?.showPopup?.( (ev?.target?.matches(".ui-indicator:has(.ui-battery)") ? ev?.target : ev?.target?.closest(".ui-indicator:has(.ui-battery)")) ); }
+        });
+
+        //
         return root;
     }
 

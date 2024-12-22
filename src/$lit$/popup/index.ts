@@ -35,7 +35,16 @@ export class UIPopup extends LitElementTheme {
     }
 
     //
-    constructor() { super(); }
+    constructor() {
+        super();
+
+        //
+        whenAnyScreenChanges?.(()=>{
+            this.placeWithElement();
+        });
+    }
+
+    //
     public connectedCallback() {
         super.connectedCallback();
 
@@ -43,21 +52,21 @@ export class UIPopup extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         if (!self.dataset?.alpha) self.dataset.alpha = "1";
         if (!self.dataset?.scheme) self.dataset.scheme = "solid";
-        if (!self.dataset?.chroma) self.dataset.scheme = "0.001";
+        if (!self.dataset?.chroma) self.dataset.chroma = "0.001";
 
         //
         self.style.setProperty("z-index", "9999", "important");
         self.classList?.add?.("ui-popup");
         self.classList?.add?.("u2-popup");
+        self.dataset.hidden = "";
 
         //
-        whenAnyScreenChanges?.(()=>{
-            this.placeWithElement()
-        });
+        this.placeWithElement();
     }
 
     //
-    public showPopup() {
+    public showPopup(element?: HTMLElement) {
+        if (element) { this.bindElement(element); };
         const self = this as unknown as HTMLElement;
         delete self.dataset.hidden;
         this.placeWithElement();
@@ -68,7 +77,7 @@ export class UIPopup extends LitElementTheme {
     public placeWithElement() {
         const element = this.boundElement?.deref?.();
         const self = this as unknown as HTMLElement;
-        if (element && self.dataset.hidden != null) {
+        if (element && self.dataset.hidden == null) {
             const box = getBoundingOrientRect(element);
             const self_box = getBoundingOrientRect(self);
             self.style.setProperty("--inline-size", `${(box.width || self_box.width)}`);

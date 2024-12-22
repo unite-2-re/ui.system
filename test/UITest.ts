@@ -16,7 +16,8 @@ import init, {
     UIVolume,
     UINumber,
     UISelectShape,
-    UISelectRow
+    UISelectRow,
+    UIPopup
 } from "../src/index";
 
 // @ts-ignore
@@ -44,9 +45,6 @@ import(/* @vite-ignore */ "/externals/core/design.js").then((module)=>{
 }).catch(console.warn.bind(console));
 
 // production mode...
-//import { UICheckBox } from "../dist/ui.js";
-
-//
 console.log(UICheckBox);
 console.log(UISelectRow);
 console.log(UISelectShape);
@@ -64,6 +62,7 @@ console.log(UIBlock);
 console.log(UIMenuItem);
 console.log(UIVolume);
 console.log(UINumber);
+console.log(UIPopup);
 
 //
 makeSelection(document.body, "ui-checkbox, ui-switch");
