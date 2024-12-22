@@ -1,59 +1,25 @@
 /// <reference types="lit" />
 // Type: contained
 
+
 // @ts-ignore
 import { getBoundingOrientRect } from "/externals/core/agate.js";
 
+// @ts-ignore
+import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../shared/LitUse";
+
+// @ts-ignore
+import { customElement, property } from "lit/decorators.js";
+
+// @ts-ignore
+import styles from "../shared/BoxLayout.scss?inline";
+
+// @ts-ignore
+import htmlCode from "../html/ap-switch.html?raw";
+
 //
-export const onSwitch = (ev?: any, self?: HTMLElement, input?: HTMLInputElement)=>{
-    //const self = this as unknown as HTMLElement;
-    //const input = (ev?.target ?? self?.querySelector?.("input:checked"));
-    if (!self) return;
-
-    //
-    if (input?.type == "radio" && input?.checked) {
-        //self.value = input?.value;
-        const index = Array.from(self.querySelectorAll?.("input[type=\"radio\"]"))?.indexOf?.(input);
-        if (index >= 0) { self.style?.setProperty?.("--value", `${index}`); };
-    }
-
-    //
-    if (input?.type == "checkbox" && (ev?.target ?? self)?.checked != null) {
-        const checked = (ev?.target ?? self)?.checked;
-        self.style.setProperty("--value", `${checked ? 1 : 0}`);
-    }
-
-    //
-    if (input?.type == "number") {
-        const value = input?.valueAsNumber || parseFloat(input?.value) || 0;
-        const index = value - (parseFloat(input?.min) || 0);
-
-        //
-        if (index >= 0 && ev?.type != "input") { self.style?.setProperty?.("--value", `${index}`); };
-        self.style.setProperty("--max-value", `${((parseFloat(input?.max)||0) - (parseFloat(input?.min)||0))}`, "");
-    };
-
-    //
-    const indicator = self?.querySelector?.(".ui-indicator");
-    if (input?.type == "number" && indicator) {
-        const value = input?.valueAsNumber || parseFloat(input?.value) || 0;
-        indicator.innerHTML = "" + value?.toLocaleString('en-US', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 1
-        });
-    }
-
-    //
-    if (input?.type == "checkbox") {
-        const icon = self.querySelector("ui-icon");
-        if (icon) { icon.setAttribute("icon", ev?.target?.checked ? "badge-check" : "badge"); }
-
-        //
-        const thumb = self.shadowRoot?.querySelector?.(".ui-thumb");
-        thumb?.setAttribute?.("data-highlight", ev?.target?.checked ? "3" : "8");
-        thumb?.setAttribute?.("data-highlight-hover", ev?.target?.checked ? "0" : "5");
-    }
-}
+import LitElementTheme from "../../shared/LitElementTheme";
+import { doIndication } from "./ap-indication.ts";
 
 //
 export const setStyle = (self, confirm: boolean = false, exact: number = 0, val: number = 0)=>{
@@ -84,7 +50,7 @@ export const setStyle = (self, confirm: boolean = false, exact: number = 0, val:
 }
 
 //
-export const makeSwitch = (self?: HTMLElement, TYPE?: string)=>{
+export const makeSwitch = (self?: HTMLElement)=>{
     if (!self) return;
 
     //
@@ -92,6 +58,11 @@ export const makeSwitch = (self?: HTMLElement, TYPE?: string)=>{
     const weak = new WeakRef(self);
     const doExaction = (self, x, y, confirm = false, boundingBox?)=>{
         if (!self) return;
+
+        //
+        let TYPE = "unknown";
+        if (self?.matches?.(":has(input[type=\"radio\"])")) { TYPE = "radio"; };
+        if (self?.matches?.(":has(input[type=\"number\"])")) { TYPE = "number"; };
 
         //
         const box   = boundingBox || getBoundingOrientRect?.(self);
@@ -174,3 +145,44 @@ export const makeSwitch = (self?: HTMLElement, TYPE?: string)=>{
         }
     });
 };
+
+// @ts-ignore
+@customElement('ui-switch')
+export class UISwitch extends LitElementTheme {
+
+    // theme style property
+    @property({attribute: true, reflect: true, type: String}) public value: string|number = "";
+    @property({attribute: true, reflect: true, type: Boolean}) public checked: boolean = false;
+
+    //
+    static styles = css`${unsafeCSS(styles)}`;
+    constructor() {
+        super(); const self = this as unknown as HTMLElement;
+        self.classList?.add?.("ui-switch");
+        self.classList?.add?.("u2-input");
+        makeSwitch(this);
+    }
+
+    //
+    protected onSelect(ev?: any){
+        const self = this as unknown as HTMLElement;
+        const input = (ev?.target?.matches?.("input") ? ev?.target : null) ?? self?.querySelector?.("input:checked") ?? self?.querySelector?.("input");
+        doIndication(ev, this, input);
+    }
+
+    //
+    protected createRenderRoot() {
+        const root = super.createRenderRoot();
+        this.importFromTemplate(htmlCode);
+        return root;
+    }
+
+    //
+    public connectedCallback() {
+        super.connectedCallback();
+        requestIdleCallback(()=>this.onSelect(), {timeout: 1000});
+    }
+}
+
+//
+export default UISwitch;
