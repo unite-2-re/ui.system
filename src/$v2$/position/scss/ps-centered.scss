@@ -1,0 +1,16 @@
+//
+:host {
+    & {
+        --inline-size: max-content;
+        --anchor-group: --ui-popup;
+    };
+
+    // fallback
+    & {
+        inset-inline-start: max(50%, 0px);
+        inset-block-start: max(50%, 0px);
+        inset-inline-end: auto;
+        inset-block-end: auto;
+        translate: -50% -50% 0px;
+    };
+};

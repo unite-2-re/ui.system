@@ -1,0 +1,106 @@
+@scope(:host, :scope, :root) {
+    //
+    @property --rx {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --ry {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --sp-x {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --sp-y {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --bound-inline-size {
+        initial-value: 100cqi;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --bound-block-size {
+        initial-value: 100cqb;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --limit-drag-x {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --limit-drag-y {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --ds-x {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --ds-y {
+        initial-value: 0px;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+};
+
+//
+:host {
+    //
+    & {
+        /* shifting point */
+        --sp-x: clamp(0px, calc(var(--shift-x, 0) * 1px), calc(var(--bound-inline-size, 100cqi) - var(--inline-size, 100%)));
+        --sp-y: clamp(0px, calc(var(--shift-y, 0) * 1px), calc(var(--bound-block-size , 100cqb) - var(--block-size , 100%)));
+
+        /* for transform drag limit */
+        --limit-drag-x: max(calc(var(--bound-inline-size, 100cqi) - 100%), 0px);
+        --limit-drag-y: max(calc(var(--bound-block-size , 100cqb) - 100%), 0px);
+
+        /* inbound drag position */
+        --rx: clamp(0px, calc(var(--sp-x, 0px) + var(--drag-x, 0) * 1px), var(--limit-drag-x, 100%));
+        --ry: clamp(0px, calc(var(--sp-y, 0px) + var(--drag-y, 0) * 1px), var(--limit-drag-y, 100%));
+
+        /* logically correct drag... */
+        --ds-x: calc(var(--rx, 0px) - var(--sp-x, 0px));
+        --ds-y: calc(var(--ry, 0px) - var(--sp-y, 0px));
+    };
+
+    /* */
+    & {
+        position: fixed;
+        inset-inline-start: var(--sp-x, 0px);//var(--ds-x, 0px);
+        inset-block-start : var(--sp-y, 0px);//var(--ds-y, 0px);
+        inset-inline-end  : auto;
+        inset-block-end   : auto;
+
+        /* */
+        translate: var(--ds-x, 0px) var(--ds-y, 0px) 0px;
+    };
+
+};

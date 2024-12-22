@@ -1,0 +1,139 @@
+// Type: standalone
+@layer ui-dropmenu {
+    :host
+    {
+        &, :where(*), ::slotted(*)
+        {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            touch-action: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
+
+            /* */
+            white-space: nowrap;
+            white-space-collapse: collapse;
+            text-wrap: nowrap;
+            text-spacing-trim: trim-start;
+
+            //
+            -webkit-font-smoothing: none;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeSpeed;
+            font-smooth: 0px;
+            font-smooth: never;
+            shape-rendering: crispEdges;
+            shape-rendering: optimizeSpeed;
+            image-rendering: auto;
+            image-rendering: crisp-edges;
+            image-rendering: optimizeSpeed;
+            image-rendering: pixelated;
+        }
+
+        //
+        & {
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            inline-size: max-content;
+            block-size: max-content;
+            min-inline-size: 2rem;
+            text-align: center;
+
+            /* */
+            //min-inline-size: 3rem;
+            //min-block-size: 3rem;
+
+            /* */
+            /*display: inline grid;
+            grid-template-rows: minmax(0px, 1fr);
+            grid-template-columns: minmax(0px, 1fr);*/
+
+            display: inline flex;
+            place-content: center;
+            place-items: center;
+
+            /* */
+            touch-action: none;
+            pointer-events: auto;
+            cursor: pointer;
+
+            /* */
+            overflow: hidden;
+            border-radius: 0.25rem;
+        }
+
+        /* */
+        :where(*) { background-color: transparent; }
+
+        /* */
+        & button {
+            gap: 0.25rem;
+            padding: 0rem;
+            display: flex;
+            flex-direction: row;
+            align-content: safe center;
+            align-items: safe center;
+            justify-items: stretch;
+            justify-content: stretch;
+            pointer-events: none;
+            border-radius: 0px;
+            outline: none 0px transparent;
+            border: none 0px transparent;
+            background-color: transparent;
+            inline-size: 100%;
+            block-size: 100%;
+            box-sizing: border-box;
+
+            /* */
+            text-align: start;
+            user-select: none;
+            touch-action: none;
+        }
+
+        /* */
+        :where(*), ::slotted(*)
+        {
+            user-select: none;
+            touch-action: none;
+            text-align: start;
+
+            /* */
+            place-self: center;
+            place-content: center;
+            place-items: center;
+        }
+
+        /* */
+        ::slotted(*)
+        {
+            interactivity: inert;
+            pointer-events: none;
+            text-align: start;
+        }
+
+        /* */
+        ::slotted(input) { display: none !important; }
+
+        /* */
+        & input[type="checkbox"], slot[name="radio"]::slotted(input[type="checkbox"]),
+        & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"])
+        {
+            box-sizing: border-box;
+            cursor: pointer;
+            grid-row: 1 / -1;
+            grid-column: 1 / -1;
+            inline-size: 100%;
+            block-size: 100%;
+            appearance: none;
+            opacity: 0;
+            margin: 0px;
+            pointer-events: auto;
+        };
+
+    }
+}

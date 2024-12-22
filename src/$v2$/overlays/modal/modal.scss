@@ -1,0 +1,24 @@
+@layer ui-popup
+{
+    //
+    :host(ui-popup)
+    {
+        & {
+            border-radius: 0.25rem;
+            inline-size: max-content;
+            block-size: max-content;
+            box-shadow: 0rem 0rem 1rem #10101040;
+            position: fixed;
+            z-index: calc(99999 + var(--z-index, 0));
+            padding: 0.25rem;
+            pointer-events: auto;
+        };
+    };
+
+    //
+    :host(ui-popup[data-hidden])
+    {
+        display: none !important;
+        pointer-events: none !important;
+    };
+};
