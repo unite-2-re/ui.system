@@ -1,5 +1,6 @@
 /// <reference types="lit" />
 // Type: contained
+// Behaviour: spinner
 
 // @ts-ignore
 import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../shared/LitUse";
@@ -63,7 +64,7 @@ export class UINumber extends LitElementTheme {
     protected onSelect(ev?: any){
         const self = this as unknown as HTMLElement;
         const input = (ev?.target?.matches?.("input") ? ev?.target : null) ?? self?.querySelector?.("input:checked") ?? self?.querySelector?.("input");
-        doIndication(ev, this, input);
+        doIndication(ev, self, input);
     }
 
     //

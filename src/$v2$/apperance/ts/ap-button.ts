@@ -1,5 +1,6 @@
 /// <reference types="lit" />
 // Type: standalone
+// Behaviour: select, button
 
 // @ts-ignore
 import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../../shared/LitUse";
@@ -15,6 +16,47 @@ import styles from "./index.scss?inline";
 
 //
 import UIButtonBase from "../../behaviour/bh-button";
+import UISelectBase from "../../behaviour/bh-select";
+
+
+// selection derivative
+
+// @ts-ignore
+@customElement('ui-toggle')
+export class UIToggle extends UISelectBase {
+    @property({attribute: true, reflect: true, type: String}) value = "";
+    @property({attribute: true, reflect: true, type: String}) icon = "";
+    @property({}) dropMenu?: any = null;
+
+    //
+    static styles = css`${unsafeCSS(styles)}`;
+    constructor() {
+        super(); const self = this as unknown as HTMLElement;
+        self.classList?.add?.("ui-toggle");
+        self.classList?.add?.("u2-toggle");
+    }
+
+    //
+    public connectedCallback() {
+        super.connectedCallback();
+        const self = this as unknown as HTMLElement;
+
+        //
+        if (!self.dataset.scheme) { self.dataset.scheme = "solid"; };
+        if (!self.dataset.highlight) { self.dataset.highlight = "0"; };
+        if (!self.dataset.highlightHover) { self.dataset.highlightHover = "1"; };
+    }
+
+    //
+    protected createRenderRoot() {
+        const root = super.createRenderRoot();
+        this.importFromTemplate(htmlCode);
+        return root;
+    }
+}
+
+
+// button derivative
 
 // @ts-ignore
 @customElement('ui-button')

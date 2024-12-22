@@ -34,7 +34,7 @@ export const onItemSelect = (ev?: any, self?: any)=>{
 // @ts-ignore
 @customElement('ui-select-base')
 export class UISelectBase extends LitElementTheme {
-    #parentNode?: any;
+    $parentNode?: any;
     #onSelect?: Function;
 
     // theme style property
@@ -50,8 +50,8 @@ export class UISelectBase extends LitElementTheme {
     //
     public disconnectedCallback() {
         super.disconnectedCallback();
-        this.#parentNode?.removeEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
-        this.#parentNode = null;
+        this.$parentNode?.removeEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
+        this.$parentNode = null;
     }
 
     //
@@ -64,9 +64,9 @@ export class UISelectBase extends LitElementTheme {
         if (!self?.getAttribute?.("data-alpha")) { self.setAttribute("data-alpha", "0"); };
 
         //
-        this.#parentNode = self?.parentNode;
-        this.#parentNode?.addEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
-        this.#parentNode?.addEventListener("ag-click", this.#onSelect ??= this.onSelect.bind(this));
+        this.$parentNode = self?.parentNode;
+        this.$parentNode?.addEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
+        this.$parentNode?.addEventListener("ag-click", this.#onSelect ??= this.onSelect.bind(this));
         requestIdleCallback(()=>this.onSelect(), {timeout: 1000});
     }
 

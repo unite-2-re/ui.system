@@ -71,10 +71,11 @@ export class UIModal extends LitElementTheme {
     //
     public placeWithElement() {
         const element = this.boundElement?.deref?.();
-        placeWithElement(this, element, "from-top", 10);
+        const self = this as unknown as HTMLElement;
+        placeWithElement(self, element, "from-top", 10);
 
         // if element not found, do hide
-        if (!element) { this.dataset.hidden = ""; }
+        if (!element) { self.dataset.hidden = ""; }
         return this;
     }
 

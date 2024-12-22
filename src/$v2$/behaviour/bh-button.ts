@@ -16,6 +16,9 @@ import LitElementTheme from "../shared/LitElementTheme";
 // @ts-ignore
 @customElement('ui-button-base')
 export class UIButtonBase extends LitElementTheme {
+    $parentNode?: any;
+
+    //
     static styles = css`${unsafeCSS(styles)}`;
     constructor() {
         super(); const self = this as unknown as HTMLElement;

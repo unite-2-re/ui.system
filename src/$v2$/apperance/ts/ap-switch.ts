@@ -1,6 +1,6 @@
 /// <reference types="lit" />
 // Type: contained
-
+// Behaviour: switch (combined)
 
 // @ts-ignore
 import { getBoundingOrientRect } from "/externals/core/agate.js";
@@ -160,14 +160,14 @@ export class UISwitch extends LitElementTheme {
         super(); const self = this as unknown as HTMLElement;
         self.classList?.add?.("ui-switch");
         self.classList?.add?.("u2-input");
-        makeSwitch(this);
+        makeSwitch(self);
     }
 
     //
     protected onSelect(ev?: any){
         const self = this as unknown as HTMLElement;
         const input = (ev?.target?.matches?.("input") ? ev?.target : null) ?? self?.querySelector?.("input:checked") ?? self?.querySelector?.("input");
-        doIndication(ev, this, input);
+        doIndication(ev, self, input);
     }
 
     //
