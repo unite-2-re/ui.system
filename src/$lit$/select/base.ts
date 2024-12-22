@@ -53,8 +53,6 @@ export class UISelectBase extends LitElementTheme {
 
         //
         if (this.checked) { self.setAttribute("checked", ""); } else { self.removeAttribute("checked"); }
-        if (!self.dataset?.chroma) self.dataset.chroma = "0.1";
-        if (!self.dataset?.highlightHover) self.dataset.highlightHover = "4";
         this.updateStyles?.();
 
         //

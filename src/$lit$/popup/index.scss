@@ -1,7 +1,32 @@
-@layer ui-popup {
+@layer ui-popup
+{
+    //
+    :host(ui-popup)
+    {
+        & { --anchor-group: --ui-popup; };
+        & {
+            border-radius: 0.25rem;
+            inline-size: max-content;
+            block-size: max-content;
+            position: fixed;
+            z-index: calc(99999 + var(--z-index, 0));
+            padding: 0.25rem;
 
-    :host(ui-popup) {
-        
-    }
+            //
+            inset: 0px;
+            box-shadow: 0rem 0rem 1rem #10101040;
 
+            //
+            inset-inline-start: calc(var(--client-x, 0) * 1px);
+            inset-block-start: calc(var(--client-y, 0) * 1px);
+            inset-inline-end: auto;
+            inset-block-end: auto;
+
+            //
+            translate:
+                    min(0px, calc(100cqi - (100% + var(--client-x, 0) * 1px)))
+                    min(0px, calc(100cqb - (100% + var(--client-y, 0) * 1px)))
+                    0px !important;
+        };
+    };
 };

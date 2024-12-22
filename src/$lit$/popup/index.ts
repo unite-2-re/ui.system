@@ -12,6 +12,16 @@ import styles from "./index.scss?inline";
 import LitElementTheme from "../shared/LitElementTheme";
 
 // @ts-ignore
+import { getBoundingOrientRect, whenAnyScreenChanges } from "/externals/core/agate.js";
+
+//
+const generateId = (len = 16) => {
+    var arr = new Uint8Array((len || 16) / 2);
+    window.crypto.getRandomValues(arr);
+    return Array.from(arr, (dec)=>dec.toString(16).padStart(2, "0")).join('')
+}
+
+// @ts-ignore
 @customElement('ui-popup')
 export class UIPopup extends LitElementTheme {
     @property() protected current: string = "";
@@ -41,12 +51,50 @@ export class UIPopup extends LitElementTheme {
         self.classList?.add?.("u2-popup");
 
         //
-        //UIPopup();
+        whenAnyScreenChanges?.(()=>{
+            this.placeWithElement()
+        });
+    }
+
+    //
+    public showPopup() {
+        const self = this as unknown as HTMLElement;
+        delete self.dataset.hidden;
+        this.placeWithElement();
+        return this;
+    }
+
+    //
+    public placeWithElement() {
+        const element = this.boundElement?.deref?.();
+        const self = this as unknown as HTMLElement;
+        if (element && self.dataset.hidden != null) {
+            const box = getBoundingOrientRect(element);
+            const self_box = getBoundingOrientRect(self);
+            self.style.setProperty("--inline-size", `${(box.width || self_box.width)}`);
+
+            // for taskbar/navbar
+            const updated_box = getBoundingOrientRect(self);
+            self.style.setProperty("--client-x", `${(box.left || 0) - (updated_box.width - box.width) * 0.5}`);
+            self.style.setProperty("--client-y", `${(box.top - updated_box.height - 10)}`);
+
+            //
+            const initialAnchor = element?.style?.getPropertyValue?.("anchor-name");
+            const ID = generateId();
+            if (!initialAnchor || initialAnchor == "none") {
+                element?.style?.setProperty?.("anchor-name", "--" + ID, "");
+            }
+
+            //
+            self.style.setProperty("--anchor-group", (element?.style?.getPropertyValue?.("anchor-name") || ("--" + ID)), "");
+        }
+        return this;
     }
 
     //
     public bindElement(element: HTMLElement) {
         this.boundElement = new WeakRef(element);
+        this?.placeWithElement?.();
         return this;
     }
 }

@@ -28,8 +28,11 @@ export class UISelectRow extends UISelectBase {
     //
     protected updateStyles() {
         const self = this as unknown as HTMLElement;
+        self.setAttribute("data-highlight-hover", this.checked ? "4" : "0");
+        self.setAttribute("data-chroma", this.checked ? "0.1" : "0");
         self.setAttribute("data-scheme", this.checked ? "inverse": "solid");
-        self.setAttribute("data-highlight", this.checked ? "4" : "0");
+        self.setAttribute("data-highlight", this.checked ? "2" : "0");
+        self.setAttribute("data-chroma", this.checked ? "0.1" : "0");
         self.setAttribute("data-alpha", this.checked ? "1": "0");
     }
 
