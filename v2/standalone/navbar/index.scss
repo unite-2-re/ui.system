@@ -1,0 +1,197 @@
+@layer ui-navbar {
+
+    //
+    :host(ui-navbar)
+    {
+        &, :where(*), ::slotted(*) {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
+            //background-color: transparent;
+        }
+
+        //
+        & {
+            --data-taskbar-shift: 0px;
+
+            //
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: keep-all;
+            word-wrap: normal;
+            flex-wrap: nowrap;
+            line-height: 0;
+
+            /* */
+            white-space-collapse: collapse;
+            text-wrap: nowrap;
+            text-spacing-trim: trim-start;
+            pointer-events: auto;
+
+            /* */
+            z-index: calc(99999 + var(--z-index, 0));
+
+            /* */
+            inline-size: 100cqi;
+            block-size: var(--taskbar-size, 3rem);
+            min-block-size: max-content;
+
+            /* */
+            display: inline grid;
+            grid-template-rows: minmax(0px, 1fr);
+            grid-template-columns:
+                [menu-button] minmax(var(--taskbar-size, 3rem), max-content)
+                [title-label] minmax(0px, 1fr)
+                [back-button] minmax(var(--taskbar-size, 3rem), max-content);
+
+            /* */
+            translate: 0px var(--data-taskbar-shift, 0px);
+        }
+
+        //
+        :where(*), ::slotted(*)
+        {
+            background-color: transparent;
+        }
+
+        //
+        & a
+        {
+            display: inline;
+            pointer-events: auto;
+            inline-size: max-content;
+            block-size: max-content;
+            place-self: center;
+            place-content: center;
+            place-items: center;
+
+            //
+            outline: none 0px transparent;
+            border: none 0px transparent;
+        }
+
+        //
+        & {
+            position: fixed !important;
+            inset: 0px;
+            inset-block-start: auto;
+            z-index: 9999;
+
+            //
+            container-type: size;
+            contain: content;
+
+            //
+            pointer-events: auto;
+            gap: 0px;
+
+            //
+            grid-row: titlebar;
+            grid-column: 1 / 3 span;
+            align-items: end;
+        }
+
+        //
+        & > :where(*)
+        {
+            inline-size: 100%;
+            block-size: 100%;
+            font-weight: bold;
+            pointer-events: none;
+            padding: 1rem;
+            grid-row: 1 / 1 span;
+
+            //
+            outline: none 0px transparent;
+            border: none 0px transparent;
+
+            //
+            --tm-bg-alpha: 0;
+        }
+
+        //
+        ::slotted(*)
+        {
+            --tm-bg-alpha: 0;
+        }
+
+        //
+        ::slotted(ui-icon), ui-icon
+        {
+            pointer-events: none;
+            aspect-ratio: 1 / 1;
+            inline-size: max-content;
+            block-size: 100%;
+            box-sizing: border-box;
+            position: relative;
+            background-color: var(--rv-color, currentColor);
+            z-index: calc(1 + var(--z-index, 0));
+            padding: 0.75rem;
+        }
+
+        //
+        & > :where(.ui-back-button, .ui-menu-button)
+        {
+            inline-size: max-content;
+            block-size: 100%;
+            aspect-ratio: 1 / 1;
+
+            //
+            max-inline-size: 100cqmin;
+            max-block-size: 100cqmin;
+
+            //
+            //padding: 0.75rem;
+            padding: 0px;
+            cursor: pointer;
+            pointer-events: auto;
+
+            //
+            outline: none 0px transparent;
+            border: none 0px transparent;
+
+            //
+            z-index: calc(9999 + var(--z-index, 0));
+        }
+
+        //
+        & > :where(.ui-back-button)  { grid-column: back-button; }
+        & > :where(.ui-title-handle) { grid-column: title-label; }
+        & > :where(.ui-menu-button)  { grid-column: menu-button; }
+
+        //
+        @media ((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)) { display: none; }
+    }
+
+    //
+    :host(body:not(:has(.ui-app-frame:not([data-hidden])))) ui-navbar
+    {
+        //
+        & {
+            --tm-bg-alpha: 0;
+            --tm-chroma: 0;
+            --hl-co: 0;
+        }
+
+        //
+        & {
+            box-shadow: none;
+            pointer-events: none;
+        }
+
+        //
+        &, & * { --hl-co: 0; }
+        & .ui-title-handle { pointer-events: none; }
+    }
+
+    //
+    :host(body:not(:has(.ui-app-frame:not([data-hidden]))):not(:has(.ui-task-panel:not([data-hidden]))) ui-navbar)
+        {& .ui-back-button { display: none; }}
+}

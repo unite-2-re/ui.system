@@ -1,0 +1,275 @@
+@layer ui-taskbar {
+
+    //
+    @property --data-taskbar-shift
+    {
+        inherits: true;
+        syntax: "<length-percentage>";
+        initial-value: 0px;
+    }
+
+    //
+    :host(ui-taskbar)
+    {
+        /* */
+        &, :where(*), ::slotted(*) {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
+            will-change: contents;
+            pointer-events: none;
+        }
+
+        //
+        & {
+            --data-taskbar-shift: 0px;
+
+            //
+            display: inline grid;
+            block-size: var(--taskbar-size, 3rem);
+
+            //
+            grid-template-rows   : minmax(0px, 1fr);
+            grid-template-columns:
+                [app-menu]  minmax(0px, var(--taskbar-size, 3rem))
+                [task-bar]  minmax(0px, 1fr)
+                [ui-status] minmax(4rem, max-content);
+
+            //
+            inline-size: 100%;
+            position: fixed !important;
+            inset: 0px;
+            inset-block-start: auto;
+            z-index: calc(9999 + var(--z-index, 0));
+            box-sizing: border-box;
+
+            //
+            transition-property: --data-taskbar-shift;
+            transition-duration: 0.25s;
+            transition-timing-function: linear;
+            transition-delay: 0.2s;
+
+            //
+            pointer-events: auto;
+            box-shadow: 0px 0px 1rem #00000070;
+
+            //
+            container-type: size;
+            contain: content;
+        }
+
+        //
+        :where(*), ::slotted(*)
+        {
+            --tm-bg-alpha: 0;
+        }
+
+        //
+        ::slotted(ui-task), ui-task {
+            pointer-events: auto;
+        }
+
+        //
+        ::slotted(ui-icon), ui-icon
+        {
+            inline-size: max-content;
+            block-size: 100%;
+            box-sizing: border-box;
+            aspect-ratio: 1 / 1;
+            position: relative;
+        }
+
+        //
+        & a {
+            display: inline;
+            pointer-events: auto;
+            inline-size: max-content;
+            block-size: max-content;
+            place-self: center;
+            place-content: center;
+            place-items: center;
+            box-sizing: border-box;
+        }
+
+        //
+        &:active { transition-delay: 0s; }
+        & > :where(*) { inline-size: 100%; block-size: 100%; }
+
+        //
+        & .ui-app-menu {
+            & {
+                padding: 0.125rem;//0.75rem;
+                cursor: pointer;
+                pointer-events: none;
+                grid-column: app-menu;
+                box-sizing: border-box;
+            };
+
+            //
+            .button {
+                pointer-events: auto;
+                border-radius: 0.25rem;
+                block-size: 100%;
+                box-sizing: border-box;
+                inline-size: max-content;
+                aspect-ratio: 1 / 1;
+                border: none 0px transparent;
+                outline: none 0px transparent;
+                padding: 0.75rem;
+                cursor: pointer;
+            };
+        }
+
+        //
+        & .ui-task-bar {
+            place-content: center;
+            place-items: center;
+
+            display: flex;
+            flex-direction: row;
+
+            gap: 0.25rem;
+            pointer-events: none;
+            justify-content: start;
+            justify-items: start;
+
+            grid-column: task-bar;
+            box-sizing: border-box;
+        }
+
+        //
+        & .ui-status {
+            & {
+                gap: 0.5rem;
+                padding: 1rem;
+                padding-block: 0.5rem;
+
+                grid-column: ui-status;
+
+                //
+                inline-size: 100%;
+                block-size: 100%;
+
+                //
+                display: inline flex;
+                flex-direction: row;
+                box-sizing: border-box;
+            }
+
+            //
+            ::slotted(ui-icon), ui-icon
+            {
+                aspect-ratio: 1 / 1;
+                inline-size: max-content;
+                block-size: 100%;
+                box-sizing: border-box;
+                position: relative;
+                padding: 0.125rem;
+            }
+
+            //
+            & > * {
+                //pointer-events: auto;
+                inline-size: 2rem;
+                block-size: 2rem;
+                padding: 0.125rem;
+                box-sizing: border-box;
+
+                //
+                border-radius: 0.25rem;
+                cursor: pointer;
+            }
+
+            //
+            & .ui-indicator {
+                &, & a {
+                    inline-size: max-content;
+                    block-size: 100%;
+                    place-self: center;
+                    place-content: center;
+                    box-sizing: border-box;
+                    pointer-events: auto;
+                }
+
+                & {
+                    padding: 0.25rem;
+                    min-inline-size: 2rem;
+                    pointer-events: auto;
+                    max-block-size: none;
+                    max-inline-size: none;
+                    contain: none;
+                }
+
+                //
+                a { display: inline; }
+            }
+
+            //
+            & .ui-time { padding-inline: 1rem; box-sizing: border-box; }
+        }
+    }
+
+    //
+    :host(body:has(.ui-app-frame:not([data-hidden])) ui-taskbar)
+    {
+        & { --data-taskbar-shift: 2.5rem; }
+        &:hover, &:active { --data-taskbar-shift: 0px; }
+        &:not(:hover, :active) { --data-taskbar-shift: 2.5rem; }
+    }
+
+    //
+    :host(body:not(:has(.ui-app-frame:not([data-hidden]))) ui-taskbar)
+    {
+        & {
+            --tm-bg-alpha: 0;
+            --tm-chroma: 0;
+            --hl-co: 0;
+        }
+
+        //
+        & {
+            box-shadow: none;
+            pointer-events: none;
+        }
+    }
+
+    //
+    @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))
+    {:host(ui-taskbar) {
+        & {
+            flex-direction: column;
+            inline-size: 100%;
+            block-size: 100%;
+            padding-block-start: 2rem;
+        }
+
+        //
+        .ui-app-menu, .ui-status {
+            display: none !important;
+        }
+
+        //
+        .ui-task-bar {
+            grid-column: 1 / -1;
+            inline-size: 100%;
+            block-size: 100%;
+            flex-direction: column;
+            gap: 0px;
+        }
+    }}
+
+    //
+    :host(ui-taskbar[data-hidden]) {
+        display: none !important;
+    }
+
+    //
+    //@media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))
+        //{:host(ui-taskbar) { display: none; }}
+}

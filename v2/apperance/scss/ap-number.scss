@@ -1,0 +1,145 @@
+// Type: contained
+@layer ui-number {
+
+    //
+    :host(ui-number) {
+
+        //
+        &, :where(*), ::slotted(*)
+        {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
+            pointer-events: none;
+            //will-change: contents;
+
+            //
+            -webkit-font-smoothing: none;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeSpeed;
+            font-smooth: 0px;
+            font-smooth: never;
+            shape-rendering: crispEdges;
+            shape-rendering: optimizeSpeed;
+            image-rendering: auto;
+            image-rendering: crisp-edges;
+            image-rendering: optimizeSpeed;
+            image-rendering: pixelated;
+        }
+
+        //
+        &, & ::where(*)
+        {
+            user-select: none;
+            touch-action: none;
+        }
+
+        //
+        & {
+            inline-size: 8rem;
+            min-inline-size: max-content;
+            box-sizing: border-box;
+            block-size: 2rem;
+            overflow: hidden;
+            border-radius: 0.25rem;
+
+            //
+            cursor: default;
+
+            //
+            display: inline grid;
+            grid-template-columns:
+                [down] minmax(2rem, max-content)
+                [content] minmax(0px, 1fr)
+                [up] minmax(2rem, max-content);
+            grid-template-rows: minmax(0px, 1fr);
+        }
+
+        //
+        & > :where(div, button, label)
+        {
+            box-sizing: border-box;
+            block-size: 100%;
+            inline-size: 100%;
+            grid-row: 1 / 1 span;
+            display: flex;
+            place-content: center;
+            place-items: center;
+            pointer-events: none;
+            user-select: none;
+            touch-action: none;
+        }
+
+        //
+        & > .ui-content   { grid-column: content; }
+        & > .ui-step-up   { grid-column: up; }
+        & > .ui-step-down { grid-column: down; }
+
+        //
+        & :where(.ui-step-up, .ui-step-down)
+        {
+            & {
+                aspect-ratio: 1 / 1;
+                pointer-events: auto;
+                cursor: pointer;
+                border-radius: 0.25rem;
+                padding: 0.25rem;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+
+            //
+            ::slotted(*)
+            {
+                inline-size: max-content;
+                block-size: 100%;
+                aspect-ratio: 1 / 1;
+                pointer-events: none;
+                user-select: none;
+                touch-action: none;
+            }
+        }
+
+        //
+        :where(button, label), ::slotted(input)
+        {
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
+            appearance: none;
+            outline: none 0px transparent;
+            border: none 0px transparent;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        //
+        ::slotted(input)
+        {
+            & {
+                text-align: center;
+                pointer-events: none;
+                user-select: none;
+                touch-action: none;
+                background-color: transparent;
+            }
+
+            //
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button
+            {
+                -webkit-appearance: none;
+                appearance: none;
+                margin: 0;
+                pointer-events: none;
+                user-select: none;
+                touch-action: none;
+            }
+        }
+    }
+}

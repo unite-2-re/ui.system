@@ -1,0 +1,125 @@
+@layer ui-statusbar {
+    :host
+    {
+        /* */
+        &, :where(*), ::slotted(*) {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
+            //will-change: contents;
+            //background-color: transparent;
+        }
+
+        /* */
+        & {
+            inline-size: 100%;
+            block-size: 2rem;
+            font-size: 0.9rem;
+
+            /* */
+            display: inline grid;
+            grid-template-columns: minmax(0px, max-content) minmax(0px, 1fr) minmax(6rem, max-content);
+            grid-template-rows: minmax(0px, 1fr);
+            gap: 0rem;
+
+            /* */
+            justify-content: space-between;
+            padding-inline: 0.5rem;
+            box-sizing: border-box;
+            overflow: hidden;
+
+            /* */
+            inset: 0px;
+            inset-block-end: auto;
+            position: fixed;
+            z-index: 999999;
+            pointer-events: none;
+
+            /* design v1 */
+            background-color: transparent !important;
+        }
+
+        /* */
+        :where(*), ::slotted(*) {
+            background-color: transparent;
+        }
+
+        /* */
+        & > :where(*)
+        {
+            & {
+                inline-size: 100%;
+                block-size: 100%;
+                box-sizing: border-box;
+                flex-direction: row;
+            }
+
+            /* */
+            & { background-color: transparent; };
+            & { justify-content: space-between; }
+        }
+
+        /* */
+        & > div         { display: inline flex; flex-direction: row; inline-size: 100%; block-size: 100%; }
+        & :where(*)     { background-color: transparent; gap: 0rem; place-items: center; place-content: center; }
+        & .left, .right { display: inline flex; flex-direction: row; }
+        & .left         { grid-column: 1 / 1 span; grid-row: 1 / 1 span; justify-self: safe start;  justify-items: safe start ; justify-content: safe start ; gap: 0rem; }
+        & .center       { grid-column: 2 / 2 span; grid-row: 1 / 1 span; justify-self: safe center; justify-items: safe center; justify-content: safe center; gap: 0rem; }
+        & .right        { grid-column: 3 / 3 span; grid-row: 1 / 1 span; justify-self: safe end;    justify-items: safe end   ; justify-content: safe end   ; gap: 0rem; }
+
+        /* */
+        .right {
+            gap: 0.5rem;
+        }
+
+        /* */
+        .ui-indicator {
+            & {
+                padding: 0.5rem;
+                background-color: transparent;
+                pointer-events: none;
+            }
+            &, a {
+                display: inline flex;
+                place-items: center;
+                place-content: center;
+                box-sizing: border-box;
+                inline-size: max-content;
+                block-size: 100%;
+                flex-direction: row;
+            }
+        }
+
+        /* */
+        span, ::slotted(span)
+        {
+            background-color: transparent;
+            pointer-events: none;
+        }
+
+        /* */
+        ui-icon,
+        ::slotted(ui-icon)
+        {
+            display: inline flex;
+            inline-size: max-content;
+            block-size: 100%;
+            aspect-ratio: 1 / 1;
+            box-sizing: border-box;
+            place-items: center;
+            place-content: center;
+            background-color: var(--rv-color, currentColor);
+        }
+    }
+
+    /* */
+    @media ((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))
+        {:host{display:none !important;}}
+}
