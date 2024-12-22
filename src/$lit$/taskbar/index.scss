@@ -103,11 +103,27 @@
 
         //
         & .ui-app-menu {
-            padding: 0.5rem;
-            cursor: pointer;
-            pointer-events: auto;
-            grid-column: app-menu;
-            box-sizing: border-box;
+            & {
+                padding: 0.125rem;//0.75rem;
+                cursor: pointer;
+                pointer-events: none;
+                grid-column: app-menu;
+                box-sizing: border-box;
+            };
+
+            //
+            .button {
+                pointer-events: auto;
+                border-radius: 0.25rem;
+                block-size: 100%;
+                box-sizing: border-box;
+                inline-size: max-content;
+                aspect-ratio: 1 / 1;
+                border: none 0px transparent;
+                outline: none 0px transparent;
+                padding: 0.75rem;
+                cursor: pointer;
+            };
         }
 
         //

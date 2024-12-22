@@ -57,9 +57,11 @@ export class UITaskBar extends LitElementTheme {
 
         //
         root.addEventListener("click", (ev)=>{
+            document.documentElement.querySelectorAll("ui-popup")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; });
             if (ev?.target?.matches(".ui-time") || ev?.target?.closest?.(".ui-time")) { (document.querySelector("ui-popup[data-name=\"calendar\"]") as any)?.showPopup?.( (ev?.target?.matches(".ui-time") ? ev?.target : ev?.target?.closest(".ui-time")) ); }
             if (ev?.target?.matches(".ui-indicator:has(.ui-network)") || ev?.target?.closest?.(".ui-indicator:has(.ui-network)")) { (document.querySelector("ui-popup[data-name=\"quick-settings\"]") as any)?.showPopup?.( (ev?.target?.matches(".ui-indicator:has(.ui-network)") ? ev?.target : ev?.target?.closest(".ui-indicator:has(.ui-network)")) ); }
             if (ev?.target?.matches(".ui-indicator:has(.ui-battery)") || ev?.target?.closest?.(".ui-indicator:has(.ui-battery)")) { (document.querySelector("ui-popup[data-name=\"power-settings\"]") as any)?.showPopup?.( (ev?.target?.matches(".ui-indicator:has(.ui-battery)") ? ev?.target : ev?.target?.closest(".ui-indicator:has(.ui-battery)")) ); }
+            if (ev?.target?.matches(".ui-app-menu:has(.button)") || ev?.target?.closest?.(".ui-app-menu:has(.button)")) { (document.querySelector("ui-popup[data-name=\"app-menu\"]") as any)?.showPopup?.( (ev?.target?.matches(".ui-app-menu:has(.button)") ? ev?.target : ev?.target?.closest(".ui-app-menu:has(.button)")) ); }
         });
 
         //

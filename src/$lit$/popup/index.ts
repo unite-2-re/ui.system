@@ -68,7 +68,11 @@ export class UIPopup extends LitElementTheme {
         if (element) { this.bindElement(element); };
         if (this.boundElement?.deref?.()) {
             const self = this as unknown as HTMLElement;
-            delete self.dataset.hidden;
+            if (self.dataset.hidden != null) {
+                delete self.dataset.hidden;
+            } else {
+                self.dataset.hidden = "";
+            }
         };
         this.placeWithElement();
         return this;
@@ -112,3 +116,12 @@ export class UIPopup extends LitElementTheme {
         return this;
     }
 }
+
+//
+document.documentElement.addEventListener("click", (ev: any)=>{
+    if (!(ev?.target?.matches?.("ui-popup, ui-taskbar") || ev?.target?.closest?.("ui-popup, ui-taskbar"))) {
+        document.documentElement.querySelectorAll("ui-popup")?.forEach?.((el: any)=>{
+            el.dataset.hidden = "";
+        });
+    }
+});
