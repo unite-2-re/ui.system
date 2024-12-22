@@ -8,7 +8,6 @@ import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
 import styles from "./index.scss?inline";
-//import runTooltip from "./service.js";
 import LitElementTheme from "../shared/LitElementTheme";
 
 // @ts-ignore
@@ -25,7 +24,7 @@ const generateId = (len = 16) => {
 @customElement('ui-popup')
 export class UIPopup extends LitElementTheme {
     @property() protected current: string = "";
-    @property() public boundElement?: WeakRef<HTMLElement>;
+    @property() public boundElement?: WeakRef<HTMLElement> | null;
 
     //
     static styles = css`${unsafeCSS(styles)}`;
@@ -67,8 +66,10 @@ export class UIPopup extends LitElementTheme {
     //
     public showPopup(element?: HTMLElement) {
         if (element) { this.bindElement(element); };
-        const self = this as unknown as HTMLElement;
-        delete self.dataset.hidden;
+        if (this.boundElement?.deref?.()) {
+            const self = this as unknown as HTMLElement;
+            delete self.dataset.hidden;
+        };
         this.placeWithElement();
         return this;
     }
@@ -97,12 +98,16 @@ export class UIPopup extends LitElementTheme {
             //
             self.style.setProperty("--anchor-group", (element?.style?.getPropertyValue?.("anchor-name") || ("--" + ID)), "");
         }
+        if (!element) {
+            // if element not found, do hide
+            self.dataset.hidden = "";
+        }
         return this;
     }
 
     //
-    public bindElement(element: HTMLElement) {
-        this.boundElement = new WeakRef(element);
+    public bindElement(element?: HTMLElement | null) {
+        this.boundElement = element ? new WeakRef(element) : null;
         this?.placeWithElement?.();
         return this;
     }
