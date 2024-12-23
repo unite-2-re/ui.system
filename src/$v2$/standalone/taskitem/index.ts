@@ -1,7 +1,8 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../shared/LitUse";
+import { html, css, unsafeCSS } from "../../shared/LitUse";
+import LitElementTheme from "../../shared/LitElementTheme";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
@@ -11,9 +12,6 @@ import htmlCode from "./index.html?raw";
 
 // @ts-ignore
 import styles from "./index.scss?inline";
-
-//
-import LitElementTheme from "../shared/LitElementTheme";
 
 //
 const focusTask = (taskManager, target: HTMLElement)=>{
@@ -67,20 +65,6 @@ export class UITaskItem extends LitElementTheme {
         //
         addEventListener("popstate"  , ()=>{ this.updateState(); });
         addEventListener("hashchange", ()=>{ this.updateState(); });
-
-        // vacuum issue
-        setInterval(()=>{
-            //const icon = (self as any).shadowRoot?.querySelector?.("ui-icon");
-            //const computed = getComputedStyle(self);
-            //const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
-            //icon?.style?.setProperty?.("stroke", color, "");
-            //icon?.style?.setProperty?.("color", color, "");
-
-            //
-            //const parent = (self as any)?.parentNode || (self as any)?.closest?.("*[data-scheme]");
-            //(self as any)?.setAttribute?.("data-scheme", parent?.getAttribute?.("data-scheme") || (self as any)?.getAttribute?.("data-scheme"));
-            //(icon as any)?.setAttribute("data-scheme", (self as any)?.getAttribute?.("data-scheme"));
-        }, 100);
     }
 
     //
@@ -153,8 +137,6 @@ export class UITaskItem extends LitElementTheme {
         }
 
         //
-        //if (!self.hasAttribute("data-scheme"))            { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
-        //if (!self.hasAttribute("data-transparent"))       { self.setAttribute("data-transparent"    , ""     ); };
         if (!self.hasAttribute("data-id") && this.taskId) { self.setAttribute("data-id"             , (this.taskId || self.dataset.id || "")); };
         if (!self.hasAttribute("data-chroma"))            { self.setAttribute("data-chroma"         , "0.05" ); };
         if (!self.hasAttribute("data-alpha"))             { self.setAttribute("data-alpha"          , "0"    ); };

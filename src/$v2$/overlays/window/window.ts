@@ -1,10 +1,11 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../shared/LitUse";
+import { css, unsafeCSS } from "../../shared/LitUse";
+import LitElementTheme from "../../shared/LitElementTheme";
 
 // @ts-ignore
-import { customElement, property } from "lit/decorators.js";
+import { customElement } from "lit/decorators.js";
 
 // @ts-ignore
 import {AxGesture} from "/externals/core/interact.js";
@@ -17,13 +18,6 @@ import styles from "./index.scss?inline";
 
 // @ts-ignore
 import {initTaskManager} from "/externals/core/core.js";
-
-//
-import LitElementTheme from "../shared/LitElementTheme";
-
-// for phantom image when dragging
-// @ts-ignore
-//import html2canvas from 'html2canvas-pro';
 
 //
 const $control$ = Symbol("@control");

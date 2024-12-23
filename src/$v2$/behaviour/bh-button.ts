@@ -2,13 +2,7 @@
 // Type: standalone
 
 // @ts-ignore
-import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../shared/LitUse";
-
-// @ts-ignore
-import { customElement, property } from "lit/decorators.js";
-
-// @ts-ignore
-import styles from "./index.scss?inline";
+import { customElement } from "lit/decorators.js";
 
 //
 import LitElementTheme from "../shared/LitElementTheme";
@@ -19,7 +13,6 @@ export class UIButtonBase extends LitElementTheme {
     $parentNode?: any;
 
     //
-    static styles = css`${unsafeCSS(styles)}`;
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         self.addEventListener("contextmenu", (ev)=>{

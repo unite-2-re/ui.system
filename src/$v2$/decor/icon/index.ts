@@ -3,16 +3,14 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic, PropertyValues } from "../shared/LitUse";
+import { html, css, unsafeCSS, PropertyValues } from "../../shared/LitUse";
+import LitElementTheme from "../../shared/LitElementTheme";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
 import styles from "./index.scss?inline";
-
-//
-import LitElementTheme from "../shared/LitElementTheme";
 
 // @ts-ignore
 const ICON_MODULE = import("/externals/vendor/lucide.min.js");

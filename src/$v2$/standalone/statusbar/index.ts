@@ -1,7 +1,8 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../shared/LitUse";
+import { css, unsafeCSS } from "../../shared/LitUse";
+import LitElementTheme from "../../shared/LitElementTheme";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
@@ -11,10 +12,6 @@ import htmlCode from "./index.html?raw";
 
 // @ts-ignore
 import styles from "./index.scss?inline";
-
-//
-import LitElementTheme from "../shared/LitElementTheme";
-
 
 // @ts-ignore
 @customElement('ui-statusbar')
@@ -31,7 +28,7 @@ export class UIStatusBar extends LitElementTheme {
         this.importFromTemplate(htmlCode);
 
         //
-        import("../shared/Status").then((module)=>{
+        import("../../shared/Status").then((module)=>{
             if (root) {
                 module?.default?.(root);
                 this.statusSW = true;

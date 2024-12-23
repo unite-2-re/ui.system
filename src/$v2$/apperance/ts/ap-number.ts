@@ -3,7 +3,7 @@
 // Behaviour: spinner
 
 // @ts-ignore
-import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../shared/LitUse";
+import { css, unsafeCSS } from "../shared/LitUse";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";

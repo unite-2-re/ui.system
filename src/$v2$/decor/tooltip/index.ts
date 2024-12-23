@@ -1,7 +1,8 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../shared/LitUse";
+import { html, css, unsafeCSS } from "../../shared/LitUse";
+import LitElementTheme from "../../shared/LitElementTheme";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
@@ -9,7 +10,6 @@ import { customElement, property } from "lit/decorators.js";
 // @ts-ignore
 import styles from "./index.scss?inline";
 import runTooltip from "./service.js";
-import LitElementTheme from "../shared/LitElementTheme";
 
 // @ts-ignore
 @customElement('ui-tooltip')

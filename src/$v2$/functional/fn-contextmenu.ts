@@ -8,29 +8,30 @@ interface CTXMenuElement {
 //
 export const hideOnClick = (ev?)=>{
     const t = ev.target as HTMLElement;
-    const self = document.querySelector("ui-contextmenu") as HTMLElement;
-    if (!((t?.closest("ui-contextmenu") == self) || (t == self)) || ev?.type == "click") {
+    const self = document.querySelector(ctx) as HTMLElement;
+    if (!((t?.closest(ctx) == self) || (t == self)) || ev?.type == "click") {
         closeContextMenu(ev);
     };
-}
+};
 
 //
 const evt: [any, any] = [ hideOnClick, {} ];
+const ctx: string = "ui-contextmenu";
 
 //
 export const closeContextMenu = (ev?)=>{
-    const ctxMenu = document.querySelector("ui-contextmenu") as HTMLElement;
+    const ctxMenu = (ev?.target?.matches?.(ctx) ? ev?.target : ev?.target?.closest?.(ctx)) ?? document.querySelector(ctx) as HTMLElement;
     if (ctxMenu) { ctxMenu.dataset.hidden = "true"; };
 
     //
     document.documentElement.removeEventListener("contextmenu", ...evt);
     document.documentElement.removeEventListener("click", ...evt);
-}
+};
 
 //
 export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMenu: any, initiator: any)=>void)=>{
     const initiator = event?.target;
-    const ctxMenu   = document.querySelector("ui-contextmenu") as any;
+    const ctxMenu   = document.querySelector(ctx) as any;
 
     //
     ctxMenu.initiator = initiator;
@@ -42,13 +43,13 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
 
         //
         ctxMenu.innerHTML = "";
-        content?.(ctxMenu, initiator);
         delete ctxMenu.dataset.hidden;
+        content?.(ctxMenu, initiator);
     } else
     if (ctxMenu && toggle && !ctxMenu.dataset.hidden) {
         closeContextMenu(event);
     }
-}
+};
 
 //
 export const makeCtxMenuItems = (ctxMenu?: any, initiator?: any, content?: any[])=>{

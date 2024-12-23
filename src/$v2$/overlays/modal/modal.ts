@@ -1,18 +1,18 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { LitElement, html, css, unsafeCSS, unsafeStatic, withStatic } from "../../shared/LitUse.js";
+import { html, css, unsafeCSS } from "../../shared/LitUse.js";
+import LitElementTheme from "../../shared/LitElementTheme.js";
+import { placeWithElement } from "../../position/ts/ps-anchor.js";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
 import styles from "./index.scss?inline";
-import LitElementTheme from "../../shared/LitElementTheme.js";
 
 // @ts-ignore
 import { whenAnyScreenChanges } from "/externals/core/agate.js";
-import { placeWithElement } from "../../position/ts/ps-anchor.js";
 
 // @ts-ignore
 @customElement('ui-modal')

@@ -1,30 +1,24 @@
-//
-import UILucideIcon from "../decor/icon/index";
-import { makeCtxMenuItems, openContextMenu } from "./fn-contextmenu";
+import { placeWithElement } from "../position/ts/ps-anchor.js";
+import { closeContextMenu, openContextMenu } from "./fn-contextmenu";
 
-// test only!
-export const openDropMenu = (ev)=>{
+//
+export const openDropMenu = (button: any, ev?: any)=>{
     ev?.preventDefault?.();
     ev?.stopPropagation?.();
 
     //
-    const self = this as unknown as HTMLElement;
-    const dropMenuEl = Array.from(self?.querySelectorAll?.("ui-menuitem"));
-    const dropMenu = dropMenuEl.map((el: any)=>{
-        const dub = el?.cloneNode?.(true);
-        dub?.querySelectorAll?.("input")?.forEach?.((el)=>el?.remove?.());
-        const icon = dub?.querySelector?.("ui-icon");
-        const input = el?.querySelector?.("input") ?? el;
-        return {
-            icon: icon?.cloneNode?.(true) || new UILucideIcon({icon: icon?.icon || el?.icon || el?.dataset?.icon, padding: ""}),
-            content: dub?.innerHTML,
-            callback() {
-                input?.click?.();
-                self.setAttribute("value", this.value = input?.value);
-            }
-        }
+    const items = Array.from(button?.querySelectorAll?.("ui-select-row, ui-button-row"));
+    const cloned = items?.map?.((el: any)=>{
+        const input: any = el?.querySelector?.("input") ?? el;
+        const clone: any = el?.cloneNode?.(true);
+        clone?.addEventListener?.("change", (ev)=>input?.click?.());
+        clone?.addEventListener?.("click", (ev)=>closeContextMenu());
+        return clone;
     });
 
     //
-    openContextMenu?.(ev, true, (menu, initiator)=>makeCtxMenuItems(menu, initiator, dropMenu));
+    openContextMenu?.(ev, true, (menu, initiator)=>{
+        placeWithElement?.(menu, button);
+        menu.append(...cloned);
+    });
 };

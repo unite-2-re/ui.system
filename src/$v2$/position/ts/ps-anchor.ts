@@ -1,5 +1,5 @@
 // @ts-ignore
-import { getBoundingOrientRect, whenAnyScreenChanges } from "/externals/core/agate.js";
+import { getBoundingOrientRect } from "/externals/core/agate.js";
 
 //
 export const generateId = (len = 16) => {
