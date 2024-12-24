@@ -232,4 +232,9 @@
         }
 
     }
+
+    //
+    ui-modal[type="contextmenu"] {
+        inline-size: var(--inline-size);
+    }
 }

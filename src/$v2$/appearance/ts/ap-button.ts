@@ -17,6 +17,7 @@ import htmlCode from "../html/ap-button.html?raw";
 //
 import UIButtonBase from "../../behaviour/bh-button";
 import UISelectBase from "../../behaviour/bh-select";
+import { openDropMenu } from "../../functional/fn-dropmenu.js";
 
 
 // selection derivative
@@ -71,6 +72,11 @@ export class UIButton extends UIButtonBase {
         super(); const self = this as unknown as HTMLElement;
         self.classList?.add?.("ui-button");
         self.classList?.add?.("u2-button");
+        self.addEventListener("click", (ev)=>{
+            if (self.querySelector("ui-select-row, ui-button-row")) {
+                openDropMenu(self, ev);
+            }
+        });
     }
 
     //

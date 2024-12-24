@@ -82,10 +82,12 @@
             cursor: pointer;
 
             /* */
-            text-align: start;
             user-select: none;
             touch-action: none;
             pointer-events: auto;
+
+            /* */
+            text-align: start;
         }
 
         /* */
@@ -94,11 +96,6 @@
             user-select: none;
             touch-action: none;
             text-align: start;
-
-            /* */
-            place-self: center;
-            place-content: center;
-            place-items: center;
         }
 
         /* */
@@ -107,6 +104,7 @@
             interactivity: inert;
             pointer-events: none;
             text-align: start;
+            font-size: 0.9rem;
         }
 
         /* */

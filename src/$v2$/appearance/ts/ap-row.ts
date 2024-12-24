@@ -32,13 +32,19 @@ export class UISelectRow extends UISelectBase {
         const self = this as unknown as HTMLElement;
 
         // in selection mode
-        if (!this.$parentNode?.matches?.("ui-button, ui-toggle")) {
+        if (this.$parentNode?.matches?.("ui-button, ui-toggle")) {
+            self.setAttribute("data-highlight-hover", "0");
+            self.setAttribute("data-highlight", "0");
+            self.setAttribute("data-alpha", "0");
+            self.setAttribute("data-scheme", this.$parentNode.dataset.scheme || "dynamic-transparent");
+            self.setAttribute("data-chroma", "0");
+        } else {
             self.setAttribute("data-highlight", this.checked ? "2" : "0");
-            self.setAttribute("data-highlight-hover", this.checked ? "4" : "0");
+            self.setAttribute("data-highlight-hover", this.checked ? "4" : "2");
             self.setAttribute("data-chroma", this.checked ? "0.1" : "0");
             self.setAttribute("data-scheme", this.checked ? "inverse": "solid");
             self.setAttribute("data-alpha", this.checked ? "1": "0");
-        };
+        }
     }
 
     //
@@ -70,7 +76,11 @@ export class UISelectRow extends UISelectBase {
         // mono element mode (for drop-menu indicator)
         if (this.$parentNode?.matches?.("ui-button, ui-toggle")) {
             const self = this as unknown as HTMLElement;
-            self.style.setProperty("display", "none", "important");
+            if (this.checked) {
+                self.style.removeProperty("display");
+            } else {
+                self.style.setProperty("display", "none", "important");
+            }
         };
 
         //

@@ -8,16 +8,33 @@
     :host
     {
         & {
+            --inline-size: max-content;
+            --anchor-group: --ui-popup;
+        };
+
+        //
+        & {
+            max-inline-size: none;
             border-radius: 0.25rem;
             inline-size: max-content;
             block-size: max-content;
             box-shadow: 0rem 0rem 1rem #10101040;
+            box-sizing: border-box;
             position: fixed;
             z-index: calc(99999 + var(--z-index, 0));
             padding: 0.25rem;
+            display: block flex;
             pointer-events: auto;
+            flex-direction: column;
+            flex-wrap: wrap;
         };
     };
+
+    //
+    :host([type="contextmenu"]) {
+        inline-size: var(--inline-size);
+        padding: 0rem;
+    }
 
     //
     :host([data-hidden])

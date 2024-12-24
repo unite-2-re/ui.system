@@ -11,6 +11,7 @@ export const openDropMenu = (button: any, ev?: any)=>{
     const cloned = items?.map?.((el: any)=>{
         const input: any = el?.querySelector?.("input") ?? el;
         const clone: any = el?.cloneNode?.(true);
+        clone?.style?.removeProperty("display");
         clone?.addEventListener?.("change", (ev)=>input?.click?.());
         clone?.addEventListener?.("click", (ev)=>closeContextMenu());
         return clone;
@@ -18,7 +19,7 @@ export const openDropMenu = (button: any, ev?: any)=>{
 
     //
     openContextMenu?.(ev, true, (menu, initiator)=>{
-        placeWithElement?.(menu, button);
         menu.append(...cloned);
+        placeWithElement?.(menu, button);
     });
 };

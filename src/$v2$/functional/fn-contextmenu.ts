@@ -36,7 +36,7 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
     const ctxMenu   = document.querySelector(ctx) as any;
 
     //
-    if (ctxMenu && (toggle && ctxMenu.dataset.hidden || !toggle)) {
+    if (ctxMenu && (toggle && ctxMenu.dataset.hidden != null || !toggle)) {
         document.documentElement.addEventListener("contextmenu", ...evt);
         document.documentElement.addEventListener("click", ...evt);
 
