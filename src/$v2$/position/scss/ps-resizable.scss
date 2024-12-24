@@ -85,6 +85,12 @@
 
     /* */
     & {
+        inline-size: 100%;
+        block-size: 100%;
+    };
+
+    /* */
+    @media (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
         inline-size: clamp(0px, var(--inline-size, 100%), calc(var(--bound-inline-size, 0px) /*- var(--rx, 0px)*/));
         block-size : clamp(0px, var(--block-size , 100%), calc(var(--bound-block-size , 0px) /*- var(--ry, 0px)*/));
     };
