@@ -1,15 +1,17 @@
 // Type: standalone
 
-@layer ui-select-row
+@layer ui-ap-row
 {
     //
-    :host(ui-select-row)
+    :host
     {
         &, :where(*), ::slotted(*)
         {
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
             user-drag: none;
+
+            //
             user-select: none;
             touch-action: none;
             -webkit-user-drag: none;
@@ -38,11 +40,18 @@
             min-block-size: 2rem;
             max-block-size: none;
 
-            /* */
-            display: grid;
+            /* grid-version */
+            display: inline grid;
             grid-column: 1 / -1;
             grid-template-rows: minmax(0px, 1fr);
             grid-template-columns: subgrid;
+
+            /* flex-version */
+            //display: inline flex;
+
+            /* flow-behaviour */
+            grid-auto-flow: row;
+            flex-direction: row;
 
             /* */
             touch-action: none;
@@ -67,6 +76,7 @@
             block-size: 100%;
             appearance: none;
             opacity: 0;
+            display: none;
             margin: 0px;
         };
 
@@ -75,18 +85,17 @@
         {
             & {
                 box-sizing: border-box;
-                grid-row: 1 / -1;
                 grid-column: 1 / -1;
+                grid-row: 1 / -1;
 
                 //
                 min-block-size: 2rem;
+                max-block-size: 100%;
                 inline-size: 100%;
                 block-size: 100%;
-                max-block-size: 100%;
 
                 //
-                display: grid;
-                //gap: 0.5rem;
+                display: contents;
                 grid-template-rows: minmax(0px, 1fr);
                 grid-template-columns: subgrid;
 
@@ -129,10 +138,6 @@
                 block-size: 100%;
                 inline-size: 100%;
                 max-block-size: none;
-
-                /* */
-                //align-content: safe center;
-                //align-items: safe center;
 
                 /* */
                 user-select: none;

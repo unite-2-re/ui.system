@@ -9,7 +9,7 @@ import { placeWithElement } from "../../position/ts/ps-anchor.js";
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import styles from "./index.scss?inline";
+import styles from "./modal.scss?inline";
 
 // @ts-ignore
 import { whenAnyScreenChanges } from "/externals/core/agate.js";
@@ -19,13 +19,11 @@ import { whenAnyScreenChanges } from "/externals/core/agate.js";
 export class UIModal extends LitElementTheme {
     @property() protected current: string = "";
     @property() public boundElement?: WeakRef<HTMLElement> | null;
+    @property({ attribute: true, reflect: true, type: String }) public type: string = "modal";
 
     //
     static styles = css`${unsafeCSS(styles)}`;
-    protected render() {
-        // use theme module if available
-        return html`${this.themeStyle}<slot></slot>`;
-    }
+    protected render() { return html`${this.themeStyle}<slot></slot>`; }
 
     //
     constructor() {
@@ -86,3 +84,6 @@ export class UIModal extends LitElementTheme {
         return this;
     }
 };
+
+//
+export default UIModal;

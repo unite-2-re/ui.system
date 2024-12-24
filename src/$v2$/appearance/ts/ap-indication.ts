@@ -4,7 +4,6 @@ export const doIndication = (ev?: any, self?: HTMLElement, input?: HTMLInputElem
 
     //
     if (input?.type == "radio" && input?.checked) {
-        //self.value = input?.value;
         const index = Array.from(self.querySelectorAll?.("input[type=\"radio\"]"))?.indexOf?.(input);
         if (index >= 0) { self.style?.setProperty?.("--value", `${index}`); };
     }

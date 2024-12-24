@@ -2,7 +2,8 @@
     :host
     {
         /* */
-        &, :where(*), ::slotted(*) {
+        &, :where(*), ::slotted(*)
+        {
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
             user-drag: none;
@@ -13,8 +14,6 @@
 
             /* */
             box-sizing: border-box;
-            //will-change: contents;
-            //background-color: transparent;
         }
 
         /* */
@@ -47,7 +46,8 @@
         }
 
         /* */
-        :where(*), ::slotted(*) {
+        :where(*), ::slotted(*)
+        {
             background-color: transparent;
         }
 

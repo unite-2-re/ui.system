@@ -2,22 +2,18 @@
 import init, {
     UITooltip,
     UIStatusBar,
-    UICheckBox,
+    UIButton,
     UILucideIcon,
     UISwitch,
-    UIDropMenu,
     UIShaped,
     UIFrame,
     UINavBar,
     UITaskBar,
     UITaskItem,
     UIBlock,
-    UIMenuItem,
-    UIVolume,
-    UINumber,
-    UISelectShape,
     UISelectRow,
-    UIPopup
+    UINumber,
+    UIModal
 } from "../src/index";
 
 // @ts-ignore
@@ -45,12 +41,11 @@ import(/* @vite-ignore */ "/externals/core/design.js").then((module)=>{
 }).catch(console.warn.bind(console));
 
 // production mode...
-console.log(UICheckBox);
+console.log(UIButton);
 console.log(UISelectRow);
-console.log(UISelectShape);
+console.log(UIModal);
 console.log(UILucideIcon);
 console.log(UISwitch);
-console.log(UIDropMenu);
 console.log(UIShaped);
 console.log(UIFrame);
 console.log(UIStatusBar);
@@ -59,10 +54,7 @@ console.log(UINavBar);
 console.log(UITaskBar);
 console.log(UITaskItem);
 console.log(UIBlock);
-console.log(UIMenuItem);
-console.log(UIVolume);
 console.log(UINumber);
-console.log(UIPopup);
 
 //
 makeSelection(document.body, "ui-checkbox, ui-switch");

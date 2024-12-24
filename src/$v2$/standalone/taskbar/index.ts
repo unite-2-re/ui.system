@@ -43,6 +43,7 @@ export class UITaskBar extends LitElementTheme {
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         this.importFromTemplate(htmlCode);
+        this.adaptiveTheme();
 
         //
         import("../../shared/Status").then((module)=>{
@@ -53,15 +54,15 @@ export class UITaskBar extends LitElementTheme {
         }).catch(console.warn.bind(console));
 
         //
-        this.adaptiveTheme();
-
-        //
+        const DOC = document.documentElement;
         root.addEventListener("click", (ev)=>{
-            document.documentElement.querySelectorAll("ui-popup")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; });
-            if (ev?.target?.matches(".ui-time") || ev?.target?.closest?.(".ui-time")) { (document.querySelector("ui-popup[data-name=\"calendar\"]") as any)?.showPopup?.( (ev?.target?.matches(".ui-time") ? ev?.target : ev?.target?.closest(".ui-time")) ); }
-            if (ev?.target?.matches(".ui-indicator:has(.ui-network)") || ev?.target?.closest?.(".ui-indicator:has(.ui-network)")) { (document.querySelector("ui-popup[data-name=\"quick-settings\"]") as any)?.showPopup?.( (ev?.target?.matches(".ui-indicator:has(.ui-network)") ? ev?.target : ev?.target?.closest(".ui-indicator:has(.ui-network)")) ); }
-            if (ev?.target?.matches(".ui-indicator:has(.ui-battery)") || ev?.target?.closest?.(".ui-indicator:has(.ui-battery)")) { (document.querySelector("ui-popup[data-name=\"power-settings\"]") as any)?.showPopup?.( (ev?.target?.matches(".ui-indicator:has(.ui-battery)") ? ev?.target : ev?.target?.closest(".ui-indicator:has(.ui-battery)")) ); }
-            if (ev?.target?.matches(".ui-app-menu:has(.button)") || ev?.target?.closest?.(".ui-app-menu:has(.button)")) { (document.querySelector("ui-popup[data-name=\"app-menu\"]") as any)?.showPopup?.( (ev?.target?.matches(".ui-app-menu:has(.button)") ? ev?.target : ev?.target?.closest(".ui-app-menu:has(.button)")) ); }
+            if (ev?.target?.matches("[data-popup]")) {
+                const popup = document.querySelector("ui-modal[data-name=\"" + ev?.target?.dataset?.popup + "\"]") as any;
+                popup?.showPopup?.(ev?.target?.matches(".ui-anchor") ? ev?.target : ev?.target?.closest(".ui-anchor"))
+                DOC.querySelectorAll("ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{ if (el != popup) { el.dataset.hidden = ""; }; });
+            } else {
+                DOC.querySelectorAll("ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; });
+            }
         });
 
         //
@@ -87,6 +88,7 @@ export class UITaskBar extends LitElementTheme {
     //
     public connectedCallback() {
         super.connectedCallback();
+        this.taskManager?.addTasks?.(this.tasks || []);
 
         //
         const self = this as unknown as HTMLElement;
@@ -97,11 +99,6 @@ export class UITaskBar extends LitElementTheme {
         if (!self.hasAttribute("data-chroma"))    { self.setAttribute("data-chroma"         , "0.05" ); };
         if (!self.hasAttribute("data-scheme"))    { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
         if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight"      , "0"    ); };
-
-        //
-        this.taskManager?.addTasks?.(this.tasks || []);
-
-        //
         if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
             self.dataset.hidden = "";
         }

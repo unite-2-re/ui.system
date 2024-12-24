@@ -12,25 +12,7 @@ import htmlCode from "./index.html?raw";
 
 // @ts-ignore
 import styles from "./index.scss?inline";
-
-//
-const focusTask = (taskManager, target: HTMLElement)=>{
-    const hash = "#" + (target.dataset.id || (target as any).taskId).trim?.()?.replace?.("#","")?.trim?.();
-    if (taskManager?.inFocus?.(hash) && matchMedia("((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))").matches) {
-        taskManager?.deactivate?.(hash);
-    } else {
-        taskManager?.focus?.(hash);
-    }
-
-    //
-    const navbar = document.querySelector("ui-taskbar") as HTMLElement;
-    if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
-        if (navbar) { navbar.dataset.hidden = ""; };
-    }
-
-    //
-    requestIdleCallback(()=>navigator?.vibrate?.([10]));
-}
+import { focusTask } from "../../functional/fn-task.js";
 
 // @ts-ignore
 @customElement('ui-task')
@@ -59,7 +41,7 @@ export class UITaskItem extends LitElementTheme {
 
         //
         self.classList?.add?.("ui-task");
-        self.addEventListener("ag-click", () => focusTask(this.taskManager, self));
+        self.addEventListener("ag-click", () => focusTask(this.taskManager, self, true));
         this.updateState();
 
         //

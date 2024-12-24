@@ -3,16 +3,13 @@
 // Behaviour: switch (combined)
 
 // @ts-ignore
-import { getBoundingOrientRect } from "/externals/core/agate.js";
-
-// @ts-ignore
-import { css, unsafeCSS } from "../shared/LitUse";
+import { css, unsafeCSS } from "../../shared/LitUse";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import styles from "../shared/BoxLayout.scss?inline";
+import styles from "../scss/ap-switch.scss?inline";
 
 // @ts-ignore
 import htmlCode from "../html/ap-switch.html?raw";
@@ -20,6 +17,9 @@ import htmlCode from "../html/ap-switch.html?raw";
 //
 import LitElementTheme from "../../shared/LitElementTheme";
 import { doIndication } from "./ap-indication";
+
+// @ts-ignore
+import { getBoundingOrientRect } from "/externals/core/agate.js";
 
 //
 export const setStyle = (self, confirm: boolean = false, exact: number = 0, val: number = 0)=>{
@@ -56,13 +56,14 @@ export const makeSwitch = (self?: HTMLElement)=>{
     //
     const sws  = { pointerId: -1 };
     const weak = new WeakRef(self);
-    const doExaction = (self, x, y, confirm = false, boundingBox?)=>{
+    const doExaction = (self, x, y, confirm = false, boundingBox?, evType?: string)=>{
         if (!self) return;
 
         //
         let TYPE = "unknown";
         if (self?.matches?.(":has(input[type=\"radio\"])")) { TYPE = "radio"; };
         if (self?.matches?.(":has(input[type=\"number\"])")) { TYPE = "number"; };
+        if (self?.matches?.(":has(input[type=\"checkbox\"])")) { TYPE = "checkbox"; };
 
         //
         const box   = boundingBox || getBoundingOrientRect?.(self);
@@ -109,6 +110,13 @@ export const makeSwitch = (self?: HTMLElement)=>{
             //
             setStyle(self, confirm, exact, val);
         }
+
+        //
+        if (TYPE == "checkbox" && (evType == "click" || evType == "ag-click")) {
+            const checkbox = self.querySelector?.("input[type=\"checkbox\"]") as unknown as HTMLInputElement;
+            checkbox?.click?.();
+            setStyle(self, true, checkbox?.checked ? 1 : 0, checkbox?.checked ? 1 : 0);
+        }
     }
 
     //
@@ -121,6 +129,12 @@ export const makeSwitch = (self?: HTMLElement)=>{
             (e.target as HTMLElement)?.setPointerCapture?.(e.pointerId);
             document.documentElement.style.cursor = "grabbing";
         }
+    });
+
+    //
+    self.addEventListener("ag-click", (ev: any)=>{
+        const e = ev?.detail || ev;
+        doExaction(weak?.deref?.(), e.orient[0], e.orient[1], true, e?.boundingBox, e?.type);
     });
 
     //
@@ -160,6 +174,7 @@ export class UISwitch extends LitElementTheme {
         super(); const self = this as unknown as HTMLElement;
         self.classList?.add?.("ui-switch");
         self.classList?.add?.("u2-input");
+        self.addEventListener("change", this.onSelect.bind(this));
         makeSwitch(self);
     }
 

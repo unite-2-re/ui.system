@@ -1,6 +1,6 @@
+/// <reference types="lit" />
 // whole dedicated, separate element for lucide icons...
 // this component (or lucide icons) may to be distributed with main package.
-/// <reference types="lit" />
 
 // @ts-ignore
 import { html, css, unsafeCSS, PropertyValues } from "../../shared/LitUse";
@@ -91,7 +91,6 @@ export class UILucideIcon extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         if (!self.classList?.contains?.("ui-icon")) self.classList?.add?.("ui-icon");
         if (!self.classList?.contains?.("u2-icon")) self.classList?.add?.("u2-icon");
-        //self.setAttribute("data-scheme", "dynamic-transparent");
     }
 
     //
@@ -104,29 +103,6 @@ export class UILucideIcon extends LitElementTheme {
                     const src = `url(\"${url}\")`;
                     if (self.style.getPropertyValue("--mask-image") != src) self.style.setProperty("--mask-image", src);
                 });
-
-                /*this.iconElement = icons?.createElement?.(icons?.[ICON]);
-                if (this.iconElement) {
-                    this.iconElement.dataset.highlight = "0";
-                    this.iconElement.dataset.alpha  = "0";
-
-                    //
-                    const self = this as unknown as HTMLElement;
-                    if (self.dataset.scheme == "dynamic" || self.dataset.scheme == "dynamic-transparent") {
-                        const computed = getComputedStyle(this as unknown as HTMLElement);
-                        const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
-                        this.iconElement.querySelectorAll("path, rect, line, circle, ellipse").forEach((p: any)=>{
-                            p.style.setProperty("stroke", color, "");
-                            p.style.setProperty("color", color, "");
-                            p.style.setProperty("accent-color", color, "");
-                        });
-                    };
-
-                    //
-                    this.iconElement.setAttribute("width", "100%");
-                    this.iconElement.setAttribute("height", "100%");
-                    this.iconElement.setAttribute("inert", "");
-                }*/
             }
         }).catch(console.warn.bind(console));
     }

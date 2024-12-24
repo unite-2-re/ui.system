@@ -8,90 +8,15 @@ import LitElementTheme from "../../shared/LitElementTheme";
 import { customElement } from "lit/decorators.js";
 
 // @ts-ignore
-import {AxGesture} from "/externals/core/interact.js";
+import htmlCode from "./window.html?raw";
 
 // @ts-ignore
-import htmlCode from "./index.html?raw";
+import styles from "./window.scss?inline";
 
 // @ts-ignore
-import styles from "./index.scss?inline";
-
-// @ts-ignore
-import {initTaskManager} from "/externals/core/core.js";
-
-//
-const $control$ = Symbol("@control");
-
-//
-const makeControl = (frameElement: HTMLElement)=>{
-    let gestureControl: any = null;
-    if (frameElement && !frameElement[$control$]) {
-        gestureControl = new AxGesture(frameElement);
-        frameElement[$control$] = gestureControl;
-
-        //
-        gestureControl.draggable({
-            handler: frameElement?.shadowRoot?.querySelector(".ui-title-handle")
-        });
-
-        //
-        gestureControl.resizable({
-            handler: frameElement?.shadowRoot?.querySelector(".ui-resize")
-        });
-    }
-
-    //
-    if (frameElement && frameElement.parentNode) {
-        // @ts-ignore
-        const pn = (frameElement.offsetParent ?? frameElement.host ?? document.documentElement) as HTMLElement;
-        frameElement.style.setProperty("--shift-x", `${(pn.clientWidth  - Math.min(Math.max(frameElement.offsetWidth , 48*16), pn.clientWidth)) * 0.5}`, "");
-        frameElement.style.setProperty("--shift-y", `${(pn.clientHeight - Math.min(Math.max(frameElement.offsetHeight, 24*16), pn.clientHeight)) * 0.5}`, "");
-        frameElement.addEventListener("m-dragstart", (ev)=>{
-            if (ev.detail.holding.propertyName == "drag") {
-                //const content = frameElement?.querySelector?.(".ui-content") as HTMLElement;
-                //const phantom = frameElement?.shadowRoot?.querySelector?.(".ui-phantom") as HTMLCanvasElement;
-
-                //
-                frameElement?.setAttribute?.("data-dragging", "");
-                frameElement?.style?.setProperty?.("will-change", "transform", "important");
-            }
-        });
-
-        //
-        frameElement.addEventListener("m-dragend", (ev)=>{
-            if (ev.detail.holding.propertyName == "drag") {
-                const content = frameElement?.querySelector?.(".ui-content") as HTMLElement;
-                frameElement?.style?.removeProperty?.("will-change");
-                frameElement?.removeAttribute?.("data-dragging");
-
-                const phantom = frameElement?.shadowRoot?.querySelector?.(".ui-phantom") as HTMLCanvasElement;
-                requestIdleCallback(()=>{
-                    content?.style?.removeProperty?.("display");
-                    if (phantom) { phantom.style.display = "none"; };
-                }, {timeout: 100});
-            }
-        });
-    }
-}
-
-// if global case
-/*
-const tasks = this.taskManager.getTasks();
-const winds: HTMLElement[] = tasks.map(({id}, index)=>{
-    return document.querySelector("ui-frame:has("+id+"), ui-frame"+id+"");
-});
-
-//
-Array.from(winds).filter((w)=>!!w).forEach((e: HTMLElement, I)=>{
-    e.style.setProperty("--z-index", ""+I);
-});*/
-
-//
-const focusTask = (taskManager, target: HTMLElement)=>{
-    const hash = "#" + (target.dataset.id || (target.querySelector(".ui-content")?.id || target.id || target.querySelector(location.hash)?.id || "") || (target as any).taskId).trim?.()?.replace?.("#","")?.trim?.();
-    taskManager?.focus?.(hash);
-    requestIdleCallback(()=>navigator?.vibrate?.([10]));
-}
+import { initTaskManager } from "/externals/core/core.js";
+import { focusTask } from "../../functional/fn-task.js";
+import { makeControl } from "../../position/ts/ps-draggable.js";
 
 // @ts-ignore
 @customElement('ui-frame')

@@ -1,3 +1,5 @@
+import { placeWithCursor } from "../position/ts/ps-cursor.js";
+
 //
 interface CTXMenuElement {
     icon: HTMLElement;
@@ -16,7 +18,7 @@ export const hideOnClick = (ev?)=>{
 
 //
 const evt: [any, any] = [ hideOnClick, {} ];
-const ctx: string = "ui-contextmenu";
+const ctx: string = "ui-modal[type=\"contextmenu\"]";
 
 //
 export const closeContextMenu = (ev?)=>{
@@ -34,15 +36,14 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
     const ctxMenu   = document.querySelector(ctx) as any;
 
     //
-    ctxMenu.initiator = initiator;
-
-    //
     if (ctxMenu && (toggle && ctxMenu.dataset.hidden || !toggle)) {
         document.documentElement.addEventListener("contextmenu", ...evt);
         document.documentElement.addEventListener("click", ...evt);
 
         //
+        placeWithCursor(ctxMenu, event);
         ctxMenu.innerHTML = "";
+        ctxMenu.initiator = initiator;
         delete ctxMenu.dataset.hidden;
         content?.(ctxMenu, initiator);
     } else

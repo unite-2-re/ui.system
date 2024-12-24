@@ -1,19 +1,18 @@
+/// <reference types="lit" />
 // Type: standalone
 // Behaviour: select, button
 
-/// <reference types="lit" />
-
 // @ts-ignore
-import { css, unsafeCSS } from "../shared/LitUse";
+import { css, unsafeCSS } from "../../shared/LitUse";
 
 // @ts-ignore
 import { customElement } from "lit/decorators.js";
 
 // @ts-ignore
-import htmlCode from "./row.html?raw";
+import styles from "../scss/ap-row.scss?inline";
 
 // @ts-ignore
-import styles from "./row.scss?inline";
+import htmlCode from "../html/ap-row.html?raw";
 
 //
 import UISelectBase from "../../behaviour/bh-select";
@@ -33,7 +32,7 @@ export class UISelectRow extends UISelectBase {
         const self = this as unknown as HTMLElement;
 
         // in selection mode
-        if (!this.$parentNode?.matches?.("ui-dropmenu")) {
+        if (!this.$parentNode?.matches?.("ui-button, ui-toggle")) {
             self.setAttribute("data-highlight", this.checked ? "2" : "0");
             self.setAttribute("data-highlight-hover", this.checked ? "4" : "0");
             self.setAttribute("data-chroma", this.checked ? "0.1" : "0");
@@ -54,7 +53,7 @@ export class UISelectRow extends UISelectBase {
         super.updateAttributes?.();
 
         // mono element mode (for drop-menu indicator)
-        if (this.$parentNode?.matches?.("ui-dropmenu")) {
+        if (this.$parentNode?.matches?.("ui-button, ui-toggle")) {
             const self = this as unknown as HTMLElement;
             if (this.checked) {
                 self.style.removeProperty("display");
@@ -69,7 +68,7 @@ export class UISelectRow extends UISelectBase {
         super.connectedCallback();
 
         // mono element mode (for drop-menu indicator)
-        if (this.$parentNode?.matches?.("ui-dropmenu")) {
+        if (this.$parentNode?.matches?.("ui-button, ui-toggle")) {
             const self = this as unknown as HTMLElement;
             self.style.setProperty("display", "none", "important");
         };

@@ -1,21 +1,18 @@
-@layer ui-taskbar {
-
-    //
-    @property --data-taskbar-shift
-    {
-        inherits: true;
-        syntax: "<length-percentage>";
-        initial-value: 0px;
-    }
+@layer ui-taskbar
+{
+    @property --data-taskbar-shift { inherits: true; syntax: "<length-percentage>"; initial-value: 0px; };
 
     //
     :host(ui-taskbar)
     {
         /* */
-        &, :where(*), ::slotted(*) {
+        &, :where(*), ::slotted(*)
+        {
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
             user-drag: none;
+
+            /* */
             user-select: none;
             -webkit-user-drag: none;
             -moz-user-drag: none;
@@ -174,8 +171,8 @@
             }
 
             //
-            & > * {
-                //pointer-events: auto;
+            & > *
+            {
                 inline-size: 2rem;
                 block-size: 2rem;
                 padding: 0.125rem;
@@ -241,7 +238,8 @@
 
     //
     @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))
-    {:host(ui-taskbar) {
+    {:host(ui-taskbar)
+    {
         & {
             flex-direction: column;
             inline-size: 100%;
@@ -265,11 +263,6 @@
     }}
 
     //
-    :host(ui-taskbar[data-hidden]) {
-        display: none !important;
-    }
-
-    //
-    //@media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))
-        //{:host(ui-taskbar) { display: none; }}
+    :host(ui-taskbar[data-hidden])
+    { display: none !important; }
 }

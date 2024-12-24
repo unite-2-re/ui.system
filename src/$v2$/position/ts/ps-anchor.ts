@@ -15,6 +15,14 @@ export const placeWithElement = (self?: HTMLElement, element?: HTMLElement, wher
         const self_box = getBoundingOrientRect(self);
 
         //
+        const initialAnchor = element?.style?.getPropertyValue?.("anchor-name");
+        const ID = generateId();
+        if (!initialAnchor || initialAnchor == "none") {
+            element?.style?.setProperty?.("anchor-name", "--" + ID, "");
+        }
+
+        //
+        self.style.setProperty("--anchor-group", (element?.style?.getPropertyValue?.("anchor-name") || ("--" + ID)), "");
         self.style.setProperty("--inline-size", `${(box.width || self_box.width)}`);
 
         // for taskbar/navbar
@@ -26,15 +34,5 @@ export const placeWithElement = (self?: HTMLElement, element?: HTMLElement, wher
             self.style.setProperty("--client-x", `${(box.left || 0) - (updated_box.width - box.width) * 0.5}`);
             self.style.setProperty("--client-y", `${((box.bottom + gap) || 0)}`);
         }
-
-        //
-        const initialAnchor = element?.style?.getPropertyValue?.("anchor-name");
-        const ID = generateId();
-        if (!initialAnchor || initialAnchor == "none") {
-            element?.style?.setProperty?.("anchor-name", "--" + ID, "");
-        }
-
-        //
-        self.style.setProperty("--anchor-group", (element?.style?.getPropertyValue?.("anchor-name") || ("--" + ID)), "");
     }
 }

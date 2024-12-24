@@ -45,6 +45,13 @@ export class UISelectBase extends LitElementTheme {
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         self.classList?.add?.("u2-input");
+        self?.addEventListener?.("click", (ev)=>{
+            // redirection...
+            const element = ev?.target as HTMLElement;
+            if (!element?.matches?.("input")) {
+                self?.querySelector?.("input")?.click?.();
+            }
+        });
     }
 
     //

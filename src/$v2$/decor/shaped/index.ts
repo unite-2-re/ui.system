@@ -1,6 +1,6 @@
+/// <reference types="lit" />
 // whole dedicated, separate element for lucide icons...
 // this component (or lucide icons) may to be distributed with main package.
-/// <reference types="lit" />
 
 // @ts-ignore
 import { html, css, unsafeCSS } from "../../shared/LitUse";
@@ -22,26 +22,13 @@ export class UIShaped extends LitElementTheme {
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
     protected render() {
-        return html`${this.themeStyle}<slot></slot> <ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
+        return html`${this.themeStyle}<slot></slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
     }
 
     //
     constructor(options = {icon: "", padding: ""}) {
         super(); const self = this as unknown as HTMLElement;
         if (options?.icon) { this.icon = options?.icon; };
-
-        // vacuum issue
-        //setInterval(()=>{
-            //const icon = (self as any).shadowRoot?.querySelector?.("ui-icon");
-            ///const computed = getComputedStyle(self);
-            //const color = computed?.getPropertyValue?.("color") || computed?.getPropertyValue?.("stroke") || "inherit";
-            //icon?.style?.setProperty?.("stroke", color, "");
-            //icon?.style?.setProperty?.("color", color, "");
-
-            //
-            //(self as any)?.setAttribute("data-scheme", (self as any)?.closest("[data-scheme]")?.getAttribute?.("data-scheme") || (self as any)?.getAttribute?.("data-scheme"));
-            //(icon as any)?.setAttribute("data-scheme", (self as any)?.getAttribute?.("data-scheme"));
-        //}, 100);
     }
 
     //

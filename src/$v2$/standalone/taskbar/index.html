@@ -1,9 +1,9 @@
 <template>
-    <div class="ui-app-menu" data-alpha="0">
-        <button class="app-menu button" type="button" data-highlight="0" data-highlight-hover="2" data-alpha="0"><ui-icon inert icon="layout-grid"></ui-icon></button>
+    <div class="ui-app-menu ui-anchor" data-alpha="0">
+        <button class="app-menu button" type="button" data-popup="app-menu" data-highlight="0" data-highlight-hover="2" data-alpha="0"><ui-icon inert icon="layout-grid"></ui-icon></button>
     </div>
 
-    <div class="ui-task-bar" data-alpha="0">
+    <div class="ui-task-bar ui-anchor" data-alpha="0">
         <!--<div v-for="task in tasks"
             :class="{'ui-focus': task.id == currentHash, 'ui-active': task.active}"
             :key="task.id"
@@ -19,7 +19,7 @@
 
         <slot></slot>
     </div>
-    <div class="ui-status" data-alpha="0">
+    <div class="ui-status ui-anchor" data-alpha="0">
         <!-- -->
         <slot name="status"></slot>
 
@@ -43,7 +43,8 @@
         <div
             class="ui-indicator ui-icon"
             data-alpha="0"
-            data-highlight-hover="2">
+            data-highlight-hover="2"
+            data-popup="quick-settings">
             <ui-icon inert
                 icon="wifi-off" class="icon-wrap ui-icon-state ui-network"
                 data-alpha="0"
@@ -55,7 +56,8 @@
         <div
             ref="target" class="ui-indicator ui-icon"
             data-alpha="0"
-            data-highlight-hover="2">
+            data-highlight-hover="2"
+            data-popup="power-settings">
             <ui-icon inert
                 icon="battery" class="icon-wrap ui-icon-state ui-battery"
                 data-alpha="0"
@@ -67,7 +69,8 @@
         <div
             class="ui-indicator ui-time"
             data-alpha="0"
-            data-highlight-hover="2">
+            data-highlight-hover="2"
+            data-popup="calendar">
             <span class="ui-time-hour" inert>00</span>:<span class="ui-time-minute" inert>00</span>
         </div>
     </div>

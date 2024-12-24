@@ -9,10 +9,10 @@ import { css, unsafeCSS } from "../../shared/LitUse";
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import htmlCode from "./index.html?raw";
+import styles from "../scss/ap-button.scss?inline";
 
 // @ts-ignore
-import styles from "./index.scss?inline";
+import htmlCode from "../html/ap-button.html?raw";
 
 //
 import UIButtonBase from "../../behaviour/bh-button";

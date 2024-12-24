@@ -2,10 +2,10 @@
 @use "../../position/scss/ps-cursor.scss";
 
 //
-@layer ui-popup
+@layer ui-modal
 {
     //
-    :host(ui-popup)
+    :host
     {
         & {
             border-radius: 0.25rem;
@@ -20,7 +20,7 @@
     };
 
     //
-    :host(ui-popup[data-hidden])
+    :host([data-hidden])
     {
         display: none !important;
         pointer-events: none !important;

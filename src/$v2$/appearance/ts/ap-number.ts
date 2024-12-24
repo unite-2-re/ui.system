@@ -3,16 +3,16 @@
 // Behaviour: spinner
 
 // @ts-ignore
-import { css, unsafeCSS } from "../shared/LitUse";
+import { css, unsafeCSS } from "../../shared/LitUse";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import styles from "./index.scss?inline";
+import styles from "../scss/ap-number.scss?inline";
 
 // @ts-ignore
-import htmlCode from "./index.html?raw";
+import htmlCode from "../html/ap-number.html?raw";
 
 //
 import LitElementTheme from "../../shared/LitElementTheme";

@@ -68,6 +68,9 @@
         }
 
         //
+        .ui-indicator, ::slotted(.ui-indicator) { background-color: transparent !important; };
+
+        //
         & > label
         {
             & {

@@ -1,5 +1,5 @@
 // Type: standalone
-@layer ui-dropmenu {
+@layer ui-button {
     :host
     {
         &, :where(*), ::slotted(*)
@@ -45,21 +45,13 @@
             text-align: center;
 
             /* */
-            //min-inline-size: 3rem;
-            //min-block-size: 3rem;
-
-            /* */
-            /*display: inline grid;
-            grid-template-rows: minmax(0px, 1fr);
-            grid-template-columns: minmax(0px, 1fr);*/
-
             display: inline flex;
             place-content: center;
             place-items: center;
 
             /* */
             touch-action: none;
-            pointer-events: auto;
+            pointer-events: none;
             cursor: pointer;
 
             /* */
@@ -80,7 +72,6 @@
             align-items: safe center;
             justify-items: stretch;
             justify-content: stretch;
-            pointer-events: none;
             border-radius: 0px;
             outline: none 0px transparent;
             border: none 0px transparent;
@@ -88,11 +79,13 @@
             inline-size: 100%;
             block-size: 100%;
             box-sizing: border-box;
+            cursor: pointer;
 
             /* */
             text-align: start;
             user-select: none;
             touch-action: none;
+            pointer-events: auto;
         }
 
         /* */

@@ -27,29 +27,22 @@ export class UINavBar extends LitElementTheme {
     static styles = css`${unsafeCSS(styles)}`;
 
     //
-    protected render() {
-        return html`${this.themeStyle}<button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}><ui-icon inert icon="menu"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-down"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle" part="ui-title-handle" @click=${this.menuAction.bind(this)}><ui-icon inert icon=${this.icon}></ui-icon><span>${this.label}</span></button>`;
-    }
-
-    //
-    protected adaptiveTheme() {
-        const self = this as unknown as HTMLElement;
-        const setTheme = ()=>{
-            //if (matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
-                self.setAttribute("data-scheme", document.body.matches(":has(ui-frame:not([data-hidden]))") ? "solid" : "dynamic-transparent");
-            //} else {
-                //self.setAttribute("data-scheme", "solid");
-            //}
-        }
-        setInterval(setTheme, 1000);
-    }
-
-    //
     constructor(options = {icon: "", padding: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
         self.classList?.add?.("ui-navbar");
         self.style.setProperty("z-index", "9999", "important");
         this.taskManager ??= options?.taskManager || initTaskManager();
+    }
+
+    //
+    protected render() { return html`${this.themeStyle}<button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}><ui-icon inert icon="menu"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-down"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle" part="ui-title-handle" @click=${this.menuAction.bind(this)}><ui-icon inert icon=${this.icon}></ui-icon><span>${this.label}</span></button>`; }
+    protected adaptiveTheme() {
+        const self = this as unknown as HTMLElement;
+        const setTheme = ()=>{
+            self.setAttribute("data-scheme", document.body.matches(":has(ui-frame:not([data-hidden]))") ? "solid" : "dynamic-transparent");
+        }
+        setInterval(setTheme, 1000);
+        setTheme();
     }
 
     //

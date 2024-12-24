@@ -3,23 +3,13 @@ import {AxGesture} from "/externals/core/interact.js";
 
 //
 export const $control$ = Symbol("@control");
-
-//
 export const makeControl = (frameElement: HTMLElement)=>{
     let gestureControl: any = null;
     if (frameElement && !frameElement[$control$]) {
         gestureControl = new AxGesture(frameElement);
+        gestureControl.draggable({ handler: frameElement?.shadowRoot?.querySelector(".ui-title-handle") });
+        gestureControl.resizable({ handler: frameElement?.shadowRoot?.querySelector(".ui-resize") });
         frameElement[$control$] = gestureControl;
-
-        //
-        gestureControl.draggable({
-            handler: frameElement?.shadowRoot?.querySelector(".ui-title-handle")
-        });
-
-        //
-        gestureControl.resizable({
-            handler: frameElement?.shadowRoot?.querySelector(".ui-resize")
-        });
     }
 
     //
@@ -30,10 +20,6 @@ export const makeControl = (frameElement: HTMLElement)=>{
         frameElement.style.setProperty("--shift-y", `${(pn.clientHeight - Math.min(Math.max(frameElement.offsetHeight, 24*16), pn.clientHeight)) * 0.5}`, "");
         frameElement.addEventListener("m-dragstart", (ev: any)=>{
             if (ev.detail.holding.propertyName == "drag") {
-                //const content = frameElement?.querySelector?.(".ui-content") as HTMLElement;
-                //const phantom = frameElement?.shadowRoot?.querySelector?.(".ui-phantom") as HTMLCanvasElement;
-
-                //
                 frameElement?.setAttribute?.("data-dragging", "");
                 frameElement?.style?.setProperty?.("will-change", "transform", "important");
             }
@@ -43,10 +29,11 @@ export const makeControl = (frameElement: HTMLElement)=>{
         frameElement.addEventListener("m-dragend", (ev: any)=>{
             if (ev.detail.holding.propertyName == "drag") {
                 const content = frameElement?.querySelector?.(".ui-content") as HTMLElement;
+                const phantom = frameElement?.shadowRoot?.querySelector?.(".ui-phantom") as HTMLCanvasElement;
+
+                //
                 frameElement?.style?.removeProperty?.("will-change");
                 frameElement?.removeAttribute?.("data-dragging");
-
-                const phantom = frameElement?.shadowRoot?.querySelector?.(".ui-phantom") as HTMLCanvasElement;
                 requestIdleCallback(()=>{
                     content?.style?.removeProperty?.("display");
                     if (phantom) { phantom.style.display = "none"; };

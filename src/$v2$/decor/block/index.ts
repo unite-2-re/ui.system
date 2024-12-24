@@ -1,6 +1,6 @@
+/// <reference types="lit" />
 // whole dedicated, separate element for lucide icons...
 // this component (or lucide icons) may to be distributed with main package.
-/// <reference types="lit" />
 
 // @ts-ignore
 import { css, unsafeCSS } from "../../shared/LitUse";
