@@ -55,6 +55,11 @@ export class UISelectBase extends LitElementTheme {
     }
 
     //
+    protected render() {
+        return super.render();
+    }
+
+    //
     public disconnectedCallback() {
         super.disconnectedCallback();
         this.$parentNode?.removeEventListener("change", this.#onSelect ??= this.onSelect.bind(this));

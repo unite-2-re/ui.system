@@ -70,7 +70,7 @@ export const makeSwitch = (self?: HTMLElement)=>{
         const coord = [x - box?.left, y - box?.top];
 
         //
-        if (TYPE == "radio") {
+        if (TYPE == "radio" && !(evType == "click" || evType == "ag-click")) {
             const radio = self.querySelectorAll?.("input[type=\"radio\"]") as unknown as HTMLInputElement[];
             const count = (radio?.length || 0); //+ 1;
             const vary = [

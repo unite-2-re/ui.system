@@ -22,6 +22,11 @@ export class UIButtonBase extends LitElementTheme {
     }
 
     //
+    protected render() {
+        return super.render();
+    }
+
+    //
     protected importFromTemplate(htmlCode) {
         return super.importFromTemplate?.(htmlCode);
     }

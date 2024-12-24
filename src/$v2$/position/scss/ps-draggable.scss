@@ -94,6 +94,12 @@
     /* */
     & {
         position: fixed;
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
+    /* */
+    @media (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
         inset-inline-start: var(--sp-x, 0px);//var(--ds-x, 0px);
         inset-block-start : var(--sp-y, 0px);//var(--ds-y, 0px);
         inset-inline-end  : auto;
@@ -101,6 +107,6 @@
 
         /* */
         translate: var(--ds-x, 0px) var(--ds-y, 0px) 0px;
-    };
+    }
 
 };

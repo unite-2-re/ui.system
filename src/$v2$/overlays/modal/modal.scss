@@ -26,7 +26,19 @@
             display: block flex;
             pointer-events: auto;
             flex-direction: column;
+            grid-auto-flow: column;
+            grid-auto-rows: max-content;
             flex-wrap: wrap;
+
+            //
+            gap: 0px;
+            column-gap: 0.25rem;
+            row-gap: 0px;
+
+            /* */
+            place-content: center;
+            place-items: center;
+            place-self: center;
         };
     };
 
