@@ -14,6 +14,7 @@
 
         //
         & {
+            font-size: 0.9rem;
             max-inline-size: none;
             border-radius: 0.25rem;
             inline-size: max-content;
@@ -29,6 +30,7 @@
             grid-auto-flow: column;
             grid-auto-rows: max-content;
             flex-wrap: wrap;
+            overflow: hidden;
 
             //
             gap: 0px;
@@ -45,7 +47,7 @@
     //
     :host([type="contextmenu"]) {
         inline-size: var(--inline-size);
-        padding: 0rem;
+        padding: 0rem !important;
     }
 
     //

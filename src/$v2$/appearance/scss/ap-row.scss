@@ -37,12 +37,13 @@
             font-size: 0.9rem;
             box-sizing: border-box;
             inline-size: 100%;
-            block-size: max-content;
+            block-size: 2.5rem;
             max-block-size: min(100%, 4rem);
-            min-block-size: 2rem;
+            min-block-size: max-content;
             max-inline-size: 100%;
             overflow: hidden;
             padding: 0.25rem;
+            padding-inline: 0.5rem;
 
             /* grid-version */
             display: inline grid;
@@ -119,6 +120,7 @@
                 //
                 place-content: center;
                 place-items: center;
+                place-self: center;
 
                 /* */
                 user-select: none;
@@ -131,7 +133,7 @@
             {
                 grid-row: 1 / -1;
                 padding: 0rem;
-                line-height: normal;
+                line-height: 0;
 
                 /* */
                 display: inline flex;
@@ -190,10 +192,10 @@
             aspect-ratio: 1 / 1;
 
             //
-            place-content: center;
-            place-items: center;
-            place-self: center;
-            text-align: center;
+            place-content: center !important;
+            place-items: center !important;
+            place-self: center !important;
+            text-align: center !important;
         }
     }
 }
