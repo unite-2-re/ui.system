@@ -13,7 +13,8 @@ import init, {
     UIBlock,
     UISelectRow,
     UINumber,
-    UIModal
+    UIModal,
+    UICalendar
 } from "../src/index";
 
 // @ts-ignore
@@ -55,6 +56,7 @@ console.log(UITaskBar);
 console.log(UITaskItem);
 console.log(UIBlock);
 console.log(UINumber);
+console.log(UICalendar);
 
 //
 makeSelection(document.body, "ui-checkbox, ui-switch");
