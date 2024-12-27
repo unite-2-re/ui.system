@@ -1,4 +1,5 @@
-@layer ui-frame-fix {
+//
+@scope(:host, :scope, :root) {
     //
     @property --data-taskbar-shift
     {
@@ -124,32 +125,38 @@
         syntax: "<length-percentage>";
         inherits: true;
     }
+};
 
+//
+@scope(:host, :root, :scope) {
+    //
+    @property --value {
+        initial-value: 0;
+        syntax: "<number>";
+        inherits: true;
+    }
+
+    //
+    @property --max-value {
+        initial-value: 0;
+        syntax: "<number>";
+        inherits: true;
+    }
+};
+
+//
+@layer ui-frame-fix {
 
     //
     ui-frame[data-dragging] {
         & { will-change: transform !important; };
-        //& { pointer-events: none !important; };
-
-        //
         :where(*) {
-            //will-change: transform !important;
             animation: none !important;
             animation-duration: 0ms !important;
             transition: none !important;
             transition-duration: 0ms !important;
             box-shadow: none !important;
-            //pointer-events: none !important;
         }
-
-        /*
-        :where(svg, input, .u2-input, span, ui-icon) {
-            content-visibility: hidden !important;
-        }
-
-        :where(ui-icon) {
-            visibility: hidden !important;
-        }*/
     }
 
     // if has identified, do top level
@@ -231,5 +238,31 @@
             }
         }
 
+    }
+
+    //
+    ui-number input::-webkit-outer-spin-button,
+    ui-number input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    //
+    ui-switch {
+        & {
+            --value: 0;
+            --max-value: 1;
+        }
+
+        //
+        @for $i from 1 through 3 {
+            input[type="radio"]:nth-child(#{$i}) { order: #{$i}; };
+            &:has(input[type="radio"]:last-child:nth-child(#{$i})) { --max-value: #{$i - 1}; };
+            &:has(input[type="radio"]:checkbox:nth-child(#{$i})) { --value: #{$i - 1}; };
+        }
+
+        //
+        &:has(input[type="checkbox"]) { transition: --value 100ms linear; --max-value: 1; }
+        &:has(input[type="checkbox"]:checkbox) { --value: 1; }
     }
 }
