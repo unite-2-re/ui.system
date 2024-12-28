@@ -30,11 +30,11 @@
 
 //
 @mixin tm-dep($property, $light, $dark, $fb: var(--tm-scheme)) {
-    & { #{$property}: color-mix(in oklch, #{$light} calc(100% * #{var(--tm-scheme)}), #{$dark}) !important; }
+    & { #{$property}: color-mix(in oklch, #{$light} calc(100% * #{var(--tm-scheme)}), #{$dark}); }
 
     //
     @supports(color: light-dark(white, black)) {
-        #{$property}: light-dark(#{$light}, #{$dark}) !important;
+        #{$property}: light-dark(#{$light}, #{$dark});
     }
 };
 
@@ -44,5 +44,5 @@
     @include tm-dep("--tm-cr", "var(--tm-cr-dark)", "var(--tm-cr-light)");
 
     // low-up version of origin color
-    & { --tm-ac: #{tm-lo(var(--tm-origin, currentColor), 80%)} !important; }
+    & { --tm-ac: #{tm-lo(var(--tm-origin, currentColor), 80%)}; }
 };

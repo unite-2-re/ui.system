@@ -5,7 +5,6 @@ import { Calendar } from 'vanilla-calendar-pro';
 
 // @ts-ignore
 import layout from 'vanilla-calendar-pro/styles/layout.css?inline';
-import theme from './theme.tw.scss?inline';
 
 // @ts-ignore
 import { html, css, unsafeCSS } from "../../shared/LitUse.js";
@@ -27,7 +26,7 @@ export class UICalendar extends LitElementTheme {
     #calendar?: any;
 
     //
-    static styles = css`${unsafeCSS(styles)};${unsafeCSS(layout)};${unsafeCSS(theme)}`;
+    static styles = css`${unsafeCSS(layout)}${unsafeCSS(styles)}`;
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;

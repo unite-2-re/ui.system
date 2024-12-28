@@ -6,6 +6,8 @@ import cssnano from "cssnano";
 import deduplicate from "postcss-discard-duplicates";
 import postcssPresetEnv from 'postcss-preset-env';
 import autoprefixer from "autoprefixer";
+import tailwindcss from "tailwindcss";
+import tailWindNested from "tailwindcss/nesting";
 
 //
 export const __dirname = resolve(import.meta.dirname, "./");
@@ -51,14 +53,22 @@ export default {
     },
     css: {
         postcss: {
-            plugins: [autoprefixer(), deduplicate(), cssnano({
+            plugins: [
+                tailWindNested(),
+                tailwindcss(),
+                deduplicate(),
+                autoprefixer(),
+                cssnano({
                 preset: ['advanced', {
                     calc: false,
                     discardComments: {
                         removeAll: true
                     }
                 }],
-            }), postcssPresetEnv({ stage: 0 })],
+            }), postcssPresetEnv({
+                features: { 'nesting-rules': false },
+                stage: 0
+            })],
         },
     },
 };
