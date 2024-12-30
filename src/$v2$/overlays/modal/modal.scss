@@ -14,9 +14,13 @@
 
         //
         & {
+            // TODO! use backdrop-filter on top-level styles
+            backdrop-filter: blur(1rem) !important;
+
+            //
             font-size: 0.9rem;
             max-inline-size: none;
-            border-radius: 0.25rem;
+            border-radius: 0.3333rem;
             inline-size: max-content;
             block-size: max-content;
             box-shadow: 0rem 0rem 1rem #10101040;
@@ -42,6 +46,11 @@
             place-items: center;
             place-self: center;
         };
+
+        //
+        &::slotted(*) {
+            --tm-bg-alpha: 0;
+        }
     };
 
     //

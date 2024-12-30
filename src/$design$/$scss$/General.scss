@@ -187,6 +187,11 @@
     }
 
     //
+    body:not(:has(ui-frame:not([data-hidden]))) ui-modal {
+        --tm-bg-alpha: 0.9;
+    }
+
+    //
     body:not(:has(ui-frame:not([data-hidden]))) ui-navbar
     {
         //

@@ -93,7 +93,9 @@ layouts: {
     public connectedCallback() {
         super.connectedCallback();
         const self = this as unknown as HTMLElement;
-        self.setAttribute("data-scheme", "solid");
+        if (!self.getAttribute("data-alpha")) {
+            self.setAttribute("data-alpha", "0");
+        }
     }
 };
 
