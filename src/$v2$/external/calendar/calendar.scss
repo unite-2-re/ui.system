@@ -134,61 +134,52 @@
                     grid-template-columns: repeat(7, 1fr);
                     grid-template-rows: minmax(2rem, max-content) minmax(0px, 1fr);
                     grid-auto-flow: row;
-                    gap: 0.25rem;
                     padding: 0.125rem;
+                    gap: 0rem;
                 }
 
-                .vc-week {
-                    display: grid;
-                    inline-size: 100%;
-                    block-size: max-content;
-                    grid-template-columns: subgrid;
-                    grid-template-rows: 1fr;
-                    grid-auto-flow: column;
-                    grid-column: 1 / -1;
-                    place-content: center;
-                    place-items: center;
-                }
-
-                .vc-dates {
+                & > :where(*) {
                     display: grid;
                     grid-template-columns: subgrid;
                     grid-template-rows: repeat(6, 1fr);
                     grid-auto-flow: row;
+                    grid-column: 1 / -1;
+                    place-items: center;
                     place-self: stretch;
                     inline-size: 100%;
                     block-size: 100%;
-                    grid-column: 1 / -1;
+                    gap: 0.25rem;
+
+                    justify-content: stretch;
                     place-content: center;
-                    place-items: center;
+                    justify-items: stretch;
+                    text-align: center;
+                }
+
+                .vc-months, .vc-years {
+                    grid-column: 1 / -1;
+                    grid-row: 1 / -1;
+                }
+
+                .vc-week {
+                    block-size: max-content;
+                    grid-template-columns: subgrid;
+                    grid-template-rows: 1fr;
+                }
+
+                .vc-dates {
+                    grid-template-columns: subgrid;
+                    grid-template-rows: repeat(6, 1fr);
                 }
 
                 .vc-months {
-                    gap: 0.5rem;
-                    display: grid;
                     grid-template-columns: repeat(4, 1fr);
                     grid-template-rows: repeat(3, 1fr);
-                    inline-size: 100%;
-                    block-size: 100%;
-                    place-self: stretch;
-                    place-content: center;
-                    place-items: center;
-                    grid-column: 1 / -1;
-                    grid-row: 1 / -1;
                 }
 
                 .vc-years {
-                    gap: 0.5rem;
-                    display: grid;
                     grid-template-columns: repeat(3, 1fr);
                     grid-template-rows: repeat(5, 1fr);
-                    inline-size: 100%;
-                    block-size: 100%;
-                    place-self: stretch;
-                    place-content: center;
-                    place-items: center;
-                    grid-column: 1 / -1;
-                    grid-row: 1 / -1;
                 }
             }
         }
