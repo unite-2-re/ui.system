@@ -1,11 +1,5 @@
 //
-:host {
-    & {
-        --inline-size: max-content;
-        --anchor-group: --ui-popup;
-    };
-
-    // fallback
+@mixin ps-centered {
     & {
         inset-inline-start: max(50%, 0px);
         inset-block-start: max(50%, 0px);

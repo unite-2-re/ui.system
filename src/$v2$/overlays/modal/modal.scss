@@ -1,5 +1,6 @@
-//@use "../../position/scss/ps-anchor.scss";
-@use "../../position/scss/ps-cursor.scss";
+//@use "../../position/scss/ps-anchor.scss" as ps;
+@use "../../position/scss/ps-cursor.scss" as ps;
+@use "../../position/scss/ps-centered.scss" as ct;
 
 //
 @layer ui-modal
@@ -7,20 +8,23 @@
     //
     :host
     {
+        @include ct.ps-centered();
+
+        //
         & {
             --inline-size: max-content;
             --anchor-group: --ui-popup;
         };
 
         //
-        & {
-            // TODO! use backdrop-filter on top-level styles
+        & { // TODO! use backdrop-filter on top-level styles
             backdrop-filter: blur(1rem) !important;
 
             //
             font-size: 0.9rem;
             max-inline-size: none;
             border-radius: 0.3333rem;
+            min-inline-size: max-content;
             inline-size: max-content;
             block-size: max-content;
             box-shadow: 0rem 0rem 1rem #10101040;
@@ -54,9 +58,21 @@
     };
 
     //
+    :host([type="popup"]) {
+        @include ps.ps-cursor();
+        & {
+            inline-size: var(--inline-size);
+            padding: 0rem !important;
+        }
+    }
+
+    //
     :host([type="contextmenu"]) {
-        inline-size: var(--inline-size);
-        padding: 0rem !important;
+        @include ps.ps-cursor();
+        & {
+            inline-size: var(--inline-size);
+            padding: 0rem !important;
+        }
     }
 
     //

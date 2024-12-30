@@ -1,12 +1,18 @@
-//
-@use "../../position/scss/ps-draggable.scss";
-@use "../../position/scss/ps-resizable.scss";
+// TODO! unify as "ps"
+@use "../../position/scss/ps-draggable.scss" as dg;
+@use "../../position/scss/ps-resizable.scss" as rs;
 
 //
 @layer ui-frame
 {
     :host
     {
+        & { // for desktop (and not maximized)
+            @include dg.ps-draggable();
+            @include rs.ps-resizable();
+        };
+
+        //
         &, :where(*), ::slotted(*)
         {
             -webkit-tap-highlight-color: rgba(0,0,0,0);

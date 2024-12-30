@@ -58,7 +58,7 @@
 };
 
 //
-:host {
+@mixin ps-resizable {
     //
     & {
         --initial-inline-size: 48rem;
