@@ -37,12 +37,13 @@
             font-size: 0.9rem;
             box-sizing: border-box;
             inline-size: 100%;
-            block-size: 2.5rem;
-            max-block-size: min(100%, 4rem);
+            block-size: 2rem;
             min-block-size: max-content;
+            max-block-size: min(100%, 4rem);
+            min-block-size: max(max-content, 2rem);
             max-inline-size: 100%;
             overflow: hidden;
-            padding: 0.25rem;
+            padding: 0.5rem;
             padding-inline: 0.5rem;
 
             /* grid-version */
@@ -178,17 +179,17 @@
 
         /* */
         :where(ui-icon), ::slotted(ui-icon) {
-            padding: 0rem;
-            min-block-size: 1rem;
+            padding: 0.25rem;
             block-size: 100%;
+            min-block-size: 1rem;
 
             //
             flex-grow: 1;
-            flex-basis: 2rem;
+            flex-basis: 1rem;
 
             //
-            max-block-size: 2rem;
-            max-inline-size: 2rem;
+            max-block-size: 100%;
+            max-inline-size: 100%;
             aspect-ratio: 1 / 1;
 
             //

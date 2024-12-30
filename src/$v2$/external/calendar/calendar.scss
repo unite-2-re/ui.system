@@ -6,6 +6,63 @@
     //
     @layer ui-general
     {
+        .vc {
+            gap: 0.5rem !important;
+            min-block-size: 20rem !important;
+            min-inline-size: 20rem !important;
+            place-content: center;
+            place-items: center;
+            place-self: center;
+        }
+
+        .vc-header {
+            gap: 0.5rem !important;
+        }
+
+        .vc-wrapper {
+            flex-basis: stretch !important;
+            flex-grow: 1 !important;
+            place-content: center !important;
+            place-items: stretch !important;
+            place-self: stretch !important;
+        }
+
+        .vc-header__content {
+            max-inline-size: 100% !important;
+            inline-size: 100% !important;
+        }
+
+        .vc-dates {
+            grid-template-rows: repeat(6, 1fr);
+        }
+
+        .vc-header__content, .vc-arrow {
+            & {
+                display: flex !important;
+                padding: 0px !important;
+                overflow: hidden !important;
+                border-radius: 0.5rem !important;
+                min-block-size: 2rem;
+            };
+
+            & button, &.button {
+                & {
+                    flex-basis: stretch;
+                    flex-grow: 1;
+                    border-radius: 0px !important;
+                    background-color: var(--rv-bg-color, currentColor) !important;
+                    padding-inline: 1rem !important;
+                };
+                & { --hl-co-state: 2; };
+                &:hover { --hl-co-state: 4; };
+            }
+
+            & .vc-year {
+                flex-grow: 0;
+                flex-basis: max-content;
+            }
+        }
+
         :where(*)
         {
             background-color: var(--rv-bg-color, currentColor);
@@ -31,7 +88,8 @@
     {
         :is([data-vc-week-day-off], [data-vc-date-weekend], [data-vc-date-holiday]) {
             &, .vc-date__btn {
-                --tm-chroma: 0.9;
+                & { --tm-chroma: 0.9; };
+                @include cm.in-contrast("--tm-color", "var(--tm-bg-color, var(--rv-bg-color, currentColor))", 1, 2);
             }
         }
     }
@@ -41,13 +99,23 @@
     {
         .vc-arrow
         {
-            background-color: var(--rv-bg-color, currentColor);
-            border-radius: 0.25rem;
-            box-sizing: border-box;
+            & { min-block-size: 2rem;
+                min-inline-size: max-content;
+                inline-size: max-content;
+                aspect-ratio: 1 / 1;
+                block-size: 100%;
+                box-sizing: border-box;
+                border-radius: 0.25rem !important;
+                background-color: var(--rv-bg-color, currentColor) !important;
+                padding: 1rem;
+            };
+            & { --hl-co-state: 2; };
+            &:hover { --hl-co-state: 4; };
         }
 
         .vc-arrow::before
         {
+            padding: 0.25rem;
             aspect-ratio: 1 / 1;
             inline-size: max-content;
             block-size: 100%;
@@ -55,7 +123,7 @@
             display: block;
             mask-repeat: no-repeat;
             mask-origin: content-box;
-            mask-clip: border-box;
+            mask-clip: content-box;
             mask-size: contain;
             mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNoZXZyb24tZG93biI+PHBhdGggZD0ibTYgOSA2IDYgNi02Ii8+PC9zdmc+");
             background-color: var(--rv-color, currentColor);

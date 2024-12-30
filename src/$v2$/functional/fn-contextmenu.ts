@@ -57,6 +57,7 @@ export const makeCtxMenuItems = (ctxMenu?: any, initiator?: any, content?: any[]
     content?.map?.((el: CTXMenuElement)=>{
         const li = document.createElement("ui-button-row");
         if (!li.dataset.highlightHover) { li.dataset.highlightHover = "1"; }
+        li.style.blockSize = "2.5rem";
 
         //
         li.addEventListener("click", (e)=>{
