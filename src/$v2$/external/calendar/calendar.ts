@@ -4,9 +4,6 @@
 import { Calendar } from 'vanilla-calendar-pro';
 
 // @ts-ignore
-import layout from 'vanilla-calendar-pro/styles/layout.css?inline';
-
-// @ts-ignore
 import { html, css, unsafeCSS } from "../../shared/LitUse.js";
 import LitElementTheme from "../../shared/LitElementTheme.js";
 
@@ -26,16 +23,67 @@ export class UICalendar extends LitElementTheme {
     #calendar?: any;
 
     //
-    static styles = css`${unsafeCSS(layout)}${unsafeCSS(styles)}`;
+    static styles = css`${unsafeCSS(styles)}`;
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
         this.importFromTemplate(htmlCode);
         requestIdleCallback(()=>{
             console.log(root?.querySelector?.(".ui-calendar"));
-            this.#calendar = new Calendar(root?.querySelector?.(".ui-calendar"));
+            this.#calendar = new Calendar(root?.querySelector?.(".ui-calendar"), {
+layouts: {
+    default: `<div class="vc-header" data-vc="header" role="toolbar" aria-label="Calendar Navigation">
+    <div class="vc-header__content" data-vc-header="content">
+        <#Month />
+        <#Year />
+    </div>
+
+    <div class="vc-header__button">
+        <#ArrowPrev [month] />
+        <#ArrowNext [month] />
+    </div>
+</div>
+<div class="vc-wrapper" data-vc="wrapper">
+    <#WeekNumbers />
+    <div class="vc-content" data-vc="content">
+    <#Week />
+    <#Dates />
+    <#DateRangeTooltip />
+    </div>
+</div>
+<#ControlTime />`,
+    year: `<div class="vc-header" data-vc="header" role="toolbar" aria-label="Calendar Navigation">
+    <div class="vc-header__content" data-vc-header="content">
+        <#Month />
+        <#Year />
+    </div>
+    <div class="vc-header__button">
+        <#ArrowPrev [month] />
+        <#ArrowNext [month] />
+    </div>
+</div>
+<div class="vc-wrapper" data-vc="wrapper">
+    <div class="vc-content" data-vc="content">
+        <#Years />
+    </div>
+</div>`,
+    month: `<div class="vc-header" data-vc="header" role="toolbar" aria-label="Calendar Navigation">
+    <div class="vc-header__content" data-vc-header="content">
+        <#Month />
+        <#Year />
+    </div>
+    <div class="vc-header__button">
+        <#ArrowPrev [month] />
+        <#ArrowNext [month] />
+    </div>
+</div>
+<div class="vc-wrapper" data-vc="wrapper">
+    <div class="vc-content" data-vc="content">
+        <#Months />
+    </div>
+</div>`
+}});
             this.#calendar?.init?.();
-            console.log(this.#calendar);
         });
         return root;
     }

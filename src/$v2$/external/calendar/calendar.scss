@@ -6,70 +6,191 @@
     //
     @layer ui-general
     {
+        :where(*)
+        {
+            & {
+                background-color: var(--rv-bg-color, currentColor);
+                color: oklch(from var(--rv-color) l min(max(c, 0.01), 0.6) h / 1.0);
+                border: solid 0px transparent;
+                outline: solid 0px transparent;
+                box-sizing: border-box;
+            }
+
+            & {
+                --hl-co-state: 0;
+                --tm-bg-alpha: 0;
+                --tm-chroma: 0.05;
+            }
+        }
+
         .vc {
-            gap: 0.5rem !important;
-            min-block-size: 20rem !important;
-            min-inline-size: 20rem !important;
+            padding: 1rem;
+            gap: 1rem;
+            min-block-size: 20rem;
+            min-inline-size: 20rem;
+            max-inline-size: 20rem;
+            inline-size: 20rem;
+            place-content: stretch;
+            place-items: stretch;
+            place-self: center;
+            display: grid;
+            grid-template-rows: minmax(1rem, max-content) minmax(0px, 1fr);
+        }
+
+        button {
+            max-inline-size: 100%;
+            inline-size: 100%;
+            max-block-size: 100%;
+            min-block-size: max-content;
+            block-size: 100%;
+            padding: 0.5rem;
             place-content: center;
             place-items: center;
-            place-self: center;
+            flex-direction: row;
+            border-radius: 0.5rem;
+            display: flex;
+            cursor: pointer;
         }
 
         .vc-header {
-            gap: 0.5rem !important;
+            & {
+                gap: 0.5rem;
+                display: flex;
+                flex-direction: row;
+                font-weight: bold;
+            };
+
+            .vc-header__content {
+                max-inline-size: 100%;
+                inline-size: 100%;
+            };
+
+            .vc-header__button {
+                display: flex;
+                flex-direction: row;
+                min-inline-size: 4rem;
+                inline-size: max-content;
+                place-content: stretch;
+                place-items: stretch;
+                place-self: stretch;
+                border-radius: 0.5rem;
+                overflow: hidden;
+                padding: 0px;
+            };
+
+            .vc-header__content, .vc-arrow {
+                & {
+                    display: flex;
+                    padding: 0px;
+                    overflow: hidden;
+                    border-radius: 0.5rem;
+                    min-block-size: 2rem;
+                };
+
+                & button, &.button {
+                    @include cm.inverse();
+                    & {
+                        flex-basis: stretch;
+                        flex-grow: 1;
+                        border-radius: 0px;
+                        background-color: var(--rv-bg-color, currentColor);
+                        padding: 0.5rem;
+                        padding-inline: 1rem;
+                        font-weight: bold;
+                    };
+                    & {
+                        --tm-chroma: 0.2;
+                        --tm-bg-alpha: 1;
+                        --hl-co-state: 2;
+                    };
+                    &:hover { --hl-co-state: 4; };
+                }
+
+                & .vc-year {
+                    flex-grow: 0;
+                    flex-basis: max-content;
+                }
+            };
         }
 
         .vc-wrapper {
-            flex-basis: stretch !important;
-            flex-grow: 1 !important;
-            place-content: center !important;
-            place-items: stretch !important;
-            place-self: stretch !important;
-        }
-
-        .vc-header__content {
-            max-inline-size: 100% !important;
-            inline-size: 100% !important;
-        }
-
-        .vc-dates {
-            grid-template-rows: repeat(6, 1fr);
-        }
-
-        .vc-header__content, .vc-arrow {
             & {
-                display: flex !important;
-                padding: 0px !important;
-                overflow: hidden !important;
-                border-radius: 0.5rem !important;
-                min-block-size: 2rem;
-            };
+                display: flex;
+                flex-basis: stretch;
+                flex-grow: 1;
+                place-content: stretch;
+                place-items: stretch;
+                place-self: stretch;
+                inline-size: 100%;
+                block-size: 100%;
+            }
 
-            & button, &.button {
+            .vc-content {
                 & {
-                    flex-basis: stretch;
-                    flex-grow: 1;
-                    border-radius: 0px !important;
-                    background-color: var(--rv-bg-color, currentColor) !important;
-                    padding-inline: 1rem !important;
-                };
-                & { --hl-co-state: 2; };
-                &:hover { --hl-co-state: 4; };
-            }
+                    inline-size: 100%;
+                    block-size: 100%;
+                    display: grid;
+                    grid-column: 1 / -1;
+                    grid-template-columns: repeat(7, 1fr);
+                    grid-template-rows: minmax(2rem, max-content) minmax(0px, 1fr);
+                    grid-auto-flow: row;
+                    gap: 0.25rem;
+                    padding: 0.125rem;
+                }
 
-            & .vc-year {
-                flex-grow: 0;
-                flex-basis: max-content;
-            }
-        }
+                .vc-week {
+                    display: grid;
+                    inline-size: 100%;
+                    block-size: max-content;
+                    grid-template-columns: subgrid;
+                    grid-template-rows: 1fr;
+                    grid-auto-flow: column;
+                    grid-column: 1 / -1;
+                    place-content: center;
+                    place-items: center;
+                }
 
-        :where(*)
-        {
-            background-color: var(--rv-bg-color, currentColor);
-            color: oklch(from var(--rv-color) l min(max(c, 0.01), 0.6) h / 1.0);
-            --hl-co-state: 0;
-            --tm-bg-alpha: 0;
-            --tm-chroma: 0.05;
+                .vc-dates {
+                    display: grid;
+                    grid-template-columns: subgrid;
+                    grid-template-rows: repeat(6, 1fr);
+                    grid-auto-flow: row;
+                    place-self: stretch;
+                    inline-size: 100%;
+                    block-size: 100%;
+                    grid-column: 1 / -1;
+                    place-content: center;
+                    place-items: center;
+                }
+
+                .vc-months {
+                    gap: 0.5rem;
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    grid-template-rows: repeat(3, 1fr);
+                    inline-size: 100%;
+                    block-size: 100%;
+                    place-self: stretch;
+                    place-content: center;
+                    place-items: center;
+                    grid-column: 1 / -1;
+                    grid-row: 1 / -1;
+                }
+
+                .vc-years {
+                    gap: 0.5rem;
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    grid-template-rows: repeat(5, 1fr);
+                    inline-size: 100%;
+                    block-size: 100%;
+                    place-self: stretch;
+                    place-content: center;
+                    place-items: center;
+                    grid-column: 1 / -1;
+                    grid-row: 1 / -1;
+                }
+            }
         }
 
         //
@@ -84,43 +205,51 @@
     }
 
     //
-    @layer ui-weekend
-    {
-        :is([data-vc-week-day-off], [data-vc-date-weekend], [data-vc-date-holiday]) {
-            &, .vc-date__btn {
-                & { --tm-chroma: 0.9; };
-                @include cm.in-contrast("--tm-color", "var(--tm-bg-color, var(--rv-bg-color, currentColor))", 1, 2);
-            }
-        }
-    }
-
-    //
     @layer ui-decor
     {
         .vc-arrow
         {
+            @include cm.inverse();
             & { min-block-size: 2rem;
                 min-inline-size: max-content;
                 inline-size: max-content;
                 aspect-ratio: 1 / 1;
                 block-size: 100%;
                 box-sizing: border-box;
-                border-radius: 0.25rem !important;
-                background-color: var(--rv-bg-color, currentColor) !important;
-                padding: 1rem;
+                border-radius: 0rem;
+                background-color: var(--rv-bg-color, currentColor);
+                padding: 0.25rem;
+                display: flex;
             };
-            & { --hl-co-state: 2; };
+            & {
+                --tm-chroma: 0.2;
+                --tm-bg-alpha: 1;
+                --hl-co-state: 2;
+            };
             &:hover { --hl-co-state: 4; };
+        }
+
+        .vc-arrow[data-vc-arrow="prev"] {
+            &::before {
+                rotate: 90deg;
+            }
+        }
+
+        .vc-arrow[data-vc-arrow="next"] {
+            &::before {
+                rotate: -90deg;
+            }
         }
 
         .vc-arrow::before
         {
-            padding: 0.25rem;
+            display: flex;
+            content: "";
+            padding: 0rem;
             aspect-ratio: 1 / 1;
             inline-size: max-content;
             block-size: 100%;
             box-sizing: border-box;
-            display: block;
             mask-repeat: no-repeat;
             mask-origin: content-box;
             mask-clip: content-box;
@@ -150,6 +279,12 @@
     //
     @layer ui-specific
     {   //
+        [data-vc-months-month-selected], [data-vc-years-year-selected] {
+            & { --hl-co-state: 4; };
+            & { --tm-bg-alpha: 0.3; };
+        }
+
+        //
         [data-vc-date-selected] {
             button {
                 & { --hl-co-state: 4; };
@@ -162,6 +297,17 @@
             button {
                 @include cm.inverse();
                 & {--tm-bg-alpha: 1;};
+            }
+        }
+    }
+
+    //
+    @layer ui-weekend
+    {
+        [data-vc-date-weekend], [data-vc-date-holiday], [data-vc-week-day-off] {
+            &, .vc-date__btn {
+                & { --tm-chroma: 0.9; };
+                @include cm.in-contrast("--tm-color", "var(--tm-bg-color, var(--rv-bg-color, currentColor))", 1, 2);
             }
         }
     }
