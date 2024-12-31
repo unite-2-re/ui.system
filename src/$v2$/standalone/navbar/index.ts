@@ -81,7 +81,7 @@ export class UINavBar extends LitElementTheme {
 
         //
         const self = this as unknown as HTMLElement;
-        if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0.05" ); };
+        if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0" ); };
         if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
         if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "0"    ); };
         if (!self.hasAttribute("data-highlight-hover")) { self.setAttribute("data-highlight-hover", "0"    ); };

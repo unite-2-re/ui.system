@@ -1,4 +1,41 @@
-@use "./lib/mixins" as cm;
+//
+@use "sass:string";
+@use "sass:meta";
+
+//
+@mixin hover ($selector: "&") {
+    @media screen and ((hover: hover) or (pointer: fine)) { #{$selector}:hover { @content; }; };
+    @media screen and ((hover: none) and (pointer: coarse)) { #{$selector}:action { @content; }; };
+};
+
+//
+@function tm-hi($base, $percent) {
+    @return color-mix(in oklch, #{$base} calc(100% - #{$percent}), var(--tm-hi, white));
+};
+
+//
+@function tm-lo($base, $percent) {
+    @return color-mix(in oklch, #{$base} calc(100% - #{$percent}), var(--tm-lo, black));
+};
+
+//
+@mixin tm-dep($property, $light, $dark, $fb: var(--tm-scheme)) {
+    & { #{$property}: color-mix(in oklch, #{$light} calc(100% * #{var(--tm-scheme)}), #{$dark}); }
+
+    //
+    @supports(color: light-dark(white, black)) {
+        #{$property}: light-dark(#{$light}, #{$dark});
+    }
+};
+
+//
+@mixin inverse {
+    // origin color is base, but with theme tone
+    @include tm-dep("--tm-cr", "var(--tm-cr-dark)", "var(--tm-cr-light)");
+
+    // low-up version of origin color
+    & { --tm-ac: #{tm-lo(var(--tm-origin, currentColor), 80%)}; }
+};
 
 //
 @layer ui-calendar
@@ -112,7 +149,7 @@
                 };
 
                 & button, &.button {
-                    @include cm.inverse();
+                    @include inverse();
                     & {
                         flex-basis: stretch;
                         flex-grow: 1;
@@ -234,7 +271,7 @@
     {
         .vc-arrow
         {
-            @include cm.inverse();
+            @include inverse();
             & { min-block-size: 2rem;
                 min-inline-size: max-content;
                 inline-size: max-content;
@@ -311,7 +348,7 @@
         //
         [data-vc-date-today] {
             button {
-                @include cm.inverse();
+                @include inverse();
                 & {
                     --tm-chroma: 0.2;
                     --tm-bg-alpha: 1;
@@ -327,7 +364,6 @@
         [data-vc-date-weekend], [data-vc-date-holiday], [data-vc-week-day-off] {
             &, .vc-date__btn {
                 & { --tm-chroma: 0.9; };
-                @include cm.in-contrast("--tm-color", "var(--tm-bg-color, var(--rv-bg-color, currentColor))", 1, 1);
             }
         }
     }
