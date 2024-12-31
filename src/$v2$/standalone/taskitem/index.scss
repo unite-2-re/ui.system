@@ -18,6 +18,11 @@
         }
 
         //
+        :where(span), ::slotted(span) {
+            background-color: transparent;
+        }
+
+        //
         & {
             border-block-start: solid 0.25rem transparent;
 

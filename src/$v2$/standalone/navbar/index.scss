@@ -17,6 +17,11 @@
         }
 
         //
+        :where(span), ::slotted(span) {
+            background-color: transparent;
+        }
+
+        //
         & {
             --data-taskbar-shift: 0px;
 

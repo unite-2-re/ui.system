@@ -16,6 +16,11 @@
             box-sizing: border-box;
         }
 
+        //
+        :where(span), ::slotted(span) {
+            background-color: transparent;
+        }
+
         /* */
         & {
             inline-size: 100%;
