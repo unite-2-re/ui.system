@@ -305,8 +305,7 @@
     @layer ui-specific
     {   //
         [data-vc-months-month-selected], [data-vc-years-year-selected], [data-vc-date-selected] button {
-            & { --hl-co-state: 8; };
-            & { --tm-bg-alpha: 0.4; };
+            & { --hl-co-state: 16; };
         }
 
         //
