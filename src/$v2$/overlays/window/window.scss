@@ -341,6 +341,13 @@
     {
         & { will-change: transform !important; }
         & { translate: var(--ds-x, 0px) var(--ds-y, 0px) 0px !important; }
+        & {
+            transition-behavior: allow-discrete !important;
+            transition-property: translate, inline-size, block-size !important;
+            transition-duration: calc(var(--drag-d, 0.01) * 0.8ms), calc(var(--resize-d, 0.01) * 0.8ms), calc(var(--resize-d, 0.01) * 0.8ms) !important;
+            transition-timing-function: linear !important;
+            transition-delay: 0ms !important;
+        }
 
         //
         :where(*), ::slotted(*)

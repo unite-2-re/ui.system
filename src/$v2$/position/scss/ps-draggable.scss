@@ -1,4 +1,26 @@
 @scope(:host, :scope, :root) {
+
+    //
+    @property --drag-d {
+        initial-value: 0.01;
+        syntax: "<number>";
+        inherits: true;
+    }
+
+    //
+    @property --drag-x {
+        initial-value: 0;
+        syntax: "<number>";
+        inherits: true;
+    }
+
+    //
+    @property --drag-y {
+        initial-value: 0;
+        syntax: "<number>";
+        inherits: true;
+    }
+
     //
     @property --rx {
         initial-value: 0px;

@@ -1,6 +1,27 @@
 @scope(:host, :scope, :root) {
 
     //
+    @property --resize-d {
+        initial-value: 0.01;
+        syntax: "<number>";
+        inherits: true;
+    }
+
+    //
+    @property --resize-x {
+        initial-value: 0;
+        syntax: "<number>";
+        inherits: true;
+    }
+
+    //
+    @property --resize-y {
+        initial-value: 0;
+        syntax: "<number>";
+        inherits: true;
+    }
+
+    //
     @property --inline-size {
         initial-value: 100%;
         syntax: "<length-percentage>";
