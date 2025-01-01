@@ -30,7 +30,7 @@
             box-shadow: 0rem 0rem 1rem #10101040;
             box-sizing: border-box;
             position: fixed;
-            z-index: calc(99999 + var(--z-index, 0));
+            z-index: calc(9999 + var(--z-index, 0));
             padding: 0.25rem;
             display: block flex;
             pointer-events: auto;
@@ -70,6 +70,7 @@
     :host([type="contextmenu"]) {
         @include ps.ps-cursor();
         & {
+            z-index: calc(99999 + var(--z-index, 0));
             inline-size: var(--inline-size);
             padding: 0rem !important;
         }
