@@ -1,8 +1,7 @@
-export * from "./appearance/ts/ap-button";
-export * from "./appearance/ts/ap-indication";
-export * from "./appearance/ts/ap-number";
-export * from "./appearance/ts/ap-switch";
-export * from "./appearance/ts/ap-row";
+export * from "./appearance/button/ap-button";
+export * from "./appearance/number/ap-number";
+export * from "./appearance/switch/ap-switch";
+export * from "./appearance/row/ap-row";
 
 //
 export * from "./functional/fn-contextmenu";

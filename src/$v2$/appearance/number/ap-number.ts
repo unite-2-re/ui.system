@@ -4,19 +4,19 @@
 
 // @ts-ignore
 import { css, unsafeCSS } from "../../shared/LitUse";
+import { doIndication } from "../../behaviour/bh-indication.js";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import styles from "../scss/ap-number.scss?inline";
+import styles from "./ap-number.scss?inline";
 
 // @ts-ignore
-import htmlCode from "../html/ap-number.html?raw";
+import htmlCode from "./ap-number.html?raw";
 
 //
 import LitElementTheme from "../../shared/LitElementTheme";
-import { doIndication } from "./ap-indication";
 
 //
 export const makeSpin = (weak?: WeakRef<any>, root?: any)=>{

@@ -9,10 +9,10 @@ import { css, unsafeCSS } from "../../shared/LitUse";
 import { customElement } from "lit/decorators.js";
 
 // @ts-ignore
-import styles from "../scss/ap-row.scss?inline";
+import styles from "./ap-row.scss?inline";
 
 // @ts-ignore
-import htmlCode from "../html/ap-row.html?raw";
+import htmlCode from "./ap-row.html?raw";
 
 //
 import UISelectBase from "../../behaviour/bh-select";

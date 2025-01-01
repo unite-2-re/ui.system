@@ -4,21 +4,20 @@
 
 // @ts-ignore
 import { css, unsafeCSS } from "../../shared/LitUse";
+import { openDropMenu } from "../../functional/fn-dropmenu.js";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import styles from "../scss/ap-button.scss?inline";
+import styles from "./ap-button.scss?inline";
 
 // @ts-ignore
-import htmlCode from "../html/ap-button.html?raw";
+import htmlCode from "./ap-button.html?raw";
 
 //
 import UIButtonBase from "../../behaviour/bh-button";
 import UISelectBase from "../../behaviour/bh-select";
-import { openDropMenu } from "../../functional/fn-dropmenu.js";
-
 
 // selection derivative
 
