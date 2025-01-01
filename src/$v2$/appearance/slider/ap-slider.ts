@@ -21,7 +21,7 @@ import LitElementTheme from "../../shared/LitElementTheme";
 
 // @ts-ignore
 @customElement('ui-slider')
-export class UISwitch extends LitElementTheme {
+export class UISlider extends LitElementTheme {
 
     // theme style property
     @property({attribute: true, reflect: true, type: String}) public value: string|number = "";
@@ -59,4 +59,4 @@ export class UISwitch extends LitElementTheme {
 }
 
 //
-export default UISwitch;
+export default UISlider;
