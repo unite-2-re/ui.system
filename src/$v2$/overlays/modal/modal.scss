@@ -70,7 +70,7 @@
     :host([type="contextmenu"]) {
         @include ps.ps-cursor();
         & {
-            z-index: calc(99999 + var(--z-index, 0));
+            z-index: calc(99999 + var(--z-index, 0)) !important;
             inline-size: var(--inline-size);
             padding: 0rem !important;
         }
