@@ -2,6 +2,7 @@ export * from "./appearance/button/ap-button";
 export * from "./appearance/number/ap-number";
 export * from "./appearance/switch/ap-switch";
 export * from "./appearance/row/ap-row";
+export * from "./appearance/slider/ap-slider";
 
 //
 export * from "./functional/fn-contextmenu";

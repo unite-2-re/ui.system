@@ -31,7 +31,7 @@ export class UISlider extends LitElementTheme {
     static styles = css`${unsafeCSS(styles)}`;
     constructor() {
         super(); const self = this as unknown as HTMLElement;
-        self.classList?.add?.("ui-switch");
+        self.classList?.add?.("ui-slider");
         self.classList?.add?.("u2-input");
         self.addEventListener("change", this.onSelect.bind(this));
         makeSwitch(self);

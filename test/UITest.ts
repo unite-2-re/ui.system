@@ -14,11 +14,12 @@ import init, {
     UISelectRow,
     UINumber,
     UIModal,
-    UICalendar
+    UICalendar,
+    UISlider
 } from "../src/index";
 
 // @ts-ignore
-import {makeSelection} from /* @vite-ignore */ "/externals/core/interact.js";
+import { makeSelection } from /* @vite-ignore */ "/externals/core/interact.js";
 
 //
 init();
@@ -57,6 +58,7 @@ console.log(UITaskItem);
 console.log(UIBlock);
 console.log(UINumber);
 console.log(UICalendar);
+console.log(UISlider);
 
 //
 makeSelection(document.body, "ui-checkbox, ui-switch");

@@ -294,8 +294,8 @@
             aspect-ratio: 1 / 1;
             min-inline-size: 1px;
             min-block-size: 1px;
-            inline-size: 1.6rem;
-            block-size: 1.6rem;
+            inline-size: 80cqmin;
+            block-size: 80cqmin;
             border-radius: 50%;
             overflow: hidden;
 
@@ -303,7 +303,7 @@
             max-block-size: none;
 
             //
-            translate: calc(-0.2rem * ((var(--value, 0) / (var(--max-value, 1) /*- 0.999*/)) * 2 - 1) + (100cqi - 100%) * (var(--value, 0) / var(--max-value, 1))) calc(50cqb - 50%);
+            translate: calc(-10cqmin * ((var(--value, 0) / (var(--max-value, 1) /*- 0.999*/)) * 2 - 1) + (100cqi - 100%) * (var(--value, 0) / var(--max-value, 1))) calc(50cqb - 50%);
         }
     }
 
