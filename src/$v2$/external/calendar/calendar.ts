@@ -29,7 +29,6 @@ export class UICalendar extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         this.importFromTemplate(htmlCode);
         requestIdleCallback(()=>{
-            console.log(root?.querySelector?.(".ui-calendar"));
             this.#calendar = new Calendar(root?.querySelector?.(".ui-calendar"), {
 layouts: {
     default: `<div class="vc-header" data-vc="header" role="toolbar" aria-label="Calendar Navigation">
