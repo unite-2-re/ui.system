@@ -25,6 +25,13 @@
             white-space-collapse: collapse;
             text-wrap: nowrap;
             text-spacing-trim: trim-start;
+            text-wrap-mode: nowrap;
+            text-wrap-style: pretty;
+
+            /* */
+            word-break: keep-all;
+            text-overflow: ellipsis;
+            overflow-wrap: anywhere;
 
             /* */
             place-content: center;
