@@ -145,8 +145,16 @@ export const rollupOptions = {
         exports: "auto",
         esModuleInterop: true,
         experimentalMinChunkSize: 500_500,
-        inlineDynamicImports: true,
+        entryFileNames: NAME + '.js',
+        chunkFileNames: '[name].js',
+        assetFileNames: '[name][extname]',
+        manualChunks(id) {
+            if (id.includes('node_modules')) {
+                return "modules/" + (id.toString().split('node_modules/')[1].split('/')[0])?.replace?.("@","");
+            }
+        }
 	}
 };
 
+//
 export default rollupOptions;
