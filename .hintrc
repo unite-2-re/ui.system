@@ -10,7 +10,8 @@
           "white-space-collapse",
           "white-space-collapse: collapse",
           "text-spacing-trim",
-          "text-spacing-trim: trim-start"
+          "text-spacing-trim: trim-start",
+          "-moz-appearance"
         ]
       }
     ]

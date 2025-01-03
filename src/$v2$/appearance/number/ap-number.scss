@@ -127,6 +127,9 @@
                 user-select: none;
                 touch-action: none;
                 background-color: transparent;
+
+                // fix for firefox
+                -moz-appearance: textfield;
             }
 
             //
