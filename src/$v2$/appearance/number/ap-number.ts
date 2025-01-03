@@ -78,7 +78,7 @@ export class UINumber extends LitElementTheme {
     //
     public connectedCallback() {
         super.connectedCallback();
-        requestIdleCallback(()=>this.onSelect(), {timeout: 1000});
+        requestIdleCallback(()=>this.onSelect(), {timeout: 100});
 
         //
         const self = this as unknown as HTMLElement;

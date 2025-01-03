@@ -54,7 +54,7 @@ export class UISlider extends LitElementTheme {
     //
     public connectedCallback() {
         super.connectedCallback();
-        requestIdleCallback(()=>this.onSelect(), {timeout: 1000});
+        requestIdleCallback(()=>this.onSelect(), {timeout: 100});
     }
 }
 

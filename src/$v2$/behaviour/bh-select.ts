@@ -79,7 +79,7 @@ export class UISelectBase extends LitElementTheme {
         this.$parentNode = self?.parentNode;
         this.$parentNode?.addEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
         this.$parentNode?.addEventListener("ag-click", this.#onSelect ??= this.onSelect.bind(this));
-        requestIdleCallback(()=>this.onSelect(), {timeout: 1000});
+        requestIdleCallback(()=>this.onSelect(), {timeout: 100});
     }
 
     //

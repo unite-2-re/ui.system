@@ -86,7 +86,7 @@ export class UIFrame extends LitElementTheme {
     public connectedCallback() {
         super.connectedCallback();
         this.updateAttributes();
-        requestIdleCallback(()=>makeControl(this as unknown as HTMLElement), {timeout: 1000});
+        requestIdleCallback(()=>makeControl(this as unknown as HTMLElement), {timeout: 100});
 
         //
         const self      = this as unknown as HTMLElement;
