@@ -68,6 +68,12 @@
         }
 
         /* */
+        & {
+            direction: ltr !important;
+            writing-mode: horizontal-tb !important;
+        }
+
+        /* */
         & :where(*)
         {
             user-select: none;

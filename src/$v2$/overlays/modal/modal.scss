@@ -52,6 +52,12 @@
         };
 
         //
+        & {
+            direction: ltr !important;
+            writing-mode: horizontal-tb !important;
+        }
+
+        //
         &::slotted(*) {
             --tm-bg-alpha: 0;
         }

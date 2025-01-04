@@ -47,6 +47,13 @@
             image-rendering: crisp-edges;
             image-rendering: optimizeSpeed;
             image-rendering: pixelated;
+
+            // brokes layout and interaction
+            direction: ltr !important;
+
+            // term '!important' added due of unsupported
+            // if support will added, we remove importance
+            writing-mode: horizontal-tb !important;
         }
 
         //

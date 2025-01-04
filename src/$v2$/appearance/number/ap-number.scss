@@ -31,6 +31,9 @@
             image-rendering: crisp-edges;
             image-rendering: optimizeSpeed;
             image-rendering: pixelated;
+
+            // brokes layout (wrong button sides)
+            direction: ltr !important;
         }
 
         //
