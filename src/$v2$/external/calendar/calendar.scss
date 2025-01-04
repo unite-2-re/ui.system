@@ -363,7 +363,7 @@
     {
         [data-vc-date-weekend], [data-vc-date-holiday], [data-vc-week-day-off] {
             &, .vc-date__btn {
-                & { --tm-chroma: 0.9; };
+                & { --tm-chroma: 0.4; };
             }
         }
     }
