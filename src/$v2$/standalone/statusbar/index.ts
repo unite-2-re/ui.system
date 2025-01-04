@@ -36,6 +36,18 @@ export class UIStatusBar extends LitElementTheme {
         }).catch(console.warn.bind(console));
 
         //
+        const DOC = document.documentElement;
+        root.addEventListener("click", (ev)=>{
+            if (ev?.target?.matches("[data-popup]")) {
+                const popup = document.querySelector("ui-modal[data-name=\"" + ev?.target?.dataset?.popup + "\"]") as any;
+                popup?.showPopup?.(ev?.target?.matches(".ui-anchor") ? ev?.target : ev?.target?.closest(".ui-anchor"))
+                DOC.querySelectorAll("ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{ if (el != popup) { el.dataset.hidden = ""; }; });
+            } else {
+                DOC.querySelectorAll("ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; });
+            }
+        });
+
+        //
         return root;
     }
 

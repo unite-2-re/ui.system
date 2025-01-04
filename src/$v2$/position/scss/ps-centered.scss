@@ -5,7 +5,8 @@
         inset-block-start: max(50%, 0px);
         inset-inline-end: auto;
         inset-block-end: auto;
-        translate: -50% -50% 0px;
+        translate: -50% -50% !important;
+        transform-origin: 0px 0px !important;
 
         // by default not prefer
         direction: ltr;

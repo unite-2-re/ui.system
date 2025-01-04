@@ -65,7 +65,12 @@
 
     //
     :host([type="popup"]) {
-        @include ps.ps-cursor();
+        @media (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))
+        {
+            @include ps.ps-cursor();
+        }
+
+        //
         & {
             inline-size: var(--inline-size);
             padding: 0rem !important;

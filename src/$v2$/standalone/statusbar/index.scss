@@ -122,6 +122,11 @@
             place-content: center;
             background-color: var(--rv-color, currentColor);
         }
+
+        //
+        *[data-popup] {
+            pointer-events: auto;
+        }
     }
 
     /* */
