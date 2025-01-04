@@ -125,6 +125,10 @@
 
         /* */
         translate: var(--ds-x, 0px) var(--ds-y, 0px) 0px;
+
+        // by default not prefer
+        direction: ltr;
+        writing-mode: horizontal-tb;
     }
 
 };

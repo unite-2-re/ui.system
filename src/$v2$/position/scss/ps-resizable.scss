@@ -108,6 +108,10 @@
     & {
         inline-size: 100%;
         block-size: 100%;
+
+        // by default not prefer
+        direction: ltr;
+        writing-mode: horizontal-tb;
     };
 
     /* */

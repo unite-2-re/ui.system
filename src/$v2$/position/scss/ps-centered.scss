@@ -6,5 +6,9 @@
         inset-inline-end: auto;
         inset-block-end: auto;
         translate: -50% -50% 0px;
+
+        // by default not prefer
+        direction: ltr;
+        writing-mode: horizontal-tb;
     };
 };
