@@ -42,7 +42,7 @@
             /* */
             inset: 0px;
             inset-block-end: auto;
-            position: fixed;
+            position: fixed !important;
             z-index: 999999;
             pointer-events: none;
 
