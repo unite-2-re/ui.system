@@ -40,7 +40,7 @@ export class UISelectRow extends UISelectBase {
             self.setAttribute("data-chroma", "0");
         } else {
             self.setAttribute("data-highlight", this.checked ? "2" : "0");
-            self.setAttribute("data-highlight-hover", this.checked ? "4" : "2");
+            self.setAttribute("data-highlight-hover", this.checked ? "4" : "1");
             self.setAttribute("data-chroma", this.checked ? "0.1" : "0");
             self.setAttribute("data-scheme", this.checked ? "inverse": "solid");
             self.setAttribute("data-alpha", this.checked ? "1": "0");

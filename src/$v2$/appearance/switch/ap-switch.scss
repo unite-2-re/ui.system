@@ -269,7 +269,7 @@
     :host {
         & { --value: 0; --max-value: 1; }
         & {
-            block-size: 2rem;
+            block-size: 2.25rem;
             inline-size: calc(0.5rem + 1.5rem * (var(--max-value, 1) + 1));
         }
 
@@ -298,11 +298,12 @@
 
         //
         & .ui-thumb {
+            padding: 10cqmin;
             aspect-ratio: 1 / 1;
             min-inline-size: 1px;
             min-block-size: 1px;
-            inline-size: 80cqmin;
-            block-size: 80cqmin;
+            inline-size: 90cqmin;
+            block-size: 90cqmin;
             border-radius: 50%;
             overflow: hidden;
 
@@ -310,7 +311,7 @@
             max-block-size: none;
 
             //
-            translate: calc(-10cqmin * ((var(--value, 0) / (var(--max-value, 1) /*- 0.999*/)) * 2 - 1) + (100cqi - 100%) * (var(--value, 0) / var(--max-value, 1))) calc(50cqb - 50%);
+            translate: calc(-4cqmin * ((var(--value, 0) / (var(--max-value, 1) /*- 0.999*/)) * 2 - 1) + (100cqi - 100%) * (var(--value, 0) / var(--max-value, 1))) calc(50cqb - 50%);
         }
     }
 
