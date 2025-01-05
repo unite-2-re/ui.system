@@ -96,6 +96,7 @@ export class UITaskBar extends LitElementTheme {
         self.classList?.add?.("ui-taskbar");
 
         //
+        if (!self.hasAttribute("data-alpha"))     { self.setAttribute("data-alpha"          , "1" ); };
         if (!self.hasAttribute("data-chroma"))    { self.setAttribute("data-chroma"         , "0" ); };
         if (!self.hasAttribute("data-scheme"))    { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
         if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight"      , "0"    ); };

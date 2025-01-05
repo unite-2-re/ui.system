@@ -31,15 +31,16 @@ export class UINavBar extends LitElementTheme {
         super(); const self = this as unknown as HTMLElement;
         self.classList?.add?.("ui-navbar");
         self.style.setProperty("z-index", "9999", "important");
+        self.style.setProperty("background-color", "transparent", "important");
         this.taskManager ??= options?.taskManager || initTaskManager();
     }
 
     //
-    protected render() { return html`${this.themeStyle}<button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}><ui-icon inert icon="menu"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-down"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle" part="ui-title-handle" @click=${this.menuAction.bind(this)}><ui-icon inert icon=${this.icon}></ui-icon><span>${this.label}</span></button>`; }
+    protected render() { return html`${this.themeStyle}<button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}><ui-icon inert icon="menu"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-right"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle" part="ui-title-handle" @click=${this.menuAction.bind(this)}><ui-icon inert icon=${this.icon}></ui-icon><span>${this.label}</span></button>`; }
     protected adaptiveTheme() {
         const self = this as unknown as HTMLElement;
         const setTheme = ()=>{
-            self.setAttribute("data-scheme", document.body.matches(":has(ui-frame:not([data-hidden]))") ? "solid" : "dynamic-transparent");
+            self.setAttribute("data-scheme", document.body.matches(":has(ui-frame:not([data-hidden]), ui-taskbar:not([data-hidden]))") ? "solid" : "base");
         }
         setInterval(setTheme, 1000);
         setTheme();
@@ -80,9 +81,10 @@ export class UINavBar extends LitElementTheme {
 
         //
         const self = this as unknown as HTMLElement;
+        if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "1"); };
         if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0" ); };
-        if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
-        if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "0"    ); };
+        if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "base"); };
+        if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "2"    ); };
         if (!self.hasAttribute("data-highlight-hover")) { self.setAttribute("data-highlight-hover", "0"    ); };
     }
 

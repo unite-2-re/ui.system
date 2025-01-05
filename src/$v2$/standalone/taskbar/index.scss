@@ -35,12 +35,13 @@
             //
             display: inline grid;
             block-size: var(--taskbar-size, 3rem);
+            pointer-events: none;
 
             //
             grid-template-rows   : minmax(0px, 1fr);
             grid-template-columns:
                 [app-menu]  minmax(0px, var(--taskbar-size, 3rem))
-                [task-bar]  minmax(0px, 1fr)
+                [task-bar]  minmax(0px, max-content)
                 [ui-status] minmax(4rem, max-content);
 
             //
@@ -58,18 +59,43 @@
             transition-delay: 0.2s;
 
             //
-            pointer-events: auto;
             box-shadow: 0px 0px 1rem #00000070;
 
             //
             container-type: size;
             contain: content;
+
+            //
+            place-content: center;
+            place-items: center;
+            justify-content: space-between;
+            padding: 0.1rem;
+
+            //
+            background-color: transparent !important;
+
+            //
+            --tm-bg-alpha: 1;
+        }
+
+        //
+        & > :where(*)
+        {
+            border-radius: 0.5rem;
+            background-color: var(--rv-bg-color, currentColor);
+            overflow: hidden;
         }
 
         //
         :where(*), ::slotted(*)
         {
             --tm-bg-alpha: 0;
+            border-radius: 0.5rem;
+        }
+
+        //
+        ::slotted(ui-task) {
+            border-radius: 0rem;
         }
 
         //
@@ -106,21 +132,23 @@
         //
         & .ui-app-menu {
             & {
-                padding: 0.125rem;//0.75rem;
+                padding: 0rem;//0.75rem;
                 cursor: pointer;
                 pointer-events: none;
                 grid-column: app-menu;
                 box-sizing: border-box;
+                inline-size: 100%;
+                block-size: 100%;
             };
 
             //
             .button {
                 pointer-events: auto;
-                border-radius: 0.25rem;
+                border-radius: 0rem;
                 block-size: 100%;
                 box-sizing: border-box;
-                inline-size: max-content;
-                aspect-ratio: 1 / 1;
+                inline-size: 100%;//max-content;
+                //aspect-ratio: 1 / 1;
                 border: none 0px transparent;
                 outline: none 0px transparent;
                 padding: 0.75rem;
@@ -132,25 +160,29 @@
         & .ui-task-bar {
             place-content: center;
             place-items: center;
+            text-align: center;
 
             display: flex;
             flex-direction: row;
 
-            gap: 0.25rem;
+            gap: 0rem;
             pointer-events: none;
-            justify-content: start;
-            justify-items: start;
+
+            //justify-content: start;
+            //justify-items: start;
 
             grid-column: task-bar;
             box-sizing: border-box;
+
+            inline-size: max-content;
         }
 
         //
         & .ui-status {
             & {
-                gap: 0.5rem;
-                padding: 1rem;
-                padding-block: 0.5rem;
+                gap: 0rem;
+                padding: 0rem;
+                padding-block: 0rem;
 
                 grid-column: ui-status;
 
@@ -173,6 +205,9 @@
                 box-sizing: border-box;
                 position: relative;
                 padding: 0.125rem;
+
+                //
+                --tm-chroma: 0;
             }
 
             //
@@ -200,12 +235,13 @@
                 }
 
                 & {
-                    padding: 0.25rem;
+                    padding: 0.6666rem;
                     min-inline-size: 2rem;
                     pointer-events: auto;
                     max-block-size: none;
                     max-inline-size: none;
                     contain: none;
+                    border-radius: 0px;
                 }
 
                 //
@@ -249,7 +285,15 @@
             flex-direction: column;
             inline-size: 100%;
             block-size: 100%;
-            padding-block-start: 2rem;
+            padding: 0.2rem;
+            padding-block-start: 2.2rem;
+
+            //
+            grid-template-rows   : minmax(0px, 1fr);
+            grid-template-columns: minmax(0px, 1fr);
+
+            //
+            pointer-events: auto;
         }
 
         //
@@ -259,10 +303,12 @@
 
         //
         .ui-task-bar {
+            pointer-events: auto;
             grid-column: 1 / -1;
             inline-size: 100%;
             block-size: 100%;
             flex-direction: column;
+            justify-content: start;
             gap: 0px;
         }
     }}

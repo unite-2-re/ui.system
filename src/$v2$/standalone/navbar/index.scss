@@ -17,12 +17,20 @@
         }
 
         //
+        style, script, link {
+            display: none !important;
+            visibility: collapse !important;
+            pointer-events: none !important;
+        }
+
+        //
         :where(span), ::slotted(span) {
             background-color: transparent;
         }
 
         //
         & {
+            --taskbar-size: 3.5rem;
             --data-taskbar-shift: 0px;
 
             //
@@ -44,7 +52,7 @@
             z-index: calc(99999 + var(--z-index, 0));
 
             /* */
-            inline-size: 100cqi;
+            inline-size: 100%;
             block-size: var(--taskbar-size, 3rem);
             min-block-size: max-content;
 
@@ -52,12 +60,24 @@
             display: inline grid;
             grid-template-rows: minmax(0px, 1fr);
             grid-template-columns:
-                [menu-button] minmax(var(--taskbar-size, 3rem), max-content)
-                [title-label] minmax(0px, 1fr)
-                [back-button] minmax(var(--taskbar-size, 3rem), max-content);
+                [menu-button] minmax(3.5rem, max-content)
+                [title-label] minmax(0px, max-content)
+                [back-button] minmax(3.5rem, max-content);
 
             /* */
             translate: 0px var(--data-taskbar-shift, 0px);
+
+            /* */
+            background-color: transparent !important;
+            padding: 0rem !important;
+            padding-block: 0.4rem !important;
+
+            /* */
+            text-align: center;
+            place-content: center;
+            place-items: center;
+            justify-content: space-between;
+            gap: 1rem;
         }
 
         //
@@ -110,15 +130,26 @@
             block-size: 100%;
             font-weight: bold;
             pointer-events: none;
-            padding: 1rem;
             grid-row: 1 / 1 span;
+            overflow: hidden;
+            padding: 1rem;
 
             //
             outline: none 0px transparent;
             border: none 0px transparent;
 
             //
+            background-color: var(--rv-bg-color, currentColor);
+
+            //
             --tm-bg-alpha: 0;
+            border-radius: 0.5rem;
+
+            //
+            display: flex;
+            place-content: center;
+            place-items: center;
+            flex-direction: row;
         }
 
         //
@@ -139,18 +170,20 @@
             background-color: var(--rv-color, currentColor);
             z-index: calc(1 + var(--z-index, 0));
             padding: 0.75rem;
+            opacity: 0.8;
         }
 
         //
         & > :where(.ui-back-button, .ui-menu-button)
         {
-            inline-size: max-content;
+            inline-size: 100%;
             block-size: 100%;
-            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            //aspect-ratio: 10 / 9;
 
             //
-            max-inline-size: 100cqmin;
-            max-block-size: 100cqmin;
+            //max-inline-size: 100cqmin;
+            //max-block-size: 100cqmin;
 
             //
             //padding: 0.75rem;
@@ -165,6 +198,21 @@
             //
             z-index: calc(9999 + var(--z-index, 0));
         }
+
+        //
+        .ui-back-button {
+            border-start-end-radius: 0px;
+            border-end-end-radius: 0px;
+        };
+
+        //
+        .ui-menu-button {
+            border-start-start-radius: 0px;
+            border-end-start-radius: 0px;
+        }
+
+        //
+        & .ui-title-handle { pointer-events: none; background-color: transparent; }
 
         //
         & > :where(.ui-back-button)  { grid-column: back-button; }
