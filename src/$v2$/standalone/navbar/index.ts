@@ -40,7 +40,9 @@ export class UINavBar extends LitElementTheme {
     protected adaptiveTheme() {
         const self = this as unknown as HTMLElement;
         const setTheme = ()=>{
-            self.setAttribute("data-scheme", document.body.matches(":has(ui-frame:not([data-hidden]), ui-taskbar:not([data-hidden]))") ? "solid" : "base");
+            const factor = document.body.matches(":has(ui-frame:not([data-hidden]), ui-taskbar:not([data-hidden]))");
+            self.setAttribute("data-scheme", factor ? "solid" : "base");
+            //self.setAttribute("data-chroma", factor ? "0.1" : "0");
         }
         setInterval(setTheme, 1000);
         setTheme();
@@ -81,8 +83,8 @@ export class UINavBar extends LitElementTheme {
 
         //
         const self = this as unknown as HTMLElement;
-        if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "1"); };
-        if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0" ); };
+        if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "0.6"); };
+        if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0.1" ); };
         if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "base"); };
         if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "2"    ); };
         if (!self.hasAttribute("data-highlight-hover")) { self.setAttribute("data-highlight-hover", "0"    ); };

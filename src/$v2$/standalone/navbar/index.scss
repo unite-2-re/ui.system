@@ -30,12 +30,12 @@
 
         //
         & {
-            --taskbar-size: 3.5rem;
+            --taskbar-size: 3rem;
             --data-taskbar-shift: 0px;
 
             //
             white-space: nowrap;
-            overflow: hidden;
+            overflow: hidden !important;
             text-overflow: ellipsis;
             word-break: keep-all;
             word-wrap: normal;
@@ -52,7 +52,7 @@
             z-index: calc(99999 + var(--z-index, 0));
 
             /* */
-            inline-size: 100%;
+            inline-size: calc(100% - 1rem);
             block-size: var(--taskbar-size, 3rem);
             min-block-size: max-content;
 
@@ -68,9 +68,9 @@
             translate: 0px var(--data-taskbar-shift, 0px);
 
             /* */
+            border-radius: 1rem !important;
             background-color: transparent !important;
             padding: 0rem !important;
-            padding-block: 0.4rem !important;
 
             /* */
             text-align: center;
@@ -107,6 +107,9 @@
             position: fixed !important;
             inset: 0px;
             inset-block-start: auto;
+            inset-inline-start: 50%;
+            translate: -50% -0.5rem !important;
+
             z-index: 9999;
 
             //
@@ -143,7 +146,7 @@
 
             //
             --tm-bg-alpha: 0;
-            border-radius: 0.5rem;
+            border-radius: 0.2rem;
 
             //
             display: flex;
