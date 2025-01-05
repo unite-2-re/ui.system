@@ -285,8 +285,8 @@
             flex-direction: column;
             inline-size: 100%;
             block-size: 100%;
-            padding: 0.2rem;
-            padding-block-start: 2.2rem;
+            padding: 0.3rem;
+            padding-block-start: 2.5rem;
 
             //
             grid-template-rows   : minmax(0px, 1fr);
@@ -294,6 +294,7 @@
 
             //
             pointer-events: auto;
+            backdrop-filter: blur(1rem) !important;
         }
 
         //
