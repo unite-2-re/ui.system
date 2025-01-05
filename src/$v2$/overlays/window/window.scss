@@ -30,6 +30,10 @@
             white-space-collapse: collapse;
             text-wrap: nowrap;
             text-spacing-trim: trim-start;
+
+            /* */
+            border: none 0px transparent;
+            outline: none 0px transparent;
         }
 
         /* */
@@ -49,11 +53,13 @@
 
             /* */
             container-name: ui-frame;
-            overflow: hidden;
+            overflow: hidden !important;
 
             /* */
-            outline: solid 0.5px var(--rv-bg-color, currentColor);
-            border-radius: 0.125rem;
+            border: none 0px transparent;
+            outline: none 0px transparent;
+            //outline: solid 0.5px oklch(from var(--rv-color, currentColor) l c h / 0.1);
+            border-radius: 0.2rem;
             box-shadow: 0rem 0rem 1rem #10101060;
 
             /* */
@@ -95,6 +101,7 @@
 
                 overflow: hidden;
                 box-sizing: border-box;
+                background-color: transparent;
 
                 display: grid;
                 grid-template-rows: minmax(0px, 1fr);
@@ -114,6 +121,7 @@
                 /* */
                 user-select: none;
                 pointer-events: none;
+                border-radius: 0px;
             }
 
             /* */
@@ -151,6 +159,7 @@
                     grid-column: title;
                     grid-row: 1 / 1 span;
 
+                    background-color: transparent;
                     place-content: safe center;
                     place-items: safe center;
 
@@ -158,6 +167,7 @@
                     pointer-events: auto;
                     user-select: none;
                     touch-action: none;
+                    border-radius: 0px;
                 }
             }
         }
@@ -228,7 +238,7 @@
                 place-items: safe center;
                 place-content: safe center;
                 inline-size: 100%;
-                block-size: 100%;
+                block-size: 90%;
                 min-inline-size: max-content;
                 grid-row: 1 / 1 span;
                 grid-column: buttons;
@@ -236,7 +246,16 @@
                 user-select: none;
                 box-sizing: border-box;
                 gap: 0.2rem;
-                padding: 0.2rem;
+                padding: 0rem;
+
+                //
+                border-radius: 0px;
+                border-end-start-radius: 1rem;
+                border-start-end-radius: 0.2rem;
+                overflow: hidden;
+
+                //
+                place-self: start end;
             }
 
             /* */
@@ -246,7 +265,7 @@
                     display: flex;
                     inline-size: max-content;
                     block-size: 100%;
-                    aspect-ratio: 1 / 1;
+                    aspect-ratio: 5 / 4;
                     background-image: transparent;
                     place-items: safe center;
                     place-content: safe center;
@@ -256,8 +275,10 @@
                     border: none 0px transparent;
                     outline: none 0px transparent;
                     padding: 0.4rem;
+                    padding-inline-start: 0.5rem;
+                    padding-block-end: 0.5rem;
                     user-select: none;
-                    border-radius: 0.25rem;
+                    border-radius: 0rem;
                 }
 
                 /* */
@@ -271,6 +292,7 @@
                     outline: none 0px transparent;
                     pointer-events: none;
                     user-select: none;
+                    border-radius: 0px;
                 }
             }
         }
@@ -305,6 +327,7 @@
                 block-size: 100%;
                 inset-inline-start: 0px;
                 inset-block-start : 0px;
+                border-radius: 0px !important;
 
                 //
                 --title-bar-height: 2rem;

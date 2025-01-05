@@ -69,6 +69,7 @@ const loadAsImage = (name: string, creator?: (name: string)=>any)=>{
 export class UILucideIcon extends LitElementTheme {
     @property() protected iconElement?: SVGElement;
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
+    @property({attribute: true, reflect: true, type: Number}) width: number = 1;
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
