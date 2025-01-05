@@ -36,6 +36,7 @@
             display: inline grid;
             block-size: var(--taskbar-size, 3rem);
             pointer-events: none;
+            font-weight: bold;
 
             //
             grid-template-rows   : minmax(0px, 1fr);
