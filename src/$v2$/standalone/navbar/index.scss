@@ -30,7 +30,7 @@
 
         //
         & {
-            --taskbar-size: 3rem;
+            --taskbar-size: 2.5rem;
             --data-taskbar-shift: 0px;
 
             //
@@ -68,7 +68,7 @@
             translate: 0px var(--data-taskbar-shift, 0px);
 
             /* */
-            border-radius: 1rem !important;
+            border-radius: 0.5rem !important;
             background-color: transparent !important;
             padding: 0rem !important;
 
@@ -108,7 +108,7 @@
             inset: 0px;
             inset-block-start: auto;
             inset-inline-start: 50%;
-            translate: -50% -0.5rem !important;
+            translate: -50% -0.45rem !important;
 
             z-index: 9999;
 
