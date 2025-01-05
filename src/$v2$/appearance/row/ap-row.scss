@@ -22,6 +22,7 @@
             box-sizing: border-box;
 
             /* */
+            background-color: transparent;
             white-space: nowrap;
             white-space-collapse: collapse;
             text-wrap: nowrap;
@@ -41,6 +42,17 @@
 
             /* */
             --tm-bg-alpha: 0.0;
+            --hl-co-state: 0.0;
+        }
+
+        /* */
+        :where(*), ::slotted(*) {
+            background-color: transparent;
+        }
+
+        /* */
+        :where(*), :where(span), ::slotted(span) {
+            background-color: transparent !important;
         }
 
         /* */
