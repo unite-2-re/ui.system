@@ -5,7 +5,10 @@
         inset-block-start: max(50%, 0px);
         inset-inline-end: auto;
         inset-block-end: auto;
-        translate: -50% -50% !important;
+        translate:
+            round(nearest, -50%, calc(1px / var(--pixel-ratio, 1)))
+            round(nearest, -50%, calc(1px / var(--pixel-ratio, 1)))
+            0px !important;
         transform-origin: 0px 0px !important;
 
         // by default not prefer
