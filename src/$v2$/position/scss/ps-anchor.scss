@@ -18,8 +18,8 @@
 
         //
         translate:
-                min(0px, calc(100cqi - (100% + var(--client-x, 0) * 1px)))
-                min(0px, calc(100cqb - (100% + var(--client-y, 0) * 1px)))
+                round(nearest, min(0px, calc(100cqi - (100% + var(--client-x, 0) * 1px))), calc(1px / var(--pixel-ratio, 1)))
+                round(nearest, min(0px, calc(100cqb - (100% + var(--client-y, 0) * 1px))), calc(1px / var(--pixel-ratio, 1)))
                 0px !important;
 
         // by default not prefer
