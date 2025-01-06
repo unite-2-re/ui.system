@@ -34,6 +34,9 @@
             /* */
             border: none 0px transparent;
             outline: none 0px transparent;
+
+            /* */
+            font-family: 'Open Sans', 'Gill Sans Nova', Ubuntu, 'DejaVu Sans', Candara, Segoe, "Segoe UI", Optima, source-sans-pro, sans-serif;
         }
 
         /* */
@@ -91,7 +94,7 @@
         {
 
             & {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
                 font-weight: bold;
 
                 inline-size: 100%;

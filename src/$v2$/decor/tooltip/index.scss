@@ -15,6 +15,9 @@
 
             /* */
             box-sizing: border-box;
+
+            /* */
+            font-family: 'Open Sans', 'Gill Sans Nova', Ubuntu, 'DejaVu Sans', Candara, Segoe, "Segoe UI", Optima, source-sans-pro, sans-serif;
         }
 
         //
@@ -39,7 +42,7 @@
 
             //
             transform: translate(var(--translate-x), var(--translate-y)) scale(var(--scale, 1));
-            font-size: 0.8rem;
+            font-size: 0.6rem;
             padding: 0.5rem;
             overflow: hidden;
             border-radius: 0.125rem;

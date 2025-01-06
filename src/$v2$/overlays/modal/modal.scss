@@ -19,9 +19,10 @@
         //
         & { // TODO! use backdrop-filter on top-level styles
             backdrop-filter: blur(1rem) !important;
+            font-family: 'Open Sans', 'Gill Sans Nova', Ubuntu, 'DejaVu Sans', Candara, Segoe, "Segoe UI", Optima, source-sans-pro, sans-serif;
 
             //
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             max-inline-size: none;
             border-radius: 0.3333rem;
             min-inline-size: max-content;

@@ -33,11 +33,14 @@
             image-rendering: crisp-edges;
             image-rendering: optimizeSpeed;
             image-rendering: pixelated;
+
+            //
+            font-family: 'Open Sans', 'Gill Sans Nova', Ubuntu, 'DejaVu Sans', Candara, Segoe, "Segoe UI", Optima, source-sans-pro, sans-serif;
         }
 
         //
         & {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             box-sizing: border-box;
             inline-size: max-content;
             block-size: max-content;
@@ -104,7 +107,7 @@
             interactivity: inert;
             pointer-events: none;
             text-align: start;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         /* */

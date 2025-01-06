@@ -43,6 +43,9 @@
             /* */
             --tm-bg-alpha: 0.0;
             --hl-co-state: 0.0;
+
+            /* */
+            font-family: 'Open Sans', 'Gill Sans Nova', Ubuntu, 'DejaVu Sans', Candara, Segoe, "Segoe UI", Optima, source-sans-pro, sans-serif;
         }
 
         /* */
@@ -57,7 +60,7 @@
 
         /* */
         & {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             box-sizing: border-box;
             inline-size: 100%;
             block-size: 2rem;
