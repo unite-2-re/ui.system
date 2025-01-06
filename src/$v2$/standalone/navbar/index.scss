@@ -52,7 +52,7 @@
             z-index: calc(99999 + var(--z-index, 0));
 
             /* */
-            inline-size: calc(100% - 1rem);
+            inline-size: calc(100% - 1.25rem);
             block-size: var(--taskbar-size, 3rem);
             min-block-size: max-content;
 
@@ -69,6 +69,8 @@
 
             /* */
             border-radius: 0.5rem !important;
+            border-end-end-radius: 1rem !important;
+            border-end-start-radius: 1rem !important;
             background-color: transparent !important;
             padding: 0rem !important;
 
@@ -108,7 +110,7 @@
             inset: 0px;
             inset-block-start: auto;
             inset-inline-start: 50%;
-            translate: -50% -0.45rem !important;
+            translate: -50% -0.6rem !important;
 
             z-index: 9999;
 
