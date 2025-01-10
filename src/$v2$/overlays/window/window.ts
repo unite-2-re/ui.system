@@ -86,7 +86,7 @@ export class UIFrame extends LitElementTheme {
     public connectedCallback() {
         super.connectedCallback();
         this.updateAttributes();
-        requestIdleCallback(()=>makeControl(this as unknown as HTMLElement), {timeout: 100});
+        requestAnimationFrame(()=>makeControl(this as any));
 
         //
         const self      = this as unknown as HTMLElement;
@@ -113,7 +113,9 @@ export class UIFrame extends LitElementTheme {
         root.addEventListener("click", (ev)=>{
             if (ev.target.matches(".ui-btn-close")) {
                 //const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;
-                this.taskManager?.deactivate?.("#" + (self.querySelector(".ui-content")?.id || self?.id || location.hash));
+                const id = (self.querySelector(".ui-content")?.id || self?.id || location.hash);
+                this.taskManager?.deactivate?.("#" + id);
+                if (id?.startsWith?.("TASK-")) { this.taskManager?.removeTask?.("#" + id); };
                 //self.dataset.hidden = "";
             }
         });
