@@ -11,7 +11,7 @@ interface CTXMenuElement {
 export const hideOnClick = (ev?)=>{
     const t = ev.target as HTMLElement;
     const self = document.querySelector(ctx) as HTMLElement;
-    if (!((t?.closest(ctx) == self) || (t == self)) || ev?.type == "click") {
+    if (!((t?.closest(ctx) == self) || (t == self)) || (ev?.type == "click" && !document.activeElement?.matches?.("input"))) {
         closeContextMenu(ev);
     };
 };
