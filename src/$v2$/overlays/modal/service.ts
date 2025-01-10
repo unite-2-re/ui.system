@@ -1,7 +1,8 @@
 //
 const ROOT = document.documentElement;
 const HIDE = (ev: any)=>{
-    if (!(ev?.target?.matches?.("ui-modal, ui-button, ui-taskbar, ui-statusbar") || ev?.target?.closest?.("ui-modal, ui-button, ui-taskbar, ui-statusbar"))) {
+    const SELECTOR = "ui-modal, ui-button, ui-taskbar, ui-statusbar, button, label, input, ui-longtext, ui-focustext, .adl-modal, .u2-input, .ui-input";
+    if (!(ev?.target?.matches?.(SELECTOR) || ev?.target?.closest?.(SELECTOR))) {
         ROOT.querySelectorAll("ui-modal:not([type]), ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{
             el.dataset.hidden = "";
         });
