@@ -148,7 +148,7 @@
 @layer ui-frame-fix {
 
     //
-    ui-frame[data-dragging] {
+    ui-frame[data-dragging]:not([data-maximized]) {
         & { will-change: transform !important; };
         :where(*) {
             animation: none !important;

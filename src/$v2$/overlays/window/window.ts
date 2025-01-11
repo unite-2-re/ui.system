@@ -118,6 +118,12 @@ export class UIFrame extends LitElementTheme {
                 if (id?.startsWith?.("TASK-")) { this.taskManager?.removeTask?.("#" + id); };
                 //self.dataset.hidden = "";
             }
+
+            //
+            if (ev.target.matches(".ui-btn-maximize")) {
+                if (self?.dataset?.maximized == null) { self.dataset.maximized = ""; } else
+                if (self?.dataset?.maximized != null) { delete self.dataset.maximized; };
+            }
         });
         return root;
     }
