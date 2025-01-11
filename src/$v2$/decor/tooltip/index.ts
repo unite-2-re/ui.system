@@ -33,6 +33,7 @@ export class UITooltip extends LitElementTheme {
         if (!self.dataset?.alpha) self.dataset.alpha = "1";
         if (!self.dataset?.scheme) self.dataset.scheme = "solid";
         if (!self.dataset?.chroma) self.dataset.scheme = "0.001";
+        self.dataset.hidden = "";
 
         //
         self.style.setProperty("z-index", "9999", "important");
