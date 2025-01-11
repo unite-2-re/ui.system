@@ -1,18 +1,28 @@
 //
 const ROOT = document.documentElement;
 const HIDE = (ev: any)=>{
-    const SELECTOR = "ui-modal, ui-button, ui-taskbar, ui-statusbar, button, label, input, ui-longtext, ui-focustext, ui-row-select, ui-row-button, .adl-modal, .u2-input, .ui-input";
-    if (!(ev?.target?.matches?.(SELECTOR) || ev?.target?.closest?.(SELECTOR) || document.activeElement?.matches?.("input"))) {
-        ROOT.querySelectorAll("ui-modal[type=\"contextmenu\"]:not([data-hidden]), ui-modal[type=\"popup\"]:not([data-hidden])")?.forEach?.((el: any)=>{
-            el.dataset.hidden = "";
-        });
-    }
+    const target = ev?.target || document.querySelector(":hover, :active") || document.activeElement;
+    const SELECTOR = "ui-modal[type=\"contextmenu\"], ui-button, ui-taskbar, ui-statusbar, button, label, input, ui-longtext, ui-focustext, ui-row-select, ui-row-button, .u2-input, .ui-input";
+
+    //
+    requestAnimationFrame(()=>{
+        if (!(target?.matches?.(SELECTOR) || target?.closest?.(SELECTOR))) {
+            if (document.activeElement?.matches?.("input") && (ev?.type == "scroll" || ev?.type == "click" || ev?.type == "pointerdown")) {
+                (document.activeElement as any)?.blur?.();
+            } else {
+                ROOT.querySelectorAll("ui-modal:not([data-hidden])")?.forEach?.((el: any)=>{
+                    // avoid to close same modal
+                    if (!ev || (target?.matches?.("ui-modal") ? target : target?.closest?.("ui-modal")) != el) { el.dataset.hidden = ""; };
+                });
+            }
+        }
+    });
 }
 
 //
 ROOT.addEventListener("click", HIDE);
-//ROOT.addEventListener("scroll", HIDE);
-//ROOT.addEventListener("pointerdown", HIDE);
+ROOT.addEventListener("scroll", HIDE);
+ROOT.addEventListener("pointerdown", HIDE);
 
 // TODO! activate modal model
 export const activateModal = ()=>{}

@@ -10,10 +10,12 @@ interface CTXMenuElement {
 //
 export const hideOnClick = (ev?)=>{
     const t = ev.target as HTMLElement;
-    const self = document.querySelector(ctx) as HTMLElement;
-    if (!((t?.closest(ctx) == self) || (t == self)) || (ev?.type == "click" && !document.activeElement?.matches?.("input"))) {
-        closeContextMenu(ev);
-    };
+    requestAnimationFrame(()=>{
+        const self = document.querySelector(ctx) as HTMLElement;
+        if (!((t?.closest(ctx) == self) || (t == self)) || (ev?.type == "click" && !document.activeElement?.matches?.("input"))) {
+            closeContextMenu(ev);
+        };
+    });
 };
 
 //
@@ -23,7 +25,7 @@ const ctx: string = "ui-modal[type=\"contextmenu\"]";
 //
 export const closeContextMenu = (ev?)=>{
     const ctxMenu = (ev?.target?.matches?.(ctx) ? ev?.target : ev?.target?.closest?.(ctx)) ?? document.querySelector(ctx) as HTMLElement;
-    if (ctxMenu) { ctxMenu.dataset.hidden = ""; };
+    if (ctxMenu && ctxMenu.dataset.hidden == null) { ctxMenu.dataset.hidden = ""; };
 
     //
     document.documentElement.removeEventListener("pointerdown", ...evt);
@@ -40,7 +42,7 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
     //
     if (ctxMenu && (toggle && ctxMenu.dataset.hidden != null || !toggle)) {
         document.documentElement.addEventListener("pointerdown", ...evt);
-        //document.documentElement.addEventListener("contextmenu", ...evt);
+        document.documentElement.addEventListener("contextmenu", ...evt);
         document.documentElement.addEventListener("scroll", ...evt);
         document.documentElement.addEventListener("click", ...evt);
 

@@ -116,7 +116,6 @@ export class UIFrame extends LitElementTheme {
                 const id = (self.querySelector(".ui-content")?.id || self?.id || location.hash);
                 this.taskManager?.deactivate?.("#" + id);
                 if (id?.startsWith?.("TASK-")) { this.taskManager?.removeTask?.("#" + id); };
-                //self.dataset.hidden = "";
             }
 
             //

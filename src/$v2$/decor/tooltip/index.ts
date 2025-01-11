@@ -9,7 +9,7 @@ import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
 import styles from "./index.scss?inline";
-import runTooltip from "./service.js";
+//import runTooltip from "./service.js";
 
 // @ts-ignore
 @customElement('ui-tooltip')
@@ -40,6 +40,6 @@ export class UITooltip extends LitElementTheme {
         self.classList?.add?.("u2-tooltip");
 
         //
-        runTooltip();
+        //runTooltip();
     }
 }

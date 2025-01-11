@@ -48,9 +48,7 @@ export class UIModal extends LitElementTheme {
         //
         self.style.setProperty("z-index", "9999", "important");
         self.dataset.hidden = "";
-
-        //
-        this.placeWithElement();
+        //this.placeWithElement();
     }
 
     //
@@ -71,9 +69,6 @@ export class UIModal extends LitElementTheme {
         const element = this.boundElement?.deref?.();
         const self = this as unknown as HTMLElement;
         placeWithElement(self, element, "from-top", 10);
-
-        // if element not found, do hide
-        if (!element) { self.dataset.hidden = ""; }
         return this;
     }
 

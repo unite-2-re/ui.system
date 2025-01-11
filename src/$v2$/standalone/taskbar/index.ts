@@ -57,7 +57,7 @@ export class UITaskBar extends LitElementTheme {
         const DOC = document.documentElement;
         root.addEventListener("click", (ev)=>{
             if (ev?.target?.matches("[data-popup]")) {
-                const popup = document.querySelector("ui-modal[data-name=\"" + ev?.target?.dataset?.popup + "\"]") as any;
+                const popup = document.querySelector("ui-modal[type=\"popup\"][data-name=\"" + ev?.target?.dataset?.popup + "\"]") as any;
                 popup?.showPopup?.(ev?.target?.matches(".ui-anchor") ? ev?.target : ev?.target?.closest(".ui-anchor"))
                 DOC.querySelectorAll("ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{ if (el != popup) { el.dataset.hidden = ""; }; });
             } else {

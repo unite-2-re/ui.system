@@ -58,7 +58,7 @@ export class UINavBar extends LitElementTheme {
 
     //
     protected backAction(ev) {
-        const navbar = document.querySelector("ui-taskbar:not([data-hidden]), ui-modal:not([data-hidden])") as HTMLElement;
+        const navbar = (document.querySelector("ui-modal[type=\"contextmenu\"]:not([data-hidden])") ?? document.querySelector("ui-modal:not([data-hidden]), ui-taskbar:not([data-hidden])")) as HTMLElement;
         const hash = (location.hash && location.hash != "#") ? location.hash : this.taskManager?.getOnFocus?.()?.id;
         if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
             if (navbar) { navbar.dataset.hidden = ""; return; };
