@@ -103,6 +103,7 @@
         inset-block-start : var(--sp-y, 0px);//var(--ds-y, 0px);
         inset-inline-end  : auto;
         inset-block-end   : auto;
+        touch-action: none;
 
         /* */
         translate: var(--ds-x, 0px) var(--ds-y, 0px) 0px;

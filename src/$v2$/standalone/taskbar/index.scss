@@ -21,6 +21,7 @@
             box-sizing: border-box;
             will-change: contents;
             pointer-events: none;
+            touch-action: none;
 
             /* */
             font-size: 0.85rem;

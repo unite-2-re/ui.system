@@ -52,9 +52,10 @@
         }
 
         //
-        :host, :where(*) {
+        :host, :where(*), ::slotted(*) {
             font-family: 'Open Sans', 'Source Sans 3', 'Gill Sans Nova', Ubuntu, 'DejaVu Sans', Candara, Segoe, "Segoe UI", Optima, source-sans-pro, sans-serif;
             font-size: 0.8rem;
+            touch-action: none;
         }
 
         //
