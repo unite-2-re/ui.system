@@ -102,14 +102,16 @@ export class UILucideIcon extends LitElementTheme {
                 const self = this as unknown as HTMLElement;
                 loadAsImage(ICON, (U)=>icons?.createElement?.(icons?.[U]))?.then?.((url)=>{
                     const src = `url(\"${url}\")`;
-                    if (self.style.getPropertyValue("--mask-image") != src) self.style.setProperty("--mask-image", src);
+                    if (self.style.getPropertyValue("mask-image") != src) {
+                        self.style.setProperty("mask-image", src);
+                    }
                 });
             }
         }).catch(console.warn.bind(console));
     }
 
     //
-    protected willUpdate(changedProperties: PropertyValues<this>) {
+    protected hasChanged(changedProperties: PropertyValues<this>) {
         if (changedProperties.has("icon")) {
             this.updateIcon();
         }

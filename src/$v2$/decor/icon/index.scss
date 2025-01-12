@@ -1,4 +1,11 @@
 @layer ui-icon {
+    //
+    @property --mask-image {
+        syntax: "<image> | <url>";
+        initial-value: none;
+        inherits: true;
+    };
+
     /* */
     :host {
         /* */
@@ -75,7 +82,7 @@
             color: var(--rv-color, currentColor);
 
             //
-            mask-image: var(--mask-image, linear-gradient(#0000, #0000));
+            mask-image: linear-gradient(#0000, #0000);
             mask-origin: content-box;
             mask-clip: content-box;
             mask-mode: alpha;
