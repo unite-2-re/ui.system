@@ -75,6 +75,17 @@
 
     //
     :host([type="popup"]) {
+        @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
+            transform: 
+                scale3d(var(--scale, 1), var(--scale, 1), var(--scale, 1))
+                translate3d(
+                    round(nearest, -50%, calc(1px / var(--pixel-ratio, 1))), 
+                    round(nearest, -50%, calc(1px / var(--pixel-ratio, 1)))
+                , 0%) !important;
+            transform-origin: 0% 0% !important;
+        }
+
+        //
         @media (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))
         {
             @include ps.ps-cursor();
@@ -95,5 +106,16 @@
             inline-size: var(--inline-size);
             padding: 0rem !important;
         }
+    }
+
+    //
+    :host(:not([type])) {
+        transform: 
+            scale3d(var(--scale, 1), var(--scale, 1), var(--scale, 1))
+            translate3d(
+                round(nearest, -50%, calc(1px / var(--pixel-ratio, 1))), 
+                round(nearest, -50%, calc(1px / var(--pixel-ratio, 1)))
+            , 0%) !important;
+        transform-origin: 0% 0% !important;
     }
 };
