@@ -306,7 +306,7 @@
                 //
                 border-radius: 0px;
                 border-end-start-radius: 1rem;
-                border-start-end-radius: 0.2rem;
+                //border-start-end-radius: 0.2rem;
                 overflow: hidden;
 
                 //
@@ -448,6 +448,18 @@
             transition: none !important;
             transition-duration: 0ms !important;
             box-shadow: none !important;
-        }
-    }
-}
+        };
+    };
+
+    //
+    :host([data-maximized]) {
+        .ui-title-bar {
+            padding-inline-end: max(calc(calc(100cqi - env(titlebar-area-width, 100cqi)) - env(titlebar-area-x, 0px)), 0px);
+        };
+
+        //
+        .ui-buttons {
+            border-end-end-radius: clamp(0px, 100000 * max(calc(calc(100cqi - env(titlebar-area-width, 100cqi)) - env(titlebar-area-x, 0px)), 0px), 1rem);
+        };
+    };
+};
