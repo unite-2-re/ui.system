@@ -21,12 +21,6 @@
         }
 
         //
-        :where(button) {
-            border: none 0px transparent;
-            pointer-events: auto;
-        }
-
-        //
         :where(span), ::slotted(span) {
             background-color: transparent;
         }
@@ -137,6 +131,17 @@
         //
         *[data-popup] {
             pointer-events: auto;
+        }
+
+        //
+        :where(button) {
+            border: none 0px transparent;
+            pointer-events: auto;
+        }
+
+        //
+        :where(button[data-action]) {
+            pointer-events: auto !important;
         }
     }
 
