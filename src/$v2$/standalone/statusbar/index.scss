@@ -21,6 +21,12 @@
         }
 
         //
+        :where(button) {
+            border: none 0px transparent;
+            pointer-events: auto;
+        }
+
+        //
         :where(span), ::slotted(span) {
             background-color: transparent;
         }

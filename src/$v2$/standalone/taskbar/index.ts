@@ -63,6 +63,18 @@ export class UITaskBar extends LitElementTheme {
             } else {
                 DOC.querySelectorAll("ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; });
             }
+
+            // TODO: native action registry support
+            if (ev?.target?.matches("[data-action=\"fullscreen\"]")) {
+                if (!document.fullscreenElement) {
+                    document.documentElement?.requestFullscreen?.({
+                        navigationUI: "hide", screen
+                    })?.catch?.(console.warn.bind(console));
+                } else
+                if (document.exitFullscreen) {
+                    document?.exitFullscreen?.();
+                }
+            }
         });
 
         //
