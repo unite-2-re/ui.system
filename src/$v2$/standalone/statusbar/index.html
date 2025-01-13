@@ -3,28 +3,6 @@
         <div class="ui-indicator ui-time" data-popup="calendar" style="pointer-events: auto;">
             <span class="ui-time-hour" inert>00</span>:<span class="ui-time-minute" inert>00</span>
         </div>
-    </div>
-    <div class="center"><slot></slot></div>
-    <div class="right">
-        <slot name="status"></slot>
-        <a
-            draggable="false"
-            class="ui-indicator ui-icon ui-github" style="pointer-events: auto;" href="https://github.com/orgs/unite-2-re"
-            data-tooltip="Our Github Repository"
-            data-action="open-link"
-            data-href="https://github.com/orgs/unite-2-re">
-            <ui-icon inert icon="github" class="icon-wrap ui-icon-state ui-github"
-            ></ui-icon>
-        </a>
-        <div class="ui-indicator ui-icon">
-            <ui-icon inert icon="wifi-off" class="icon-wrap ui-icon-state ui-network"
-            ></ui-icon>
-        </div>
-        <div class="ui-indicator ui-icon">
-            <ui-icon inert icon="battery" class="icon-wrap ui-icon-state ui-battery"
-            ></ui-icon>
-        </div>
-        <!-- -->
         <button
             class="ui-indicator ui-icon"
             data-action="fullscreen"
@@ -37,5 +15,28 @@
                 data-transparent
             ></ui-icon>
         </button>
+        <a
+            target="_blank" rel="noopener noreferrer"
+            draggable="false"
+            class="ui-indicator ui-icon ui-github" style="pointer-events: auto;" href="https://github.com/orgs/unite-2-re"
+            data-tooltip="Our Github Repository"
+            data-action="open-link"
+            data-href="https://github.com/orgs/unite-2-re">
+            <ui-icon inert icon="github" class="icon-wrap ui-icon-state ui-github"
+            ></ui-icon>
+        </a>
+    </div>
+    <div class="center"><slot></slot></div>
+    <div class="right">
+        <slot name="status"></slot>
+
+        <div class="ui-indicator ui-icon">
+            <ui-icon inert icon="wifi-off" class="icon-wrap ui-icon-state ui-network"
+            ></ui-icon>
+        </div>
+        <div class="ui-indicator ui-icon">
+            <ui-icon inert icon="battery" class="icon-wrap ui-icon-state ui-battery"
+            ></ui-icon>
+        </div>
     </div>
 </template>
