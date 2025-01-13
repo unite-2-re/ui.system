@@ -68,7 +68,17 @@
         ::slotted(*) {
             overflow: hidden;
             pointer-events: auto;
-            scale: var(--corrector, 1);
+
+            //
+            --scale: var(--corrector, 1);
+
+            /*
+                transform: translate3d(var(--translate-x, 0%), var(--translate-y, 0%), 0) scale3d(var(--scale, 1), var(--scale, 1), var(--scale, 1));
+                translate: 0% 0% 0%;
+                opacity: var(--opacity, 1);
+                rotate: 0deg;
+                scale: 1;
+            */
         };
 
         /* */

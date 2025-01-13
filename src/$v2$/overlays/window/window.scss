@@ -51,8 +51,6 @@
     :host {
         inset-inline-start: 0px;
         inset-block-start: 0px;
-        translate: 0px 0px 0px;
-        transform: none;
     }
 
     //
@@ -411,7 +409,6 @@
     //
     :host(ui-frame:empty)  { display: none; };
     :host(ui-frame:has(::slotted(.ui-content[data-hidden]))) { display: none; };
-    :host(ui-frame[data-hidden]) { display: none; };
     :host(ui-frame:not(:has(.ui-content))) { display: none; };
     :host(ui-frame:not(:has(::slotted(.ui-content)))) { display: none; };
 
@@ -424,24 +421,24 @@
         display: inline grid;
 
         // revert visibility if hidden (may not help)
-        ::slotted(.ui-content[data-hidden])
-        {
-            display: revert-layer;
-        }
+        ::slotted(.ui-content[data-hidden]) { display: revert-layer; }
     }
 
     //
     :host(ui-frame[data-dragging]:not([data-maximized]))
     {
-        & { will-change: transform !important; }
-        & { translate: var(--ds-x, 0px) var(--ds-y, 0px) 0px !important; }
+        & { will-change: transform !important; };
+        & { 
+            --translate-x: var(--ds-x, 0px) !important;
+            --translate-y: var(--ds-y, 0px) !important;
+        };
         & {
             transition-behavior: allow-discrete !important;
-            transition-property: translate, inline-size, block-size !important;
+            transition-property: --translate-x, --translate-y, inline-size, block-size !important;
             transition-duration: calc(var(--drag-d, 0.01) * 0.8ms), calc(var(--resize-d, 0.01) * 0.8ms), calc(var(--resize-d, 0.01) * 0.8ms) !important;
             transition-timing-function: linear !important;
             transition-delay: 0ms !important;
-        }
+        };
 
         //
         :where(*), ::slotted(*)

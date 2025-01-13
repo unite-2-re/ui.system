@@ -96,11 +96,4 @@
             padding: 0rem !important;
         }
     }
-
-    //
-    :host([data-hidden])
-    {
-        display: none !important;
-        pointer-events: none !important;
-    };
 };

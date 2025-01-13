@@ -104,9 +104,11 @@
         inset-inline-end  : auto;
         inset-block-end   : auto;
         touch-action: none;
+        translate: 0% 0% 0%;
 
-        /* */
-        translate: var(--ds-x, 0px) var(--ds-y, 0px) 0px;
+        //
+        --translate-x: var(--ds-x, 0px) !important;
+        --translate-y: var(--ds-y, 0px) !important;
 
         // by default not prefer
         direction: ltr;

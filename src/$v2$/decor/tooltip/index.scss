@@ -42,7 +42,6 @@
             max-block-size: min(4rem, 80cqb);
 
             //
-            transform: translate(var(--translate-x), var(--translate-y)) scale(var(--scale, 1));
             font-size: 0.6rem;
             padding: 0.5rem;
             overflow: hidden;
@@ -65,7 +64,4 @@
             z-index: calc(9999 + var(--z-index, 0));
         }
     }
-
-    //
-    :host([data-hidden]) { display: none !important; }
 }

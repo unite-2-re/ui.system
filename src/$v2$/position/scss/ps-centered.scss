@@ -5,11 +5,16 @@
         inset-block-start: max(50%, 0px);
         inset-inline-end: auto;
         inset-block-end: auto;
-        translate:
-            round(nearest, -50%, calc(1px / var(--pixel-ratio, 1)))
-            round(nearest, -50%, calc(1px / var(--pixel-ratio, 1)))
-            0px !important;
-        transform-origin: 0px 0px !important;
+
+        //
+        translate: 0% 0% 0%;
+        transform: 
+            scale3d(var(--scale, 1), var(--scale, 1), var(--scale, 1))
+            translate3d(
+                round(nearest, -50%, calc(1px / var(--pixel-ratio, 1))), 
+                round(nearest, -50%, calc(1px / var(--pixel-ratio, 1)))
+            , 0%);
+        transform-origin: 0% 0%;
 
         // by default not prefer
         direction: ltr;
