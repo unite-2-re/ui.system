@@ -50,7 +50,7 @@
             //
             grid-template-rows   : minmax(0px, 1fr);
             grid-template-columns:
-                [app-menu]  minmax(0px, var(--taskbar-size, 3rem))
+                [app-menu]  minmax(var(--taskbar-size, 3rem), max-content)
                 [task-bar]  minmax(0px, max-content)
                 [ui-status] minmax(4rem, max-content);
 
@@ -140,33 +140,6 @@
         & > :where(*) { inline-size: 100%; block-size: 100%; }
 
         //
-        & .ui-app-menu {
-            & {
-                padding: 0rem;//0.75rem;
-                cursor: pointer;
-                pointer-events: none;
-                grid-column: app-menu;
-                box-sizing: border-box;
-                inline-size: 100%;
-                block-size: 100%;
-            };
-
-            //
-            .button {
-                pointer-events: auto;
-                border-radius: 0rem;
-                block-size: 100%;
-                box-sizing: border-box;
-                inline-size: 100%;//max-content;
-                //aspect-ratio: 1 / 1;
-                border: none 0px transparent;
-                outline: none 0px transparent;
-                padding: 0.75rem;
-                cursor: pointer;
-            };
-        }
-
-        //
         & .ui-task-bar {
             place-content: center;
             place-items: center;
@@ -188,13 +161,17 @@
         }
 
         //
-        & .ui-status {
+        & .ui-status { grid-column: ui-status; };
+        & .ui-app-menu { grid-column: app-menu; };
+
+        //
+        & :where(.ui-app-menu, .ui-status) {
+
+            //
             & {
                 gap: 0rem;
                 padding: 0rem;
                 padding-block: 0rem;
-
-                grid-column: ui-status;
 
                 //
                 inline-size: 100%;
@@ -204,6 +181,11 @@
                 display: inline flex;
                 flex-direction: row;
                 box-sizing: border-box;
+
+                //
+                padding: 0rem;//0.75rem;
+                cursor: pointer;
+                pointer-events: none;
             }
 
             //
@@ -224,7 +206,7 @@
             & > *
             {
                 inline-size: 2rem;
-                block-size: 2rem;
+                block-size: 100%;
                 padding: 0.125rem;
                 box-sizing: border-box;
 
@@ -234,14 +216,38 @@
             }
 
             //
+            .button {
+                aspect-ratio: 5 / 4;
+                pointer-events: auto;
+                border-radius: 0rem;
+                block-size: 100%;
+                inline-size: max-content;
+                box-sizing: border-box;
+                border: none 0px transparent;
+                outline: none 0px transparent;
+                padding: 0.75rem;
+                cursor: pointer;
+
+                //
+                place-self: center;
+                place-content: center;
+                place-items: center;
+                display: inline flex;
+            }
+
+            //
             & .ui-indicator {
                 &, & a {
+                    aspect-ratio: 1 / 1;
                     inline-size: max-content;
                     block-size: 100%;
                     place-self: center;
                     place-content: center;
+                    place-items: center;
                     box-sizing: border-box;
                     pointer-events: auto;
+                    display: inline flex;
+                    flex-direction: row;
                 }
 
                 & {
@@ -259,7 +265,26 @@
             }
 
             //
-            & .ui-time { padding-inline: 1rem; box-sizing: border-box; }
+            & .ui-time {
+                & {
+                    aspect-ratio: auto;
+                    place-self: center;
+                    place-content: center;
+                    place-items: center;
+                    display: inline flex; 
+                    flex-direction: row; 
+                    padding-inline: 1rem; 
+                    box-sizing: border-box;
+                    block-size: 100%;
+                    line-height: 0;
+                }
+
+                span {
+                    display: inline;
+                    block-size: max-content;
+                    line-height: 0;
+                }
+            }
         }
     }
 

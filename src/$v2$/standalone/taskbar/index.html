@@ -1,6 +1,36 @@
 <template>
     <div class="ui-app-menu ui-anchor" data-alpha="0">
         <button class="app-menu button" type="button" data-popup="app-menu" data-highlight="0" data-highlight-hover="2" data-alpha="0"><ui-icon inert icon="layout-grid"></ui-icon></button>
+
+        <!-- -->
+        <button
+            class="button ui-icon"
+            data-action="fullscreen"
+            data-alpha="0"
+            data-highlight-hover="2"
+        >
+            <ui-icon inert
+                icon="fullscreen" class="icon-wrap ui-icon-state"
+                data-alpha="0"
+                data-transparent
+            ></ui-icon>
+        </button>
+
+        <!-- -->
+        <a
+            draggable="false"
+            class="button ui-icon ui-github" style="pointer-events: auto;" href="https://github.com/orgs/unite-2-re"
+            data-tooltip="Our Github Repository"
+            data-alpha="0"
+            data-action="open-link"
+            data-href="https://github.com/orgs/unite-2-re"
+            data-highlight-hover="2">
+            <ui-icon inert
+                icon="github" class="icon-wrap ui-icon-state ui-github"
+                data-alpha="0"
+                data-transparent
+            ></ui-icon>
+        </a>
     </div>
 
     <div class="ui-task-bar ui-anchor" data-alpha="0">
@@ -24,22 +54,6 @@
         <slot name="status"></slot>
 
         <!-- -->
-        <a
-            draggable="false"
-            class="ui-indicator ui-icon ui-github" style="pointer-events: auto;" href="https://github.com/orgs/unite-2-re"
-            data-tooltip="Our Github Repository"
-            data-alpha="0"
-            data-action="open-link"
-            data-href="https://github.com/orgs/unite-2-re"
-            data-highlight-hover="2">
-            <ui-icon inert
-                icon="github" class="icon-wrap ui-icon-state ui-github"
-                data-alpha="0"
-                data-transparent
-            ></ui-icon>
-        </a>
-
-        <!-- -->
         <div
             class="ui-indicator ui-icon"
             data-alpha="0"
@@ -54,7 +68,7 @@
 
         <!-- -->
         <div
-            ref="target" class="ui-indicator ui-icon"
+            class="ui-indicator ui-icon"
             data-alpha="0"
             data-highlight-hover="2"
             data-popup="power-settings">
@@ -66,26 +80,10 @@
         </div>
 
         <!-- -->
-        <button
-            class="ui-indicator ui-icon"
-            data-action="fullscreen"
-            data-alpha="0"
-            data-highlight-hover="2"
-        >
-            <ui-icon inert
-                icon="fullscreen" class="icon-wrap ui-icon-state"
-                data-alpha="0"
-                data-transparent
-            ></ui-icon>
-        </button>
-
-        <!-- -->
         <div
             class="ui-indicator ui-time"
             data-alpha="0"
             data-highlight-hover="2"
-            data-popup="calendar">
-            <span class="ui-time-hour" inert>00</span>:<span class="ui-time-minute" inert>00</span>
-        </div>
+            data-popup="calendar"><span class="ui-time-hour" inert>00</span>:<span class="ui-time-minute" inert>00</span></div>
     </div>
 </template>
