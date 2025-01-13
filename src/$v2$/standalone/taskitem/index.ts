@@ -56,7 +56,7 @@ export class UITaskItem extends LitElementTheme {
         const task = this.taskManager?.get?.(hash);
 
         //
-        if (task?.active || (this.focused = location.hash == hash)) { this.active = true; };
+        if (task?.active || (this.focused ||= location.hash == hash)) { this.active = true; };
         if (this.focused && !self.classList.contains("ui-focus")) { self.classList.add("ui-focus"); };
         if (this.active && !self.classList.contains("ui-active")) { self.classList.add("ui-active"); };
         if (!this.focused && self.classList.contains("ui-focus")) { self.classList.remove("ui-focus"); };
@@ -72,26 +72,31 @@ export class UITaskItem extends LitElementTheme {
             //
             this.taskManager.on("focus", ({task, index})=>{
                 const hash = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
-                const isInFocus = hash == task.id.trim?.()?.replace?.("#","")?.trim?.();
-                this.focused = isInFocus && location.hash == ("#"+hash);
+                const isInFocus = (hash == task.id.trim?.()?.replace?.("#","")?.trim?.());
+                this.focused = isInFocus || location.hash == ("#"+hash);
                 this.updateState();
             });
 
             //
             this.taskManager.on("activate", ({task, index})=>{
-                const isInFocus = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
+                const hash = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
+                const isInFocus = (hash == task.id.trim?.()?.replace?.("#","")?.trim?.());
                 if (isInFocus) {
-                    this.active = true;
+                    this.active  = true;
                 }
+                this.focused = (this.taskManager.getOnFocus()?.id == ("#"+hash)) || location.hash == ("#"+hash);
                 this.updateState();
             });
 
             //
             this.taskManager.on("deactivate", ({task, index})=>{
-                const isInFocus = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
+                const hash = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
+                const isInFocus = (hash == task.id.trim?.()?.replace?.("#","")?.trim?.());
                 if (isInFocus) {
                     this.active  = false;
                     this.focused = false;
+                } else {
+                    this.focused = (this.taskManager.getOnFocus()?.id == ("#"+hash)) || location.hash == ("#"+hash);
                 }
                 this.updateState();
             });

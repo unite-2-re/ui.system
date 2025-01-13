@@ -81,8 +81,14 @@ export class UITaskBar extends LitElementTheme {
                 self.setAttribute("data-scheme", "solid");
             }
         }
+
+        //
         setInterval(setTheme, 1000);
         setTheme();
+
+        //
+        document.addEventListener("u2-appear", setTheme);
+        document.addEventListener("u2-hidden", setTheme);
     }
 
     //

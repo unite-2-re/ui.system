@@ -44,8 +44,14 @@ export class UINavBar extends LitElementTheme {
             self.setAttribute("data-scheme", factor ? "solid" : "base");
             //self.setAttribute("data-chroma", factor ? "0.1" : "0");
         }
+
+        //
         setInterval(setTheme, 1000);
         setTheme();
+
+        //
+        document.addEventListener("u2-appear", setTheme);
+        document.addEventListener("u2-hidden", setTheme);
     }
 
     //
