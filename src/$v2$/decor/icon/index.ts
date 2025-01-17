@@ -81,6 +81,11 @@ export class UILucideIcon extends LitElementTheme {
         if (options?.icon) { this.icon = options?.icon; };
         if (options?.padding) { self.style.setProperty("padding", options?.padding); };
         self.inert = true;
+
+        //
+        requestIdleCallback(()=>{
+            this.updateIcon();
+        }, {timeout: 100});
     }
 
     //
@@ -95,9 +100,23 @@ export class UILucideIcon extends LitElementTheme {
     }
 
     //
-    protected updateIcon() {
-        ICON_MODULE.then((icons)=>{
-            const ICON = toCamelCase(this.icon);
+    public firstUpdated() {
+        this.updateIcon();
+    }
+
+    //
+    protected createRenderRoot() {
+        const root = super.createRenderRoot();
+        this.updateIcon();
+        return root;
+    }
+
+    //
+    protected updateIcon($icon?: string) {
+        const self = this as unknown as HTMLElement;
+        const icon = this.icon || self.getAttribute("icon") || $icon || "circle-help";
+        if (icon) ICON_MODULE.then((icons)=>{
+            const ICON = toCamelCase(icon);
             if (icons?.[ICON]) {
                 const self = this as unknown as HTMLElement;
                 loadAsImage(ICON, (U)=>icons?.createElement?.(icons?.[U]))?.then?.((url)=>{
@@ -111,9 +130,9 @@ export class UILucideIcon extends LitElementTheme {
     }
 
     //
-    protected hasChanged(changedProperties: PropertyValues<this>) {
-        if (changedProperties.has("icon")) {
-            this.updateIcon();
+    protected updated(changedProperties: PropertyValues<this>) {
+        if (changedProperties?.has?.("icon") || !changedProperties) {
+            this.updateIcon(changedProperties?.get?.("icon"));
         }
     }
 }
