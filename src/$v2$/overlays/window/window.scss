@@ -89,6 +89,7 @@
             /* */
             border: none 0px transparent;
             outline: none 0px transparent;
+            content-visibility: auto;
 
             /* */
             font-family: 'Open Sans', 'Source Sans 3', 'Gill Sans Nova', Ubuntu, 'DejaVu Sans', Candara, Segoe, "Segoe UI", Optima, source-sans-pro, sans-serif;
@@ -175,6 +176,7 @@
                 place-content: safe center;
                 align-items: safe center;
                 align-content: safe center;
+                isolation: isolate;
 
                 /* */
                 user-select: none;
@@ -195,6 +197,7 @@
                 user-select: none;
                 box-sizing: border-box;
                 text-align: start;
+                content-visibility: visible;
 
                 grid-column: 1 / -1;
                 grid-row: 1 / 1 span;
@@ -258,6 +261,7 @@
         /* */
         & .ui-content-box, ::slotted(.ui-content)
         {
+            isolation: isolate;
             inline-size: 100%;
             block-size: 100%;
             box-sizing: border-box;

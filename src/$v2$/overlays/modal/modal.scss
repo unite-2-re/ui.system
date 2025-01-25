@@ -59,6 +59,9 @@
             place-content: center;
             place-items: center;
             place-self: center;
+
+            /* */
+            isolation: isolate;
         };
 
         //
