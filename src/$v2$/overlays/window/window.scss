@@ -26,6 +26,12 @@
         /* resized window size */
         --inline-size: min(calc(var(--initial-inline-size, 100%) + var(--rs-x, 0px)), calc(var(--bound-inline-size, 100cqi) - (var(--shift-x, 0) * 1px)));
         --block-size : min(calc(var(--initial-block-size , 100%) + var(--rs-y, 0px)), calc(var(--bound-block-size , 100cqb) - (var(--shift-y, 0) * 1px)));
+
+        /* */
+        [data-dragging] {
+            --inline-size: min(calc(var(--initial-inline-size, 100%) + var(--rs-x, 0px)), var(--bound-inline-size, 100cqi)) !important;
+            --block-size : min(calc(var(--initial-block-size , 100%) + var(--rs-y, 0px)), var(--bound-block-size , 100cqb)) !important;
+        }
     };
 
     //
