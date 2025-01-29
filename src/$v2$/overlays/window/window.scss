@@ -112,12 +112,11 @@
                 [status]    minmax(1px, max-content);
 
             /* */
-            contain: strict;
+            container-name: ui-frame;
             container-type: size;
             isolation: isolate;
 
             /* */
-            container-name: ui-frame;
             overflow: hidden !important;
 
             /* */
@@ -285,7 +284,6 @@
             /* */
             container-type: size;
             container-name: ui-content;
-            contain: strict;
             overflow: hidden;
         }
 

@@ -74,24 +74,17 @@
             place-content: center;
 
             //
-            background-size: contain;
-            background-clip: border-box;
-            background-attachment: local;
-            background-repeat: no-repeat;
-            background-origin: content-box;
             background-color: var(--rv-color, currentColor);
-            background-image: none;
             color: var(--rv-color, currentColor);
-            overflow: visible !important;
 
             //
+            mask-size: contain;
             mask-image: linear-gradient(#0000, #0000);
             mask-origin: content-box;
             mask-clip: content-box;
             mask-mode: alpha;
             mask-position: center;
             mask-repeat: no-repeat;
-            mask-size: contain;
         }
 
         /* */
