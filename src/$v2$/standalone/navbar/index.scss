@@ -145,9 +145,6 @@
             border: none 0px transparent;
 
             //
-            background-color: var(--rv-bg-color, currentColor);
-
-            //
             --tm-bg-alpha: 0;
             border-radius: 0.2rem;
 
@@ -167,15 +164,8 @@
         //
         ::slotted(ui-icon), ui-icon
         {
-            pointer-events: none;
-            aspect-ratio: 1 / 1;
-            inline-size: max-content;
-            block-size: 100%;
-            box-sizing: border-box;
             position: relative;
-            background-color: var(--rv-color, currentColor);
             z-index: calc(1 + var(--z-index, 0));
-            padding: 0rem;
             opacity: 0.8;
             --opacity: 0.8;
         }
@@ -203,6 +193,7 @@
 
             //
             z-index: calc(9999 + var(--z-index, 0));
+            background-color: var(--rv-bg-color, currentColor);
         }
 
         //

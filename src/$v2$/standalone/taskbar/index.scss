@@ -92,7 +92,6 @@
         & > :where(*)
         {
             border-radius: 0.5rem;
-            background-color: var(--rv-bg-color, currentColor);
             overflow: hidden;
         }
 

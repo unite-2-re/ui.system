@@ -114,20 +114,6 @@
             pointer-events: none;
         }
 
-        /* */
-        ui-icon,
-        ::slotted(ui-icon)
-        {
-            display: inline flex;
-            inline-size: max-content;
-            block-size: 100%;
-            aspect-ratio: 1 / 1;
-            box-sizing: border-box;
-            place-items: center;
-            place-content: center;
-            background-color: var(--rv-color, currentColor);
-        }
-
         //
         *[data-popup] {
             pointer-events: auto;

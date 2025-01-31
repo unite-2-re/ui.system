@@ -106,7 +106,7 @@
             & { --tm-bg-alpha: 1; };
             & { background-color: oklch(from var(--rv-color, currentColor) l c h / 1) !important; };
             &, & :where(*) { color: oklch(from var(--rv-bg-color, currentColor) l c h / 1) !important; };
-            & :where(ui-icon) { background-color: oklch(from var(--rv-bg-color, currentColor) l c h / 1) !important; }
+            & :where(ui-icon) { --rv-color: oklch(from var(--rv-bg-color, currentColor) l c h / 1) !important; }
         }
     }
 
