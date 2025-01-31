@@ -3,7 +3,7 @@
 // this component (or lucide icons) may to be distributed with main package.
 
 // @ts-ignore
-import { html, css, unsafeCSS, PropertyValues } from "../../shared/LitUse";
+import { html, css, unsafeCSS, PropertyValues, LitElement } from "../../shared/LitUse";
 import LitElementTheme from "../../shared/LitElementTheme";
 
 // @ts-ignore
@@ -66,14 +66,14 @@ const loadAsImage = (name: string, creator?: (name: string)=>any)=>{
 
 // @ts-ignore
 @customElement('ui-icon')
-export class UILucideIcon extends LitElementTheme {
+export class UILucideIcon extends LitElement {
     @property() protected iconElement?: SVGElement;
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
     @property({attribute: true, reflect: true, type: Number}) width: number = 1;
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
-    protected render() { return html`${this.themeStyle}`; }
+    protected render() { return html`<div class="fill"></div>`; }
 
     //
     constructor(options = {icon: "", padding: ""}) {
@@ -118,11 +118,12 @@ export class UILucideIcon extends LitElementTheme {
         if (icon) ICON_MODULE.then((icons)=>{
             const ICON = toCamelCase(icon);
             if (icons?.[ICON]) {
-                const self = this as unknown as HTMLElement;
+                const self = this as any;
                 loadAsImage(ICON, (U)=>icons?.createElement?.(icons?.[U]))?.then?.((url)=>{
-                    const src = `url(\"${url}\")`;
-                    if (self.style.getPropertyValue("mask-image") != src) {
-                        self.style.setProperty("mask-image", src);
+                    const src  = `url(\"${url}\")`;
+                    const fill = self.shadowRoot.querySelector(".fill");
+                    if (fill.style.getPropertyValue("mask-image") != src) {
+                        fill.style.setProperty("mask-image", src);
                     }
                 });
             }
