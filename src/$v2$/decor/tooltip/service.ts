@@ -2,13 +2,13 @@
 import AxGesture, {pointerMap} from "/externals/core/interact.js";
 
 // @ts-ignore
-import { getBoundingOrientRect } from "/externals/core/agate.js";
+import { getBoundingOrientRect, agWrapEvent } from "/externals/core/agate.js";
 
 //
 const ROOT = document.documentElement;
 export const runTooltip = async ()=>{
     const timer = Symbol("@disappear");
-    const fixTooltip = (ev, initiator?: HTMLElement)=>{
+    const fixTooltip = agWrapEvent((ev, initiator?: HTMLElement)=>{
         const e = ev?.detail ?? ev;
         const tooltip = document.querySelector("ui-tooltip") as HTMLElement;
         initiator ??= e?.target;
@@ -41,11 +41,11 @@ export const runTooltip = async ()=>{
                 });
             }
         }
-    }
+    });
 
     //
-    ROOT.addEventListener("ag-pointerover", fixTooltip);
-    ROOT.addEventListener("ag-pointerdown", fixTooltip);
+    ROOT.addEventListener("pointerover", fixTooltip);
+    ROOT.addEventListener("pointerdown", fixTooltip);
     const controller = new AxGesture(ROOT);
     controller.longHover({
         selector: "*[data-tooltip]",
@@ -81,7 +81,7 @@ export const runTooltip = async ()=>{
                 tooltip[timer] = null;
 
                 //
-                if (e?.type == "ag-pointerout" || e?.type == "ag-pointermove") {
+                if (e?.type == "pointerout" || e?.type == "pointermove") {
                     tooltip[timer] = setTimeout(()=>{ tooltip.dataset.hidden = ""; }, 100);
                 } else {
                     tooltip.dataset.hidden = "";
@@ -91,11 +91,11 @@ export const runTooltip = async ()=>{
     }
 
     //
-    ROOT.addEventListener("ag-click", hideTooltip);
-    ROOT.addEventListener("ag-pointerup", hideTooltip);
-    ROOT.addEventListener("ag-pointerdown", hideTooltip);
-    ROOT.addEventListener("ag-contextmenu", hideTooltip);
-    ROOT.addEventListener("ag-pointerout", (ev)=>{
+    ROOT.addEventListener("click", hideTooltip);
+    ROOT.addEventListener("pointerup", hideTooltip);
+    ROOT.addEventListener("pointerdown", hideTooltip);
+    ROOT.addEventListener("contextmenu", hideTooltip);
+    ROOT.addEventListener("pointerout", (ev)=>{
         if ((ev?.target as HTMLElement)?.dataset?.tooltip) {
             hideTooltip(ev);
         }

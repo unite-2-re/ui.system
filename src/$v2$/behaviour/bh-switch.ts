@@ -1,6 +1,6 @@
 
 // @ts-ignore
-import { getBoundingOrientRect } from "/externals/core/agate.js";
+import { getBoundingOrientRect, agWrapEvent } from "/externals/core/agate.js";
 
 //
 export const setStyle = (self, confirm: boolean = false, exact: number = 0, val: number = 0)=>{
@@ -51,7 +51,7 @@ export const makeSwitch = (self?: HTMLElement)=>{
         const coord = [x - box?.left, y - box?.top];
 
         //
-        if (TYPE == "radio" && !(evType == "click" || evType == "ag-click")) {
+        if (TYPE == "radio" && evType != "click") {
             const radio = self.querySelectorAll?.("input[type=\"radio\"]") as unknown as HTMLInputElement[];
             const count = (radio?.length || 0); //+ 1;
             const vary = [
@@ -93,7 +93,7 @@ export const makeSwitch = (self?: HTMLElement)=>{
         }
 
         //
-        if (TYPE == "checkbox" && (evType == "click" || evType == "ag-click")) {
+        if (TYPE == "checkbox" && evType != "click") {
             const checkbox = self.querySelector?.("input[type=\"checkbox\"]") as unknown as HTMLInputElement;
             checkbox?.click?.();
             setStyle(self, true, checkbox?.checked ? 1 : 0, checkbox?.checked ? 1 : 0);
@@ -101,7 +101,7 @@ export const makeSwitch = (self?: HTMLElement)=>{
     }
 
     //
-    self?.addEventListener?.("ag-pointerdown", (ev: any)=>{
+    self?.addEventListener?.("pointerdown", (ev: any)=>{
         const e = ev?.detail || ev;
         if (sws.pointerId < 0) {
             sws.pointerId = e.pointerId;
@@ -113,13 +113,13 @@ export const makeSwitch = (self?: HTMLElement)=>{
     });
 
     //
-    self.addEventListener("ag-click", (ev: any)=>{
+    self.addEventListener("click", agWrapEvent((ev: any)=>{
         const e = ev?.detail || ev;
         doExaction(weak?.deref?.(), e.orient[0], e.orient[1], true, e?.boundingBox, e?.type);
-    });
+    }));
 
     //
-    const stopMove = (ev: any)=>{
+    const stopMove = agWrapEvent((ev: any)=>{
         const e = ev?.detail || ev;
         if (sws.pointerId == e.pointerId) {
             sws.pointerId = -1;
@@ -127,16 +127,16 @@ export const makeSwitch = (self?: HTMLElement)=>{
             e.target?.releasePointerCapture?.(e.pointerId);
             document.documentElement.style.removeProperty("cursor");
         }
-    }
+    });
 
     //
     const ROOT = document.documentElement;
-    ROOT.addEventListener("ag-pointerup", stopMove);
-    ROOT.addEventListener("ag-pointercancel", stopMove);
-    ROOT.addEventListener("ag-pointermove", (ev: any)=>{
+    ROOT.addEventListener("pointerup", stopMove);
+    ROOT.addEventListener("pointercancel", stopMove);
+    ROOT.addEventListener("pointermove", agWrapEvent((ev: any)=>{
         const e = ev?.detail || ev;
         if (sws.pointerId == e.pointerId) {
             doExaction(weak?.deref?.(), e.orient[0], e.orient[1], false, e?.boundingBox);
         }
-    });
+    }));
 };

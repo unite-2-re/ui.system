@@ -88,7 +88,7 @@ export class UISelectBase extends LitElement {
         //
         this.$parentNode = self?.parentNode;
         this.$parentNode?.addEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
-        this.$parentNode?.addEventListener("ag-click", this.#onSelect ??= this.onSelect.bind(this));
+        this.$parentNode?.addEventListener("click", this.#onSelect ??= this.onSelect.bind(this));
         requestIdleCallback(()=>this.onSelect(), {timeout: 100});
     }
 
@@ -119,7 +119,7 @@ export class UISelectBase extends LitElement {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
         self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
-        self.addEventListener("ag-click", (ev)=>{
+        self.addEventListener("click", (ev)=>{
             const input = root.querySelector("input[type=\"radio\"]") as HTMLInputElement;
             if (ev.target != input || !(ev.target as HTMLElement)?.matches?.("input")) { input?.click?.(); };
         });

@@ -32,7 +32,7 @@ export class UIFrame extends LitElementTheme {
         self.classList?.add?.("u2-frame");
         self.dataset.hidden = "";
         this.initTaskManager(options);
-        self.addEventListener("ag-pointerdown", (ev)=>{
+        self.addEventListener("pointerdown", (ev)=>{
             focusTask(this?.taskManager, self);
         });
     }
