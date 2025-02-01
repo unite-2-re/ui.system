@@ -12,6 +12,9 @@ import { customElement, property } from "lit/decorators.js";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
+//
+const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
+
 // @ts-ignore
 const ICON_MODULE = import("/externals/vendor/lucide.min.js");
 const toCamelCase = (str: string) => {
@@ -72,8 +75,7 @@ export class UILucideIcon extends LitElement {
     @property({attribute: true, reflect: true, type: Number}) width: number = 1;
 
     // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`;
-    protected render() { return html`<div class="fill"></div>`; }
+    protected render() { return html`<style>${importStyle}</style><div class="fill"></div>`; }
 
     //
     constructor(options = {icon: "", padding: ""}) {
@@ -121,9 +123,9 @@ export class UILucideIcon extends LitElement {
                 const self = this as any;
                 loadAsImage(ICON, (U)=>icons?.createElement?.(icons?.[U]))?.then?.((url)=>{
                     const src  = `url(\"${url}\")`;
-                    const fill = self.shadowRoot.querySelector(".fill");
-                    if (fill.style.getPropertyValue("mask-image") != src) {
-                        fill.style.setProperty("mask-image", src);
+                    const fill = self?.shadowRoot?.querySelector?.(".fill");
+                    if (fill?.style?.getPropertyValue?.("mask-image") != src) {
+                        fill?.style?.setProperty?.("mask-image", src);
                     }
                 });
             }

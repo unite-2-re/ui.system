@@ -2,7 +2,9 @@
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
-import LitElementTheme from "../shared/LitElementTheme";
+
+// @ts-ignore
+import { LitElement, html } from "../shared/LitUse";
 
 //
 export const onItemSelect = (ev?: any, self?: any)=>{
@@ -33,13 +35,14 @@ export const onItemSelect = (ev?: any, self?: any)=>{
 
 // @ts-ignore
 @customElement('ui-select-base')
-export class UISelectBase extends LitElementTheme {
+export class UISelectBase extends LitElement {
     $parentNode?: any;
     #onSelect?: Function;
 
     // theme style property
     @property({attribute: true, reflect: true, type: String}) public value: string|number = "";
     @property({attribute: true, reflect: true, type: Boolean}) public checked: boolean = false;
+    @property({ type: Array }) protected nodes?: HTMLElement[];
 
     //
     constructor() {
@@ -56,7 +59,14 @@ export class UISelectBase extends LitElementTheme {
 
     //
     protected render() {
-        return super.render();
+        return html`${this.nodes}`;
+    }
+
+    //
+    protected importFromTemplate(htmlCode: string) {
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(htmlCode, "text/html");
+        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
     }
 
     //

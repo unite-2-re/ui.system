@@ -3,7 +3,7 @@
 // Behaviour: select, button
 
 // @ts-ignore
-import { css, unsafeCSS } from "../../shared/LitUse";
+import { css, html, unsafeCSS } from "../../shared/LitUse";
 
 // @ts-ignore
 import { customElement } from "lit/decorators.js";
@@ -18,13 +18,12 @@ import htmlCode from "./ap-row.html?raw";
 import UISelectBase from "../../behaviour/bh-select";
 import UIButtonBase from "../../behaviour/bh-button";
 
-
-// selection derivative (for example, file, tabs, etc.)
+//
+const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
 
 // @ts-ignore
 @customElement('ui-select-row')
 export class UISelectRow extends UISelectBase {
-    static styles = css`${unsafeCSS(styles)}`;
     constructor() { super(); };
 
     //
@@ -45,6 +44,11 @@ export class UISelectRow extends UISelectBase {
             self.setAttribute("data-scheme", this.checked ? "inverse": "solid");
             self.setAttribute("data-alpha", this.checked ? "1": "0");
         }
+    }
+
+    //
+    protected render() {
+        return html`<style>${importStyle}</style>${this.nodes}`;
     }
 
     //
@@ -99,8 +103,12 @@ export class UISelectRow extends UISelectBase {
 // @ts-ignore
 @customElement('ui-button-row')
 export class UIButtonRow extends UIButtonBase {
-    static styles = css`${unsafeCSS(styles)}`;
     constructor() { super(); };
+
+    //
+    protected render() {
+        return html`<style>${importStyle}</style>${this.nodes}`;
+    }
 
     //
     protected createRenderRoot() {

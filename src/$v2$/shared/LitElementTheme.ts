@@ -1,10 +1,10 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { LitElement, html, css, unsafeCSS, PropertyValues } from "./LitUse";
+import { LitElement, html } from "./LitUse";
 
 // @ts-ignore
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
 //
 export class LitElementTheme extends LitElement {

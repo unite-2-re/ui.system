@@ -3,8 +3,7 @@
 // this component (or lucide icons) may to be distributed with main package.
 
 // @ts-ignore
-import { html, css, unsafeCSS } from "../../shared/LitUse";
-import LitElementTheme from "../../shared/LitElementTheme";
+import { html, LitElement } from "../../shared/LitUse";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
@@ -12,17 +11,19 @@ import { customElement, property } from "lit/decorators.js";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
+//
+const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
+
 // @ts-ignore
 @customElement('ui-shaped')
-export class UIShaped extends LitElementTheme {
+export class UIShaped extends LitElement {
 
     // theme style property
     @property({attribute: true, reflect: true, type: String}) icon: string = "";
 
     // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`;
     protected render() {
-        return html`${this.themeStyle}<slot></slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
+        return html`<style>${importStyle}</style><slot></slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
     }
 
     //

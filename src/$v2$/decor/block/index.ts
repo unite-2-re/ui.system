@@ -3,11 +3,10 @@
 // this component (or lucide icons) may to be distributed with main package.
 
 // @ts-ignore
-import { css, unsafeCSS } from "../../shared/LitUse";
-import LitElementTheme from "../../shared/LitElementTheme";
+import { html, LitElement } from "../../shared/LitUse";
 
 // @ts-ignore
-import { customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
 import styles from "./index.scss?inline";
@@ -15,11 +14,28 @@ import styles from "./index.scss?inline";
 // @ts-ignore
 import htmlCode from "./index.html?raw";
 
+//
+const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
+
 // @ts-ignore
 @customElement('ui-block')
-export class UIBlock extends LitElementTheme {
-    static styles = css`${unsafeCSS(styles)}`;
+export class UIBlock extends LitElement {
     constructor() { super(); }
+
+    // theme style property
+    @property({ type: Array }) protected nodes?: HTMLElement[];
+
+    //
+    protected render() {
+        return html`<style>${importStyle}</style>${this.nodes}`;
+    }
+
+    //
+    protected importFromTemplate(htmlCode: string) {
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(htmlCode, "text/html");
+        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
+    }
 
     //
     public connectedCallback() {
