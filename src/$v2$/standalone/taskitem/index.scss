@@ -1,114 +1,117 @@
 @layer ui-task {
 
     //
-    :host(ui-task)
-    {
-        /* */
-        &, :where(*), ::slotted(*) {
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-tap-highlight-color: transparent;
-            user-drag: none;
-            user-select: none;
-            -webkit-user-drag: none;
-            -moz-user-drag: none;
-            touch-action: none;
-
-            /* */
-            box-sizing: border-box;
-            pointer-events: none;
-        }
-
+    @media screen {
         //
-        :where(span), ::slotted(span) {
-            background-color: transparent;
-        }
+        ui-task
+        {
+            :host(&) {
+                /* */
+                &, :where(*), ::slotted(*) {
+                    -webkit-tap-highlight-color: rgba(0,0,0,0);
+                    -webkit-tap-highlight-color: transparent;
+                    user-drag: none;
+                    user-select: none;
+                    -webkit-user-drag: none;
+                    -moz-user-drag: none;
+                    touch-action: none;
 
-        //
-        & {
-            border-block-start: solid 0.25rem transparent;
+                    /* */
+                    box-sizing: border-box;
+                    pointer-events: none;
+                }
 
-            //
-            pointer-events: auto;
-            padding: 0.6666rem;
-            cursor: pointer;
-            box-sizing: border-box;
+                //
+                :where(span), ::slotted(span) {
+                    background-color: transparent;
+                }
 
-            //
-            min-inline-size: 3.5rem;
-            inline-size: max-content;
-            block-size: 100%;
+                //
+                & {
+                    border-block-start: solid 0.25rem transparent;
 
-            //
-            display: flex;
-            flex-direction: row;
-            place-content: center;
-            place-items: center;
+                    //
+                    pointer-events: auto;
+                    padding: 0.6666rem;
+                    cursor: pointer;
+                    box-sizing: border-box;
 
-            //
-            z-index: calc(9999 + var(--z-index, 0));
-        }
+                    //
+                    min-inline-size: 3.5rem;
+                    inline-size: max-content;
+                    block-size: 100%;
 
-        //
-        &::slotted(*) { display: none; };
-        &::slotted(ui-icon:first-child), ui-icon {
-            inline-size: max-content;
-            block-size: 100%;
-            box-sizing: border-box;
-            aspect-ratio: 1 / 1;
+                    //
+                    display: flex;
+                    flex-direction: row;
+                    place-content: center;
+                    place-items: center;
 
-            //
-            pointer-events: none;
-            interactivity: inert;
+                    //
+                    z-index: calc(9999 + var(--z-index, 0));
+                }
 
-            //
-            translate: 0px -0.125rem;
-        }
+                //
+                &::slotted(*) { display: none; };
+                &::slotted(ui-icon:first-child), ui-icon {
+                    inline-size: max-content;
+                    block-size: 100%;
+                    box-sizing: border-box;
+                    aspect-ratio: 1 / 1;
 
-        //
-        @media (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))
-            {& span { display: none; }}
+                    //
+                    pointer-events: none;
+                    interactivity: inert;
 
-        //
-        @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))
-            {& {
-                display: inline grid;
-                grid-template-columns: minmax(4rem, max-content) minmax(0px, 1fr);
-                grid-template-rows: minmax(0px, 1fr);
-                max-block-size: 4rem;
-                inline-size: 100%;
+                    //
+                    translate: 0px -0.125rem;
+                }
             }
 
             //
-            &::slotted(ui-icon:first-child), ui-icon {
-                padding: 0.5rem;
-            }
+            :host(&:not(.ui-active)) { opacity: 0.5; --opacity: 0.5 !important; }
 
             //
-            & span {
-                translate: 0px -0.125rem;
-                padding-inline-start: 0rem;
-                display: inline flow;
-                text-align: start;
-                justify-self: start;
-                inline-size: max-content;
-                block-size: max-content;
-            }}
-    }
+            @at-root [data-device-type="desktop"] {
+                :host-context(&) { span { display: none; }}
+                :host-context(&):host(.ui-focus) { --tm-bg-alpha: 1; border-block-start: solid 0.25rem oklch(from var(--rv-color, currentColor) l c h / 1) !important; }
+            };
 
-    //
-    @media (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
-        :host(ui-task.ui-focus) { --tm-bg-alpha: 1; border-block-start: solid 0.25rem oklch(from var(--rv-color, currentColor) l c h / 1) !important; }
-    }
+            //
+            @at-root [data-device-type="mobile"] {
+                :host-context(&) {
+                    display: inline grid;
+                    grid-template-columns: minmax(4rem, max-content) minmax(0px, 1fr);
+                    grid-template-rows: minmax(0px, 1fr);
+                    max-block-size: 4rem;
+                    inline-size: 100%;
+                }
 
-    //
-    @media not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
-        :host(ui-task.ui-focus) {
-            & { --tm-bg-alpha: 1; };
-            & { background-color: oklch(from var(--rv-color, currentColor) l c h / 1) !important; };
-            &, & :where(*) { color: oklch(from var(--rv-bg-color, currentColor) l c h / 1) !important; };
-            & :where(ui-icon) { --rv-color: oklch(from var(--rv-bg-color, currentColor) l c h / 1) !important; }
+                //
+                :host-context(&) ::slotted(ui-icon:first-child),
+                :host-context(&) ui-icon {
+                    padding: 0.5rem;
+                }
+
+                //
+                :host-context(&) span {
+                    translate: 0px -0.125rem;
+                    padding-inline-start: 0rem;
+                    display: inline flow;
+                    text-align: start;
+                    justify-self: start;
+                    inline-size: max-content;
+                    block-size: max-content;
+                }
+
+                //
+                :host-context(&):host(.ui-focus) {
+                    & { --tm-bg-alpha: 1; };
+                    & { background-color: oklch(from var(--rv-color, currentColor) l c h / 1) !important; };
+                    &, & :where(*) { color: oklch(from var(--rv-bg-color, currentColor) l c h / 1) !important; };
+                    & :where(ui-icon) { --rv-color: oklch(from var(--rv-bg-color, currentColor) l c h / 1) !important; }
+                }
+            }
         }
-    }
-
-    :host(ui-task:not(.ui-active))  { opacity: 0.5; --opacity: 0.5 !important; }
-}
+    };
+};

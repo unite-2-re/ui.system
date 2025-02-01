@@ -148,108 +148,6 @@
 @layer ui-frame-fix {
 
     //
-    ui-frame[data-dragging]:not([data-maximized]) {
-        & { will-change: transform !important; };
-        :where(*) {
-            animation: none !important;
-            animation-duration: 0ms !important;
-            transition: none !important;
-            transition-duration: 0ms !important;
-            box-shadow: none !important;
-        }
-    }
-
-    // if has identified, do top level
-    ui-frame:has(:target),
-    ui-frame:target
-    {
-        & {
-            --z-index: 0;
-            z-index: calc(1099 + var(--z-index, 0));
-            display: inline grid;
-        }
-
-        // revert visibility if hidden (may not help)
-        ::slotted(.ui-content[data-hidden]) {
-            display: revert-layer;
-        }
-    }
-
-    //
-    ui-frame:where(
-        :empty, 
-        :has(.ui-content[data-hidden]), 
-        :has(.ui-content:empty), 
-        :not(:has(.ui-content))
-    ) { display: none; };
-
-    //
-    ui-frame .ui-content {
-        inline-size: 100%;
-        block-size: 100%;
-        overflow: hidden;
-    }
-
-    //
-    body:not(:has(ui-frame:not([data-hidden]))) ui-modal {
-        --tm-bg-alpha: 0.9;
-    }
-
-    //
-    body:not(:has(ui-frame:not([data-hidden]))) ui-navbar
-    {
-        //
-        & {
-            --tm-bg-alpha: 0;
-            --tm-chroma: 0;
-            --hl-co: 0;
-        }
-
-        //
-        & {
-            box-shadow: none;
-            pointer-events: none;
-        }
-
-        //
-        &, & * { --hl-co: 0; }
-        &::part(ui-title-handle) { pointer-events: none; }
-    }
-
-    //
-    body:not(:has(ui-frame:not([data-hidden]))):not(:has(ui-taskbar:not([data-hidden]))) ui-navbar
-        {&::part(ui-back-button) { display: none; }}
-
-    //
-    @media (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))) {
-
-        //
-        body:has(ui-frame:not([data-hidden])) ui-taskbar
-        {
-            & { --data-taskbar-shift: 2.5rem; }
-            &:hover, &:active { --data-taskbar-shift: 0px; }
-            &:not(:hover, :active) { --data-taskbar-shift: 2.5rem; }
-        }
-
-        //
-        body:not(:has(ui-frame:not([data-hidden]))) ui-taskbar
-        {
-            & {
-                --tm-bg-alpha: 0;
-                --tm-chroma: 0;
-                --hl-co: 0;
-            }
-
-            //
-            & {
-                box-shadow: none;
-                pointer-events: none;
-            }
-        }
-
-    }
-
-    //
     ui-number input::-webkit-outer-spin-button,
     ui-number input::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -274,4 +172,112 @@
         &:has(input[type="checkbox"]) { transition: --value 100ms linear; --max-value: 1; }
         &:has(input[type="checkbox"]:checkbox) { --value: 1; }
     }
+
+
+
+    ui-frame {
+        //
+        &[data-dragging]:not([data-maximized]) {
+            & { will-change: transform !important; };
+            :where(*) {
+                animation: none !important;
+                animation-duration: 0ms !important;
+                transition: none !important;
+                transition-duration: 0ms !important;
+                box-shadow: none !important;
+            }
+        }
+
+        // if has identified, do top level
+        &:has(:target),
+        &:target
+        {
+            & {
+                --z-index: 0;
+                z-index: calc(1099 + var(--z-index, 0));
+                display: inline grid;
+            }
+
+            // revert visibility if hidden (may not help)
+            ::slotted(.ui-content[data-hidden]) {
+                display: revert-layer;
+            }
+        }
+
+        //
+        &:where(
+            :empty,
+            :has(.ui-content[data-hidden]),
+            :has(.ui-content:empty),
+            :not(:has(.ui-content))
+        ) { display: none; };
+
+        //
+        & .ui-content, :host(&)::slotted(.ui-content) {
+            inline-size: 100%;
+            block-size: 100%;
+            overflow: hidden;
+        }
+    }
+
+
+
+
+
+    // when any window is visible, affect to another elements
+    ui-frame:not([data-hidden]) {
+
+        //
+        body:not(:has(&)) {
+            &:not(:has(ui-taskbar:not([data-hidden]))) ui-navbar {&::part(ui-back-button) { display: none; }}
+            & ui-modal { --tm-bg-alpha: 0.9; }
+
+            //
+            & ui-navbar
+            {
+                //
+                & {
+                    --tm-bg-alpha: 0;
+                    --tm-chroma: 0;
+                    --hl-co: 0;
+                }
+
+                //
+                & {
+                    box-shadow: none;
+                    pointer-events: none;
+                }
+
+                //
+                &, & * { --hl-co: 0; }
+                &::part(ui-title-handle) { pointer-events: none; }
+            }
+
+            // make taskbar hiding when has window
+            & ui-taskbar
+            {
+                & { --data-taskbar-shift: 2.5rem; }
+                &:hover, &:active { --data-taskbar-shift: 0px; }
+                &:not(:hover, :active) { --data-taskbar-shift: 2.5rem; }
+            }
+        }
+
+        // make taskbar is transparent when has no any window
+        body:not(:has(&)) ui-taskbar
+        {
+            & {
+                --tm-bg-alpha: 0;
+                --tm-chroma: 0;
+                --hl-co: 0;
+            }
+
+            //
+            & {
+                box-shadow: none;
+                pointer-events: none;
+            }
+        }
+
+    }
+
 }
