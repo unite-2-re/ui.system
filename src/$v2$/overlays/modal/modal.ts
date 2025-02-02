@@ -18,7 +18,7 @@ import { whenAnyScreenChanges } from "/externals/core/agate.js";
 @customElement('ui-modal')
 export class UIModal extends LitElementTheme {
     @property() protected current: string = "";
-    @property() public boundElement?: WeakRef<HTMLElement> | null;
+    @property({ type: Object }) public boundElement?: WeakRef<HTMLElement> | null;
     @property({ attribute: true, reflect: true, type: String }) public type: string = "modal";
 
     //
@@ -33,6 +33,18 @@ export class UIModal extends LitElementTheme {
         whenAnyScreenChanges?.(()=>{
             this.placeWithElement();
         });
+
+        //
+        self.addEventListener("u2-appear", ()=>{
+            this.placeWithElement();
+        });
+
+        //
+        self.addEventListener("u2-before-show", ()=>{
+            requestAnimationFrame(()=>{
+                this.placeWithElement();
+            });
+        });
     }
 
     //
@@ -41,14 +53,13 @@ export class UIModal extends LitElementTheme {
 
         //
         const self = this as unknown as HTMLElement;
-        if (!self.dataset?.alpha) self.dataset.alpha = "1";
+        if (!self.dataset?.alpha)  self.dataset.alpha = "1";
         if (!self.dataset?.scheme) self.dataset.scheme = "solid";
         if (!self.dataset?.chroma) self.dataset.chroma = "0.001";
 
         //
         self.style.setProperty("z-index", "9999", "important");
         self.dataset.hidden = "";
-        //this.placeWithElement();
     }
 
     //
@@ -68,14 +79,14 @@ export class UIModal extends LitElementTheme {
     public placeWithElement() {
         const element = this.boundElement?.deref?.();
         const self = this as unknown as HTMLElement;
-        placeWithElement(self, element, "from-top", 10);
+        if (element) { placeWithElement(self, element, "from-top", 10); };
         return this;
     }
 
     //
     public bindElement(element?: HTMLElement | null) {
         this.boundElement = element ? new WeakRef(element) : null;
-        this?.placeWithElement?.();
+        if (element) { this?.placeWithElement?.(); };
         return this;
     }
 };

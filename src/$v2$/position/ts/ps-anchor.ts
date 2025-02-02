@@ -10,7 +10,10 @@ export const generateId = (len = 16) => {
 
 //
 export const placeWithElement = (self?: HTMLElement, element?: HTMLElement, where?: string, gap: number = 0)=>{
-    if (element && self && self?.dataset?.hidden == null) {
+    if (
+        element && element.dataset?.hidden == null &&
+        self && self?.dataset?.hidden == null
+    ) {
         const box = getBoundingOrientRect(element);
         const self_box = getBoundingOrientRect(self);
 

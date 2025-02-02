@@ -6,7 +6,12 @@ import { getBoundingOrientRect, agWrapEvent } from "/externals/core/agate.js";
 export const setStyle = (self, confirm: boolean = false, exact: number = 0, val: number = 0)=>{
     //
     if (confirm) {
-        if (!matchMedia("(prefers-reduced-motion: reduce)").matches && self.animate != null) {
+        const current = self.style?.getPropertyValue?.("--value") ?? val;
+        if (
+            (current != exact) &&
+            !matchMedia("(prefers-reduced-motion: reduce)").matches &&
+            self.animate != null
+        ) {
             let animation: any = null;
             (animation = self.animate?.([
                 { "--value": self.style?.getPropertyValue?.("--value") ?? val },
@@ -18,11 +23,10 @@ export const setStyle = (self, confirm: boolean = false, exact: number = 0, val:
             }))?.finished?.then(()=>{
                 animation?.commitStyles?.();
                 animation?.cancel?.();
-
-                //
                 self.style.setProperty("--value", `${exact}`, "");
             });
-        } else {
+        } else
+        if (current != exact) {
             self.style.setProperty("--value", `${exact}`, "");
         }
     } else {
@@ -42,8 +46,8 @@ export const makeSwitch = (self?: HTMLElement)=>{
 
         //
         let TYPE = "unknown";
-        if (self?.matches?.(":has(input[type=\"radio\"])")) { TYPE = "radio"; };
-        if (self?.matches?.(":has(input[type=\"number\"])")) { TYPE = "number"; };
+        if (self?.matches?.(":has(input[type=\"radio\"])"))    { TYPE = "radio";    };
+        if (self?.matches?.(":has(input[type=\"number\"])"))   { TYPE = "number";   };
         if (self?.matches?.(":has(input[type=\"checkbox\"])")) { TYPE = "checkbox"; };
 
         //
@@ -51,21 +55,34 @@ export const makeSwitch = (self?: HTMLElement)=>{
         const coord = [x - box?.left, y - box?.top];
 
         //
-        if (TYPE == "radio" && evType != "click") {
-            const radio = self.querySelectorAll?.("input[type=\"radio\"]") as unknown as HTMLInputElement[];
-            const count = (radio?.length || 0); //+ 1;
-            const vary = [
-                (coord[0]/box.width) * count,
-                (coord[1]/box.height) * 1
-            ];
-            const val = Math.min(Math.max(vary[0] - 0.5, 0), count-1);
-            const exact = Math.min(Math.max(Math.floor(vary[0]), 0), count-1);
-            if (!radio?.[exact]?.checked && confirm) {
-                radio?.[exact]?.click?.();
-            };
+        if (evType != "click") {
 
-            //
-            setStyle(self, confirm, exact, val);
+            // determine checkbox state
+            if (TYPE == "checkbox") {
+                const checkbox = self.querySelector?.("input[type=\"checkbox\"]") as unknown as HTMLInputElement;
+                checkbox?.click?.();
+                setStyle(self, true, checkbox?.checked ? 1 : 0, checkbox?.checked ? 1 : 0);
+            }
+
+            // determine radio state
+            if (TYPE == "radio") {
+                const radio = self.querySelectorAll?.("input[type=\"radio\"]") as unknown as HTMLInputElement[];
+                const count = ((radio?.length || 1)-1);
+                const vary  = [
+                    (coord[0]/box.width ) * (count + 1),
+                    (coord[1]/box.height) * 1
+                ];
+                const val   = Math.min(Math.max( ((-0.5) + vary[0]), 0), count);
+                const exact = Math.min(Math.max(Math.floor(vary[0]), 0), count);
+
+                //
+                if (!radio?.[exact]?.checked && confirm) {
+                    radio?.[exact]?.click?.();
+                };
+
+                //
+                setStyle(self, confirm, exact, val);
+            }
         }
 
         //
@@ -91,52 +108,51 @@ export const makeSwitch = (self?: HTMLElement)=>{
             //
             setStyle(self, confirm, exact, val);
         }
-
-        //
-        if (TYPE == "checkbox" && evType != "click") {
-            const checkbox = self.querySelector?.("input[type=\"checkbox\"]") as unknown as HTMLInputElement;
-            checkbox?.click?.();
-            setStyle(self, true, checkbox?.checked ? 1 : 0, checkbox?.checked ? 1 : 0);
-        }
     }
 
     //
-    self?.addEventListener?.("pointerdown", (ev: any)=>{
-        const e = ev?.detail || ev;
-        if (sws.pointerId < 0) {
-            sws.pointerId = e.pointerId;
-
-            //
-            (e.target as HTMLElement)?.setPointerCapture?.(e.pointerId);
-            document.documentElement.style.cursor = "grabbing";
-        }
-    });
-
-    //
-    self.addEventListener("click", agWrapEvent((ev: any)=>{
-        const e = ev?.detail || ev;
-        doExaction(weak?.deref?.(), e.orient[0], e.orient[1], true, e?.boundingBox, e?.type);
-    }));
-
-    //
-    const stopMove = agWrapEvent((ev: any)=>{
-        const e = ev?.detail || ev;
-        if (sws.pointerId == e.pointerId) {
-            sws.pointerId = -1;
-            doExaction(weak?.deref?.(), e.orient[0], e.orient[1], true, e?.boundingBox);
-            e.target?.releasePointerCapture?.(e.pointerId);
-            document.documentElement.style.removeProperty("cursor");
+    const whenMove = agWrapEvent((ev: any)=>{
+        if (sws.pointerId == ev.pointerId) {
+            const boundingBox = getBoundingOrientRect?.(self);
+            doExaction(weak?.deref?.(), ev.orient[0], ev.orient[1], false, boundingBox, ev?.type);
         }
     });
 
     //
     const ROOT = document.documentElement;
-    ROOT.addEventListener("pointerup", stopMove);
-    ROOT.addEventListener("pointercancel", stopMove);
-    ROOT.addEventListener("pointermove", agWrapEvent((ev: any)=>{
-        const e = ev?.detail || ev;
-        if (sws.pointerId == e.pointerId) {
-            doExaction(weak?.deref?.(), e.orient[0], e.orient[1], false, e?.boundingBox);
+    const stopMove = agWrapEvent((ev: any)=>{
+        if (sws.pointerId == ev.pointerId) { sws.pointerId = -1;
+            const boundingBox = getBoundingOrientRect?.(self);
+            doExaction(weak?.deref?.(), ev.orient[0], ev.orient[1], true, boundingBox, ev?.type);
+            ev?.release?.();
+
+            // stop support these events
+            ROOT.removeEventListener("pointerup", stopMove);
+            ROOT.removeEventListener("pointercancel", stopMove);
+            ROOT.removeEventListener("pointermove", whenMove);
         }
+    });
+
+    //
+    self?.addEventListener?.("pointerdown", agWrapEvent((ev: any)=>{
+        if (sws.pointerId < 0) {
+            sws.pointerId = ev?.pointerId;
+            ev?.capture?.();
+
+            //
+            const boundingBox = getBoundingOrientRect?.(self);
+            doExaction(weak?.deref?.(), ev.orient[0], ev.orient[1], true, boundingBox, ev?.type);
+
+            // make events temp available
+            ROOT.addEventListener("pointerup", stopMove);
+            ROOT.addEventListener("pointercancel", stopMove);
+            ROOT.addEventListener("pointermove", whenMove);
+        }
+    }));
+
+    //
+    self?.addEventListener?.("click", agWrapEvent((ev: any)=>{
+        const boundingBox = getBoundingOrientRect?.(self);
+        doExaction(weak?.deref?.(), ev.orient[0], ev.orient[1], true, boundingBox, ev?.type);
     }));
 };
