@@ -63,6 +63,13 @@
             }
 
             //
+            :host(&[data-dragging]) *,
+            :host(&[data-dragging]) ::slotted(*) {
+                pointer-events: none !important;
+                backdrop-filter: none !important;
+            }
+
+            //
             :host(&)
             {
                 //
