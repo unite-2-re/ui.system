@@ -263,6 +263,7 @@
         }
 
         // make taskbar is transparent when has no any window
+        @at-root [data-device-type="desktop"] // in case if desktop
         body:not(:has(&)) ui-taskbar
         {
             & {
