@@ -19,6 +19,16 @@ import {initTaskManager} from "/externals/core/core.js";
 //
 import {connect} from "../../shared/Status";
 
+//
+const setIdleInterval = (cb, timeout, ...args)=>{
+    requestIdleCallback(async ()=>{
+        while (true) {
+            cb?.(...args);
+            await new Promise((r)=>setTimeout(r, timeout));
+            await new Promise((r)=>requestIdleCallback(r));
+        }
+    }, {timeout: 1000});
+}
 
 // @ts-ignore
 @customElement('ui-taskbar')
@@ -107,12 +117,12 @@ export class UITaskBar extends LitElementTheme {
         }
 
         //
-        setInterval(setTheme, 1000);
+        setIdleInterval(setTheme, 1000);
         setTheme();
 
         //
-        document.addEventListener("u2-appear", setTheme);
-        document.addEventListener("u2-hidden", setTheme);
+        document.addEventListener("u2-appear", ()=>requestIdleCallback(setTheme));
+        document.addEventListener("u2-hidden", ()=>requestIdleCallback(setTheme));
     }
 
     //

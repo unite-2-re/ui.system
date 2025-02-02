@@ -29,6 +29,17 @@ const setElementIcon = (selector, value)=>{
 }
 
 //
+const setIdleInterval = (cb, timeout, ...args)=>{
+    requestIdleCallback(async ()=>{
+        while (true) {
+            cb?.(...args);
+            await new Promise((r)=>setTimeout(r, timeout));
+            await new Promise((r)=>requestIdleCallback(r));
+        }
+    }, {timeout: 1000});
+}
+
+//
 export const runTimeStatus = (async()=>{
     //
     const updateTime = ()=>{
@@ -43,7 +54,7 @@ export const runTimeStatus = (async()=>{
 
     //
     updateTime();
-    setInterval(updateTime, 15000);
+    setIdleInterval(updateTime, 15000);
     document.addEventListener("DOMContentLoaded", updateTime, { once: true });
 });
 
@@ -70,7 +81,7 @@ export const runSignalStatus = (async()=>{
 
     //
     changeSignal();
-    setInterval(changeSignal, 1000);
+    setIdleInterval(changeSignal, 1000);
 });
 
 //
@@ -103,7 +114,7 @@ const runBatteryStatus = (async()=>{
 
     //
     changeBatteryStatus();
-    setInterval(changeBatteryStatus, 1000);
+    setIdleInterval(changeBatteryStatus, 1000);
 
     //
     batteryStatus?.then?.((btr)=>{

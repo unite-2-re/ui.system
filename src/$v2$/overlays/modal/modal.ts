@@ -36,14 +36,12 @@ export class UIModal extends LitElementTheme {
 
         //
         self.addEventListener("u2-appear", (e)=>{
-            if (e.target == this) { this.placeWithElement(); };
+            if (e.target == this) requestAnimationFrame(()=>this.placeWithElement());
         });
 
         //
         self.addEventListener("u2-before-show", (e)=>{
-            requestAnimationFrame(()=>{
-                if (e.target == this) { this.placeWithElement(); };
-            });
+            if (e.target == this) requestAnimationFrame(()=> this.placeWithElement());
         });
     }
 

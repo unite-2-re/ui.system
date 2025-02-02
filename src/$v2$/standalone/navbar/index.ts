@@ -16,6 +16,17 @@ import styles from "./index.scss?inline";
 // @ts-ignore
 import {initTaskManager} from "/externals/core/core.js";
 
+//
+const setIdleInterval = (cb, timeout, ...args)=>{
+    requestIdleCallback(async ()=>{
+        while (true) {
+            cb?.(...args);
+            await new Promise((r)=>setTimeout(r, timeout));
+            await new Promise((r)=>requestIdleCallback(r));
+        }
+    }, {timeout: 1000});
+}
+
 // @ts-ignore
 @customElement('ui-navbar')
 export class UINavBar extends LitElementTheme {
@@ -46,12 +57,12 @@ export class UINavBar extends LitElementTheme {
         }
 
         //
-        setInterval(setTheme, 1000);
+        setIdleInterval(setTheme, 1000);
         setTheme();
 
         //
-        document.addEventListener("u2-appear", setTheme);
-        document.addEventListener("u2-hidden", setTheme);
+        document.addEventListener("u2-appear", ()=>requestIdleCallback(setTheme));
+        document.addEventListener("u2-hidden", ()=>requestIdleCallback(setTheme));
     }
 
     //
