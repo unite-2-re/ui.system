@@ -1,14 +1,26 @@
 
+const throttleMap = new Map<string, any>();
+
+//
+requestIdleCallback(async ()=>{
+    while (true) {
+        throttleMap.forEach((cb, nm)=>cb?.());
+        await new Promise((r)=>requestIdleCallback(r));
+    }
+}, {timeout: 1000});
+
 //
 const setElementContent = (selector, value, root = document)=>{
-    root.querySelectorAll(selector).forEach((element)=>element.innerHTML = value);
+    throttleMap.set(selector, ()=>root.querySelectorAll(selector).forEach((element)=>{
+        if (element.innerHTML != value) { element.innerHTML = value; };
+    }));
 }
 
 //
 const setElementIcon = (selector, value, root = document)=>{
-    root.querySelectorAll(selector).forEach((element)=>{
+    throttleMap.set(selector, ()=>root.querySelectorAll(selector).forEach((element)=>{
         if (element?.getAttribute?.("icon") != value) { element?.setAttribute?.("icon", value); };
-    });
+    }));
 }
 
 //

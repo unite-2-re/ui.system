@@ -35,14 +35,14 @@ export class UIModal extends LitElementTheme {
         });
 
         //
-        self.addEventListener("u2-appear", ()=>{
-            this.placeWithElement();
+        self.addEventListener("u2-appear", (e)=>{
+            if (e.target == this) { this.placeWithElement(); };
         });
 
         //
-        self.addEventListener("u2-before-show", ()=>{
+        self.addEventListener("u2-before-show", (e)=>{
             requestAnimationFrame(()=>{
-                this.placeWithElement();
+                if (e.target == this) { this.placeWithElement(); };
             });
         });
     }
@@ -71,7 +71,7 @@ export class UIModal extends LitElementTheme {
         } else {
             self.dataset.hidden = "";
         }
-        this.placeWithElement();
+        //this.placeWithElement();
         return this;
     }
 

@@ -41,8 +41,8 @@ export class UINavBar extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         const setTheme = ()=>{
             const factor = document.body.matches(":has(ui-frame:not([data-hidden]), ui-taskbar:not([data-hidden]))");
-            self.setAttribute("data-scheme", factor ? "solid" : "base");
-            //self.setAttribute("data-chroma", factor ? "0.1" : "0");
+            const newScheme = factor ? "solid" : "base";
+            if (newScheme != self.getAttribute("data-scheme")) { self.setAttribute("data-scheme", newScheme); };
         }
 
         //

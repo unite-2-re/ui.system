@@ -93,6 +93,8 @@ export class UITaskBar extends LitElementTheme {
     protected adaptiveTheme() {
         const self = this as unknown as HTMLElement;
         if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "solid"); };
+
+        //
         const setTheme = ()=>{
             if (matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
                 const hasFrame = document.body.matches(":has(ui-frame:not([data-hidden]))");
