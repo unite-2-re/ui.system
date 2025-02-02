@@ -44,7 +44,7 @@
                     --data-taskbar-shift: 0px;
 
                     //
-                    display: inline grid;
+                    display: none;//inline grid;
                     block-size: var(--taskbar-size, 3rem);
                     pointer-events: none;
                     font-weight: bold;
@@ -313,6 +313,13 @@
                 }
             }
 
+            //
+            @at-root [data-device-type="desktop"] {
+                :host-context(&) {
+                    display: inline grid;
+                }
+            }
+
             // different design and layout in mobile
             @at-root [data-device-type="mobile"] {
                 :host-context(&) {
@@ -322,6 +329,7 @@
                         block-size: 100%;
                         padding: 0.3rem;
                         padding-block-start: 2.5rem;
+                        display: inline grid;
 
                         //
                         grid-template-rows   : minmax(0px, 1fr);
@@ -348,6 +356,11 @@
                         gap: 0px;
                     }
                 }
+            }
+
+            //
+            &[data-hidden], :host([data-hidden]) {
+                display: none !important;
             }
         }
     }

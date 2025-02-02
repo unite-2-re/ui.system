@@ -20,8 +20,8 @@ import {initTaskManager} from "/externals/core/core.js";
 @customElement('ui-taskbar')
 export class UITaskBar extends LitElementTheme {
     // theme style property
-    @property() protected statusSW?: boolean = false;
-    @property() public tasks?: any[] = [];
+    @property({ type: Boolean }) protected statusSW?: boolean = false;
+    @property({ type: Array }) public tasks?: any[] = [];
     @property() public taskManager?: any;
 
     // also "display" may be "contents"
@@ -34,8 +34,16 @@ export class UITaskBar extends LitElementTheme {
         this.taskManager.addTasks(this.tasks || []);
 
         // cupola
-        matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").addEventListener("change", ({matches}) => {
+        const media = matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))");
+
+        //
+        media.addEventListener("change", ({matches}) => {
             if (matches) { delete self.dataset.hidden; } else { self.dataset.hidden = ""; };
+        });
+
+        //
+        requestAnimationFrame(()=>{
+            if (media.matches) { delete self.dataset.hidden; } else { self.dataset.hidden = ""; };
         });
     }
 
@@ -118,9 +126,12 @@ export class UITaskBar extends LitElementTheme {
         if (!self.hasAttribute("data-chroma"))    { self.setAttribute("data-chroma"         , "0" ); };
         if (!self.hasAttribute("data-scheme"))    { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
         if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight"      , "0"    ); };
-        if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
-            self.dataset.hidden = "";
-        }
+
+        //
+        const media = matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))");
+
+        // if mobile, hide it
+        if (!media.matches) { self.dataset.hidden = ""; }
     }
 
 }
