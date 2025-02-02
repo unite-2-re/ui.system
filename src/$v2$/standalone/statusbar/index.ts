@@ -13,6 +13,9 @@ import htmlCode from "./index.html?raw";
 // @ts-ignore
 import styles from "./index.scss?inline";
 
+//
+import {connect} from "../../shared/Status";
+
 // @ts-ignore
 @customElement('ui-statusbar')
 export class UIStatusBar extends LitElementTheme {
@@ -28,12 +31,10 @@ export class UIStatusBar extends LitElementTheme {
         this.importFromTemplate(htmlCode);
 
         //
-        import("../../shared/Status").then((module)=>{
-            if (root) {
-                module?.default?.(root);
-                this.statusSW = true;
-            }
-        }).catch(console.warn.bind(console));
+        if (root) {
+            connect?.(root);
+            this.statusSW = true;
+        }
 
         //
         const DOC = document.documentElement;

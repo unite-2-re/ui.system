@@ -4,27 +4,32 @@ const throttleMap = new Map<string, any>();
 //
 requestIdleCallback(async ()=>{
     while (true) {
-        throttleMap.forEach((cb, nm)=>cb?.());
+        throttleMap.forEach((cb)=>cb?.());
         await new Promise((r)=>requestIdleCallback(r));
     }
 }, {timeout: 1000});
 
 //
-const setElementContent = (selector, value, root = document)=>{
-    throttleMap.set(selector, ()=>root.querySelectorAll(selector).forEach((element)=>{
-        if (element.innerHTML != value) { element.innerHTML = value; };
-    }));
+const roots: any[] = [];
+
+//
+const setElementContent = (selector, value)=>{
+    throttleMap.set(selector, ()=>
+        roots.forEach((root)=>root.querySelectorAll(selector).forEach((element)=>{
+            if (element.innerHTML != value) { element.innerHTML = value; };
+        }))
+    );
 }
 
 //
-const setElementIcon = (selector, value, root = document)=>{
-    throttleMap.set(selector, ()=>root.querySelectorAll(selector).forEach((element)=>{
+const setElementIcon = (selector, value)=>{
+    throttleMap.set(selector, ()=>roots.forEach((root)=>root.querySelectorAll(selector).forEach((element)=>{
         if (element?.getAttribute?.("icon") != value) { element?.setAttribute?.("icon", value); };
-    }));
+    })));
 }
 
 //
-export const runTimeStatus = (async(root = document)=>{
+export const runTimeStatus = (async()=>{
     //
     const updateTime = ()=>{
         const date = new Date();
@@ -32,8 +37,8 @@ export const runTimeStatus = (async(root = document)=>{
         const timeHours = `${date.getHours()}`.padStart(2,"0");
 
         //
-        setElementContent(".ui-time-minute", timeMinutes, root);
-        setElementContent(".ui-time-hour", timeHours, root);
+        setElementContent(".ui-time-minute", timeMinutes);
+        setElementContent(".ui-time-hour", timeHours);
     }
 
     //
@@ -43,7 +48,7 @@ export const runTimeStatus = (async(root = document)=>{
 });
 
 //
-export const runSignalStatus = (async(root = document)=>{
+export const runSignalStatus = (async()=>{
     //
     const signalIcons = {
         "offline": "wifi-off",
@@ -57,7 +62,7 @@ export const runSignalStatus = (async(root = document)=>{
     const changeSignal = ()=>{
         // @ts-ignore
         const signal = navigator.onLine ? (navigator?.connection?.effectiveType || "4g") : "offline";
-        setElementIcon(".ui-network", signalIcons[signal], root);
+        setElementIcon(".ui-network", signalIcons[signal]);
     }
 
     // @ts-ignore
@@ -69,7 +74,7 @@ export const runSignalStatus = (async(root = document)=>{
 });
 
 //
-const runBatteryStatus = (async(root = document)=>{
+const runBatteryStatus = (async()=>{
     // @ts-ignore
     const batteryStatus = navigator.getBattery?.();
     const batteryIcons = new Map([
@@ -85,13 +90,13 @@ const runBatteryStatus = (async(root = document)=>{
     const changeBatteryStatus = ()=>{
         let battery = "battery-charging";
         if (!batteryStatus) {
-            setElementIcon(".ui-battery", battery, root);
+            setElementIcon(".ui-battery", battery);
         } else {
             batteryStatus?.then?.((btr)=>{
                 if (btr.charging)
                     { battery = "battery-charging"; } else // @ts-ignore
                     { battery = byLevel(btr.level)||"battery"; };
-                    setElementIcon(".ui-battery", battery, root);
+                    setElementIcon(".ui-battery", battery);
             })?.catch?.(console.warn.bind(console));
         }
     }
@@ -109,10 +114,20 @@ const runBatteryStatus = (async(root = document)=>{
 });
 
 //
-export const initStatus = (root = document)=>{
-    runBatteryStatus(root);
-    runSignalStatus(root);
-    runTimeStatus(root);
+let initialized = false;
+export const initStatus = ()=>{
+    if (!initialized) {
+        initialized = true;
+        runBatteryStatus();
+        runSignalStatus();
+        runTimeStatus();
+    };
+}
+
+//
+export const connect = (receiver = document)=>{
+    if (!initialized) initStatus();
+    roots.push(receiver);
 }
 
 //

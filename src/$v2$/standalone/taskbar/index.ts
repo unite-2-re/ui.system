@@ -16,6 +16,10 @@ import styles from "./index.scss?inline";
 // @ts-ignore
 import {initTaskManager} from "/externals/core/core.js";
 
+//
+import {connect} from "../../shared/Status";
+
+
 // @ts-ignore
 @customElement('ui-taskbar')
 export class UITaskBar extends LitElementTheme {
@@ -54,12 +58,10 @@ export class UITaskBar extends LitElementTheme {
         this.adaptiveTheme();
 
         //
-        import("../../shared/Status").then((module)=>{
-            if (root) {
-                module?.default?.(root);
-                this.statusSW = true;
-            }
-        }).catch(console.warn.bind(console));
+        if (root) {
+            connect?.(root);
+            this.statusSW = true;
+        }
 
         //
         const DOC = document.documentElement;
