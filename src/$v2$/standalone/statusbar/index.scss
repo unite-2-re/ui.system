@@ -1,27 +1,28 @@
 @layer ui-statusbar {
     @media screen {
+        //
+        :host, :where(*), ::slotted(*)
+        {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
+            touch-action: none;
+
+            /* */
+            font-family: 'Open Sans', 'Ubuntu Sans', Ubuntu, Segoe, "Segoe UI", source-sans-pro, 'Source Sans 3', 'Gill Sans Nova', Candara, sans-serif, ui-sans-serif, system-ui;
+        }
+
+        //
         ui-statusbar
         {
             :host(&) {
-                /* */
-                &, :where(*), ::slotted(*)
-                {
-                    -webkit-tap-highlight-color: rgba(0,0,0,0);
-                    -webkit-tap-highlight-color: transparent;
-                    user-drag: none;
-                    user-select: none;
-                    pointer-events: none;
-                    -webkit-user-drag: none;
-                    -moz-user-drag: none;
-
-                    /* */
-                    box-sizing: border-box;
-                    touch-action: none;
-
-                    /* */
-                    font-family: 'Open Sans', 'Ubuntu Sans', Ubuntu, Segoe, "Segoe UI", source-sans-pro, 'Source Sans 3', 'Gill Sans Nova', Candara, sans-serif, ui-sans-serif, system-ui;
-                }
-
                 //
                 :where(span), ::slotted(span) {
                     background-color: transparent;
@@ -133,9 +134,9 @@
                 }
 
             }
-
-            //
-            @at-root [data-device-type="desktop"] {:host-context(&) {display:none !important;}}
         }
+
+        //
+        @at-root [data-device-type="desktop"] {:host-context(&) {display:none !important;}}
     }
 }

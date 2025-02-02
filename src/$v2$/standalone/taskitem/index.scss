@@ -2,25 +2,24 @@
 
     //
     @media screen {
+        :host, :where(*), ::slotted(*) {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            touch-action: none;
+
+            /* */
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+
         //
         ui-task
         {
             :host(&) {
-                /* */
-                &, :where(*), ::slotted(*) {
-                    -webkit-tap-highlight-color: rgba(0,0,0,0);
-                    -webkit-tap-highlight-color: transparent;
-                    user-drag: none;
-                    user-select: none;
-                    -webkit-user-drag: none;
-                    -moz-user-drag: none;
-                    touch-action: none;
-
-                    /* */
-                    box-sizing: border-box;
-                    pointer-events: none;
-                }
-
                 //
                 :where(span), ::slotted(span) {
                     background-color: transparent;

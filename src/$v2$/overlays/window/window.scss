@@ -4,8 +4,39 @@
 
 //
 @layer ui-frame
-{
+{   //
     @media screen {
+
+        //
+        :host, :where(*), ::slotted(*)
+        {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
+            touch-action: none;
+
+            /* */
+            white-space: nowrap;
+            white-space-collapse: collapse;
+            text-wrap: nowrap;
+            text-spacing-trim: trim-start;
+
+            /* */
+            border: none 0px transparent;
+            outline: none 0px transparent;
+            content-visibility: auto;
+
+            /* */
+            font-family: 'Open Sans', 'Source Sans 3', 'Gill Sans Nova', Ubuntu, 'DejaVu Sans', Candara, Segoe, "Segoe UI", Optima, source-sans-pro, sans-serif;
+        }
+
+        //
         ui-frame {
 
             :host(&) {
@@ -81,35 +112,6 @@
                     direction: ltr;
                     writing-mode: horizontal-tb;
                 };
-
-                //
-                &, :where(*), ::slotted(*)
-                {
-                    -webkit-tap-highlight-color: rgba(0,0,0,0);
-                    -webkit-tap-highlight-color: transparent;
-                    user-drag: none;
-                    user-select: none;
-                    -webkit-user-drag: none;
-                    -moz-user-drag: none;
-
-                    /* */
-                    box-sizing: border-box;
-                    touch-action: none;
-
-                    /* */
-                    white-space: nowrap;
-                    white-space-collapse: collapse;
-                    text-wrap: nowrap;
-                    text-spacing-trim: trim-start;
-
-                    /* */
-                    border: none 0px transparent;
-                    outline: none 0px transparent;
-                    content-visibility: auto;
-
-                    /* */
-                    font-family: 'Open Sans', 'Source Sans 3', 'Gill Sans Nova', Ubuntu, 'DejaVu Sans', Candara, Segoe, "Segoe UI", Optima, source-sans-pro, sans-serif;
-                }
 
                 /* */
                 & {
@@ -423,68 +425,68 @@
                 };
             };
 
-            // mobile always fullscreen
-            @at-root [data-device-type="mobile"]
-            {
-                :host-context(&) {
-                    & {
-                        inline-size: 100%;
-                        block-size: 100%;
-                        inset-inline-start: 0px;
-                        inset-block-start : 0px;
-                        border-radius: 0px !important;
+        };
 
-                        //
-                        --title-bar-height: 2rem;
-                    }
+        // mobile always fullscreen
+        @at-root [data-device-type="mobile"]
+        {
+            :host-context(&) {
+                & {
+                    inline-size: 100%;
+                    block-size: 100%;
+                    inset-inline-start: 0px;
+                    inset-block-start : 0px;
+                    border-radius: 0px !important;
 
                     //
-                    .ui-title-bar {  min-block-size: var(--title-bar-height, 2rem); }
-                    .ui-title-bar :where(*),
-                    .ui-title-bar ::slotted(*) {
-                        text-align: start;
-                        display: none !important;
-                    }
+                    --title-bar-height: 2rem;
+                }
+
+                //
+                .ui-title-bar {  min-block-size: var(--title-bar-height, 2rem); }
+                .ui-title-bar :where(*),
+                .ui-title-bar ::slotted(*) {
+                    text-align: start;
+                    display: none !important;
                 }
             }
+        }
 
-            // make desktop window maximizable
-            // desktop window also draggable and resizable
-            @at-root [data-device-type="desktop"] {
-                //
-                :host-context(&):host([data-dragging]:not([data-maximized]))
-                {
-                    & { will-change: transform !important; };
-                    & {
-                        --translate-x: var(--ds-x, 0px) !important;
-                        --translate-y: var(--ds-y, 0px) !important;
-                    };
-                    & {
-                        transition-behavior: allow-discrete !important;
-                        transition-property: --translate-x, --translate-y, inline-size, block-size !important;
-                        transition-duration: calc(var(--drag-d, 0.01) * 0.8ms), calc(var(--resize-d, 0.01) * 0.8ms), calc(var(--resize-d, 0.01) * 0.8ms) !important;
-                        transition-timing-function: linear !important;
-                        transition-delay: 0ms !important;
-                    };
-
-                    //
-                    :where(*), ::slotted(*)
-                    {
-                        animation: none !important;
-                        animation-duration: 0ms !important;
-                        transition: none !important;
-                        transition-duration: 0ms !important;
-                        box-shadow: none !important;
-                    };
+        // make desktop window maximizable
+        // desktop window also draggable and resizable
+        @at-root [data-device-type="desktop"] {
+            //
+            :host-context(&):host([data-dragging]:not([data-maximized]))
+            {
+                & { will-change: transform !important; };
+                & {
+                    --translate-x: var(--ds-x, 0px) !important;
+                    --translate-y: var(--ds-y, 0px) !important;
+                };
+                & {
+                    transition-behavior: allow-discrete !important;
+                    transition-property: --translate-x, --translate-y, inline-size, block-size !important;
+                    transition-duration: calc(var(--drag-d, 0.01) * 0.8ms), calc(var(--resize-d, 0.01) * 0.8ms), calc(var(--resize-d, 0.01) * 0.8ms) !important;
+                    transition-timing-function: linear !important;
+                    transition-delay: 0ms !important;
                 };
 
                 //
-                :host-context(&):host(:not([data-maximized])) {
-                    @include dg.ps-draggable();
-                    @include rs.ps-resizable();
+                :where(*), ::slotted(*)
+                {
+                    animation: none !important;
+                    animation-duration: 0ms !important;
+                    transition: none !important;
+                    transition-duration: 0ms !important;
+                    box-shadow: none !important;
                 };
             };
 
+            //
+            :host-context(&):host(:not([data-maximized])) {
+                @include dg.ps-draggable();
+                @include rs.ps-resizable();
+            };
         };
     };
 };

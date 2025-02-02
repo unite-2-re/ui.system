@@ -4,31 +4,31 @@
         @property --data-taskbar-shift { inherits: true; syntax: "<length-percentage>"; initial-value: 0px; };
 
         //
+        :host, :where(*), ::slotted(*)
+        {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+
+            /* */
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
+            will-change: contents;
+            pointer-events: none;
+            touch-action: none;
+
+            /* */
+            font-size: 0.85rem;
+        }
+
+        //
         ui-taskbar
         {
             :host(&) {
-                /* */
-                &, :where(*), ::slotted(*)
-                {
-                    -webkit-tap-highlight-color: rgba(0,0,0,0);
-                    -webkit-tap-highlight-color: transparent;
-                    user-drag: none;
-
-                    /* */
-                    user-select: none;
-                    -webkit-user-drag: none;
-                    -moz-user-drag: none;
-
-                    /* */
-                    box-sizing: border-box;
-                    will-change: contents;
-                    pointer-events: none;
-                    touch-action: none;
-
-                    /* */
-                    font-size: 0.85rem;
-                }
-
                 //
                 :where(button) {
                     border: none 0px transparent;
@@ -290,78 +290,79 @@
             }
 
             //
-            :host-context(body:has(.ui-app-frame:not([data-hidden])))
-            {
-                & { --data-taskbar-shift: 2.5rem; }
-                &:host(:hover, :active) { --data-taskbar-shift: 0px; }
-                &:host(:not(:hover, :active)) { --data-taskbar-shift: 2.5rem; }
-            }
-
-            //
-            :host-context(body:not(:has(.ui-app-frame:not([data-hidden]))))
-            {
-                & {
-                    --tm-bg-alpha: 0;
-                    --tm-chroma: 0;
-                    --hl-co: 0;
-                }
-
-                //
-                & {
-                    box-shadow: none;
-                    pointer-events: none;
-                }
-            }
-
-            //
-            @at-root [data-device-type="desktop"] {
-                :host-context(&) {
-                    display: inline grid;
-                }
-            }
-
-            // different design and layout in mobile
-            @at-root [data-device-type="mobile"] {
-                :host-context(&) {
-                    & {
-                        flex-direction: column;
-                        inline-size: 100%;
-                        block-size: 100%;
-                        padding: 0.3rem;
-                        padding-block-start: 2.5rem;
-                        display: inline grid;
-
-                        //
-                        grid-template-rows   : minmax(0px, 1fr);
-                        grid-template-columns: minmax(0px, 1fr);
-
-                        //
-                        pointer-events: auto;
-                        backdrop-filter: blur(1rem) !important;
-                    }
-
-                    //
-                    .ui-app-menu, .ui-status {
-                        display: none !important;
-                    }
-
-                    //
-                    .ui-task-bar {
-                        pointer-events: auto;
-                        grid-column: 1 / -1;
-                        inline-size: 100%;
-                        block-size: 100%;
-                        flex-direction: column;
-                        justify-content: start;
-                        gap: 0px;
-                    }
-                }
-            }
-
-            //
             &[data-hidden], :host([data-hidden]) {
                 display: none !important;
             }
         }
+
+        //
+        :host-context(body:has(.ui-app-frame:not([data-hidden])))
+        {
+            & { --data-taskbar-shift: 2.5rem; }
+            &:host(:hover, :active) { --data-taskbar-shift: 0px; }
+            &:host(:not(:hover, :active)) { --data-taskbar-shift: 2.5rem; }
+        }
+
+        //
+        :host-context(body:not(:has(.ui-app-frame:not([data-hidden]))))
+        {
+            & {
+                --tm-bg-alpha: 0;
+                --tm-chroma: 0;
+                --hl-co: 0;
+            }
+
+            //
+            & {
+                box-shadow: none;
+                pointer-events: none;
+            }
+        }
+
+        //
+        @at-root [data-device-type="desktop"] {
+            :host-context(&) {
+                display: inline grid;
+            }
+        }
+
+        // different design and layout in mobile
+        @at-root [data-device-type="mobile"] {
+            :host-context(&) {
+                & {
+                    flex-direction: column;
+                    inline-size: 100%;
+                    block-size: 100%;
+                    padding: 0.3rem;
+                    padding-block-start: 2.5rem;
+                    display: inline grid;
+
+                    //
+                    grid-template-rows   : minmax(0px, 1fr);
+                    grid-template-columns: minmax(0px, 1fr);
+
+                    //
+                    pointer-events: auto;
+                    backdrop-filter: blur(1rem) !important;
+                }
+
+                //
+                .ui-app-menu, .ui-status {
+                    display: none !important;
+                }
+
+                //
+                .ui-task-bar {
+                    pointer-events: auto;
+                    grid-column: 1 / -1;
+                    inline-size: 100%;
+                    block-size: 100%;
+                    flex-direction: column;
+                    justify-content: start;
+                    gap: 0px;
+                }
+            }
+        }
+
     }
 }
