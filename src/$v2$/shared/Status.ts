@@ -29,10 +29,11 @@ const setElementIcon = (selector, value)=>{
 }
 
 //
-const setIdleInterval = (cb, timeout, ...args)=>{
+const setIdleInterval = (cb, timeout = 1000, ...args)=>{
     requestIdleCallback(async ()=>{
+        if (!cb || typeof cb != "function") return;
         while (true) {
-            cb?.(...args);
+            await Promise.try(cb, ...args);
             await new Promise((r)=>setTimeout(r, timeout));
             await new Promise((r)=>requestIdleCallback(r));
         }
