@@ -179,14 +179,14 @@
         //
         &[data-dragging]:not([data-maximized]) {
             & { will-change: transform !important; };
-            :where(*) {
+            & > :where(*) {
                 animation: none !important;
                 animation-duration: 0ms !important;
                 transition: none !important;
                 transition-duration: 0ms !important;
                 box-shadow: none !important;
-            }
-        }
+            };
+        };
 
         // if has identified, do top level
         &:has(:target),
@@ -219,10 +219,6 @@
             overflow: hidden;
         }
     }
-
-
-
-
 
     // when any window is visible, affect to another elements
     ui-frame:not([data-hidden]) {
