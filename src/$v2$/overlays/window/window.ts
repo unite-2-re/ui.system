@@ -80,6 +80,8 @@ export class UIFrame extends LitElementTheme {
     protected updateAttributes() {
         const self = this as unknown as HTMLElement;
         setAttributesIfNull(self, {
+            //"data-hidden": true,
+            "data-maximized": null,
             "data-chroma": 0.001,
             "data-scheme": "inverse",
             "data-highlight": 0

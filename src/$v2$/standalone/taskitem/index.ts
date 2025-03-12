@@ -14,7 +14,7 @@ import htmlCode from "./index.html?raw";
 import styles from "./index.scss?inline";
 import { focusTask } from "../../functional/fn-task.js";
 import { taskManage } from "../../tasks/binding";
-import { setAttributesIfNull } from "../../shared/Utils";
+import { setAttributes, setAttributesIfNull } from "../../shared/Utils";
 
 // @ts-ignore
 @customElement('ui-task')
@@ -92,9 +92,10 @@ export class UITaskItem extends LitElementTheme {
         }
 
         //
+        setAttributes(self, {"data-id": (this.taskId || self.dataset.id || "")});
         setAttributesIfNull(self, {
-            "data-id": (this.taskId || self.dataset.id || ""),
-            "data-chroma": 0,
+            //"data-scheme": "dynamic-transparent",
+            "data-chroma": 0.01,
             "data-alpha": 0,
             "data-highlight": 0,
             "data-highlight-hover": 3

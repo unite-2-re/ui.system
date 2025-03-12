@@ -29,6 +29,7 @@ export class UICalendar extends LitElementTheme {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
         this.importFromTemplate(htmlCode);
+        self.style.display = "none";
         requestIdleCallback(()=>{
             this.#calendar = new Calendar(root?.querySelector?.(".ui-calendar"), {
 layouts: {
@@ -84,6 +85,7 @@ layouts: {
 </div>`
 }});
             this.#calendar?.init?.();
+            self.style.removeProperty("display");
         });
         return root;
     }

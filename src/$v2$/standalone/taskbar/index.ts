@@ -19,7 +19,7 @@ import initTaskManager from "../../tasks/logic";
 //
 import {connect} from "../../shared/Status";
 import { onInteration } from "../../tasks/opening";
-import { setAttributesIfNull } from "../../shared/Utils";
+import { setAttributes, setAttributesIfNull } from "../../shared/Utils";
 
 //
 const setIdleInterval = (cb, timeout = 1000, ...args)=>{
@@ -80,15 +80,15 @@ export class UITaskBar extends LitElementTheme {
     //
     protected adaptiveTheme() {
         const self = this as unknown as HTMLElement;
-        if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "solid"); };
+        setAttributesIfNull(self, { "data-scheme": "dynamic-transparent" });
 
         //
         const setTheme = ()=>{
             if (matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
                 const hasFrame = document.body.matches(":has(ui-frame:not([data-hidden]))");
-                self.setAttribute("data-scheme", hasFrame ? "solid" : "dynamic-transparent");
+                setAttributes(self, { "data-scheme": hasFrame ? "solid" : "dynamic-transparent", "data-alpha": hasFrame ? 1 : 0 });
             } else {
-                self.setAttribute("data-scheme", "solid");
+                setAttributes(self, { "data-scheme": "solid", "data-alpha": 1 });
             }
         }
 
@@ -114,7 +114,7 @@ export class UITaskBar extends LitElementTheme {
         //
         setAttributesIfNull(self, {
             "data-scheme": "dynamic-transparent",
-            "data-chroma": 0,
+            "data-chroma": 0.001,
             "data-alpha": 1,
             "data-highlight": 0
         });

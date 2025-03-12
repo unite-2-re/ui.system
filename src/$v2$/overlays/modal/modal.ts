@@ -31,12 +31,16 @@ export class UIModal extends LitElementTheme {
         super();
 
         //
+        const self = this as unknown as HTMLElement;
+
+        //
         whenAnyScreenChanges?.(()=>{
             this.placeWithElement();
         });
 
         //
         self.addEventListener("u2-appear", (e)=>{
+            //self.style.removeProperty("display");
             if (e.target == this) requestAnimationFrame(()=>this.placeWithElement());
         });
 
@@ -44,6 +48,15 @@ export class UIModal extends LitElementTheme {
         self.addEventListener("u2-before-show", (e)=>{
             if (e.target == this) requestAnimationFrame(()=> this.placeWithElement());
         });
+
+        // force fix phantom appear
+        /*document.documentElement.addEventListener("u2-before-show", (e)=>{
+            self.style.display = "none";
+        }, {once: true});*/
+
+        //
+        //self.style.display = "none";
+        self.dataset.hidden = "";
     }
 
     //
@@ -53,6 +66,7 @@ export class UIModal extends LitElementTheme {
         //
         const self = this as unknown as HTMLElement;
         setAttributesIfNull(self, {
+            "data-hidden": "",
             "data-chroma": "0.001",
             "data-scheme": "solid",
             "data-alpha": 1
@@ -60,7 +74,6 @@ export class UIModal extends LitElementTheme {
 
         //
         self.style.setProperty("z-index", "9999", "important");
-        self.dataset.hidden = "";
     }
 
     //
