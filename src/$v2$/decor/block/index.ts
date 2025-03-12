@@ -13,6 +13,7 @@ import styles from "./index.scss?inline";
 
 // @ts-ignore
 import htmlCode from "./index.html?raw";
+import { setAttributesIfNull } from "../../shared/Utils";
 
 //
 const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
@@ -43,11 +44,13 @@ export class UIBlock extends LitElement {
 
         //
         const self = this as unknown as HTMLElement;
-        if (!self.hasAttribute("data-transparent")) { self.setAttribute("data-transparent", ""); };
-        if (!self.hasAttribute("data-alpha")) { self.setAttribute("data-alpha", "0"); };
-        if (!self.hasAttribute("data-chroma")) { self.setAttribute("data-chroma", "0.1"); };
-        if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "solid"); };
-        if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "0"); };
+        setAttributesIfNull(self, {
+            "data-transparent": "",
+            "data-alpha": 0,
+            "data-chroma": 0.1,
+            "data-scheme": "solid",
+            "data-highlight": 0
+        });
         if (!self.classList?.contains?.("ui-block")) self.classList?.add?.("ui-block");
         if (!self.classList?.contains?.("u2-block")) self.classList?.add?.("u2-block");
     }

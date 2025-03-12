@@ -17,6 +17,7 @@ import htmlCode from "./ap-row.html?raw";
 //
 import UISelectBase from "../../behaviour/bh-select";
 import UIButtonBase from "../../behaviour/bh-button";
+import { setAttributes } from "../../shared/Utils";
 
 //
 const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
@@ -32,17 +33,21 @@ export class UISelectRow extends UISelectBase {
 
         // in selection mode
         if (this.$parentNode?.matches?.("ui-button, ui-toggle")) {
-            self.setAttribute("data-highlight-hover", "0");
-            self.setAttribute("data-highlight", "0");
-            self.setAttribute("data-alpha", "0");
-            self.setAttribute("data-scheme", this.$parentNode.dataset.scheme || "dynamic-transparent");
-            self.setAttribute("data-chroma", "0");
+            setAttributes(self, {
+                "data-highlight": 0,
+                "data-highlight-hover": 0,
+                "data-alpha": 0,
+                "data-chroma": 0,
+                "data-scheme": "dynamic-transparent"
+            });
         } else {
-            self.setAttribute("data-highlight", this.checked ? "2" : "0");
-            self.setAttribute("data-highlight-hover", this.checked ? "4" : "1");
-            self.setAttribute("data-chroma", this.checked ? "0.1" : "0");
-            self.setAttribute("data-scheme", this.checked ? "inverse": "solid");
-            self.setAttribute("data-alpha", this.checked ? "1": "0");
+            setAttributes(self, {
+                "data-highlight": this.checked ? "2" : "0",
+                "data-highlight-hover": this.checked ? "4" : "1",
+                "data-alpha" : this.checked ? "1"   : "0",
+                "data-chroma": this.checked ? "0.1" : "0",
+                "data-scheme": this.checked ? "inverse": "solid"
+            });
         }
     }
 

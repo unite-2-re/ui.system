@@ -5,6 +5,7 @@ import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
 import { LitElement, html } from "../shared/LitUse";
+import { setAttributes, setAttributesIfNull } from "../shared/Utils";
 
 //
 export const onItemSelect = (ev?: any, self?: any)=>{
@@ -82,8 +83,10 @@ export class UISelectBase extends LitElement {
 
         //
         const self = this as unknown as HTMLElement;
-        if (!self?.getAttribute?.("data-highlight")) { self?.setAttribute?.("data-highlight", "0"); };
-        if (!self?.getAttribute?.("data-alpha")) { self.setAttribute("data-alpha", "0"); };
+        setAttributesIfNull(self, {
+            "data-highlight": 0,
+            "data-alpha": 0
+        });
 
         //
         this.$parentNode = self?.parentNode;
@@ -104,8 +107,10 @@ export class UISelectBase extends LitElement {
         //
         const ownBox = self.shadowRoot?.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])") ?? self.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])");
         if (ownBox) {
-            ownBox.setAttribute("value", "" + this.value);
-            ownBox.setAttribute("name", (self.parentNode as HTMLElement)?.dataset?.name || "dummy-radio");
+            setAttributes(ownBox, {
+                "name" : (self.parentNode as HTMLElement)?.dataset?.name || "dummy-radio",
+                "value": this.value
+            });
         };
     }
 

@@ -18,6 +18,7 @@ import htmlCode from "./ap-button.html?raw";
 //
 import UIButtonBase from "../../behaviour/bh-button";
 import UISelectBase from "../../behaviour/bh-select";
+import { setAttributesIfNull } from "../../shared/Utils";
 
 // selection derivative
 
@@ -42,9 +43,11 @@ export class UIToggle extends UISelectBase {
         const self = this as unknown as HTMLElement;
 
         //
-        if (!self.dataset.scheme) { self.dataset.scheme = "solid"; };
-        if (!self.dataset.highlight) { self.dataset.highlight = "0"; };
-        if (!self.dataset.highlightHover) { self.dataset.highlightHover = "1"; };
+        setAttributesIfNull(self, {
+            "data-scheme": "solid",
+            "data-highlight": 0,
+            "data-highlight-hover": 1
+        });
     }
 
     //
@@ -84,9 +87,11 @@ export class UIButton extends UIButtonBase {
         const self = this as unknown as HTMLElement;
 
         //
-        if (!self.dataset.scheme) { self.dataset.scheme = "solid"; };
-        if (!self.dataset.highlight) { self.dataset.highlight = "0"; };
-        if (!self.dataset.highlightHover) { self.dataset.highlightHover = "1"; };
+        setAttributesIfNull(self, {
+            "data-scheme": "solid",
+            "data-highlight": 0,
+            "data-highlight-hover": 1
+        });
     }
 
     //

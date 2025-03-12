@@ -14,9 +14,11 @@ import htmlCode from "./window.html?raw";
 import styles from "./window.scss?inline";
 
 // @ts-ignore
-import { initTaskManager } from "/externals/core/core.js";
 import { focusTask } from "../../functional/fn-task.js";
 import { makeControl } from "../../position/ts/ps-draggable.js";
+import { onTasking } from "../../tasks/binding";
+import initTaskManager from "../../tasks/logic";
+import { setAttributesIfNull } from "../../shared/Utils";
 
 // @ts-ignore
 @customElement('ui-frame')
@@ -40,30 +42,7 @@ export class UIFrame extends LitElementTheme {
     //
     protected initTaskManager(options = {icon: "", padding: "", taskManager: null}) {
         const self = this as unknown as HTMLElement;
-
-        //
-        this.taskManager ??= options?.taskManager || initTaskManager();
-        this.taskManager.on("focus", ({task, index})=>{
-            const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
-            if (isInFocus) { delete self.dataset.hidden; };
-            this.fixZLayer();
-        });
-
-        //
-        this.taskManager.on("activate", ({task, index})=>{
-            const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
-            if (isInFocus) { delete self.dataset.hidden; };
-            this.fixZLayer();
-        });
-
-        //
-        this.taskManager.on("deactivate", ({task, index})=>{
-            const isInFocus = (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.id.trim?.()?.replace?.("#","")?.trim?.();
-            if (isInFocus) { self.dataset.hidden = ""; };
-            this.fixZLayer();
-        });
-
-        //
+        onTasking(this, this.taskManager ??= options.taskManager || initTaskManager());
         this.fixZLayer();
     }
 
@@ -100,9 +79,11 @@ export class UIFrame extends LitElementTheme {
     //
     protected updateAttributes() {
         const self = this as unknown as HTMLElement;
-        if (!self.dataset.chroma) { self.dataset.chroma = "0"; };
-        if (!self.dataset.scheme) { self.dataset.scheme = "inverse"; };
-        if (!self.dataset.highlight) { self.dataset.highlight = "0"; };
+        setAttributesIfNull(self, {
+            "data-chroma": 0.001,
+            "data-scheme": "inverse",
+            "data-highlight": 0
+        });
     }
 
     //

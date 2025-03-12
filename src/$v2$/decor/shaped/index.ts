@@ -10,6 +10,7 @@ import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
 import styles from "./index.scss?inline";
+import { setAttributesIfNull } from "../../shared/Utils";
 
 //
 const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
@@ -38,10 +39,13 @@ export class UIShaped extends LitElement {
 
         //
         const self = this as unknown as HTMLElement;
-        if (!self.hasAttribute("data-chroma")) { self.setAttribute("data-chroma", "0.1"); };
-        if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "solid"); };
-        if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "0"); };
-        if (!self.hasAttribute("data-alpha")) { self.setAttribute("data-alpha", "0"); };
+        setAttributesIfNull(self, {
+            "data-transparent": "",
+            "data-alpha": 0,
+            "data-chroma": 0.1,
+            "data-scheme": "solid",
+            "data-highlight": 0
+        });
         if (!self.classList?.contains?.("ui-shaped")) { self.classList?.add?.("ui-shaped"); };
         if (!self.classList?.contains?.("u2-shaped")) { self.classList?.add?.("u2-shaped"); };
     }

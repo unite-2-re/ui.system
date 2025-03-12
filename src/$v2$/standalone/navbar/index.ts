@@ -14,7 +14,8 @@ import htmlCode from "./index.html?raw";
 import styles from "./index.scss?inline";
 
 // @ts-ignore
-import {initTaskManager} from "/externals/core/core.js";
+import initTaskManager from "../../tasks/logic";
+import { setAttributesIfNull } from "../../shared/Utils";
 
 //
 const setIdleInterval = (cb, timeout = 1000, ...args)=>{
@@ -106,11 +107,13 @@ export class UINavBar extends LitElementTheme {
 
         //
         const self = this as unknown as HTMLElement;
-        if (!self.hasAttribute("data-alpha"))           { self.setAttribute("data-alpha"          , "0.6"); };
-        if (!self.hasAttribute("data-chroma"))          { self.setAttribute("data-chroma"         , "0.1" ); };
-        if (!self.hasAttribute("data-scheme"))          { self.setAttribute("data-scheme"         , "base"); };
-        if (!self.hasAttribute("data-highlight"))       { self.setAttribute("data-highlight"      , "2"    ); };
-        if (!self.hasAttribute("data-highlight-hover")) { self.setAttribute("data-highlight-hover", "0"    ); };
+        setAttributesIfNull(self, {
+            "data-alpha": 0.6,
+            "data-chroma": 0.1,
+            "data-scheme": "base",
+            "data-highlight": 2,
+            "data-highlight-hover": 0,
+        });
     }
 
 }

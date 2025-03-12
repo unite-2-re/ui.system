@@ -14,10 +14,12 @@ import htmlCode from "./index.html?raw";
 import styles from "./index.scss?inline";
 
 // @ts-ignore
-import {initTaskManager} from "/externals/core/core.js";
+import initTaskManager from "../../tasks/logic";
 
 //
 import {connect} from "../../shared/Status";
+import { onInteration } from "../../tasks/opening";
+import { setAttributesIfNull } from "../../shared/Utils";
 
 //
 const setIdleInterval = (cb, timeout = 1000, ...args)=>{
@@ -70,36 +72,8 @@ export class UITaskBar extends LitElementTheme {
         this.adaptiveTheme();
 
         //
-        if (root) {
-            connect?.(root);
-            this.statusSW = true;
-        }
-
-        //
-        const DOC = document.documentElement;
-        root.addEventListener("click", (ev)=>{
-            if (ev?.target?.matches("[data-popup]")) {
-                const popup = document.querySelector("ui-modal[type=\"popup\"][data-name=\"" + ev?.target?.dataset?.popup + "\"]") as any;
-                popup?.showPopup?.(ev?.target?.matches(".ui-anchor") ? ev?.target : ev?.target?.closest(".ui-anchor"))
-                DOC.querySelectorAll("ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{ if (el != popup) { el.dataset.hidden = ""; }; });
-            } else {
-                DOC.querySelectorAll("ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; });
-            }
-
-            // TODO: native action registry support
-            if (ev?.target?.matches("[data-action=\"fullscreen\"]")) {
-                if (!document.fullscreenElement) {
-                    document.documentElement?.requestFullscreen?.({
-                        navigationUI: "hide", screen
-                    })?.catch?.(console.warn.bind(console));
-                } else
-                if (document.exitFullscreen) {
-                    document?.exitFullscreen?.();
-                }
-            }
-        });
-
-        //
+        if (root) { connect?.(root); this.statusSW = true; }
+        root.addEventListener("click", onInteration);
         return root;
     }
 
@@ -138,10 +112,12 @@ export class UITaskBar extends LitElementTheme {
         self.classList?.add?.("ui-taskbar");
 
         //
-        if (!self.hasAttribute("data-alpha"))     { self.setAttribute("data-alpha"          , "1" ); };
-        if (!self.hasAttribute("data-chroma"))    { self.setAttribute("data-chroma"         , "0" ); };
-        if (!self.hasAttribute("data-scheme"))    { self.setAttribute("data-scheme"         , "dynamic-transparent"); };
-        if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight"      , "0"    ); };
+        setAttributesIfNull(self, {
+            "data-scheme": "dynamic-transparent",
+            "data-chroma": 0,
+            "data-alpha": 1,
+            "data-highlight": 0
+        });
 
         //
         const media = matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))");

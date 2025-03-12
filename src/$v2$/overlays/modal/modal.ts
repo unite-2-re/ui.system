@@ -13,6 +13,7 @@ import styles from "./modal.scss?inline";
 
 // @ts-ignore
 import { whenAnyScreenChanges } from "/externals/core/agate.js";
+import { setAttributesIfNull } from "../../shared/Utils";
 
 // @ts-ignore
 @customElement('ui-modal')
@@ -51,9 +52,11 @@ export class UIModal extends LitElementTheme {
 
         //
         const self = this as unknown as HTMLElement;
-        if (!self.dataset?.alpha)  self.dataset.alpha = "1";
-        if (!self.dataset?.scheme) self.dataset.scheme = "solid";
-        if (!self.dataset?.chroma) self.dataset.chroma = "0.001";
+        setAttributesIfNull(self, {
+            "data-chroma": "0.001",
+            "data-scheme": "solid",
+            "data-alpha": 1
+        });
 
         //
         self.style.setProperty("z-index", "9999", "important");

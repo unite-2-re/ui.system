@@ -15,6 +15,8 @@ import styles from "./index.scss?inline";
 
 //
 import {connect} from "../../shared/Status";
+import { onInteration } from "../../tasks/opening";
+import { setAttributesIfNull } from "../../shared/Utils";
 
 // @ts-ignore
 @customElement('ui-statusbar')
@@ -31,36 +33,8 @@ export class UIStatusBar extends LitElementTheme {
         this.importFromTemplate(htmlCode);
 
         //
-        if (root) {
-            connect?.(root);
-            this.statusSW = true;
-        }
-
-        //
-        const DOC = document.documentElement;
-        root.addEventListener("click", (ev)=>{
-            if (ev?.target?.matches("[data-popup]")) {
-                const popup = document.querySelector("ui-modal[type=\"popup\"][data-name=\"" + ev?.target?.dataset?.popup + "\"]") as any;
-                popup?.showPopup?.(ev?.target?.matches(".ui-anchor") ? ev?.target : ev?.target?.closest(".ui-anchor"))
-                DOC.querySelectorAll("ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{ if (el != popup) { el.dataset.hidden = ""; }; });
-            } else {
-                DOC.querySelectorAll("ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; });
-            }
-
-            // TODO: native action registry support
-            if (ev?.target?.matches("[data-action=\"fullscreen\"]")) {
-                if (!document.fullscreenElement) {
-                    document.documentElement?.requestFullscreen?.({
-                        navigationUI: "hide", screen
-                    })?.catch?.(console.warn.bind(console));
-                } else
-                if (document.exitFullscreen) {
-                    document?.exitFullscreen?.();
-                }
-            }
-        });
-
-        //
+        if (root) { connect?.(root); this.statusSW = true; }
+        root.addEventListener("click", onInteration);
         return root;
     }
 
@@ -71,8 +45,10 @@ export class UIStatusBar extends LitElementTheme {
         //
         const self = this as unknown as HTMLElement;
         self.style.setProperty("z-index", "999999", "important");
-        if (!self.hasAttribute("data-chroma")) { self.setAttribute("data-chroma", "0"); };
-        if (!self.hasAttribute("data-scheme")) { self.setAttribute("data-scheme", "dynamic-transparent"); };
+        setAttributesIfNull(self, {
+            "data-scheme": "dynamic-transparent",
+            "data-chroma": 0
+        });
     }
 };
 

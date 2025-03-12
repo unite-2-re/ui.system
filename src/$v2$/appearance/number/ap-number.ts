@@ -17,6 +17,7 @@ import htmlCode from "./ap-number.html?raw";
 
 //
 import LitElementTheme from "../../shared/LitElementTheme";
+import { setAttributesIfNull } from "../../shared/Utils";
 
 //
 export const makeSpin = (weak?: WeakRef<any>, root?: any)=>{
@@ -82,8 +83,10 @@ export class UINumber extends LitElementTheme {
 
         //
         const self = this as unknown as HTMLElement;
-        if (!self.hasAttribute("data-highlight")) { self.setAttribute("data-highlight", "0"); };
-        if (!self.hasAttribute("data-alpha")) { self.setAttribute("data-alpha", "0"); };
+        setAttributesIfNull(self, {
+            "data-alpha": 0,
+            "data-highlight": 0
+        });
     }
 }
 

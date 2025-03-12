@@ -13,6 +13,8 @@ import htmlCode from "./index.html?raw";
 // @ts-ignore
 import styles from "./index.scss?inline";
 import { focusTask } from "../../functional/fn-task.js";
+import { taskManage } from "../../tasks/binding";
+import { setAttributesIfNull } from "../../shared/Utils";
 
 // @ts-ignore
 @customElement('ui-task')
@@ -66,43 +68,9 @@ export class UITaskItem extends LitElementTheme {
     //
     public bindTaskManager(taskManager: any) {
         const self = this as unknown as HTMLElement;
-
+        
         //
-        if (this.taskManager = taskManager ?? this.taskManager) {
-            //
-            this.taskManager.on("focus", ({task, index})=>{
-                const hash = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
-                const isInFocus = (hash == task.id.trim?.()?.replace?.("#","")?.trim?.());
-                this.focused = isInFocus || location.hash == ("#"+hash);
-                this.updateState();
-            });
-
-            //
-            this.taskManager.on("activate", ({task, index})=>{
-                const hash = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
-                const isInFocus = (hash == task.id.trim?.()?.replace?.("#","")?.trim?.());
-                if (isInFocus) {
-                    this.active  = true;
-                }
-                this.focused = (this.taskManager.getOnFocus()?.id == ("#"+hash)) || location.hash == ("#"+hash);
-                this.updateState();
-            });
-
-            //
-            this.taskManager.on("deactivate", ({task, index})=>{
-                const hash = (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
-                const isInFocus = (hash == task.id.trim?.()?.replace?.("#","")?.trim?.());
-                if (isInFocus) {
-                    this.active  = false;
-                    this.focused = false;
-                } else {
-                    this.focused = (this.taskManager.getOnFocus()?.id == ("#"+hash)) || location.hash == ("#"+hash);
-                }
-                this.updateState();
-            });
-        }
-
-        //
+        taskManage(this, this.taskManager ??= taskManager);
         { this.updateState(); }
     }
 
@@ -124,12 +92,13 @@ export class UITaskItem extends LitElementTheme {
         }
 
         //
-        if (!self.hasAttribute("data-id") && this.taskId) { self.setAttribute("data-id"             , (this.taskId || self.dataset.id || "")); };
-        if (!self.hasAttribute("data-chroma"))            { self.setAttribute("data-chroma"         , "0" ); };
-        if (!self.hasAttribute("data-alpha"))             { self.setAttribute("data-alpha"          , "0"    ); };
-        if (!self.hasAttribute("data-highlight"))         { self.setAttribute("data-highlight"      , "0"    ); };
-        if (!self.hasAttribute("data-highlight-hover"))   { self.setAttribute("data-highlight-hover", "3"    ); };
-        if (self.dataset.id && !this.taskId) { this.taskId = self.dataset.id; };
+        setAttributesIfNull(self, {
+            "data-id": (this.taskId || self.dataset.id || ""),
+            "data-chroma": 0,
+            "data-alpha": 0,
+            "data-highlight": 0,
+            "data-highlight-hover": 3
+        });
 
         //
         this.updateState();

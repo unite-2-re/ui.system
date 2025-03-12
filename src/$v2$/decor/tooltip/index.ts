@@ -9,6 +9,7 @@ import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
 import styles from "./index.scss?inline";
+import { setAttributesIfNull } from "../../shared/Utils";
 //import runTooltip from "./service.js";
 
 // @ts-ignore
@@ -30,10 +31,13 @@ export class UITooltip extends LitElementTheme {
 
         //
         const self = this as unknown as HTMLElement;
-        if (!self.dataset?.alpha) self.dataset.alpha = "1";
-        if (!self.dataset?.scheme) self.dataset.scheme = "solid";
-        if (!self.dataset?.chroma) self.dataset.scheme = "0.001";
-        self.dataset.hidden = "";
+
+        //
+        setAttributesIfNull(self, {
+            "data-chroma": "0.001",
+            "data-scheme": "solid",
+            "data-alpha": 1
+        });
 
         //
         self.style.setProperty("z-index", "9999", "important");

@@ -15,6 +15,7 @@ import styles from "./calendar.scss?inline";
 
 // @ts-ignore
 import htmlCode from "./calendar.html?raw";
+import { setAttributesIfNull } from '../../shared/Utils';
 
 // @ts-ignore
 @customElement('ui-calendar')
@@ -92,9 +93,7 @@ layouts: {
     public connectedCallback() {
         super.connectedCallback();
         const self = this as unknown as HTMLElement;
-        if (!self.getAttribute("data-alpha")) {
-            self.setAttribute("data-alpha", "0");
-        }
+        setAttributesIfNull(self, {"data-alpha": 0});
     }
 };
 

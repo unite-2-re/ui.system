@@ -1,3 +1,5 @@
+import { setAttributes } from "../shared/Utils";
+
 //
 export const doIndication = (ev?: any, self?: HTMLElement, input?: HTMLInputElement)=>{
     if (!self) return;
@@ -41,7 +43,9 @@ export const doIndication = (ev?: any, self?: HTMLElement, input?: HTMLInputElem
 
         //
         const thumb = self.shadowRoot?.querySelector?.(".ui-thumb");
-        thumb?.setAttribute?.("data-highlight", input?.checked ? "3" : "8");
-        thumb?.setAttribute?.("data-highlight-hover", input?.checked ? "0" : "5");
+        setAttributes(thumb, {
+            "data-highlight": input?.checked ? 3 : 8,
+            "data-highlight-hover": input?.checked ? 0 : 5
+        });
     }
 }
