@@ -44,19 +44,13 @@ const setIdleInterval = (cb, timeout = 1000, ...args)=>{
 //
 export const runTimeStatus = (async()=>{
     //
-    const updateTime = ()=>{
-        const date = new Date();
-        const timeMinutes = `${date.getMinutes()}`.padStart(2,"0");
-        const timeHours = `${date.getHours()}`.padStart(2,"0");
-
-        //
-        setElementContent(".ui-time-minute", timeMinutes);
-        setElementContent(".ui-time-hour", timeHours);
+    const updateTime = () => {
+        // TODO! support of `hour12` option (used-defined)
+        setElementContent(".ui-time", new Date().toLocaleTimeString(navigator.language, { hour12: false, timeStyle: "short" }));
     }
 
-    //
-    updateTime();
-    setIdleInterval(updateTime, 15000);
+    // TODO! support of seconds option (user-defined)
+    updateTime(); setIdleInterval(updateTime, 15000);
     document.addEventListener("DOMContentLoaded", updateTime, { once: true });
 });
 
