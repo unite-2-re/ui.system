@@ -3,33 +3,33 @@
 export const taskManage = (self, taskManager) => {
     //
     taskManager.on("focus", ({task, index})=>{
-        const hash = (self.dataset.id || self.taskId).trim?.()?.replace?.("#","")?.trim?.();
-        const isInFocus = (hash == task.id.trim?.()?.replace?.("#","")?.trim?.());
-        self.focused = isInFocus || location.hash == ("#"+hash);
+        //const hash = (self.dataset.id || self.taskId).trim?.()?.replace?.("#","")?.trim?.();
+        //const isInFocus = (hash == task.id.trim?.()?.replace?.("#","")?.trim?.());
+        //self.focused = isInFocus || location.hash == ("#"+hash);
         self?.updateState?.();
     });
 
     //
     taskManager.on("activate", ({task, index})=>{
-        const hash = (self.dataset.id || self.taskId).trim?.()?.replace?.("#","")?.trim?.();
-        const isInFocus = (hash == task.id.trim?.()?.replace?.("#","")?.trim?.());
-        if (isInFocus) {
-            self.active  = true;
-        }
-        self.focused = (taskManager.getOnFocus()?.id == ("#"+hash)) || location.hash == ("#"+hash);
+        ///const hash = (self.dataset.id || self.taskId).trim?.()?.replace?.("#","")?.trim?.();
+        //const isInFocus = (hash == task.id.trim?.()?.replace?.("#","")?.trim?.());
+        //if (isInFocus) {
+            //self.active  = true;
+        //}
+        //self.focused = (taskManager.getOnFocus()?.id == ("#"+hash)) || location.hash == ("#"+hash);
         self?.updateState?.();
     });
 
     //
     taskManager.on("deactivate", ({task, index})=>{
-        const hash = (self.dataset.id || self.taskId).trim?.()?.replace?.("#","")?.trim?.();
-        const isInFocus = (hash == task.id.trim?.()?.replace?.("#","")?.trim?.());
-        if (isInFocus) {
-            self.active  = false;
-            self.focused = false;
-        } else {
-            self.focused = (taskManager.getOnFocus()?.id == ("#"+hash)) || location.hash == ("#"+hash);
-        }
+        //const hash = (self.dataset.id || self.taskId).trim?.()?.replace?.("#","")?.trim?.();
+        //const isInFocus = (hash == task.id.trim?.()?.replace?.("#","")?.trim?.());
+        //if (isInFocus) {
+            //self.active  = false;
+            //self.focused = false;
+        //} else {
+            //self.focused = (taskManager.getOnFocus()?.id == ("#"+hash)) || location.hash == ("#"+hash);
+        //}
         self?.updateState?.();
     });
 }

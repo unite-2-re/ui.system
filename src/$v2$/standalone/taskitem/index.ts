@@ -20,25 +20,31 @@ import { setAttributes, setAttributesIfNull } from "../../shared/Utils";
 @customElement('ui-task')
 export class UITaskItem extends LitElementTheme {
     @property({attribute: "data-id", reflect: true, type: String}) taskId: string = "";
-    @property({attribute: true, reflect: true, type: String}) icon: string = "";
-    @property({attribute: true, reflect: true, type: String}) label: string = "";
-    @property({attribute: true, reflect: true, type: String}) active: boolean = false;
-    @property({attribute: true, reflect: true, type: String}) focused: boolean = false;
+    @property({attribute: true, reflect: true, type: Object}) desc: any = {};
     @property() public taskManager?: any;
+
+    // TODO: implicit state managment
+    //@property({attribute: true, reflect: true, type: String}) active: boolean = false;
+    //@property({attribute: true, reflect: true, type: String}) focused: boolean = false;
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
     protected render() {
-        return html`${this.themeStyle} <ui-icon inert icon=${this.icon} data-highlight="0" data-alpha="0"></ui-icon> <span inert data-highlight="0" data-alpha="0">${this.label}</span>`;
+        return html`${this.themeStyle} <ui-icon inert icon=${this.desc?.icon} data-highlight="0" data-alpha="0"></ui-icon> <span inert data-highlight="0" data-alpha="0">${this.desc?.label}</span>`;
     }
 
     //
-    constructor(options = {icon: "", padding: "", id: "", taskManager: null}) {
+    constructor(options = {
+        desc: "", 
+        padding: "", 
+        id: "", 
+        taskManager: null
+    }) {
         super(); const self = this as unknown as HTMLElement;
 
         //
         if (options?.id)          { this.taskId = options?.id   ?? this.taskId; };
-        if (options?.icon)        { this.icon   = options?.icon ?? this.icon; };
+        if (options?.desc)        { this.desc   = options?.desc ?? this.desc; };
         if (options?.taskManager) { this.bindTaskManager(options?.taskManager); };
 
         //
@@ -58,11 +64,22 @@ export class UITaskItem extends LitElementTheme {
         const task = this.taskManager?.get?.(hash);
 
         //
-        if (task?.active || (this.focused ||= location.hash == hash)) { this.active = true; };
-        if (this.focused && !self.classList.contains("ui-focus")) { self.classList.add("ui-focus"); };
-        if (this.active && !self.classList.contains("ui-active")) { self.classList.add("ui-active"); };
-        if (!this.focused && self.classList.contains("ui-focus")) { self.classList.remove("ui-focus"); };
-        if (!this.active && self.classList.contains("ui-active")) { self.classList.remove("ui-active"); };
+        let focused = this.taskManager?.getOnFocus?.(true)?.id?.replace("#","") == this.taskId?.replace("#","");
+        if (focused ||= location.hash == hash) task.active = true;
+
+        //
+        if (task?.active) {
+            if (!self.classList.contains("ui-active")) self.classList.add("ui-active");
+        } else {
+            if (self.classList.contains("ui-active")) self.classList.remove("ui-active");
+        }
+
+        //
+        if (focused) {
+            if (!self.classList.contains("ui-focus")) self.classList.add("ui-focus");
+        } else {
+            if (self.classList.contains("ui-focus")) self.classList.remove("ui-focus");
+        }
     }
 
     //

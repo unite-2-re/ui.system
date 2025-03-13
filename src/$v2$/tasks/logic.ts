@@ -2,31 +2,63 @@
 type FX = ((a: any)=>any);
 
 //
-const replaceState = (hash = "")=>{
-    /*if (location.hash != hash) {
-        pendingChange = hash;
-        history.replaceState(null, "", location.hash = hash || "#");
-    }*/
+export const blurTask = (taskManager?) => {
+    const isMobile = matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches;
+    const taskbar = isMobile ? document.querySelector("ui-taskbar:not([data-hidden])") : null;
+    const modal = (document.querySelector("ui-modal[type=\"contextmenu\"]:not([data-hidden])") ?? document.querySelector("ui-modal:not([data-hidden]):where(:has(:focus), :focus)") ?? taskbar ?? document.querySelector("ui-modal:not([data-hidden])")) as HTMLElement;
+
+    //
+    if (document.activeElement?.matches?.("input")) {
+        (document.activeElement as any)?.blur?.();
+        return true;
+    } else 
+
+    //
+    if (modal) {
+        modal.dataset.hidden = "";
+        return true;
+    } else
+
+    // general case
+    if (taskManager) {
+        const task = taskManager?.getOnFocus?.();
+        const id = task?.id || location.hash;
+        if (id && id != "#") {
+            taskManager.deactivate(id, false);
+            if (id?.replace?.("#","")?.startsWith("TASK-")) {
+                taskManager.removeTask(id);
+            }
+            return true;
+        }
+    }
+
+    //
+    return false;
 }
 
 //
 export class TaskManager {
     #tasks: any[] = [];
     #events = new Map<string, FX[]>([]);
+    #initialHistoryCount = 0;
 
     //
     constructor(tasks = []) {
         this.#tasks  = tasks || [];
         this.#events = new Map<string, FX[]>([]);
+        this.#initialHistoryCount = history?.length;
 
         //
         addEventListener("hashchange", (ev)=>{
-            this.focus(location.hash);
+            this.focus(location.hash, true);
         });
 
         //
-        if (history?.length <= 1) {
-            history?.pushState?.("", "", location.hash = location.hash || "#");
+        if (location.hash) {
+            history?.pushState?.("", "", location.hash || "#");
+            this.focus(location.hash, true);
+        } else {
+            history?.pushState?.("", "", "");
         }
 
         //
@@ -38,29 +70,12 @@ export class TaskManager {
             ev.stopImmediatePropagation();
 
             // hide taskbar before back
-            const taskbar = (document.querySelector("ui-modal[type=\"contextmenu\"]:not([data-hidden])") ?? document.querySelector("ui-modal:not([data-hidden]), ui-taskbar:not([data-hidden])")) as HTMLElement;
             if (ignoreForward) {
                 ignoreForward = false;
-            } else
-            if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches && taskbar && !ignoreForward) {
+            } else 
+            if (blurTask(this)) {
                 ignoreForward = true;
                 history?.forward?.();
-                if (!document.activeElement?.matches?.("input") || !taskbar?.matches?.("ui-modal")) {
-                    taskbar.dataset.hidden = "";
-                } else {
-                    (document.activeElement as any)?.blur?.();
-                }
-            } else
-            if (taskManager && !ignoreForward) {
-                const id = taskManager.getOnFocus(false)?.id || "#";
-                if (id && id != "#") {
-                    ignoreForward = true;
-                    history?.forward?.();
-                    taskManager.deactivate(id, false);
-                    if (id?.replace?.("#","")?.startsWith("TASK-")) {
-                        taskManager.removeTask(id);
-                    }
-                }
             }
         });
     }
@@ -125,7 +140,11 @@ export class TaskManager {
     }
 
     //
-    focus(taskId: string) {
+    focus(taskId: string, force = false) {
+        const previous = this.getOnFocus();
+        if (previous?.id == taskId && !force) return;
+
+        //
         this.activate(taskId);
 
         //
@@ -139,16 +158,9 @@ export class TaskManager {
         //
         if (index >= 0) { this.trigger("focus", {task, self: this, oldIndex: index, index: (this.tasks.length-1)}); };
 
-        //
-        if (location?.hash?.trim?.() != taskId?.trim?.() && taskId)
-            {
-                const oldHash = location.hash;
-                replaceState(taskId || oldHash);
-            };
-
         // may breaking...
-        if (history?.length <= 1 && taskId) {
-            history?.pushState?.("", "", location.hash = location.hash || "#");
+        if (taskId && history.length <= this.#initialHistoryCount) {
+            history.pushState("", "", taskId || location.hash);
         }
 
         //
@@ -166,10 +178,10 @@ export class TaskManager {
 
         //
         if (location?.hash?.trim?.() == taskId?.trim?.() && taskId)
-            {
-                const newHash = this.getOnFocus(false)?.id || "#";
-                if (trigger) { replaceState(newHash); }
-            };
+        {
+            const newHash = this.getOnFocus(false)?.id || "#";
+            if (trigger) { history.replaceState("", "", newHash); }
+        };
 
         //
         return this;
@@ -238,8 +250,7 @@ export class TaskManager {
 let taskManager: TaskManager|null = null;
 export const initTaskManager = (): TaskManager =>{
     //const wasInit = taskManager == null;
-    const Manager = (taskManager ??= new TaskManager());
-    return Manager;
+    return (taskManager ??= new TaskManager());
 }
 
 //
