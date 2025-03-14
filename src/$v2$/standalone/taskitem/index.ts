@@ -35,9 +35,9 @@ export class UITaskItem extends LitElementTheme {
 
     //
     constructor(options = {
-        desc: "", 
-        padding: "", 
-        id: "", 
+        desc: "",
+        padding: "",
+        id: "",
         taskManager: null
     }) {
         super(); const self = this as unknown as HTMLElement;
@@ -85,7 +85,7 @@ export class UITaskItem extends LitElementTheme {
     //
     public bindTaskManager(taskManager: any) {
         const self = this as unknown as HTMLElement;
-        
+
         //
         taskManage(this, this.taskManager ??= taskManager);
         { this.updateState(); }

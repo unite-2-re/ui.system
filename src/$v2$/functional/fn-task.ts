@@ -11,7 +11,7 @@ Array.from(winds).filter((w)=>!!w).forEach((e: HTMLElement, I)=>{
 
 //
 export const focusTask = (taskManager, target: HTMLElement, deActiveWhenFocus = false)=>{
-    const hash = "#" + (target.dataset.id || (target.querySelector(".ui-content")?.id || target.id || target.querySelector(location.hash)?.id || "") || (target as any).taskId).trim?.()?.replace?.("#","")?.trim?.();
+    const hash = "#" + (target.dataset.id || (target.querySelector(".ui-content")?.id || target.id || (location.hash ? target.querySelector(location.hash) : null)?.id || "") || (target as any).taskId).trim?.()?.replace?.("#","")?.trim?.();
     if (taskManager?.inFocus?.(hash) && matchMedia("((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))").matches && deActiveWhenFocus) {
         taskManager?.deactivate?.(hash);
     } else {

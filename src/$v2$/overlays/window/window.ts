@@ -69,7 +69,7 @@ export class UIFrame extends LitElementTheme {
 
         //
         const self      = this as unknown as HTMLElement;
-        const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || self.querySelector(location.hash)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
+        const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || (location.hash ? self.querySelector(location.hash) : null)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
         if (isInFocus) { delete self.dataset.hidden; };
 
         //
