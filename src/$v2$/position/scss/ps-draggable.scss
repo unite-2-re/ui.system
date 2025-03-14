@@ -119,6 +119,7 @@
         inset-block-end   : auto;
         touch-action: none;
         translate: 0% 0% 0%;
+        transform-origin: 0% 0%;
 
         //
         --translate-x: calc(var(--ds-x, 0px) - 50%) !important;
