@@ -64,6 +64,20 @@
     }
 
     //
+    @property --limit-shift-x {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
+    @property --limit-shift-y {
+        initial-value: 100%;
+        syntax: "<length-percentage>";
+        inherits: true;
+    }
+
+    //
     @property --limit-drag-x {
         initial-value: 100%;
         syntax: "<length-percentage>";
@@ -99,16 +113,16 @@
 
     /* */
     & {
-        inset-inline-start: var(--sp-x, 0px);//var(--ds-x, 0px);
-        inset-block-start : var(--sp-y, 0px);//var(--ds-y, 0px);
+        inset-inline-start: calc(var(--sp-x, 0px) + 50%);//var(--ds-x, 0px);
+        inset-block-start : calc(var(--sp-y, 0px) + 50%);//var(--ds-y, 0px);
         inset-inline-end  : auto;
         inset-block-end   : auto;
         touch-action: none;
         translate: 0% 0% 0%;
 
         //
-        --translate-x: var(--ds-x, 0px) !important;
-        --translate-y: var(--ds-y, 0px) !important;
+        --translate-x: calc(var(--ds-x, 0px) - 50%) !important;
+        --translate-y: calc(var(--ds-y, 0px) - 50%) !important;
 
         // by default not prefer
         direction: ltr;

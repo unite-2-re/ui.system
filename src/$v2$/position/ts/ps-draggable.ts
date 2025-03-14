@@ -15,9 +15,9 @@ export const makeControl = (frameElement: HTMLElement)=>{
     //
     if (frameElement && frameElement.parentNode) {
         // @ts-ignore
-        const pn = (frameElement.offsetParent ?? frameElement.host ?? document.documentElement) as HTMLElement;
-        frameElement.style.setProperty("--shift-x", `${(pn.clientWidth  - Math.min(Math.max(frameElement.offsetWidth , 48*16), pn.clientWidth)) * 0.5}`, "");
-        frameElement.style.setProperty("--shift-y", `${(pn.clientHeight - Math.min(Math.max(frameElement.offsetHeight, 24*16), pn.clientHeight)) * 0.5}`, "");
+        //const pn = (frameElement.offsetParent ?? frameElement.host ?? document.documentElement) as HTMLElement;
+        //frameElement.style.setProperty("--shift-x", `${(pn.clientWidth  - Math.min(Math.max(frameElement.offsetWidth , 48*16), pn.clientWidth)) * 0.5}`, "");
+        //frameElement.style.setProperty("--shift-y", `${(pn.clientHeight - Math.min(Math.max(frameElement.offsetHeight, 24*16), pn.clientHeight)) * 0.5}`, "");
         frameElement.addEventListener("m-dragstart", (ev: any)=>{
             if (ev.detail.holding.propertyName == "drag") {
                 frameElement?.setAttribute?.("data-dragging", "");
