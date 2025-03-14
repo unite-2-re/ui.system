@@ -19,5 +19,9 @@
         // by default not prefer
         direction: ltr;
         writing-mode: horizontal-tb;
+
+        //
+        --translate-x: 0px;
+        --translate-y: 0px;
     };
 };
