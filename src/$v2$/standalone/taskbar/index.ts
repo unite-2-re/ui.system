@@ -38,7 +38,7 @@ const setIdleInterval = (cb, timeout = 1000, ...args)=>{
 @customElement('ui-taskbar')
 export class UITaskBar extends LitElementTheme {
     // theme style property
-    @property({ type: Boolean }) protected statusSW?: boolean = false;
+    @property({ type: Boolean }) protected statusSW?: boolean;// = false;
     @property({ type: Array }) public tasks?: any[] = [];
     @property() public taskManager?: any;
 
@@ -46,34 +46,29 @@ export class UITaskBar extends LitElementTheme {
     static styles = css`${unsafeCSS(styles)}`;
     constructor(options = {icon: "", padding: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
-
-        //
-        this.taskManager ??= options?.taskManager || initTaskManager();
-        this.taskManager.addTasks(this.tasks || []);
+        const taskManager = options?.taskManager || initTaskManager();
+        this.taskManager ??= taskManager;
 
         // cupola
         const media = matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))");
-
-        //
-        media.addEventListener("change", ({matches}) => {
-            if (matches) { delete self.dataset.hidden; } else { self.dataset.hidden = ""; };
-        });
-
-        //
         requestAnimationFrame(()=>{
+            media.addEventListener("change", ({matches}) => {
+                if (matches) { delete self.dataset.hidden; } else { self.dataset.hidden = ""; };
+            });
             if (media.matches) { delete self.dataset.hidden; } else { self.dataset.hidden = ""; };
+            //.addTasks(this.tasks || []);
         });
     }
 
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        this.importFromTemplate(htmlCode);
-        this.adaptiveTheme();
-
-        //
-        if (root) { connect?.(root); this.statusSW = true; }
-        root.addEventListener("click", onInteration);
+        requestAnimationFrame(()=>{
+            this.importFromTemplate(htmlCode);
+            this.adaptiveTheme();
+            if (root) { connect?.(root); this.statusSW = true; }
+            root.addEventListener("click", onInteration);
+        });
         return root;
     }
 

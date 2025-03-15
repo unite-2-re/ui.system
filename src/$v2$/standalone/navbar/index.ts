@@ -33,8 +33,8 @@ const setIdleInterval = (cb, timeout = 1000, ...args)=>{
 // @ts-ignore
 @customElement('ui-navbar')
 export class UINavBar extends LitElementTheme {
-    @property({attribute: true, reflect: true, type: String}) icon : string = "";
-    @property({attribute: true, reflect: true, type: String}) label: string = "";
+    @property({attribute: true, reflect: true, type: String}) icon ?: string;// = "";
+    @property({attribute: true, reflect: true, type: String}) label?: string;// = "";
     @property() public taskManager?: any;
 
     // also "display" may be "contents"
@@ -43,14 +43,16 @@ export class UINavBar extends LitElementTheme {
     //
     constructor(options = {icon: "", padding: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
-        self.classList?.add?.("ui-navbar");
-        self.style.setProperty("z-index", "9999", "important");
-        self.style.setProperty("background-color", "transparent", "important");
-        this.taskManager ??= options?.taskManager || initTaskManager();
+        requestAnimationFrame(()=>{
+            self.classList?.add?.("ui-navbar");
+            self.style.setProperty("z-index", "9999", "important");
+            self.style.setProperty("background-color", "transparent", "important");
+            this.taskManager ??= options?.taskManager || initTaskManager();
+        });
     }
 
     //
-    protected render() { return html`${this.themeStyle}<button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}><ui-icon inert icon="menu"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-right"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle" part="ui-title-handle" @click=${this.menuAction.bind(this)}><ui-icon inert icon=${this.icon}></ui-icon><span>${this.label}</span></button>`; }
+    protected render() { return html`${this.themeStyle}<button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}><ui-icon inert icon="menu"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-right"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle" part="ui-title-handle" @click=${this.menuAction.bind(this)}><ui-icon inert icon=${this.icon||""}></ui-icon><span>${this.label}</span></button>`; }
     protected adaptiveTheme() {
         const self = this as unknown as HTMLElement;
         const setTheme = ()=>{
@@ -86,7 +88,9 @@ export class UINavBar extends LitElementTheme {
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         this.importFromTemplate(htmlCode);
-        this.adaptiveTheme();
+        requestAnimationFrame(()=>{
+            this.adaptiveTheme();
+        });
         return root;
     }
 

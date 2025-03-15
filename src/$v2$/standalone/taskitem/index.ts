@@ -19,8 +19,8 @@ import { setAttributes, setAttributesIfNull } from "../../shared/Utils";
 // @ts-ignore
 @customElement('ui-task')
 export class UITaskItem extends LitElementTheme {
-    @property({attribute: "data-id", reflect: true, type: String}) taskId: string = "";
-    @property({attribute: true, reflect: true, type: Object}) desc: any = {};
+    @property({attribute: "data-id", reflect: true, type: String}) taskId?: string; //= "";
+    @property({attribute: true, reflect: true, type: Object}) desc?: any;// = {};
     @property() public taskManager?: any;
 
     // TODO: implicit state managment
@@ -41,16 +41,19 @@ export class UITaskItem extends LitElementTheme {
         taskManager: null
     }) {
         super(); const self = this as unknown as HTMLElement;
+        this.taskManager ??= options?.taskManager;
 
         //
-        if (options?.id)          { this.taskId = options?.id   ?? this.taskId; };
-        if (options?.desc)        { this.desc   = options?.desc ?? this.desc; };
-        if (options?.taskManager) { this.bindTaskManager(options?.taskManager); };
+        requestAnimationFrame(()=>{
+            if (options?.desc)        { this.desc   = options?.desc ?? this.desc;   };
+            if (options?.id)          { this.taskId = options?.id   ?? this.taskId; };
+            if (options?.taskManager) { this.bindTaskManager(options?.taskManager); };
 
-        //
-        self.classList?.add?.("ui-task");
-        self.addEventListener("click", () => focusTask(this.taskManager, self, true));
-        this.updateState();
+            //
+            self.classList?.add?.("ui-task");
+            self.addEventListener("click", () => focusTask(this.taskManager, self, true));
+            this.updateState();
+        });
 
         //
         addEventListener("popstate"  , ()=>{ this.updateState(); });
@@ -60,7 +63,7 @@ export class UITaskItem extends LitElementTheme {
     //
     protected updateState() {
         const self = this as unknown as HTMLElement;
-        const hash = "#" + (self.dataset.id || this.taskId).trim?.()?.replace?.("#","")?.trim?.();
+        const hash = "#" + (self.dataset?.id || this.taskId || "").trim?.()?.replace?.("#","")?.trim?.();
         const task = this.taskManager?.get?.(hash);
 
         //

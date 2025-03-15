@@ -41,20 +41,22 @@ export class UISelectBase extends LitElement {
     #onSelect?: Function;
 
     // theme style property
-    @property({attribute: true, reflect: true, type: String}) public value: string|number = "";
-    @property({attribute: true, reflect: true, type: Boolean}) public checked: boolean = false;
+    @property({attribute: true, reflect: true, type: String}) public value?: string|number;
+    @property({attribute: true, reflect: true, type: Boolean}) public checked?: boolean;
     @property({ type: Array }) protected nodes?: HTMLElement[];
 
     //
     constructor() {
         super(); const self = this as unknown as HTMLElement;
-        self.classList?.add?.("u2-input");
-        self?.addEventListener?.("click", (ev)=>{
-            // redirection...
-            const element = ev?.target as HTMLElement;
-            if (!element?.matches?.("input")) {
-                self?.querySelector?.("input")?.click?.();
-            }
+        requestAnimationFrame(()=>{
+            self.classList?.add?.("u2-input");
+            self?.addEventListener?.("click", (ev)=>{
+                // redirection...
+                const element = ev?.target as HTMLElement;
+                if (!element?.matches?.("input")) {
+                    self?.querySelector?.("input")?.click?.();
+                }
+            });
         });
     }
 

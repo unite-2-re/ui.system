@@ -25,16 +25,18 @@ import { setAttributesIfNull } from "../../shared/Utils";
 // @ts-ignore
 @customElement('ui-toggle')
 export class UIToggle extends UISelectBase {
-    @property({attribute: true, reflect: true, type: String}) value = "";
-    @property({attribute: true, reflect: true, type: String}) icon = "";
+    @property({attribute: true, reflect: true, type: String}) value;// = "";
+    @property({attribute: true, reflect: true, type: String}) icon;// = "";
     @property({}) dropMenu?: any = null;
 
     //
     static styles = css`${unsafeCSS(styles)}`;
     constructor() {
         super(); const self = this as unknown as HTMLElement;
-        self.classList?.add?.("ui-toggle");
-        self.classList?.add?.("u2-toggle");
+        requestAnimationFrame(()=>{
+            self.classList?.add?.("ui-toggle");
+            self.classList?.add?.("u2-toggle");
+        });
     }
 
     //
@@ -64,8 +66,8 @@ export class UIToggle extends UISelectBase {
 // @ts-ignore
 @customElement('ui-button')
 export class UIButton extends UIButtonBase {
-    @property({attribute: true, reflect: true, type: String}) value = "";
-    @property({attribute: true, reflect: true, type: String}) icon = "";
+    @property({attribute: true, reflect: true, type: String}) value;// = "";
+    @property({attribute: true, reflect: true, type: String}) icon;// = "";
     @property({}) dropMenu?: any = null;
 
     //

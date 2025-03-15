@@ -15,7 +15,7 @@ import { setAttributesIfNull } from "../../shared/Utils";
 // @ts-ignore
 @customElement('ui-tooltip')
 export class UITooltip extends LitElementTheme {
-    @property() protected current: string = "";
+    @property() protected current?: string;// = "";
 
     //
     static styles = css`${unsafeCSS(styles)}`;

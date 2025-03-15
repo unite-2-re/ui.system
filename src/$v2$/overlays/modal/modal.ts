@@ -18,9 +18,9 @@ import { setAttributesIfNull } from "../../shared/Utils";
 // @ts-ignore
 @customElement('ui-modal')
 export class UIModal extends LitElementTheme {
-    @property() protected current: string = "";
+    @property() protected current?: string; //= "";
     @property({ type: Object }) public boundElement?: WeakRef<HTMLElement> | null;
-    @property({ attribute: true, reflect: true, type: String }) public type: string = "modal";
+    @property({ attribute: true, reflect: true, type: String }) public type?: string;// = "modal";
 
     //
     static styles = css`${unsafeCSS(styles)}`;
@@ -39,14 +39,25 @@ export class UIModal extends LitElementTheme {
         });
 
         //
-        self.addEventListener("u2-appear", (e)=>{
-            //self.style.removeProperty("display");
-            if (e.target == this) requestAnimationFrame(()=>this.placeWithElement());
-        });
+        requestAnimationFrame(()=>{
+            setAttributesIfNull(self, {
+                //"type": "modal",
+                "data-hidden": "",
+                "data-chroma": "0.001",
+                "data-scheme": "solid",
+                "data-alpha": 1
+            });
 
-        //
-        self.addEventListener("u2-before-show", (e)=>{
-            if (e.target == this) requestAnimationFrame(()=> this.placeWithElement());
+            //
+            self.addEventListener("u2-appear", (e)=>{
+                //self.style.removeProperty("display");
+                if (e.target == this) requestAnimationFrame(()=>this.placeWithElement());
+            });
+
+            //
+            self.addEventListener("u2-before-show", (e)=>{
+                if (e.target == this) requestAnimationFrame(()=> this.placeWithElement());
+            });
         });
 
         // force fix phantom appear
@@ -56,7 +67,7 @@ export class UIModal extends LitElementTheme {
 
         //
         //self.style.display = "none";
-        self.dataset.hidden = "";
+        //self.dataset.hidden = "";
     }
 
     //
@@ -66,6 +77,7 @@ export class UIModal extends LitElementTheme {
         //
         const self = this as unknown as HTMLElement;
         setAttributesIfNull(self, {
+            //"type": "modal",
             "data-hidden": "",
             "data-chroma": "0.001",
             "data-scheme": "solid",

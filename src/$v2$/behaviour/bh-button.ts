@@ -16,9 +16,11 @@ export class UIButtonBase extends LitElement {
     $parentNode?: any;
     constructor() {
         super(); const self = this as unknown as HTMLElement;
-        self.addEventListener("contextmenu", (ev)=>{
-            ev?.stopPropagation?.();
-            ev?.preventDefault?.();
+        requestAnimationFrame(()=>{
+            self.addEventListener("contextmenu", (ev)=>{
+                ev?.stopPropagation?.();
+                ev?.preventDefault?.();
+            });
         });
     }
 

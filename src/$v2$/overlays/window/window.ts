@@ -30,20 +30,24 @@ export class UIFrame extends LitElementTheme {
     static styles = css`${unsafeCSS(styles)}`;
     constructor(options = {icon: "", padding: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
-        self.classList?.add?.("ui-frame");
-        self.classList?.add?.("u2-frame");
-        self.dataset.hidden = "";
-        this.initTaskManager(options);
-        self.addEventListener("pointerdown", (ev)=>{
-            focusTask(this?.taskManager, self);
-        });
-    }
+        const taskManager = options.taskManager || initTaskManager();
+        this.taskManager ??= taskManager;
 
-    //
-    protected initTaskManager(options = {icon: "", padding: "", taskManager: null}) {
-        const self = this as unknown as HTMLElement;
-        onTasking(this, this.taskManager ??= options.taskManager || initTaskManager());
-        this.fixZLayer();
+        //
+        requestAnimationFrame(()=>{
+            self.classList?.add?.("ui-frame");
+            self.classList?.add?.("u2-frame");
+            self.dataset.hidden = "";
+
+            //
+            onTasking(this, this.taskManager);
+            self.addEventListener("pointerdown", (ev)=>{
+                focusTask(this?.taskManager, self);
+            });
+
+            //
+            this.fixZLayer();
+        });
     }
 
     //

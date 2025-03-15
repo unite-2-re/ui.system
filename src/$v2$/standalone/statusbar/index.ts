@@ -33,8 +33,10 @@ export class UIStatusBar extends LitElementTheme {
         this.importFromTemplate(htmlCode);
 
         //
-        if (root) { connect?.(root); this.statusSW = true; }
-        root.addEventListener("click", onInteration);
+        requestAnimationFrame(()=>{
+            if (root) { connect?.(root); this.statusSW = true; }
+            root.addEventListener("click", onInteration);
+        });
         return root;
     }
 

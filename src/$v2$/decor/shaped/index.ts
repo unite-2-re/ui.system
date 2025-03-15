@@ -20,17 +20,19 @@ const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type
 export class UIShaped extends LitElement {
 
     // theme style property
-    @property({attribute: true, reflect: true, type: String}) icon: string = "";
+    @property({attribute: true, reflect: true, type: String}) icon?: string;
 
     // also "display" may be "contents"
     protected render() {
-        return html`<style>${importStyle}</style><slot></slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon}></ui-icon>`;
+        return html`<style>${importStyle}</style><slot></slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon||""}></ui-icon>`;
     }
 
     //
     constructor(options = {icon: "", padding: ""}) {
         super(); const self = this as unknown as HTMLElement;
-        if (options?.icon) { this.icon = options?.icon; };
+        requestAnimationFrame(()=>{
+            if (options?.icon) { this.icon = options?.icon || ""; };
+        });
     }
 
     //

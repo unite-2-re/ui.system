@@ -24,17 +24,19 @@ import LitElementTheme from "../../shared/LitElementTheme";
 export class UISlider extends LitElementTheme {
 
     // theme style property
-    @property({attribute: true, reflect: true, type: String}) public value: string|number = "";
-    @property({attribute: true, reflect: true, type: Boolean}) public checked: boolean = false;
+    @property({attribute: true, reflect: true, type: String}) public value?: string|number;// = "";
+    @property({attribute: true, reflect: true, type: Boolean}) public checked?: boolean; //= false;
 
     //
     static styles = css`${unsafeCSS(styles)}`;
     constructor() {
         super(); const self = this as unknown as HTMLElement;
-        self.classList?.add?.("ui-slider");
-        self.classList?.add?.("u2-input");
-        self.addEventListener("change", this.onSelect.bind(this));
-        makeSwitch(self);
+        requestAnimationFrame(()=>{
+            self.classList?.add?.("ui-slider");
+            self.classList?.add?.("u2-input");
+            self.addEventListener("change", this.onSelect.bind(this));
+            makeSwitch(self);
+        });
     }
 
     //
