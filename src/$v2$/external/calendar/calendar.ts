@@ -20,7 +20,7 @@ import { setAttributesIfNull } from '../../shared/Utils';
 // @ts-ignore
 @customElement('ui-calendar')
 export class UICalendar extends LitElementTheme {
-    @property({ attribute: true, reflect: true, type: String }) public type: string = "regular";
+    @property({ attribute: true, reflect: true, type: String }) public type?: string; //= "regular";
     #calendar?: any;
 
     //
@@ -29,7 +29,7 @@ export class UICalendar extends LitElementTheme {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
         this.importFromTemplate(htmlCode);
-        self.style.display = "none";
+        //self.style.display = "none";
         requestIdleCallback(()=>{
             this.#calendar = new Calendar(root?.querySelector?.(".ui-calendar"), {
 layouts: {

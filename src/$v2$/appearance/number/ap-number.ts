@@ -74,7 +74,9 @@ export class UINumber extends LitElementTheme {
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         this.importFromTemplate(htmlCode);
-        makeSpin(new WeakRef(this), root);
+        requestAnimationFrame(()=>{
+            makeSpin(new WeakRef(this), root);
+        });
         return root;
     }
 

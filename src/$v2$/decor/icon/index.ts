@@ -71,8 +71,8 @@ const loadAsImage = (name: string, creator?: (name: string)=>any)=>{
 @customElement('ui-icon')
 export class UILucideIcon extends LitElement {
     @property() protected iconElement?: SVGElement;
-    @property({attribute: true, reflect: true, type: String}) icon: string = "";
-    @property({attribute: true, reflect: true, type: Number}) width: number = 1;
+    @property({attribute: true, reflect: true, type: String}) icon?: string;// = "";
+    @property({attribute: true, reflect: true, type: Number}) width?: number; //= 1;
 
     // also "display" may be "contents"
     protected render() { return html`<style>${importStyle}</style><div class="fill"></div>`; }
@@ -80,12 +80,10 @@ export class UILucideIcon extends LitElement {
     //
     constructor(options = {icon: "", padding: ""}) {
         super(); const self = this as unknown as HTMLElement;
-        if (options?.icon) { this.icon = options?.icon; };
-        if (options?.padding) { self.style.setProperty("padding", options?.padding); };
-        self.inert = true;
-
-        //
         requestIdleCallback(()=>{
+            if (options?.icon) { this.icon = options?.icon; };
+            if (options?.padding) { self.style.setProperty("padding", options?.padding); };
+            self.inert = true;
             this.updateIcon();
         }, {timeout: 100});
     }
@@ -109,7 +107,9 @@ export class UILucideIcon extends LitElement {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        this.updateIcon();
+        requestAnimationFrame(()=>{
+            this.updateIcon();
+        });
         return root;
     }
 
