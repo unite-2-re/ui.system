@@ -11,7 +11,7 @@ export const blurTask = (taskManager?) => {
     if (document.activeElement?.matches?.("input")) {
         (document.activeElement as any)?.blur?.();
         return true;
-    } else 
+    } else
 
     //
     if (modal) {
@@ -22,7 +22,7 @@ export const blurTask = (taskManager?) => {
     // general case
     if (taskManager) {
         const task = taskManager?.getOnFocus?.();
-        const id = task?.id || location.hash;
+        const id = task?.taskId || location.hash;
         if (id && id != "#") {
             taskManager.deactivate(id, false);
             if (id?.replace?.("#","")?.startsWith("TASK-")) {
@@ -72,7 +72,7 @@ export class TaskManager {
             // hide taskbar before back
             if (ignoreForward) {
                 ignoreForward = false;
-            } else 
+            } else
             if (blurTask(this)) {
                 ignoreForward = true;
                 history?.forward?.();
@@ -103,7 +103,7 @@ export class TaskManager {
 
     //
     get(taskId: string) {
-        const index = this.tasks.findIndex((t)=>t.id == taskId);
+        const index = this.tasks.findIndex((t)=>t.taskId == taskId);
         if (index >= 0) {
             return this.tasks[index];
         }
@@ -127,7 +127,7 @@ export class TaskManager {
 
     //
     isActive(taskId: string) {
-        const index = this.#tasks.findLastIndex((t)=>t.active && t.id == taskId);
+        const index = this.#tasks.findLastIndex((t)=>t.active && t.taskId == taskId);
         if (index >= 0) { return true; };
         return false;
     }
@@ -135,20 +135,20 @@ export class TaskManager {
     //
     inFocus(taskId: string) {
         const task = this.#tasks.findLast((t)=>t.active);
-        if (task?.id == taskId) { return true; };
+        if (task?.taskId == taskId) { return true; };
         return false;
     }
 
     //
     focus(taskId: string, force = false) {
         const previous = this.getOnFocus();
-        if (previous?.id == taskId && !force) return;
+        if (previous?.taskId == taskId && !force) return;
 
         //
         this.activate(taskId);
 
         //
-        const index = this.tasks.findIndex((t)=>t.id == taskId);
+        const index = this.tasks.findIndex((t)=>t.taskId == taskId);
         const task  = this.tasks[index];
         if (index >= 0 && index < (this.tasks.length-1)) {
             this.tasks.splice(index, 1);
@@ -169,7 +169,7 @@ export class TaskManager {
 
     //
     deactivate(taskId: string, trigger = true) {
-        const index = this.tasks.findIndex((t)=>t.id == taskId);
+        const index = this.tasks.findIndex((t)=>t.taskId == taskId);
         if (index >= 0) {
             const task = this.tasks[index];
             if (task?.active) { task.active = false; };
@@ -179,7 +179,7 @@ export class TaskManager {
         //
         if (location?.hash?.trim?.() == taskId?.trim?.() && taskId)
         {
-            const newHash = this.getOnFocus(false)?.id || "#";
+            const newHash = this.getOnFocus(false)?.taskId || "#";
             if (trigger) { history.replaceState("", "", newHash); }
         };
 
@@ -189,7 +189,7 @@ export class TaskManager {
 
     //
     activate(taskId: string) {
-        const index = this.tasks.findIndex((t)=>t?.id == taskId);
+        const index = this.tasks.findIndex((t)=>t?.taskId == taskId);
         if (index >= 0) {
             const task = this.tasks[index];
             if (!task?.active) {
@@ -210,7 +210,7 @@ export class TaskManager {
 
     //
     addTask(task, doFocus = true) {
-        const index = this.tasks.findIndex((t)=>(t == task || t?.id == task.id));
+        const index = this.tasks.findIndex((t)=>(t == task || t?.taskId == task.taskId));
         const last = this.tasks.length;
 
         //
@@ -226,8 +226,8 @@ export class TaskManager {
         }
 
         //
-        if (doFocus || location?.hash?.trim?.() == task?.id?.trim?.()) {
-            this.focus(task?.id);
+        if (doFocus || location?.hash?.trim?.() == task?.taskId?.trim?.()) {
+            this.focus(task?.taskId);
         }
 
         //
@@ -236,7 +236,7 @@ export class TaskManager {
 
     //
     removeTask(taskId: string) {
-        const index = this.tasks.findIndex((t)=>t?.id == taskId);
+        const index = this.tasks.findIndex((t)=>t?.taskId == taskId);
         if (index >= 0) {
             const task = this.tasks[index];
             this.tasks.splice(index, 1);

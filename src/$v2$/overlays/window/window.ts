@@ -55,7 +55,7 @@ export class UIFrame extends LitElementTheme {
         // if local/relative case
         const self = this as unknown as HTMLElement;
         const tasks  = this?.taskManager?.getTasks?.();
-        const zIndex = tasks?.findIndex?.(({id}, I)=>self.matches("ui-frame:has("+id+"), ui-frame"+id+""));
+        const zIndex = tasks?.findIndex?.(({taskId}, I)=>self.matches("ui-frame:has("+taskId+"), ui-frame"+taskId+""));
         const exists = self.style.getPropertyValue("--z-index");
         if (exists != zIndex || !exists) { self.style.setProperty("--z-index", zIndex); };
     }
