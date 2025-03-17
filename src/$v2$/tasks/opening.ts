@@ -1,21 +1,29 @@
-export const onInteration = (ev, DOC = document.documentElement)=>{
+export const onInteration = (ev, args = [], DOC = document.documentElement)=>{
     if (ev?.target?.matches("[data-popup]")) {
-        const popup = document.querySelector("ui-modal[type=\"popup\"][data-name=\"" + ev?.target?.dataset?.popup + "\"]") as any;
-        popup?.showPopup?.(ev?.target?.matches(".ui-anchor") ? ev?.target : ev?.target?.closest(".ui-anchor"))
-        DOC.querySelectorAll("ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{ if (el != popup) { el.dataset.hidden = ""; }; });
-    } else {
-        DOC.querySelectorAll("ui-modal[type=\"popup\"]")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; });
+        (ev?.target?.getRootNode()?.host ?? ev?.target)?.dispatchEvent?.(new CustomEvent("u2-action", {
+            bubbles: true,
+            cancelable: true,
+            detail: {
+                type: "popup",
+                name: ev?.target?.dataset?.popup,
+                anchor: ev?.target?.matches(".ui-anchor") ? ev?.target : ev?.target?.closest(".ui-anchor"),
+                initial: ev?.target
+            }
+        }));
     }
 
-    // TODO: native action registry support
-    if (ev?.target?.matches("[data-action=\"fullscreen\"]")) {
-        if (!document.fullscreenElement) {
-            document.documentElement?.requestFullscreen?.({
-                navigationUI: "hide", screen
-            })?.catch?.(console.warn.bind(console));
-        } else
-        if (document.exitFullscreen) {
-            document?.exitFullscreen?.();
-        }
+    //
+    if (ev?.target?.matches("[data-action]")) {
+        (ev?.target?.getRootNode()?.host ?? ev?.target)?.dispatchEvent?.(new CustomEvent("u2-action", {
+            bubbles: true,
+            cancelable: true,
+            detail:{
+                type: "action",
+                name: ev?.target?.dataset?.action,
+                anchor: ev?.target?.matches(".ui-anchor") ? ev?.target : ev?.target?.closest(".ui-anchor"),
+                initial: ev?.target,
+                args: ev?.target?.dataset?.action == "open-link" ? [ev?.target?.dataset?.href] : (args ?? []),
+            }
+        }));
     }
 };
