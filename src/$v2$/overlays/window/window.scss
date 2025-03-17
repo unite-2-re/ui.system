@@ -78,8 +78,13 @@
                 --limit-shift-y: calc(var(--bound-block-size , 100cqi) - var(--block-size , 100%));
 
                 /* shifting point */
-                --sp-x: clamp(calc(var(--limit-shift-x, 100%) * -0.5),   calc(var(--shift-x, 0) * 1px),   calc(var(--limit-shift-x, 100%) * 0.5));
-                --sp-y: clamp(calc(var(--limit-shift-y, 100%) * -0.5),   calc(var(--shift-y, 0) * 1px),   calc(var(--limit-shift-y, 100%) * 0.5));
+                //--sp-x: clamp(calc(var(--limit-shift-x, 100%) * -0.5),   calc(var(--shift-x, 0) * 1px),   calc(var(--limit-shift-x, 100%) * 0.5));
+                //--sp-y: clamp(calc(var(--limit-shift-y, 100%) * -0.5),   calc(var(--shift-y, 0) * 1px),   calc(var(--limit-shift-y, 100%) * 0.5));
+
+                --sp-x: clamp(calc(var(--limit-shift-x, 100%) * -0.5 - var(--rs-x, 0px) * 0.5),   calc(var(--shift-x, 0) * 1px),   calc(var(--limit-shift-x, 100%) * 0.5 + var(--rs-x, 0px) * 0.5));
+                --sp-y: clamp(calc(var(--limit-shift-y, 100%) * -0.5 - var(--rs-y, 0px) * 0.5),   calc(var(--shift-y, 0) * 1px),   calc(var(--limit-shift-y, 100%) * 0.5 + var(--rs-y, 0px) * 0.5));
+                //--sp-x: clamp(0px,   calc(var(--shift-x, 0) * 1px),   var(--limit-shift-x, 100%));
+                //--sp-y: clamp(0px,   calc(var(--shift-y, 0) * 1px),   var(--limit-shift-y, 100%));
             };
 
             //
@@ -89,8 +94,8 @@
                 --limit-drag-y: calc(var(--bound-block-size , 100cqb) - 100%);
 
                 /* logically correct drag... */
-                --ds-x: clamp(calc(var(--limit-drag-x, 100%) * -0.5 - var(--sp-x, 0px)), calc(var(--drag-x, 0) * 1px),  calc(var(--limit-drag-x, 100%) * 0.5 - var(--sp-x, 0px)));
-                --ds-y: clamp(calc(var(--limit-drag-y, 100%) * -0.5 - var(--sp-y, 0px)), calc(var(--drag-y, 0) * 1px),  calc(var(--limit-drag-y, 100%) * 0.5 - var(--sp-y, 0px)));
+                --ds-x: clamp(calc(var(--limit-drag-x, 100%) * -0.5 - var(--sp-x, 0px) - var(--rs-x, 0px) * 0.5), calc(var(--drag-x, 0) * 1px),  calc(var(--limit-drag-x, 100%) * 0.5 - var(--sp-x, 0px) - var(--rs-x, 0px) * 0.5));
+                --ds-y: clamp(calc(var(--limit-drag-y, 100%) * -0.5 - var(--sp-y, 0px) - var(--rs-y, 0px) * 0.5), calc(var(--drag-y, 0) * 1px),  calc(var(--limit-drag-y, 100%) * 0.5 - var(--sp-y, 0px) - var(--rs-y, 0px) * 0.5));
             }
 
             //

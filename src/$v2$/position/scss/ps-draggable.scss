@@ -113,8 +113,8 @@
 
     /* */
     & {
-        inset-inline-start: calc(var(--sp-x, 0px) + 50%);//var(--ds-x, 0px);
-        inset-block-start : calc(var(--sp-y, 0px) + 50%);//var(--ds-y, 0px);
+        inset-inline-start: calc(var(--sp-x, 0px) + var(--rs-x, 0) * 0.5 + 50%);//var(--ds-x, 0px);
+        inset-block-start : calc(var(--sp-y, 0px) + var(--rs-y, 0) * 0.5 + 50%);//var(--ds-y, 0px);
         inset-inline-end  : auto;
         inset-block-end   : auto;
         touch-action: none;
