@@ -12,9 +12,9 @@ import htmlCode from "./index.html?raw";
 
 // @ts-ignore
 import styles from "./index.scss?inline";
-import { focusTask } from "../../functional/fn-task.js";
-import { taskManage } from "../../tasks/binding";
+import { focusTask, taskManage } from "../../tasks/binding";
 import { setAttributes, setAttributesIfNull } from "../../shared/Utils";
+import initTaskManager from "../../tasks/logic";
 
 // @ts-ignore
 @customElement('ui-task')
@@ -37,16 +37,16 @@ export class UITaskItem extends LitElementTheme {
     constructor(options = {
         desc: "",
         padding: "",
-        id: "",
+        taskId: "",
         taskManager: null
     }) {
         super(); const self = this as unknown as HTMLElement;
-        this.taskManager ??= options?.taskManager;
+        this.taskManager ??= options?.taskManager || initTaskManager();
 
         //
         requestAnimationFrame(()=>{
-            if (options?.desc)        { this.desc   = options?.desc ?? this.desc;   };
-            if (options?.id)          { this.taskId = options?.id   ?? this.taskId; };
+            if (options?.desc)        { this.desc   = options?.desc   ?? this.desc;   };
+            if (options?.taskId)      { this.taskId = options?.taskId?.replace?.("#","") ?? this.taskId; };
             if (options?.taskManager) { this.bindTaskManager(options?.taskManager); };
 
             //
@@ -63,12 +63,12 @@ export class UITaskItem extends LitElementTheme {
     //
     protected updateState() {
         const self = this as unknown as HTMLElement;
-        const hash = "#" + (self.dataset?.id || this.taskId || "").trim?.()?.replace?.("#","")?.trim?.();
+        const hash = "#" + (self.dataset?.id?.replace("#","") || this.taskId?.replace?.("#","") || "").trim?.()?.replace?.("#","")?.trim?.();
         const task = this.taskManager?.get?.(hash);
 
         //
-        let focused = this.taskManager?.getOnFocus?.(true)?.id?.replace("#","") == this.taskId?.replace("#","");
-        if (focused ||= location.hash == hash) task.active = true;
+        let focused = this.taskManager?.getOnFocus?.(true)?.taskId?.replace("#","") == hash?.replace("#","");
+        if (focused) task.active = true;
 
         //
         if (task?.active) {
@@ -112,7 +112,7 @@ export class UITaskItem extends LitElementTheme {
         }
 
         //
-        setAttributes(self, {"data-id": (this.taskId || self.dataset.id || "")});
+        setAttributes(self, {"data-id": (this.taskId || self.dataset.id || "")?.replace?.("#","")});
         setAttributesIfNull(self, {
             //"data-scheme": "dynamic-transparent",
             "data-chroma": 0.01,

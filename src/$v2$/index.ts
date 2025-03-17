@@ -7,7 +7,6 @@ export * from "./appearance/slider/ap-slider";
 //
 export * from "./functional/fn-contextmenu";
 export * from "./functional/fn-dropmenu";
-export * from "./functional/fn-task";
 //export * from "./functional/fn-popup";
 //export * from "./functional/fn-modal";
 

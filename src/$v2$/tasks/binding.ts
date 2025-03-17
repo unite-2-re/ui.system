@@ -16,7 +16,7 @@ export const taskManage = (self, taskManager) => {
         //if (isInFocus) {
             //self.active  = true;
         //}
-        //self.focused = (taskManager.getOnFocus()?.id == ("#"+hash)) || location.hash == ("#"+hash);
+        //self.focused = (taskManager.getOnFocus()?.taskId == ("#"+hash)) || location.hash == ("#"+hash);
         self?.updateState?.();
     });
 
@@ -28,7 +28,7 @@ export const taskManage = (self, taskManager) => {
             //self.active  = false;
             //self.focused = false;
         //} else {
-            //self.focused = (taskManager.getOnFocus()?.id == ("#"+hash)) || location.hash == ("#"+hash);
+            //self.focused = (taskManager.getOnFocus()?.taskId == ("#"+hash)) || location.hash == ("#"+hash);
         //}
         self?.updateState?.();
     });
@@ -55,4 +55,23 @@ export const onTasking = (self, taskManager)=>{
         if (isInFocus) { self.dataset.hidden = ""; };
         self?.fixZLayer?.();
     });
+}
+
+//
+export const focusTask = (taskManager, target: HTMLElement, deActiveWhenFocus = false)=>{
+    const hash = "#" + (target.dataset.id || (target.querySelector(".ui-content")?.id || target.id || (location.hash ? target.querySelector(location.hash) : null)?.id || "") || (target as any).taskId).trim?.()?.replace?.("#","")?.trim?.();
+    if (taskManager?.inFocus?.(hash) && matchMedia("((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))").matches && deActiveWhenFocus) {
+        taskManager?.deactivate?.(hash);
+    } else {
+        taskManager?.focus?.(hash);
+    }
+
+    //
+    const navbar = document.querySelector("ui-taskbar") as HTMLElement;
+    if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
+        if (navbar) { navbar.dataset.hidden = ""; };
+    }
+
+    //
+    requestIdleCallback(()=>navigator?.vibrate?.([10]));
 }

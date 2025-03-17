@@ -14,9 +14,8 @@ import htmlCode from "./window.html?raw";
 import styles from "./window.scss?inline";
 
 // @ts-ignore
-import { focusTask } from "../../functional/fn-task.js";
 import { makeControl } from "../../position/ts/ps-draggable.js";
-import { onTasking } from "../../tasks/binding";
+import { focusTask, onTasking } from "../../tasks/binding";
 import initTaskManager from "../../tasks/logic";
 import { setAttributesIfNull } from "../../shared/Utils";
 
