@@ -68,8 +68,8 @@
                 --rs-y: clamp(0px, calc(var(--resize-y, 0) * 1px), calc(var(--diff-block , 0px) - max(0px, var(--shift-y, 0) * 1px + 0.5 * var(--diff-block , 0px))));
 
                 /* resized window size */
-                --inline-size: min(calc(var(--initial-inline-size, 0px) + var(--rs-x, 0px)), calc(var(--bound-inline-size, 100cqi) - max(0px, var(--shift-x, 0) * 1px - 50%)));
-                --block-size : min(calc(var(--initial-block-size , 0px) + var(--rs-y, 0px)), calc(var(--bound-block-size , 100cqb) - max(0px, var(--shift-y, 0) * 1px - 50%)));
+                --inline-size: min(calc(var(--initial-inline-size, 0px) + var(--rs-x, 0px)), var(--bound-inline-size, 100cqi));
+                --block-size : min(calc(var(--initial-block-size , 0px) + var(--rs-y, 0px)), var(--bound-block-size , 100cqb));
             };
 
             /* forbid clamping size while dragging */
