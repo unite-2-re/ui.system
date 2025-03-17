@@ -36,7 +36,11 @@ export class UIFrame extends LitElementTheme {
         requestAnimationFrame(()=>{
             self.classList?.add?.("ui-frame");
             self.classList?.add?.("u2-frame");
-            self.dataset.hidden = "";
+
+            //
+            if (self?.querySelector?.(".ui-content")?.id != this.taskManager?.getOnFocus?.()?.taskId?.replace?.("#","")) {
+                self.dataset.hidden = "";
+            }
 
             //
             onTasking(this, this.taskManager);
