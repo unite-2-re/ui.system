@@ -38,7 +38,7 @@ export class UIFrame extends LitElementTheme {
             self.classList?.add?.("u2-frame");
 
             //
-            if (self?.querySelector?.(".ui-content")?.id != this.taskManager?.getOnFocus?.()?.taskId?.replace?.("#","")) {
+            if (!this?.taskManager?.isActive?.("#" + self?.querySelector?.(".ui-content")?.id)) {
                 self.dataset.hidden = "";
             } else {
                 delete self.dataset.hidden;
@@ -47,7 +47,8 @@ export class UIFrame extends LitElementTheme {
             //
             onTasking(this, this.taskManager);
             self.addEventListener("pointerdown", (ev)=>{
-                focusTask(this?.taskManager, self);
+                const id = "#" + (self.querySelector(".ui-content")?.id || self?.id || location.hash)?.replace?.("#", "");
+                if (this?.taskManager?.isActive?.(id)) focusTask(this?.taskManager, self);
             });
 
             //
@@ -105,8 +106,8 @@ export class UIFrame extends LitElementTheme {
         root.addEventListener("click", (ev)=>{
             if (ev.target.matches(".ui-btn-close")) {
                 //const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;
-                const id = (self.querySelector(".ui-content")?.id || self?.id || location.hash);
-                this.taskManager?.deactivate?.("#" + id);
+                const id = "#" + (self.querySelector(".ui-content")?.id || self?.id || location.hash)?.replace?.("#", "");
+                this.taskManager?.deactivate?.(id, true);
                 self.addEventListener("u2-hidden", ()=>{
                     self?.dispatchEvent?.(new CustomEvent("u2-close", {
                         bubbles: true,

@@ -40,6 +40,12 @@ export class UIToggle extends UISelectBase {
     }
 
     //
+    protected updateStyles() {
+        const self = this as unknown as HTMLElement;
+        self.dataset.scheme = (this as any).checked ? "solid" : "inverse"
+    };
+
+    //
     public connectedCallback() {
         super.connectedCallback();
         const self = this as unknown as HTMLElement;
@@ -74,14 +80,22 @@ export class UIButton extends UIButtonBase {
     static styles = css`${unsafeCSS(styles)}`;
     constructor() {
         super(); const self = this as unknown as HTMLElement;
-        self.classList?.add?.("ui-button");
-        self.classList?.add?.("u2-button");
-        self.addEventListener("click", (ev)=>{
-            if (self.querySelector("ui-select-row, ui-button-row")) {
-                openDropMenu(self, ev);
-            }
+        requestAnimationFrame(()=>{
+            self.classList?.add?.("ui-button");
+            self.classList?.add?.("u2-button");
+            self.addEventListener("click", (ev)=>{
+                if (self.querySelector("ui-select-row, ui-button-row")) {
+                    openDropMenu(self, ev);
+                }
+            });
         });
     }
+
+    //
+    protected updateStyles() {
+        const self = this as unknown as HTMLElement;
+        //self.dataset.scheme = "inverse";//(this as any).checked ? "solid" : "inverse"
+    };
 
     //
     public connectedCallback() {
@@ -99,6 +113,10 @@ export class UIButton extends UIButtonBase {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
+        const self = this as unknown as HTMLElement;
+        root.addEventListener("click", ()=>{
+            self?.click?.();
+        });
         this.importFromTemplate(htmlCode);
         return root;
     }

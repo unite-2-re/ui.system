@@ -80,7 +80,7 @@ export class UINavBar extends LitElementTheme {
 
     //
     protected backAction(ev) {
-        blurTask(this.taskManager);
+        blurTask(this.taskManager, true);
         //if (!blurTask()) { history.back(); };
     }
 

@@ -49,6 +49,7 @@ export class UISelectBase extends LitElement {
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
+            if (this?.checked == null) this.checked = false;
             self.classList?.add?.("u2-input");
             self?.addEventListener?.("click", (ev)=>{
                 // redirection...
@@ -82,6 +83,7 @@ export class UISelectBase extends LitElement {
     //
     public connectedCallback() {
         super.connectedCallback();
+        if (this?.checked == null) this.checked = false;
 
         //
         const self = this as unknown as HTMLElement;
@@ -126,11 +128,13 @@ export class UISelectBase extends LitElement {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
-            self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
-            self.addEventListener("click", (ev)=>{
-                const input = root.querySelector("input[type=\"radio\"]") as HTMLInputElement;
+            if (!self.querySelector("input[type=\"radio\"], input[type=\"checkbox\"]")) {
+                self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
+            }
+            /*self.addEventListener("click", (ev)=>{
+                const input = self.querySelector("input[type=\"radio\"], input[type=\"checkbox\"]") as HTMLInputElement;
                 if (ev.target != input || !(ev.target as HTMLElement)?.matches?.("input")) { input?.click?.(); };
-            });
+            });*/
         });
         return root;
     }

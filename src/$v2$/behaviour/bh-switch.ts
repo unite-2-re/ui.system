@@ -90,10 +90,10 @@ export const makeSwitch = (self?: HTMLElement)=>{
             const number = self.querySelector?.("input[type=\"number\"]") as unknown as HTMLInputElement
             const count  = ((parseFloat(number?.max) || 0) - (parseFloat(number?.min) || 0));
             const vary   = [
-                (coord[0]/box.width) * (count + 1),
+                (coord[0]/box.width) * count,//(count + 1 - 0.5),
                 (coord[1]/box.height) * 1
             ];
-            const val = Math.min(Math.max(vary[0] - 0.5, 0), count);
+            const val = Math.min(Math.max(vary[0], 0), count);
             const step = parseFloat(number?.step ?? 1) ?? 1;
             const exact = Math.min(Math.max(Math.round(val / step) * step, 0), count);
 

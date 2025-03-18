@@ -47,12 +47,14 @@ export class UITaskItem extends LitElementTheme {
         requestAnimationFrame(()=>{
             if (options?.desc)        { this.desc   = options?.desc   ?? this.desc;   };
             if (options?.taskId)      { this.taskId = options?.taskId?.replace?.("#","") ?? this.taskId; };
-            if (options?.taskManager) { this.bindTaskManager(options?.taskManager); };
+            this.bindTaskManager(options?.taskManager ?? this.taskManager);
 
             //
             self.classList?.add?.("ui-task");
-            self.addEventListener("click", () => focusTask(this.taskManager, self, true));
-            this.updateState();
+            self.addEventListener("click", () => {
+                focusTask(this.taskManager, self, true);
+                this.updateState();
+            });
         });
 
         //

@@ -2,7 +2,7 @@
 type FX = ((a: any)=>any);
 
 //
-export const blurTask = (taskManager?) => {
+export const blurTask = (taskManager?, trigger: boolean = false) => {
     const isMobile = matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches;
     const taskbar = isMobile ? document.querySelector("ui-taskbar:not([data-hidden])") : null;
     const modal = (document.querySelector("ui-modal[type=\"contextmenu\"]:not([data-hidden])") ?? document.querySelector("ui-modal:not([data-hidden]):where(:has(:focus), :focus)") ?? taskbar ?? document.querySelector("ui-modal:not([data-hidden])")) as HTMLElement;
@@ -24,7 +24,7 @@ export const blurTask = (taskManager?) => {
         const task = taskManager?.getOnFocus?.();
         const id = task?.taskId || location.hash;
         if (id && id != "#") {
-            taskManager.deactivate(id, false);
+            taskManager.deactivate(id, trigger ?? false);
             const frame = document.querySelector("ui-frame:has("+id+")");
 
             if (frame) {
@@ -133,7 +133,7 @@ export class TaskManager {
 
     //
     getOnFocus(includeHash = true) {
-        return this.#tasks.findLast((t)=>t.active) || (includeHash ? this.get(location.hash) : "#");
+        return this.#tasks.findLast((t)=>t.active) ?? (includeHash ? this.get(location.hash) : null);
     }
 
     //
@@ -188,10 +188,15 @@ export class TaskManager {
         }
 
         //
-        if (location?.hash?.trim?.() == taskId?.trim?.() && taskId)
-        {
-            const newHash = this.getOnFocus(false)?.taskId || "#";
-            if (trigger) { history.replaceState("", "", newHash); }
+        if (location?.hash?.trim?.() == taskId?.trim?.()) {
+            const withFocus = this.getOnFocus(false);
+            if (withFocus && withFocus?.taskId != taskId) {
+                const newHash = withFocus?.taskId || "#";
+                if (trigger) { history.replaceState("", "", newHash); }
+            } else {
+                if (trigger) { history.replaceState("", "", ""); }
+                if (withFocus?.taskId == taskId) withFocus.active = false;
+            }
         };
 
         //
