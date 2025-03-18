@@ -40,6 +40,8 @@ export class UIFrame extends LitElementTheme {
             //
             if (self?.querySelector?.(".ui-content")?.id != this.taskManager?.getOnFocus?.()?.taskId?.replace?.("#","")) {
                 self.dataset.hidden = "";
+            } else {
+                delete self.dataset.hidden;
             }
 
             //
