@@ -25,9 +25,20 @@ export const blurTask = (taskManager?) => {
         const id = task?.taskId || location.hash;
         if (id && id != "#") {
             taskManager.deactivate(id, false);
-            if (id?.replace?.("#","")?.startsWith("TASK-")) {
-                taskManager.removeTask(id);
-            }
+            const frame = document.querySelector("ui-frame:has("+id+")");
+
+            if (frame) {
+                frame?.addEventListener?.("u2-hidden", ()=>{
+                    frame?.dispatchEvent?.(new CustomEvent("u2-close", {
+                        bubbles: true,
+                        cancelable: true,
+                        detail: {
+                            taskId: id
+                        }
+                    }));
+                }, {once: true});
+            } else { taskManager.removeTask(id); };
+
             return true;
         }
     }

@@ -105,7 +105,16 @@ export class UIFrame extends LitElementTheme {
                 //const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;
                 const id = (self.querySelector(".ui-content")?.id || self?.id || location.hash);
                 this.taskManager?.deactivate?.("#" + id);
-                if (id?.startsWith?.("TASK-")) { this.taskManager?.removeTask?.("#" + id); };
+                self.addEventListener("u2-hidden", ()=>{
+                    self?.dispatchEvent?.(new CustomEvent("u2-close", {
+                        bubbles: true,
+                        cancelable: true,
+                        detail: {
+                            taskId: id
+                        }
+                    }));
+                }, {once: true});
+                //if (id?.startsWith?.("TASK-")) { this.taskManager?.removeTask?.("#" + id); };
             }
 
             //
