@@ -35,7 +35,7 @@ export const closeContextMenu = (ev?)=>{
 };
 
 //
-export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMenu: any, initiator: any)=>void)=>{
+export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMenu: any, initiator: any, event?: any)=>void)=>{
     const initiator = event?.target;
     const ctxMenu   = document.querySelector(ctx) as any;
 
@@ -50,8 +50,9 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
         placeWithCursor(ctxMenu, event);
         ctxMenu.innerHTML = "";
         ctxMenu.initiator = initiator;
+        ctxMenu.event = event;
         delete ctxMenu.dataset.hidden;
-        content?.(ctxMenu, initiator);
+        content?.(ctxMenu, initiator, event);
     } else
     if (ctxMenu && toggle && !ctxMenu.dataset.hidden) {
         closeContextMenu(event);
@@ -67,7 +68,7 @@ export const makeCtxMenuItems = (ctxMenu?: any, initiator?: any, content?: any[]
 
         //
         li.addEventListener("click", (e)=>{
-            el.callback?.(initiator, {});
+            el.callback?.(initiator, ctxMenu?.event);
         });
 
         //
