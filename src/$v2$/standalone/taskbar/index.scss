@@ -376,6 +376,21 @@
                         max-block-size: 3rem;
                         pointer-events: auto;
                     }
+
+                    & .ui-github {
+                        order: 2;
+                        visibility: hidden;
+                        pointer-events: none;
+                        & * { pointer-events: none; }
+                    }
+
+                    & .app-menu {
+                        order: 1;
+                    }
+
+                    & [data-action="fullscreen"] {
+                        order: 0;
+                    }
                 }
 
                 //

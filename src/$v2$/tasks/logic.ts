@@ -5,7 +5,7 @@ type FX = ((a: any)=>any);
 export const blurTask = (taskManager?, trigger: boolean = false) => {
     const isMobile = matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches;
     const taskbar = isMobile ? document.querySelector("ui-taskbar:not([data-hidden])") : null;
-    const modal = (document.querySelector("ui-modal[type=\"contextmenu\"]:not([data-hidden])") ?? document.querySelector("ui-modal:not([data-hidden]):where(:has(:focus), :focus)") ?? taskbar ?? document.querySelector("ui-modal:not([data-hidden])")) as HTMLElement;
+    const modal = (document.querySelector("ui-modal[type=\"contextmenu\"]:not([data-hidden])") ?? document.querySelector("ui-modal:not([data-hidden]):where(:has(:focus), :focus)") ?? document.querySelector("ui-modal:not([data-hidden])") ?? taskbar) as HTMLElement;
 
     //
     if (document.activeElement?.matches?.("input")) {
