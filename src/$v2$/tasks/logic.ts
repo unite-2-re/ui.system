@@ -164,14 +164,12 @@ export class TaskManager {
         if (index >= 0 && index < (this.tasks.length-1)) {
             this.tasks.splice(index, 1);
             this.tasks.push(task);
-        }
+            this.trigger("focus", {task, self: this, oldIndex: index, index: (this.tasks.length-1)});
 
-        //
-        if (index >= 0) { this.trigger("focus", {task, self: this, oldIndex: index, index: (this.tasks.length-1)}); };
-
-        // may breaking...
-        if (taskId && history.length <= this.#initialHistoryCount) {
-            history.pushState("", "", taskId || location.hash);
+            // may breaking...
+            if (taskId && history.length <= this.#initialHistoryCount) {
+                history.replaceState("", "", taskId || location.hash);
+            }
         }
 
         //
@@ -185,21 +183,19 @@ export class TaskManager {
             const task = this.tasks[index];
             if (task?.active) { task.active = false; };
             this.trigger("deactivate", {task, self: this, index});
+
+            //
+            if (location?.hash?.trim?.() == taskId?.trim?.()) {
+                const withFocus = this.getOnFocus(false);
+                if (withFocus && withFocus?.taskId != taskId) {
+                    const newHash = withFocus?.taskId || "#";
+                    if (trigger) { history.replaceState("", "", newHash); }
+                } else {
+                    if (trigger) { history.replaceState("", "", ""); }
+                    if (withFocus?.taskId == taskId) withFocus.active = false;
+                }
+            };
         }
-
-        //
-        if (location?.hash?.trim?.() == taskId?.trim?.()) {
-            const withFocus = this.getOnFocus(false);
-            if (withFocus && withFocus?.taskId != taskId) {
-                const newHash = withFocus?.taskId || "#";
-                if (trigger) { history.replaceState("", "", newHash); }
-            } else {
-                if (trigger) { history.replaceState("", "", ""); }
-                if (withFocus?.taskId == taskId) withFocus.active = false;
-            }
-        };
-
-        //
         return this;
     }
 
@@ -211,6 +207,7 @@ export class TaskManager {
             if (!task?.active) {
                 task.active = true;
                 this.trigger("activate", {task, self: this, index});
+                history.pushState("", "", location.hash);
             }
         }
         return this;
@@ -236,9 +233,7 @@ export class TaskManager {
             this.trigger("addTask", {task, self: this, index: last});
         } else {
             const exist = this.tasks[index];
-            if (exist != task) {
-                Object.assign(exist, task);
-            }
+            if (exist != task) { Object.assign(exist, task); }
         }
 
         //
