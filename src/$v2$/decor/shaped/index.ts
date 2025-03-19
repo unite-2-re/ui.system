@@ -24,7 +24,7 @@ export class UIShaped extends LitElement {
 
     // also "display" may be "contents"
     protected render() {
-        return html`<style>${importStyle}</style><slot></slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" icon=${this.icon||""}></ui-icon>`;
+        return html`<style>${importStyle}</style><slot></slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" part="icon" icon=${this.icon||""}></ui-icon>`;
     }
 
     //
