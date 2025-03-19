@@ -36,6 +36,7 @@ export class UIToggle extends UISelectBase {
         requestAnimationFrame(()=>{
             self.classList?.add?.("ui-toggle");
             self.classList?.add?.("u2-toggle");
+            self.classList?.add?.("u2-input");
         });
     }
 

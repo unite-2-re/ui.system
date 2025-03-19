@@ -112,7 +112,7 @@ export class UISelectBase extends LitElement {
         const ownBox = self.shadowRoot?.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])") ?? self.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])");
         if (ownBox) {
             setAttributes(ownBox, {
-                "name" : (self.parentNode as HTMLElement)?.dataset?.name || "dummy-radio",
+                "name" : (self.parentNode as HTMLElement)?.dataset?.name || self?.dataset?.name || (ownBox as any)?.name || "dummy-radio",
                 "value": this.value
             });
         };
@@ -128,7 +128,7 @@ export class UISelectBase extends LitElement {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
-            if (!self.querySelector("input[type=\"radio\"], input[type=\"checkbox\"]")) {
+            if (!self.querySelector("input")) {
                 self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
             }
             /*self.addEventListener("click", (ev)=>{
