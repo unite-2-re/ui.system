@@ -53,6 +53,7 @@
             // term '!important' added due of unsupported
             // if support will added, we remove importance
             writing-mode: horizontal-tb !important;
+            background-color: transparent;
 
             //
             font-family: 'Open Sans', 'Ubuntu Sans', Ubuntu, Segoe, "Segoe UI", source-sans-pro, 'Source Sans 3', 'Gill Sans Nova', Candara, sans-serif, ui-sans-serif, system-ui;
@@ -71,7 +72,7 @@
             place-items: safe center;
             place-content: safe center;
             border-radius: 0px;
-            background-color: transparent;
+            background-color: transparent !important;
 
             //
             overflow: visible;
@@ -282,8 +283,14 @@
             overflow: hidden;
             display: grid;
             grid-template-columns:
-                [in-active] minmax(0px, calc(var(--value, 0) / (var(--max-value, 1) /*- 0.999*/) * 100%))
-                [on-active] minmax(0px, 1fr);
+                [on-active] minmax(0px, calc(var(--value, 0) / (var(--max-value, 1) /*- 0.999*/) * 100%))
+                [in-active] minmax(0px, 1fr);
+
+            --hl-co: inherit;
+            --hl-co-hover: inherit;
+            --hl-co-state: inherit;
+
+            background-color: var(--tm-bg-color, transparent);
         }
 
         //
@@ -296,6 +303,7 @@
         & .ui-fill-inactive {
             grid-column: in-active;
             border-radius: 0px;
+            background-color: var(--tm-bg-color, transparent);
         }
 
         //
@@ -313,6 +321,7 @@
 
             //
             translate: calc(10cqmin * ((var(--value, 0) / (var(--max-value, 1) /*- 0.999*/)) * 2 - 1) + (100cqi - 100%) * (var(--value, 0) / var(--max-value, 1))) calc(50cqb - 50%);
+            background-color: var(--tm-bg-color, transparent);
         }
     }
 
