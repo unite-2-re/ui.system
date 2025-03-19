@@ -11,6 +11,7 @@
 
             /* */
             box-sizing: border-box;
+            pointer-events: none;
             //background-color: transparent;
         }
 
@@ -48,7 +49,7 @@
                     white-space-collapse: collapse;
                     text-wrap: nowrap;
                     text-spacing-trim: trim-start;
-                    pointer-events: auto;
+                    pointer-events: none;
 
                     /* */
                     z-index: calc(99999 + var(--z-index, 0));
@@ -88,6 +89,7 @@
                 :where(*), ::slotted(*)
                 {
                     background-color: transparent;
+                    pointer-events: none;
                 }
 
                 //
@@ -121,7 +123,6 @@
                     contain: content;
 
                     //
-                    pointer-events: auto;
                     gap: 0px;
 
                     //
@@ -191,6 +192,7 @@
                     //
                     outline: none 0px transparent;
                     border: none 0px transparent;
+                    pointer-events: auto;
 
                     //
                     z-index: calc(9999 + var(--z-index, 0));
@@ -224,7 +226,7 @@
         @at-root body:not(:has(.ui-app-frame:not([data-hidden]))) {
 
             // transparent taskbar style
-            :host-context(&:not(:has(.ui-task-panel:not([data-hidden])))) { .ui-back-button { display: none !important; }}
+            :host-context(&:not(:has(.ui-task-panel:not([data-hidden])))) { .ui-back-button { pointer-events: none !important; display: none !important; }}
             :host-context(&)
             {
                 //

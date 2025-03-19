@@ -335,24 +335,52 @@
                     block-size: 100%;
                     padding: 0.3rem;
                     padding-block-start: 2.5rem;
+                    padding-block-end: 0.2rem;
                     display: inline grid;
 
                     //
-                    grid-template-rows   : minmax(0px, 1fr);
+                    grid-template-rows   : minmax(0px, 1fr) minmax(0px, 3rem);
                     grid-template-columns: minmax(0px, 1fr);
 
                     //
                     pointer-events: auto;
                     backdrop-filter: blur(1rem) !important;
+                    grid-auto-flow: column;
+
+                    //
+                    gap: 0.5rem;
                 }
 
                 //
-                .ui-app-menu, .ui-status {
+                .ui-status {
                     display: none !important;
                 }
 
                 //
+                .ui-app-menu {
+                    place-content: center;
+                    place-self: center;
+                    place-items: center;
+                    grid-row: 2 / 2 span;
+                    grid-column: 1 / -1;
+                    max-block-size: 3rem;
+                    display: flex;
+                    flex-direction: row;
+                    overflow: hidden;
+                    pointer-events: auto !important;
+
+                    //
+                    & > * {
+                        flex-grow: 0;
+                        flex-basis: auto;
+                        max-block-size: 3rem;
+                        pointer-events: auto;
+                    }
+                }
+
+                //
                 .ui-task-bar {
+                    grid-row: 1 / 1 span;
                     pointer-events: auto;
                     grid-column: 1 / -1;
                     inline-size: 100%;

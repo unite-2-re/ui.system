@@ -89,6 +89,16 @@ export class TaskManager {
                 history?.forward?.();
             }
         });
+
+        //
+        this?.on?.("activate", ()=>{
+            document.querySelectorAll("ui-modal")?.forEach?.((el)=>{ (el as HTMLElement).dataset.hidden = ""; });
+        });
+
+        //
+        this?.on?.("focus", ()=>{
+            document.querySelectorAll("ui-modal")?.forEach?.((el)=>{ (el as HTMLElement).dataset.hidden = ""; });
+        });
     }
 
     //
@@ -161,7 +171,8 @@ export class TaskManager {
         //
         const index = this.tasks.findIndex((t)=>t.taskId == taskId);
         const task  = this.tasks[index];
-        if (index >= 0 && index < (this.tasks.length-1)) {
+        const last  = this.tasks?.findLastIndex((t)=>t.active);
+        if (index >= 0 && index < last) {
             this.tasks.splice(index, 1);
             this.tasks.push(task);
             this.trigger("focus", {task, self: this, oldIndex: index, index: (this.tasks.length-1)});

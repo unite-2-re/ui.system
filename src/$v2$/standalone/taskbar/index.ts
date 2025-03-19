@@ -58,6 +58,20 @@ export class UITaskBar extends LitElementTheme {
             if (media.matches) { delete self.dataset.hidden; } else { self.dataset.hidden = ""; };
             //.addTasks(this.tasks || []);
         });
+
+        //
+        this?.taskManager?.on?.("focus", ()=>{
+            const isMobile = matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches;
+            const taskbar = isMobile ? document.querySelector("ui-taskbar:not([data-hidden])") : null;
+            if (taskbar) (taskbar as HTMLElement).dataset.hidden = "";
+        });
+
+        //
+        this?.taskManager?.on?.("activate", ()=>{
+            const isMobile = matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches;
+            const taskbar = isMobile ? document.querySelector("ui-taskbar:not([data-hidden])") : null;
+            if (taskbar) (taskbar as HTMLElement).dataset.hidden = "";
+        });
     }
 
     //
