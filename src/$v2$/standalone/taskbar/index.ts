@@ -77,6 +77,9 @@ export class UITaskBar extends LitElementTheme {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
+        root.addEventListener("click", (ev)=>{
+            if (!ev.target.matches("button, .ui-indicator")) { document.documentElement.querySelectorAll("ui-modal:not([data-hidden])")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; }); }
+        });
         requestAnimationFrame(()=>{
             this.importFromTemplate(htmlCode);
             this.adaptiveTheme();

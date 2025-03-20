@@ -43,7 +43,7 @@ export class UIToggle extends UISelectBase {
     //
     protected updateStyles() {
         const self = this as unknown as HTMLElement;
-        self.dataset.scheme = (this as any).checked ? "solid" : "inverse"
+        self.dataset.scheme = (this as any).checked ? "inverse" : "solid";
     };
 
     //

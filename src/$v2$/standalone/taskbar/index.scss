@@ -403,6 +403,9 @@
                     flex-direction: column;
                     justify-content: start;
                     gap: 0px;
+
+                    //
+                    &:has(:not(:has-slotted)) { display: none !important; }
                 }
             }
         }
