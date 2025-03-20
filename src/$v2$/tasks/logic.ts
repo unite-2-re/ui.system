@@ -50,7 +50,7 @@ export class TaskManager {
     #tasks: any[] = [];
     #events = new Map<string, FX[]>([]);
     #initialHistoryCount = 0;
-    #ignoreForward = true;
+    #ignoreForward = false;
 
     //
     constructor(tasks: any[] = []) {
@@ -64,7 +64,7 @@ export class TaskManager {
         });
 
         //
-        this.#ignoreForward = true;
+        //this.#ignoreForward = true;
         history?.pushState?.("", "", location.hash = location.hash || "#");
 
         // prevent behaviour once...
