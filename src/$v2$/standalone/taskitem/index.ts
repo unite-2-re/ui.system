@@ -69,10 +69,6 @@ export class UITaskItem extends LitElementTheme {
         const task = this.taskManager?.get?.(hash);
 
         //
-        let focused = this.taskManager?.getOnFocus?.(true)?.taskId?.replace("#","") == hash?.replace("#","");
-        if (focused) task.active = true;
-
-        //
         if (task?.active) {
             if (!self.classList.contains("ui-active")) self.classList.add("ui-active");
         } else {
@@ -80,6 +76,7 @@ export class UITaskItem extends LitElementTheme {
         }
 
         //
+        let focused = task?.active && (this.taskManager?.getOnFocus?.()?.taskId?.replace("#","") == hash?.replace("#",""));
         if (focused) {
             if (!self.classList.contains("ui-focus")) self.classList.add("ui-focus");
         } else {
@@ -92,7 +89,6 @@ export class UITaskItem extends LitElementTheme {
         const self = this as unknown as HTMLElement;
 
         //
-        taskManage(this, this.taskManager ??= taskManager);
         { this.updateState(); }
     }
 
@@ -100,6 +96,7 @@ export class UITaskItem extends LitElementTheme {
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         this.importFromTemplate(htmlCode);
+        taskManage(this,this.taskManager);
         return root;
     }
 

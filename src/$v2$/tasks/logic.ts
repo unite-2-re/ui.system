@@ -22,12 +22,11 @@ export const blurTask = (taskManager?, trigger: boolean = false) => {
     // general case
     if (taskManager) {
         const task = taskManager?.getOnFocus?.();
-        const id = task?.taskId || location.hash;
+        const id   = task?.taskId;
         if (id && id != "#") {
-            taskManager.deactivate(id, trigger ?? false);
             const frame = document.querySelector("ui-frame:has("+id+")");
-
             if (frame) {
+                taskManager.deactivate(id, trigger ?? false);
                 frame?.addEventListener?.("u2-hidden", ()=>{
                     frame?.dispatchEvent?.(new CustomEvent("u2-close", {
                         bubbles: true,
@@ -38,7 +37,6 @@ export const blurTask = (taskManager?, trigger: boolean = false) => {
                     }));
                 }, {once: true});
             } else { taskManager.removeTask(id); };
-
             return true;
         }
     }
@@ -52,9 +50,10 @@ export class TaskManager {
     #tasks: any[] = [];
     #events = new Map<string, FX[]>([]);
     #initialHistoryCount = 0;
+    #ignoreForward = false;
 
     //
-    constructor(tasks = []) {
+    constructor(tasks: any[] = []) {
         this.#tasks  = tasks || [];
         this.#events = new Map<string, FX[]>([]);
         this.#initialHistoryCount = history?.length;
@@ -72,8 +71,6 @@ export class TaskManager {
             history?.pushState?.("", "", "");
         }
 
-        //
-        let ignoreForward = false;
         // prevent behaviour once...
         addEventListener("popstate", (ev)=>{
             ev.preventDefault();
@@ -81,11 +78,11 @@ export class TaskManager {
             ev.stopImmediatePropagation();
 
             // hide taskbar before back
-            if (ignoreForward) {
-                ignoreForward = false;
+            if (this.#ignoreForward) {
+                this.#ignoreForward = false;
             } else
             if (blurTask(this)) {
-                ignoreForward = true;
+                this.#ignoreForward = true;
                 history?.forward?.();
             }
         });
@@ -124,7 +121,8 @@ export class TaskManager {
 
     //
     get(taskId: string) {
-        const index = this.tasks.findIndex((t)=>t.taskId == taskId);
+        if (!taskId) return null;
+        const index = this.tasks.findIndex((t)=>(typeof t.taskId == "string" && t.taskId == taskId));
         if (index >= 0) {
             return this.tasks[index];
         }
@@ -143,44 +141,72 @@ export class TaskManager {
 
     //
     getOnFocus(includeHash = true) {
-        return this.#tasks.findLast((t)=>t.active) ?? (includeHash ? this.get(location.hash) : null);
+        return (this.#tasks.findLast((t)=>t.active) ?? (includeHash ? this.get(location.hash) : null));
     }
 
     //
     isActive(taskId: string) {
-        const index = this.#tasks.findLastIndex((t)=>t.active && t.taskId == taskId);
-        if (index >= 0) { return true; };
-        return false;
+        if (!taskId) return false;
+        return !!this.#tasks.find((t)=>(typeof t.taskId == "string" && t.taskId == taskId))?.active;
     }
 
     //
     inFocus(taskId: string) {
-        const task = this.#tasks.findLast((t)=>t.active);
+        if (!taskId) return false;
+        const task = this.#tasks.findLast((t)=>t.active); if (!task) return false;
         if (task?.taskId == taskId) { return true; };
         return false;
     }
 
     //
     focus(taskId: string, force = false) {
-        const previous = this.getOnFocus();
-        if (previous?.taskId == taskId && !force) return;
+        if (!taskId) return this;
 
         //
-        this.activate(taskId);
+        //const previous = this.getOnFocus(false);
+        //if (previous?.taskId == taskId && !force) return this;
 
         //
-        const index = this.tasks.findIndex((t)=>t.taskId == taskId);
+        const last  = this.tasks.findLastIndex((t)=>t.active);
+        const index = this.tasks.findIndex((t)=>(typeof t.taskId == "string" && t.taskId == taskId));
         const task  = this.tasks[index];
-        const last  = this.tasks?.findLastIndex((t)=>t.active);
-        if (index >= 0 && index < last) {
-            this.tasks.splice(index, 1);
-            this.tasks.push(task);
-            this.trigger("focus", {task, self: this, oldIndex: index, index: (this.tasks.length-1)});
 
-            // may breaking...
-            if (taskId && history.length <= this.#initialHistoryCount) {
-                history.replaceState("", "", taskId || location.hash);
+        //
+        if (index >= 0) {
+            if (!task.active) this.activate(taskId);
+            if (index < last) {
+                // @ts-ignore
+                if (this.tasks.silentForwardByIndex) {
+                    // @ts-ignore
+                    this.tasks.silentForwardByIndex(index);
+                } else {
+                    this.tasks.splice(index, 1);
+                    this.tasks.push(task);
+                }
             }
+
+            //
+            this.trigger("focus", {task, self: this, oldIndex: index, index: (this.tasks.length-1)});
+            if (location.hash != taskId) history.replaceState("", "", taskId || location.hash);
+        }
+
+        //
+        return this;
+    }
+
+    //
+    historyBack(taskId: string) {
+        if (!taskId) return this;
+
+        //
+        this.#ignoreForward = true;
+        history?.back?.();
+
+        //
+        const lastFocus = this.getOnFocus(false)?.taskId || "";
+        if (location?.hash?.trim?.() != lastFocus) {
+            this.#ignoreForward = true;
+            history?.replaceState?.("", "", lastFocus);
         }
 
         //
@@ -189,22 +215,13 @@ export class TaskManager {
 
     //
     deactivate(taskId: string, trigger = true) {
-        const index = this.tasks.findIndex((t)=>t.taskId == taskId);
+        if (!taskId) return this;
+        const index = this.tasks.findIndex((t)=>((typeof t.taskId == "string") && t.taskId == taskId));
         if (index >= 0) {
             const task = this.tasks[index];
-            if (task?.active) { task.active = false; };
-            this.trigger("deactivate", {task, self: this, index});
-
-            //
-            if (location?.hash?.trim?.() == taskId?.trim?.()) {
-                const withFocus = this.getOnFocus(false);
-                if (withFocus && withFocus?.taskId != taskId) {
-                    const newHash = withFocus?.taskId || "#";
-                    if (trigger) { history.replaceState("", "", newHash); }
-                } else {
-                    if (trigger) { history.replaceState("", "", ""); }
-                    if (withFocus?.taskId == taskId) withFocus.active = false;
-                }
+            if (task?.active) {
+                task.active = false;
+                this.trigger("deactivate", {task, self: this, index});
             };
         }
         return this;
@@ -212,13 +229,16 @@ export class TaskManager {
 
     //
     activate(taskId: string) {
-        const index = this.tasks.findIndex((t)=>t?.taskId == taskId);
+        if (!taskId) return this;
+        const index = this.tasks.findIndex((t)=>((typeof t.taskId == "string") && t.taskId == taskId));
         if (index >= 0) {
             const task = this.tasks[index];
             if (!task?.active) {
                 task.active = true;
                 this.trigger("activate", {task, self: this, index});
-                history.pushState("", "", location.hash);
+                if (taskId && history.length <= this.#initialHistoryCount) {
+                    history.pushState("", "", location.hash);
+                }
             }
         }
         return this;
@@ -234,8 +254,11 @@ export class TaskManager {
 
     //
     addTask(task, doFocus = true) {
-        const index = this.tasks.findIndex((t)=>(t == task || t?.taskId == task.taskId));
-        const last = this.tasks.length;
+        if (!task || (typeof task != "object")) return this;
+
+        //
+        const index = this.tasks.findIndex((t)=>((typeof t.taskId == "string") && t.taskId == task.taskId || task == t));
+        const last  = this.tasks.length;
 
         //
         if (index < 0) {
@@ -248,8 +271,9 @@ export class TaskManager {
         }
 
         //
-        if (doFocus || location?.hash?.trim?.() == task?.taskId?.trim?.()) {
-            this.focus(task?.taskId);
+        if (doFocus) {
+            this.focus(task?.taskId); this.#ignoreForward = true;
+            history.pushState("", "", task?.taskId || location?.hash);
         }
 
         //
@@ -257,12 +281,14 @@ export class TaskManager {
     }
 
     //
-    removeTask(taskId: string) {
-        const index = this.tasks.findIndex((t)=>t?.taskId == taskId);
+    removeTask(tp: any) {
+        if (!tp) return this;
+        const index = this.tasks.findIndex((t)=>((typeof t.taskId == "string") && t.taskId == (typeof tp == "string" ? tp : tp.taskId) || tp == t));
         if (index >= 0) {
             const task = this.tasks[index];
             this.tasks.splice(index, 1);
             this.trigger("removeTask", {task, self: this, index: -1, oldIndex: index});
+            if (task.taskId && typeof task.taskId == "string") this.historyBack(task.taskId);
         }
         return this;
     }
@@ -270,9 +296,9 @@ export class TaskManager {
 
 //
 let taskManager: TaskManager|null = null;
-export const initTaskManager = (): TaskManager =>{
+export const initTaskManager = (tasks: any[] = []): TaskManager =>{
     //const wasInit = taskManager == null;
-    return (taskManager ??= new TaskManager());
+    return (taskManager ??= new TaskManager(tasks));
 }
 
 //

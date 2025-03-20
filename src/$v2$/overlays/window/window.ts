@@ -45,7 +45,6 @@ export class UIFrame extends LitElementTheme {
             }
 
             //
-            onTasking(this, this.taskManager);
             self.addEventListener("pointerdown", (ev)=>{
                 const id = "#" + (self.querySelector(".ui-content")?.id || self?.id || location.hash)?.replace?.("#", "");
                 if (this?.taskManager?.isActive?.(id)) focusTask(this?.taskManager, self);
@@ -102,6 +101,7 @@ export class UIFrame extends LitElementTheme {
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
+        onTasking(this, this.taskManager);
         this.importFromTemplate(htmlCode);
         root.addEventListener("click", (ev)=>{
             if (ev.target.matches(".ui-btn-close")) {

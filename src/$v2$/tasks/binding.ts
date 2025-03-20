@@ -1,77 +1,52 @@
 
 
 export const taskManage = (self, taskManager) => {
-    //
-    taskManager.on("focus", ({task, index})=>{
-        //const hash = (self.dataset.id || self.taskId).trim?.()?.replace?.("#","")?.trim?.();
-        //const isInFocus = (hash == task.taskId.trim?.()?.replace?.("#","")?.trim?.());
-        //self.focused = isInFocus || location.hash == ("#"+hash);
-        self?.updateState?.();
-    });
-
-    //
-    taskManager.on("activate", ({task, index})=>{
-        ///const hash = (self.dataset.id || self.taskId).trim?.()?.replace?.("#","")?.trim?.();
-        //const isInFocus = (hash == task.taskId.trim?.()?.replace?.("#","")?.trim?.());
-        //if (isInFocus) {
-            //self.active  = true;
-        //}
-        //self.focused = (taskManager.getOnFocus()?.taskId == ("#"+hash)) || location.hash == ("#"+hash);
-        self?.updateState?.();
-    });
-
-    //
-    taskManager.on("deactivate", ({task, index})=>{
-        //const hash = (self.dataset.id || self.taskId).trim?.()?.replace?.("#","")?.trim?.();
-        //const isInFocus = (hash == task.taskId.trim?.()?.replace?.("#","")?.trim?.());
-        //if (isInFocus) {
-            //self.active  = false;
-            //self.focused = false;
-        //} else {
-            //self.focused = (taskManager.getOnFocus()?.taskId == ("#"+hash)) || location.hash == ("#"+hash);
-        //}
-        self?.updateState?.();
-    });
+    taskManager.on("*", ({task, index})=>{ self?.updateState?.();});
 }
 
 //
 export const onTasking = (self, taskManager)=>{
-    taskManager.on("focus", ({task, index})=>{
-        const isInFocus = (self.querySelector(".ui-content")?.id || self.id || (location.hash ? self.querySelector(location.hash) : null)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.taskId.trim?.()?.replace?.("#","")?.trim?.();
-        if (isInFocus) { delete self.dataset.hidden; };
-        self?.fixZLayer?.();
-    });
+    //
+    const whenFocus = ({task, index})=>{
+        if (task?.taskId) {
+            const targetId  = (self?.querySelector(".ui-content")?.id || self?.taskId || self?.dataset?.id || self?.id)?.trim?.()?.replace?.("#","")?.trim?.();
+            const isInFocus = targetId == task.taskId.trim?.()?.replace?.("#","")?.trim?.();
+            if (isInFocus && task?.active) { delete self.dataset.hidden; };
+            self?.fixZLayer?.();
+        }
+    };
 
     //
-    taskManager.on("activate", ({task, index})=>{
-        const isInFocus = (self.querySelector(".ui-content")?.id || self.id || (location.hash ? self.querySelector(location.hash) : null)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.taskId.trim?.()?.replace?.("#","")?.trim?.();
-        if (isInFocus) { delete self.dataset.hidden; };
-        self?.fixZLayer?.();
-    });
+    const whenHide = ({task, index})=>{
+        if (task?.taskId) {
+            const targetId  = (self?.querySelector(".ui-content")?.id || self?.taskId || self?.dataset?.id || self?.id)?.trim?.()?.replace?.("#","")?.trim?.();
+            const isInFocus = targetId == task.taskId.trim?.()?.replace?.("#","")?.trim?.();
+            if (isInFocus && !task?.active) { self.dataset.hidden = ""; };
+            self?.fixZLayer?.();
+        }
+    }
 
     //
-    taskManager.on("deactivate", ({task, index})=>{
-        const isInFocus = (self.querySelector(".ui-content")?.id || self.id || (location.hash ? self.querySelector(location.hash) : null)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.() == task.taskId.trim?.()?.replace?.("#","")?.trim?.();
-        if (isInFocus) { self.dataset.hidden = ""; };
-        self?.fixZLayer?.();
-    });
+    taskManager.on("focus", ()=>self?.fixZLayer?.());
+    taskManager.on("addTask", whenFocus);
+    taskManager.on("activate", whenFocus);
+    taskManager.on("deactivate", whenHide);
+    //taskManager.on("removeTask", whenHide);
 }
 
 //
 export const focusTask = (taskManager, target: HTMLElement, deActiveWhenFocus = false)=>{
-    const hash = "#" + (target.dataset.id || (target.querySelector(".ui-content")?.id || target.id || (location.hash ? target.querySelector(location.hash) : null)?.id || "") || (target as any).taskId).trim?.()?.replace?.("#","")?.trim?.();
-    if (taskManager?.inFocus?.(hash) && matchMedia("((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))").matches && deActiveWhenFocus) {
+    const targetId = ((target as any)?.taskId || target.dataset.id || target.querySelector(".ui-content")?.id || target.id || "");
+    const hash = "#" + targetId?.replace?.("#", "");
+    if (taskManager?.inFocus?.(hash, false) && matchMedia("((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))").matches && deActiveWhenFocus) {
         taskManager?.deactivate?.(hash);
     } else {
         taskManager?.focus?.(hash);
     }
 
     //
-    const navbar = document.querySelector("ui-taskbar") as HTMLElement;
+    const bar = document.querySelector("ui-taskbar") as HTMLElement;
     if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
-        if (navbar) { navbar.dataset.hidden = ""; };
+        if (bar) { bar.dataset.hidden = ""; };
     }
-
-    //
-    requestIdleCallback(()=>navigator?.vibrate?.([10]));
 }
