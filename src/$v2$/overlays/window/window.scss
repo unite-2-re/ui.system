@@ -410,13 +410,13 @@
             }
 
             //
-            :host(&:empty)  { display: none; };
+            :host(&:empty) { display: none; };
             :host(&:has(::slotted(.ui-content[data-hidden]))) { display: none; };
             :host(&:not(:has(.ui-content))) { display: none; };
             :host(&:not(:has(::slotted(.ui-content)))) { display: none; };
 
             // if has identified, do top level
-            :host(&:has(*:target)),
+            /*:host(&:has(*:target)),
             :host(&:target)
             {
                 --z-index: 0;
@@ -425,7 +425,7 @@
 
                 // revert visibility if hidden (may not help)
                 ::slotted(.ui-content[data-hidden]) { display: revert-layer; }
-            }
+            }*/
 
             //
             :host(&[data-maximized]) {

@@ -189,7 +189,7 @@
         };
 
         // if has identified, do top level
-        &:has(:target),
+        /*&:has(:target),
         &:target
         {
             & {
@@ -202,7 +202,7 @@
             ::slotted(.ui-content[data-hidden]) {
                 display: revert-layer;
             }
-        }
+        }*/
 
         //
         &:where(

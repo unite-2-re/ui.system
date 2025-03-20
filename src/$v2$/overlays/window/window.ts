@@ -107,7 +107,6 @@ export class UIFrame extends LitElementTheme {
             if (ev.target.matches(".ui-btn-close")) {
                 //const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;
                 const id = "#" + (self.querySelector(".ui-content")?.id || self?.id || location.hash)?.replace?.("#", "");
-                this.taskManager?.deactivate?.(id, true);
                 self.addEventListener("u2-hidden", ()=>{
                     self?.dispatchEvent?.(new CustomEvent("u2-close", {
                         bubbles: true,
@@ -117,7 +116,7 @@ export class UIFrame extends LitElementTheme {
                         }
                     }));
                 }, {once: true});
-                //if (id?.startsWith?.("TASK-")) { this.taskManager?.removeTask?.("#" + id); };
+                this.taskManager?.deactivate?.(id, true);
             }
 
             //
