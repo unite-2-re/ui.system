@@ -77,14 +77,27 @@ export class UITaskBar extends LitElementTheme {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
+        const self = this as unknown as HTMLElement;
         root.addEventListener("click", (ev)=>{
             if (!ev.target.matches("button, .ui-indicator")) { document.documentElement.querySelectorAll("ui-modal:not([data-hidden])")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; }); }
-        });
+        }); //.composed
         requestAnimationFrame(()=>{
             this.importFromTemplate(htmlCode);
             this.adaptiveTheme();
             if (root) { connect?.(root); this.statusSW = true; }
             root.addEventListener("click", onInteration);
+            self.addEventListener("click", (ev)=>{
+                if (ev?.composedPath?.()?.[0] == self) {
+                    if (document.documentElement?.querySelector?.("ui-modal:not([data-hidden])")) {
+                        document.documentElement.querySelectorAll("ui-modal:not([data-hidden])")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; });
+                    } else
+                    if (ev?.target == self) {
+                        const isMobile = matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches;
+                        const self: any = isMobile ? ev?.target : null;
+                        if (self) (self as HTMLElement).dataset.hidden = "";
+                    }
+                }
+            });
         });
         return root;
     }
