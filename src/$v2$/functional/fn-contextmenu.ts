@@ -14,8 +14,8 @@ export const hideOnClick = (ev?)=>{
     requestAnimationFrame(()=>{
         const self = document.querySelector(ctx) as HTMLElement;
         const isOutside = !((t?.closest(ctx) == self) || (t == self));
-        //const exception = t?.closest?.(excSel) || t?.matches?.(excSel);
-        if (isOutside || (ev?.type == "click" && !document.activeElement?.matches?.("input"))) {
+        const exception = t?.closest?.(excSel) || t?.matches?.(excSel);
+        if (isOutside && !exception || (ev?.type == "click" && !document.activeElement?.matches?.("input"))) {
             closeContextMenu(ev);
         };
     });
@@ -50,14 +50,14 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
         document.documentElement.addEventListener("click", ...evt);
 
         //
+        delete ctxMenu.dataset.hidden;
         placeWithCursor(ctxMenu, event);
         ctxMenu.innerHTML = "";
         ctxMenu.initiator = initiator;
         ctxMenu.event = event;
         content?.(ctxMenu, initiator, event);
-        delete ctxMenu.dataset.hidden;
     } else
-    if (ctxMenu && toggle && ctxMenu.dataset.hidden == null) {
+    if (ctxMenu && !ctxMenu.dataset.hidden) {
         closeContextMenu(event);
     }
 };

@@ -8,10 +8,10 @@ export * from "./appearance/slider/ap-slider";
 export * from "./functional/fn-contextmenu";
 export * from "./functional/fn-dropmenu";
 //export * from "./functional/fn-popup";
-//export * from "./functional/fn-modal";
+export * from "./functional/fn-modal";
 
 //
-export * from "./overlays/modal/service";
+//export * from "./overlays/modal/service";
 export * from "./overlays/modal/modal";
 export * from "./overlays/window/window";
 

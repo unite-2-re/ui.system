@@ -112,6 +112,9 @@
 
         /* */
         ::slotted(input) { display: none; pointer-events: none; };
+        ::slotted(ui-button-row, ui-select-row) {
+            display: contents;
+        }
 
         /* */
         & input[type="checkbox"], slot[name="radio"]::slotted(input[type="checkbox"]),

@@ -89,6 +89,21 @@ export class UIButton extends UIButtonBase {
                     openDropMenu(self, ev);
                 }
             });
+
+            //
+            self.querySelectorAll("ui-select-row, ui-button-row")?.forEach?.((el: any)=>{ el.style.display = "none"; });
+            self.addEventListener("change", (ev)=>{
+                //console.log(el?.dataset?.value || el?.value || "");
+                if ((ev?.target as any)?.matches?.("input[type=\"text\"]")) {
+                    self?.querySelectorAll?.("ui-select-row, ui-button-row")?.forEach?.((el: any)=>{
+                        if ((el?.dataset?.value || el?.value) == (ev?.target as any)?.value) {
+                            el.style.removeProperty("display");
+                        } else {
+                            el.style.display = "none";
+                        }
+                    });
+                }
+            });
         });
     }
 
