@@ -45,6 +45,7 @@
                     flex-direction: row;
                     place-content: center;
                     place-items: center;
+                    overflow: hidden;
 
                     //
                     z-index: calc(9999 + var(--z-index, 0));
@@ -84,23 +85,39 @@
                     grid-template-rows: minmax(0px, 1fr);
                     max-block-size: 4rem;
                     inline-size: 100%;
+                    overflow: hidden;
                 }
 
                 //
                 :host-context(&) ::slotted(ui-icon:first-child),
                 :host-context(&) ui-icon {
                     padding: 0.5rem;
+                    grid-column: 1 / 1 span;
+                    grid-row: 1 / 1 span;
                 }
 
                 //
                 :host-context(&) span {
+                    flex-direction: row;
+                    place-content: center;
+                    place-items: center;
                     translate: 0px -0.125rem;
                     padding-inline-start: 0rem;
                     display: inline flow;
                     text-align: start;
                     justify-self: start;
+                    justify-content: start;
+                    //inline-size: max-content;
+                    min-block-size: max-content;
+                    block-size: 100%;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    max-inline-size: 100%;
                     inline-size: max-content;
-                    block-size: max-content;
+                    grid-column: 2 / 2 span;
+                    grid-row: 1 / 1 span;
+                    line-height: 1.4;
                 }
 
                 //
