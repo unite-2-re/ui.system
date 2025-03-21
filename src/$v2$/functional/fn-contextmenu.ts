@@ -8,11 +8,14 @@ interface CTXMenuElement {
 };
 
 //
+const excSel = "ui-button";
 export const hideOnClick = (ev?)=>{
     const t = ev.target as HTMLElement;
     requestAnimationFrame(()=>{
         const self = document.querySelector(ctx) as HTMLElement;
-        if (!((t?.closest(ctx) == self) || (t == self)) || (ev?.type == "click" && !document.activeElement?.matches?.("input"))) {
+        const isOutside = !((t?.closest(ctx) == self) || (t == self));
+        //const exception = t?.closest?.(excSel) || t?.matches?.(excSel);
+        if (isOutside || (ev?.type == "click" && !document.activeElement?.matches?.("input"))) {
             closeContextMenu(ev);
         };
     });
@@ -51,10 +54,10 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
         ctxMenu.innerHTML = "";
         ctxMenu.initiator = initiator;
         ctxMenu.event = event;
-        delete ctxMenu.dataset.hidden;
         content?.(ctxMenu, initiator, event);
+        delete ctxMenu.dataset.hidden;
     } else
-    if (ctxMenu && toggle && !ctxMenu.dataset.hidden) {
+    if (ctxMenu && toggle && ctxMenu.dataset.hidden == null) {
         closeContextMenu(event);
     }
 };

@@ -9,11 +9,24 @@ export const openDropMenu = (button: any, ev?: any)=>{
     //
     const items = Array.from(button?.querySelectorAll?.("ui-select-row, ui-button-row"));
     const cloned = items?.map?.((el: any)=>{
-        const input: any = el?.querySelector?.("input") ?? el;
-        const clone: any = el?.cloneNode?.(true);
+        const clone: any = el?.matches("ui-button-row") ? el?.cloneNode?.(true) : document?.createElement?.("ui-button-row");
+        if (el?.matches("ui-select-row")) {
+            clone?.append(...Array.from(el?.querySelectorAll?.("*:not(input)")).map((n:any)=>n.cloneNode(true)));
+        }
+
+        //
         clone?.style?.removeProperty("display");
-        clone?.addEventListener?.("change", (ev)=>input?.click?.());
-        clone?.addEventListener?.("click", (ev)=>closeContextMenu());
+        clone?.addEventListener?.("change", (ev)=>{
+            const input: any = el?.matches?.("input") ? el : el?.querySelector?.("input");
+            //input?.click?.();
+            //input?.dispatchEvent?.(new Event("change", { bubbles: true }));
+        });
+        clone?.addEventListener?.("click", (ev)=>{
+            const input: any = el?.matches?.("input") ? el : el?.querySelector?.("input");
+            input?.click?.();
+            //input?.dispatchEvent?.(new Event("change", { bubbles: true }));
+            closeContextMenu();
+        });
         return clone;
     });
 

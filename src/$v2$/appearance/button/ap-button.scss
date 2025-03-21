@@ -105,19 +105,20 @@
         /* */
         ::slotted(*)
         {
-            interactivity: inert;
             pointer-events: none;
             text-align: start;
             font-size: 0.8rem;
         }
 
         /* */
-        ::slotted(input) { display: none !important; }
+        ::slotted(input) { display: none; pointer-events: none; };
 
         /* */
         & input[type="checkbox"], slot[name="radio"]::slotted(input[type="checkbox"]),
         & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"])
         {
+            background-color: transparent;
+            pointer-events: auto;
             box-sizing: border-box;
             cursor: pointer;
             grid-row: 1 / -1;
@@ -127,7 +128,7 @@
             appearance: none;
             opacity: 0;
             margin: 0px;
-            pointer-events: auto;
+            min-inline-size: 1px;
         };
 
     }

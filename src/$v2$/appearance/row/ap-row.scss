@@ -111,6 +111,9 @@
         & input[type="checkbox"], slot[name="radio"]::slotted(input[type="checkbox"]),
         & input[type="radio"], slot[name="radio"]::slotted(input[type="radio"])
         {
+            position: fixed;
+            background-color: transparent;
+            pointer-events: auto;
             max-block-size: none;
             box-sizing: border-box;
             cursor: pointer;
@@ -120,8 +123,8 @@
             block-size: 100%;
             appearance: none;
             opacity: 0;
-            display: none;
             margin: 0px;
+            min-inline-size: 1px;
         };
 
         /* */
@@ -202,6 +205,9 @@
             background-color: transparent;
             text-align: start;
         }
+
+        /* */
+        ::slotted(input) { display: none; pointer-events: none; };
 
         /* */
         :where(ui-icon), ::slotted(ui-icon) {

@@ -115,9 +115,7 @@ export class UIButton extends UIButtonBase {
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
-        root.addEventListener("click", ()=>{
-            self?.click?.();
-        });
+        //root.addEventListener("click", ()=>{ self?.click?.(); });
         this.importFromTemplate(htmlCode);
         return root;
     }

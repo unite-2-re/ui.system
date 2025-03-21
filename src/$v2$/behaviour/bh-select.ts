@@ -129,7 +129,7 @@ export class UISelectBase extends LitElement {
         const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
             if (!self.querySelector("input")) {
-                self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder="" label="" type="radio" value=${this.value} name=${(self?.parentNode as HTMLElement)?.dataset?.name || "dummy-radio"}>`);
+                self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder=" " label=" " type="radio" value="${this.value}" name="${(self?.parentNode as HTMLElement)?.dataset?.name || self?.dataset?.name || "dummy-radio"}">`);
             }
             /*self.addEventListener("click", (ev)=>{
                 const input = self.querySelector("input[type=\"radio\"], input[type=\"checkbox\"]") as HTMLInputElement;
