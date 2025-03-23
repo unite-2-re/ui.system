@@ -23,9 +23,6 @@ export const setStyle = async (self, confirm: boolean = false, exact: number = 0
 
             //
             animation?.commitStyles?.();
-            animation?.cancel?.();
-
-            //
             self.style.setProperty("--value", `${exact}`, "");
         }
     } else {
@@ -77,12 +74,9 @@ export const makeSwitch = (self?: HTMLElement)=>{
                 const exact = Math.min(Math.max(Math.floor(vary[0]), 0), count);
 
                 //
-                if (!radio?.[exact]?.checked && confirm) {
-                    radio?.[exact]?.click?.();
-                };
-
-                //
-                setStyle(self, confirm, exact, val);
+                setStyle(self, confirm, exact, evType == "pointermove" ? val : (self.style?.getPropertyValue?.("--value") ?? val))?.finally?.(()=>{
+                    if (!radio?.[exact]?.checked && confirm) { radio?.[exact]?.click?.(); };
+                });
             }
         }
 
@@ -109,7 +103,7 @@ export const makeSwitch = (self?: HTMLElement)=>{
             }));
 
             //
-            setStyle(self, confirm, exact, val);
+            setStyle(self, confirm, exact, evType == "pointermove" ? val : (self.style?.getPropertyValue?.("--value") ?? val));
         }
     }
 
@@ -154,8 +148,8 @@ export const makeSwitch = (self?: HTMLElement)=>{
     }));
 
     //
-    self?.addEventListener?.("click", agWrapEvent((ev: any)=>{
+    /*self?.addEventListener?.("click", agWrapEvent((ev: any)=>{
         const boundingBox = getBoundingOrientRect?.(self);
         doExaction(weak?.deref?.(), ev.orient[0], ev.orient[1], true, boundingBox, ev?.type);
-    }));
+    }));*/
 };
