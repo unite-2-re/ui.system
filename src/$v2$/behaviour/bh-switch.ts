@@ -74,7 +74,7 @@ export const makeSwitch = (self?: HTMLElement)=>{
                 const exact = Math.min(Math.max(Math.floor(vary[0]), 0), count);
 
                 //
-                setStyle(self, confirm, exact, evType == "pointermove" ? val : (self.style?.getPropertyValue?.("--value") ?? val))?.finally?.(()=>{
+                setStyle(self, confirm || evType == "change", exact, (evType == "pointermove") ? val : (self.style?.getPropertyValue?.("--value") ?? val))?.finally?.(()=>{
                     if (!radio?.[exact]?.checked && confirm) { radio?.[exact]?.click?.(); };
                 });
             }
@@ -103,7 +103,7 @@ export const makeSwitch = (self?: HTMLElement)=>{
             }));
 
             //
-            setStyle(self, confirm, exact, evType == "pointermove" ? val : (self.style?.getPropertyValue?.("--value") ?? val));
+            setStyle(self, confirm || evType == "change", exact, (evType == "pointermove") ? val : (self.style?.getPropertyValue?.("--value") ?? val));
         }
     }
 
