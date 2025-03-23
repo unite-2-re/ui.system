@@ -3,30 +3,29 @@
 import { getBoundingOrientRect, agWrapEvent } from "/externals/core/agate.js";
 
 //
-export const setStyle = (self, confirm: boolean = false, exact: number = 0, val: number = 0)=>{
-    //
+export const setStyle = async (self, confirm: boolean = false, exact: number = 0, val: number = 0)=>{
     if (confirm) {
         const current = self.style?.getPropertyValue?.("--value") ?? val;
-        if (
-            (current != exact) &&
-            !matchMedia("(prefers-reduced-motion: reduce)").matches &&
-            self.animate != null
-        ) {
-            let animation: any = null;
-            (animation = self.animate?.([
-                { "--value": self.style?.getPropertyValue?.("--value") ?? val },
-                { "--value": exact },
-            ], {
-                duration: 100,
-                iterations: 1, // @ts-ignore
-                fillMode: "both"
-            }))?.finished?.then(()=>{
-                animation?.commitStyles?.();
-                animation?.cancel?.();
-                self.style.setProperty("--value", `${exact}`, "");
-            });
-        } else
         if (current != exact) {
+            let animation: any = null;
+
+            //
+            if (!matchMedia("(prefers-reduced-motion: reduce)").matches && self.animate != null) {
+                await (animation = self.animate?.([
+                    { "--value": current },
+                    { "--value": exact },
+                ], {
+                    duration: 100,
+                    iterations: 1,
+                    fillMode: "forwards"
+                }))?.finished;
+            }
+
+            //
+            animation?.commitStyles?.();
+            animation?.cancel?.();
+
+            //
             self.style.setProperty("--value", `${exact}`, "");
         }
     } else {
@@ -54,25 +53,27 @@ export const makeSwitch = (self?: HTMLElement)=>{
         const box   = boundingBox || getBoundingOrientRect?.(self);
         const coord = [x - box?.left, y - box?.top];
 
-        //
-        if (evType != "click") {
-
-            // determine checkbox state
+        // determine checkbox state
+        if (evType != "pointerdown") {
             if (TYPE == "checkbox") {
                 const checkbox = self.querySelector?.("input[type=\"checkbox\"]") as unknown as HTMLInputElement;
                 checkbox?.click?.();
                 setStyle(self, true, checkbox?.checked ? 1 : 0, checkbox?.checked ? 1 : 0);
             }
+        }
+
+        //
+        if (evType != "click") {
 
             // determine radio state
             if (TYPE == "radio") {
                 const radio = self.querySelectorAll?.("input[type=\"radio\"]") as unknown as HTMLInputElement[];
                 const count = ((radio?.length || 1)-1);
                 const vary  = [
-                    (coord[0]/box.width ) * (count + 1),
+                    (coord[0]/box.width ) * (count+1),
                     (coord[1]/box.height) * 1
                 ];
-                const val   = Math.min(Math.max( ((-0.5) + vary[0]), 0), count);
+                const val   = Math.min(Math.max(vary[0] - 0.5, 0), count);
                 const exact = Math.min(Math.max(Math.floor(vary[0]), 0), count);
 
                 //
@@ -93,8 +94,10 @@ export const makeSwitch = (self?: HTMLElement)=>{
                 (coord[0]/box.width) * count,//(count + 1 - 0.5),
                 (coord[1]/box.height) * 1
             ];
-            const val = Math.min(Math.max(vary[0], 0), count);
+
+            //
             const step = parseFloat(number?.step ?? 1) ?? 1;
+            const val = Math.min(Math.max(vary[0] - step * 0.5, 0), count);
             const exact = Math.min(Math.max(Math.round(val / step) * step, 0), count);
 
             //
@@ -141,7 +144,7 @@ export const makeSwitch = (self?: HTMLElement)=>{
 
             //
             const boundingBox = getBoundingOrientRect?.(self);
-            doExaction(weak?.deref?.(), ev.orient[0], ev.orient[1], true, boundingBox, ev?.type);
+            doExaction(weak?.deref?.(), ev.orient[0], ev.orient[1], false, boundingBox, ev?.type);
 
             // make events temp available
             ROOT.addEventListener("pointerup", stopMove);
