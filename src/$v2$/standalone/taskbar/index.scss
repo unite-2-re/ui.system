@@ -358,6 +358,11 @@
 
                 //
                 .ui-app-menu {
+                    display: none !important;
+                }
+
+                //
+                /*.ui-app-menu {
                     place-content: center;
                     place-self: center;
                     place-items: center;
@@ -391,7 +396,7 @@
                     & [data-action="fullscreen"] {
                         order: 0;
                     }
-                }
+                }*/
 
                 //
                 .ui-task-bar {

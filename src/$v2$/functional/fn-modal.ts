@@ -2,7 +2,7 @@
 const ROOT = document.documentElement;
 const HIDE = (ev: any)=>{
     const target = ev?.target || document.querySelector(":hover, :active") || document.activeElement;
-    const SELECTOR = "ui-modal[type=\"contextmenu\"], ui-button, ui-taskbar, ui-statusbar, button, label, input, ui-longtext, ui-focustext, ui-row-select, ui-row-button, .u2-input, .ui-input";
+    const SELECTOR = "ui-modal[type=\"contextmenu\"], ui-button, ui-taskbar, ui-navbar, ui-statusbar, button, label, input, ui-longtext, ui-focustext, ui-row-select, ui-row-button, .u2-input, .ui-input";
 
     //
     requestAnimationFrame(()=>{

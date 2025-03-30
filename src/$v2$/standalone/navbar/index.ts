@@ -18,6 +18,9 @@ import initTaskManager, { blurTask } from "../../tasks/logic";
 import { setAttributesIfNull } from "../../shared/Utils";
 
 //
+import { onInteration } from "../../tasks/opening";
+
+//
 const setIdleInterval = (cb, timeout = 1000, ...args)=>{
     requestIdleCallback(async ()=>{
         if (!cb || (typeof cb != "function")) return;
@@ -52,13 +55,33 @@ export class UINavBar extends LitElementTheme {
     }
 
     //
-    protected render() { return html`${this.themeStyle}<button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}><ui-icon inert icon="menu"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-right"></ui-icon></button><button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle" part="ui-title-handle" @click=${this.menuAction.bind(this)}><ui-icon inert icon=${this.icon||""}></ui-icon><span>${this.label}</span></button>`; }
+    protected render() { return html`${this.themeStyle}
+        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}>
+            <ui-icon inert icon="menu"></ui-icon>
+        </button>
+        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}>
+            <ui-icon inert icon="chevron-right"></ui-icon>
+        </button>
+        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle ui-anchor" part="ui-title-handle" data-popup="app-menu">
+            <span>${this.label}</span><ui-icon inert icon=${this.icon||""}></ui-icon>
+        </button>`;
+    }
+
+    //
     protected adaptiveTheme() {
         const self = this as unknown as HTMLElement;
         const setTheme = ()=>{
-            const factor = document.body.matches(":has(ui-frame:not([data-hidden]), ui-taskbar:not([data-hidden]))");
+            const factor = document.body.matches(":has(ui-frame:not([data-hidden]))");
             const newScheme = factor ? "solid" : "base";
             if (newScheme != self.getAttribute("data-scheme")) { self.setAttribute("data-scheme", newScheme); };
+            (self as any).shadowRoot.querySelector(".ui-title-handle").dataset.visible = "";
+
+            //
+            /*if (document.body.matches(":has(ui-taskbar:not([data-hidden]))")) {
+                (self as any).shadowRoot.querySelector(".ui-title-handle").dataset.visible = "";
+            } else {
+                delete (self as any).shadowRoot.querySelector(".ui-title-handle").dataset.visible;
+            }*/
         }
 
         //
@@ -68,6 +91,20 @@ export class UINavBar extends LitElementTheme {
         //
         document.addEventListener("u2-appear", ()=>requestIdleCallback(setTheme));
         document.addEventListener("u2-hidden", ()=>requestIdleCallback(setTheme));
+
+        //
+        const showLabel = (ev?)=>{
+            const onFocus = this.taskManager.getOnFocus(false);
+            (self as any).shadowRoot.querySelector(".ui-title-handle span").textContent = onFocus?.desc?.label || "";
+            (self as any).shadowRoot.querySelector(".ui-title-handle ui-icon").icon = onFocus?.desc?.icon || "layout-grid";
+        }
+
+        //
+        this.taskManager.on("focus", showLabel);
+        this.taskManager.on("addTask", showLabel);
+        this.taskManager.on("activate", showLabel);
+        this.taskManager.on("deactivate", showLabel);
+        showLabel();
     }
 
     //
@@ -89,6 +126,15 @@ export class UINavBar extends LitElementTheme {
         const root = super.createRenderRoot();
         this.importFromTemplate(htmlCode);
         requestAnimationFrame(()=>{
+            root.addEventListener("click", (ev)=>{
+                // if opened tasks, hide in focus
+                const focusId = this.taskManager.getOnFocus(false)?.taskId;
+                if (focusId) {
+                    this.taskManager.deactivate(focusId);
+                } else {
+                    onInteration(ev)
+                }
+            });
             this.adaptiveTheme();
         });
         return root;

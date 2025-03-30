@@ -124,6 +124,11 @@ export class UITaskBar extends LitElementTheme {
         //
         document.addEventListener("u2-appear", ()=>requestIdleCallback(setTheme));
         document.addEventListener("u2-hidden", ()=>requestIdleCallback(setTheme));
+
+        //
+        self.addEventListener("u2-appear", (ev)=>{
+            document.documentElement.querySelectorAll("ui-modal:not([data-hidden])")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; });
+        });
     }
 
     //
