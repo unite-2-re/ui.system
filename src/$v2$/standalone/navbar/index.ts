@@ -104,6 +104,7 @@ export class UINavBar extends LitElementTheme {
         this.taskManager.on("addTask", showLabel);
         this.taskManager.on("activate", showLabel);
         this.taskManager.on("deactivate", showLabel);
+        this.taskManager.on("removeTask", showLabel);
         showLabel();
     }
 
