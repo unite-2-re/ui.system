@@ -3,8 +3,7 @@
 // this component (or lucide icons) may to be distributed with main package.
 
 // @ts-ignore
-import { html, css, unsafeCSS, PropertyValues, LitElement } from "../../shared/LitUse";
-import LitElementTheme from "../../shared/LitElementTheme";
+import { html, PropertyValues, LitElement } from "../../shared/LitUse";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
@@ -15,8 +14,11 @@ import styles from "./index.scss?inline";
 //
 const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
 
+// @ts-ignore /* @vite-ignore */
+import {importCdn} from "/externals/modules/cdnImport.mjs";
+export {importCdn};
+
 // @ts-ignore
-const ICON_MODULE = import("/externals/vendor/lucide.min.js");
 const toCamelCase = (str: string) => {
     return str
         .split(/[-_]/)
@@ -117,7 +119,8 @@ export class UILucideIcon extends LitElement {
     protected updateIcon($icon?: string) {
         const self = this as unknown as HTMLElement;
         const icon = this.icon || self.getAttribute("icon") || $icon || "circle-help";
-        if (icon) ICON_MODULE.then((icons)=>{
+        // @ts-ignore
+        if (icon) Promise.try(importCdn, ["/externals/vendor/lucide.min.js"])?.then?.((icons)=>{
             const ICON = toCamelCase(icon);
             if (icons?.[ICON]) {
                 const self = this as any;

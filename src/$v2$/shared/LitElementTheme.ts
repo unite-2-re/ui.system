@@ -6,6 +6,10 @@ import { LitElement, html } from "./LitUse";
 // @ts-ignore
 import { property } from "lit/decorators.js";
 
+// @ts-ignore /* @vite-ignore */
+import {importCdn} from "/externals/modules/cdnImport.mjs";
+export {importCdn};
+
 //
 export class LitElementTheme extends LitElement {
 
@@ -30,7 +34,7 @@ export class LitElementTheme extends LitElement {
         const root = super.createRenderRoot();
 
         // @ts-ignore
-        import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
+        Promise.try(importCdn, ["/externals/core/theme.js"])?.then?.((module)=>{
             if (root) { this.themeStyle = module?.default?.(root); }
         }).catch(console.warn.bind(console));
 

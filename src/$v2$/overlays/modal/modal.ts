@@ -2,18 +2,15 @@
 
 // @ts-ignore
 import { html, css, unsafeCSS } from "../../shared/LitUse.js";
-import LitElementTheme from "../../shared/LitElementTheme.js";
+import LitElementTheme, { importCdn } from "../../shared/LitElementTheme.js";
 import { placeWithElement } from "../../position/ts/ps-anchor.js";
+import { setAttributesIfNull } from "../../shared/Utils";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
 import styles from "./modal.scss?inline";
-
-// @ts-ignore
-import { whenAnyScreenChanges } from "/externals/core/agate.js";
-import { setAttributesIfNull } from "../../shared/Utils";
 
 // @ts-ignore
 @customElement('ui-modal')
@@ -33,9 +30,9 @@ export class UIModal extends LitElementTheme {
         //
         const self = this as unknown as HTMLElement;
 
-        //
-        whenAnyScreenChanges?.(()=>{
-            this.placeWithElement();
+        // @ts-ignore
+        Promise.try(importCdn, ["/externals/core/agate.js"])?.then?.(({whenAnyScreenChanges})=>{
+            whenAnyScreenChanges?.(()=>this.placeWithElement());
         });
 
         //

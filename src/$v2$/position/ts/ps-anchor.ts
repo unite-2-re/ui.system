@@ -1,5 +1,6 @@
-// @ts-ignore
-import { getBoundingOrientRect } from "/externals/core/agate.js";
+// @ts-ignore /* @vite-ignore */
+import {importCdn} from "/externals/modules/cdnImport.mjs";
+export {importCdn};
 
 //
 export const generateId = (len = 16) => {
@@ -9,11 +10,15 @@ export const generateId = (len = 16) => {
 }
 
 //
-export const placeWithElement = (self?: HTMLElement, element?: HTMLElement, where?: string, gap: number = 0)=>{
+export const placeWithElement = async (self?: HTMLElement, element?: HTMLElement, where?: string, gap: number = 0)=>{
     if (
         element && element.dataset?.hidden == null &&
         self && self?.dataset?.hidden == null
     ) {
+        // @ts-ignore
+        const {getBoundingOrientRect} = await Promise.try(importCdn, ["/externals/core/agate.js"]);
+
+        //
         const box      = getBoundingOrientRect(element);
         const self_box = getBoundingOrientRect(self);
         const anchor   = element?.style?.getPropertyValue?.("anchor-name");

@@ -1,6 +1,6 @@
 
 // @ts-ignore
-import { getBoundingOrientRect, agWrapEvent } from "/externals/core/agate.js";
+import { importCdn } from "../../$design$/index";
 
 //
 export const setStyle = async (self, confirm: boolean = false, exact: number = 0, val: number = 0)=>{
@@ -31,8 +31,11 @@ export const setStyle = async (self, confirm: boolean = false, exact: number = 0
 }
 
 //
-export const makeSwitch = (self?: HTMLElement)=>{
+export const makeSwitch = async (self?: HTMLElement)=>{
     if (!self) return;
+
+    // @ts-ignore
+    const { getBoundingOrientRect, agWrapEvent } = await Promise.try(importCdn, ["/externals/core/agate.js"]);
 
     //
     const sws  = { pointerId: -1 };
