@@ -60,7 +60,7 @@ export class TaskManager {
 
         //
         addEventListener("hashchange", (ev)=>{
-            this.focus(location.hash, true);
+            if (this.get(location.hash)?.active) { this.focus(location.hash, true); } else { history.replaceState("", "", this.getOnFocus(false)?.taskId || ""); };
         });
 
         //

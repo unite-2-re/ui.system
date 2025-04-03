@@ -56,13 +56,13 @@ export class UINavBar extends LitElementTheme {
 
     //
     protected render() { return html`${this.themeStyle}
-        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button"  part="ui-menu-button"  @click=${this.menuAction.bind(this)}>
-            <ui-icon inert icon="menu"></ui-icon>
+        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button ui-anchor"  part="ui-menu-button"  data-popup="app-menu">
+            <ui-icon inert icon="layout-grid"></ui-icon>
         </button>
-        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button"  part="ui-back-button"  @click=${this.backAction.bind(this)}>
+        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button ui-anchor"  part="ui-back-button"  @click=${this.backAction.bind(this)}>
             <ui-icon inert icon="chevron-right"></ui-icon>
         </button>
-        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle ui-anchor" part="ui-title-handle" data-popup="app-menu">
+        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle ui-anchor" part="ui-title-handle" @click=${this.menuAction.bind(this)}>
             <span>${this.label}</span><ui-icon inert icon=${this.icon||""}></ui-icon>
         </button>`;
     }
@@ -96,7 +96,7 @@ export class UINavBar extends LitElementTheme {
         const showLabel = (ev?)=>{
             const onFocus = this.taskManager.getOnFocus(false);
             (self as any).shadowRoot.querySelector(".ui-title-handle span").textContent = onFocus?.desc?.label || "";
-            (self as any).shadowRoot.querySelector(".ui-title-handle ui-icon").icon = onFocus?.desc?.icon || "layout-grid";
+            (self as any).shadowRoot.querySelector(".ui-title-handle ui-icon").icon = onFocus?.desc?.icon || "menu";
         }
 
         //
@@ -110,7 +110,11 @@ export class UINavBar extends LitElementTheme {
 
     //
     protected menuAction() {
-        const navbar = document.querySelector("ui-taskbar") as HTMLElement;
+        const navbar  = document.querySelector("ui-taskbar") as HTMLElement;
+        const focusId = this.taskManager.getOnFocus(false)?.taskId;
+        if (focusId) {
+            this.taskManager.deactivate(focusId);
+        } else
         if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
             if (navbar) { if (navbar.dataset.hidden != null) { delete navbar.dataset.hidden; } else { navbar.dataset.hidden = ""; } };
         }
@@ -118,7 +122,10 @@ export class UINavBar extends LitElementTheme {
 
     //
     protected backAction(ev) {
-        blurTask(this.taskManager, true);
+        // @ts-ignore
+        //(navigator?.back ? navigator?.back : history.back)?.();
+        history.back?.(); // za-e-ball-o1
+        //blurTask(this.taskManager, true);
         //if (!blurTask()) { history.back(); };
     }
 
@@ -128,13 +135,7 @@ export class UINavBar extends LitElementTheme {
         this.importFromTemplate(htmlCode);
         requestAnimationFrame(()=>{
             root.addEventListener("click", (ev)=>{
-                // if opened tasks, hide in focus
-                const focusId = this.taskManager.getOnFocus(false)?.taskId;
-                if (focusId) {
-                    this.taskManager.deactivate(focusId);
-                } else {
-                    onInteration(ev)
-                }
+                onInteration(ev);
             });
             this.adaptiveTheme();
         });
