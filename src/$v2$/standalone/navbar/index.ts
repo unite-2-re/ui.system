@@ -62,7 +62,7 @@ export class UINavBar extends LitElementTheme {
         <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button ui-anchor"  part="ui-back-button"  @click=${this.backAction.bind(this)}>
             <ui-icon inert icon="chevron-right"></ui-icon>
         </button>
-        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle ui-anchor" part="ui-title-handle" @click=${this.menuAction.bind(this)}>
+        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle ui-anchor" part="ui-title-handle" @contextmenu=${this.menuAction.bind(this)} @click=${this.menuAction.bind(this)}>
             <span>${this.label}</span><ui-icon inert icon=${this.icon||""}></ui-icon>
         </button>`;
     }
@@ -109,10 +109,13 @@ export class UINavBar extends LitElementTheme {
     }
 
     //
-    protected menuAction() {
+    protected menuAction(ev) {
+        ev?.preventDefault?.();
+
+        //
         const navbar  = document.querySelector("ui-taskbar") as HTMLElement;
         const focusId = this.taskManager.getOnFocus(false)?.taskId;
-        if (focusId) {
+        if (focusId && ev.type != "contextmenu") {
             this.taskManager.deactivate(focusId);
         } else
         if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
