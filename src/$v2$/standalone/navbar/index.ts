@@ -115,7 +115,7 @@ export class UINavBar extends LitElementTheme {
         //
         const navbar  = document.querySelector("ui-taskbar") as HTMLElement;
         const focusId = this.taskManager.getOnFocus(false)?.taskId;
-        if (focusId && ev.type != "contextmenu") {
+        if ((focusId && navbar.dataset.hidden != null) && ev.type != "contextmenu") {
             this.taskManager.deactivate(focusId);
         } else
         if (matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches) {
