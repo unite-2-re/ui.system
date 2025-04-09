@@ -48,12 +48,27 @@ export class UIModal extends LitElementTheme {
             //
             self.addEventListener("u2-appear", (e)=>{
                 //self.style.removeProperty("display");
+                const target = e.target as HTMLElement;
                 if (e.target == this) requestAnimationFrame(()=>this.placeWithElement());
+            });
+
+            // when something is appear, close contextmenu (except contextmenu itself)
+            document.documentElement.addEventListener("u2-appear", (e)=>{
+                const target = e.target as HTMLElement;
+                if (!(target?.matches?.("ui-modal[type=\"contextmenu\"]") || target?.closest?.("ui-modal[type=\"contextmenu\"]")) && self?.matches?.("ui-modal[type=\"contextmenu\"]")) { self.dataset.hidden = ""; };
             });
 
             //
             self.addEventListener("u2-before-show", (e)=>{
                 if (e.target == this) requestAnimationFrame(()=> this.placeWithElement());
+            });
+
+            //
+            self.addEventListener("click", (e)=>{
+                requestAnimationFrame(()=>{
+                    const target = e.target as HTMLElement;
+                    if (self.dataset.hidden == null && self.matches("ui-modal[type=\"contextmenu\"]") && (target?.matches?.("ui-button-row, ui-select-row, li") || target?.closest?.("ui-button-row, ui-select-row, li"))) { self.dataset.hidden = ""; };
+                });
             });
         });
 

@@ -34,13 +34,15 @@ const ctx: string = "ui-modal[type=\"contextmenu\"]";
 //
 export const closeContextMenu = (ev?)=>{
     const ctxMenu = (ev?.target?.matches?.(ctx) ? ev?.target : ev?.target?.closest?.(ctx)) ?? document.querySelector(ctx) as HTMLElement;
-    if (ctxMenu && ctxMenu.dataset.hidden == null) { ctxMenu.dataset.hidden = ""; };
+    if (ctxMenu && ctxMenu.dataset.hidden == null) {
+        document.documentElement.removeEventListener("pointerdown", ...evt);
+        document.documentElement.removeEventListener("contextmenu", ...evt);
+        document.documentElement.removeEventListener("scroll", ...evt);
+        document.documentElement.removeEventListener("click", ...evt);
 
-    //
-    document.documentElement.removeEventListener("pointerdown", ...evt);
-    document.documentElement.removeEventListener("contextmenu", ...evt);
-    document.documentElement.removeEventListener("scroll", ...evt);
-    document.documentElement.removeEventListener("click", ...evt);
+        //
+        delete ctxMenu.dataset.hidden;
+    };
 };
 
 //
@@ -59,6 +61,9 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
 
     //
     if (ctxMenu && (toggle && ctxMenu.dataset.hidden != null || !toggle)) {
+        delete ctxMenu.dataset.hidden;
+
+        //
         document.documentElement.removeEventListener("pointerdown", ...evt);
         document.documentElement.removeEventListener("contextmenu", ...evt);
         document.documentElement.removeEventListener("scroll", ...evt);
@@ -69,9 +74,6 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
         document.documentElement.addEventListener("contextmenu", ...evt);
         document.documentElement.addEventListener("scroll", ...evt);
         document.documentElement.addEventListener("click", ...evt);
-
-        //
-        delete ctxMenu.dataset.hidden;
     } else
     if (ctxMenu && ctxMenu.dataset.hidden == null) {
         closeContextMenu(event);
