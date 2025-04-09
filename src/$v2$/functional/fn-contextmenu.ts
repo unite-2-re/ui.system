@@ -35,13 +35,14 @@ const ctx: string = "ui-modal[type=\"contextmenu\"]";
 export const closeContextMenu = (ev?)=>{
     const ctxMenu = (ev?.target?.matches?.(ctx) ? ev?.target : ev?.target?.closest?.(ctx)) ?? document.querySelector(ctx) as HTMLElement;
     if (ctxMenu && ctxMenu.dataset.hidden == null) {
+        document.documentElement.removeEventListener("m-dragstart", ...evt);
         document.documentElement.removeEventListener("pointerdown", ...evt);
         document.documentElement.removeEventListener("contextmenu", ...evt);
         document.documentElement.removeEventListener("scroll", ...evt);
         document.documentElement.removeEventListener("click", ...evt);
 
         //
-        delete ctxMenu.dataset.hidden;
+        ctxMenu.dataset.hidden = "";
     };
 };
 
@@ -64,12 +65,14 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
         delete ctxMenu.dataset.hidden;
 
         //
+        document.documentElement.removeEventListener("m-dragstart", ...evt);
         document.documentElement.removeEventListener("pointerdown", ...evt);
         document.documentElement.removeEventListener("contextmenu", ...evt);
         document.documentElement.removeEventListener("scroll", ...evt);
         document.documentElement.removeEventListener("click", ...evt);
 
         //
+        document.documentElement.addEventListener("m-dragstart", ...evt);
         document.documentElement.addEventListener("pointerdown", ...evt);
         document.documentElement.addEventListener("contextmenu", ...evt);
         document.documentElement.addEventListener("scroll", ...evt);
