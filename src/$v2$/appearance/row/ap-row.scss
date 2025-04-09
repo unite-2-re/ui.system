@@ -46,6 +46,13 @@
 
             /* */
             font-family: 'Open Sans', 'Ubuntu Sans', Ubuntu, Segoe, "Segoe UI", source-sans-pro, 'Source Sans 3', 'Gill Sans Nova', Candara, sans-serif, ui-sans-serif, system-ui;
+
+            /* touch screen not able to use context menu */
+            @media screen and (pointer: coarse) and (hover: none)
+            {
+                -webkit-user-drag: none !important;
+                -moz-user-drag: none !important;
+            }
         }
 
         /* */
