@@ -11,11 +11,17 @@ interface CTXMenuElement {
 const excSel = "ui-button";
 export const hideOnClick = (ev?)=>{
     const t = ev.target as HTMLElement;
+
+    // prevent from immediate close
+    const ctxMenu = (ev?.target?.matches?.(ctx) ? ev?.target : ev?.target?.closest?.(ctx)) ?? document.querySelector(ctx) as HTMLElement;
+    const isVisible = ctxMenu.dataset.hidden == null;
+
+    //
     requestAnimationFrame(()=>{
         const self = document.querySelector(ctx) as HTMLElement;
         const isOutside = !((t?.closest(ctx) == self) || (t == self));
         const exception = t?.closest?.(excSel) || t?.matches?.(excSel);
-        if (isOutside && !exception || (ev?.type == "click" && !document.activeElement?.matches?.("input"))) {
+        if ((isVisible && ctxMenu.dataset.hidden == null) && (isOutside && !exception || (ev?.type == "click" && !document.activeElement?.matches?.("input")))) {
             closeContextMenu(ev);
         };
     });
@@ -43,7 +49,22 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
     const ctxMenu   = document.querySelector(ctx) as any;
 
     //
+    if (event?.type == "contextmenu") { placeWithCursor(ctxMenu, event); };
+
+    //
+    ctxMenu.innerHTML = "";
+    ctxMenu.initiator = initiator;
+    ctxMenu.event = event;
+    content?.(ctxMenu, initiator, event);
+
+    //
     if (ctxMenu && (toggle && ctxMenu.dataset.hidden != null || !toggle)) {
+        document.documentElement.removeEventListener("pointerdown", ...evt);
+        document.documentElement.removeEventListener("contextmenu", ...evt);
+        document.documentElement.removeEventListener("scroll", ...evt);
+        document.documentElement.removeEventListener("click", ...evt);
+
+        //
         document.documentElement.addEventListener("pointerdown", ...evt);
         document.documentElement.addEventListener("contextmenu", ...evt);
         document.documentElement.addEventListener("scroll", ...evt);
@@ -51,13 +72,8 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
 
         //
         delete ctxMenu.dataset.hidden;
-        placeWithCursor(ctxMenu, event);
-        ctxMenu.innerHTML = "";
-        ctxMenu.initiator = initiator;
-        ctxMenu.event = event;
-        content?.(ctxMenu, initiator, event);
     } else
-    if (ctxMenu && !ctxMenu.dataset.hidden) {
+    if (ctxMenu && ctxMenu.dataset.hidden == null) {
         closeContextMenu(event);
     }
 };
@@ -67,9 +83,9 @@ export const makeCtxMenuItems = (ctxMenu?: any, initiator?: any, content?: any[]
     content?.map?.((el: CTXMenuElement)=>{
         const li = document.createElement("ui-button-row");
         if (!li.dataset.highlightHover) { li.dataset.highlightHover = "1"; }
-        li.style.blockSize = "2.5rem";
 
         //
+        li.style.blockSize = "2.5rem";
         li.addEventListener("click", (e)=>{
             el.callback?.(initiator, ctxMenu?.event);
         });

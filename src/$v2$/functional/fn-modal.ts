@@ -4,9 +4,12 @@ const HIDE = (ev: any)=>{
     const target = ev?.target || document.querySelector(":hover, :active") || document.activeElement;
     const SELECTOR = "ui-modal[type=\"contextmenu\"], ui-button, ui-taskbar, ui-navbar, ui-statusbar, button, label, input, ui-longtext, ui-focustext, ui-row-select, ui-row-button, .u2-input, .ui-input";
 
+    // prevent from immediate close
+    const isVisible = target.dataset.hidden == null;
+
     //
     requestAnimationFrame(()=>{
-        if (!(target?.matches?.(SELECTOR) || target?.closest?.(SELECTOR))) {
+        if (!(target?.matches?.(SELECTOR) || target?.closest?.(SELECTOR)) && isVisible && target.dataset.hidden == null) {
             if (document.activeElement?.matches?.("input") && (ev?.type == "scroll" || ev?.type == "click" || ev?.type == "pointerdown")) {
                 (document.activeElement as any)?.blur?.();
             } else

@@ -37,6 +37,8 @@ export const openDropMenu = (button: any, ev?: any)=>{
     //
     openContextMenu?.(ev, true, (menu, initiator)=>{
         menu.append(...cloned);
-        placeWithElement?.(menu, button);
+        requestAnimationFrame(()=>{
+            placeWithElement?.(menu, button);
+        });
     });
 };
