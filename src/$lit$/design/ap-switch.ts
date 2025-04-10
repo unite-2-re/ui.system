@@ -3,7 +3,7 @@
 // Behaviour: switch (combined)
 
 // @ts-ignore
-import { css, unsafeCSS } from "../$service$/shared/LitUse";
+import { css, unsafeCSS } from "../../$service$/shared/LitUse";
 import { doIndication } from "../../behaviour/bh-indication.js";
 import { makeSwitch } from "../../behaviour/bh-switch.js";
 
@@ -17,7 +17,7 @@ import styles from "./ap-switch.scss?inline";
 import htmlCode from "./ap-switch.html?raw";
 
 //
-import LitElementTheme from "../$service$/shared/LitElementTheme";
+import LitElementTheme from "../../$service$/shared/LitElementTheme";
 
 // @ts-ignore
 @customElement('ui-switch')

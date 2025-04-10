@@ -3,8 +3,8 @@
 // Behaviour: select, button
 
 // @ts-ignore
-import { css, unsafeCSS } from "../$service$/shared/LitUse";
-import { openDropMenu } from "../$service$/functional/fn-dropmenu.js";
+import { css, unsafeCSS } from "../../$service$/shared/LitUse";
+import { openDropMenu } from "../../$service$/functional/fn-dropmenu.js";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
@@ -18,7 +18,7 @@ import htmlCode from "./ap-button.html?raw";
 //
 import UIButtonBase from "../../behaviour/bh-button";
 import UISelectBase from "../../behaviour/bh-select";
-import { setAttributesIfNull } from "../$service$/shared/Utils";
+import { setAttributesIfNull } from "../../$service$/shared/Utils";
 
 // selection derivative
 

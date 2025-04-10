@@ -3,7 +3,7 @@
 // Behaviour: select, button
 
 // @ts-ignore
-import { css, html, unsafeCSS } from "../$service$/shared/LitUse";
+import { css, html, unsafeCSS } from "../../$service$/shared/LitUse";
 
 // @ts-ignore
 import { customElement } from "lit/decorators.js";
@@ -17,7 +17,7 @@ import htmlCode from "./ap-row.html?raw";
 //
 import UISelectBase from "../../behaviour/bh-select";
 import UIButtonBase from "../../behaviour/bh-button";
-import { setAttributes } from "../$service$/shared/Utils";
+import { setAttributes } from "../../$service$/shared/Utils";
 
 //
 const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;

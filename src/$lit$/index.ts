@@ -1,8 +1,8 @@
-export * from "./ap-button";
-export * from "./ap-number";
-export * from "./ap-switch";
-export * from "./ap-row";
-export * from "./ap-slider";
+export * from "./design/ap-button";
+export * from "./design/ap-number";
+export * from "./design/ap-switch";
+export * from "./design/ap-row";
+export * from "./design/ap-slider";
 
 //
 export * from "../$service$/functional/fn-contextmenu";
@@ -28,8 +28,8 @@ export * from "./overlays/ov-taskbar";
 export * from "./overlays/ov-taskitem";
 
 //
-export * from "./de-block";
-export * from "./de-shape";
+export * from "./design/de-block";
+export * from "./design/de-shape";
 export * from "./overlays/ov-tooltip";
 
 //
