@@ -1,16 +1,16 @@
 /// <reference types="lit" />
 
+import { setAttributesIfNull } from "@service/Utils";
+
 // @ts-ignore
-import { html, css, unsafeCSS } from "../../$service$/shared/LitUse";
-import LitElementTheme from "../../$service$/shared/LitElementTheme";
+import { html, css, unsafeCSS } from "@mods/shared/LitUse";
+import LitElementTheme from "@mods/shared/LitElementTheme";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import styles from "./index.scss?inline";
-import { setAttributesIfNull } from "../../$service$/shared/Utils";
-//import runTooltip from "./service.js";
+import styles from "@scss/design/ov-tooltip.scss?inline";
 
 // @ts-ignore
 @customElement('ui-tooltip')

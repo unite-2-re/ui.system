@@ -1,7 +1,18 @@
 {
     "include": ["./src/**/*"],
-    "exclude": ["./test/**/*", "./externals/**/*", "./src/$polyfill$/*", "./dist/**/*"],
+    "exclude": ["./test/**/*", "./externals/**/*", "./dist/**/*"],
     "compilerOptions": {
+        "paths": {
+            "@/*": ["./src/*"],
+            "@mods/*": ["./src/$mods$/*"],
+            "@scss/*": ["./src/$scss$/*"],
+            "@temp/*": ["./src/$temp$/*"],
+            "@service/*": ["./src/$service$/*"],
+            "/externals/*": ["./externals/*"],
+            "/assets/*": ["./assets/*"],
+            "/frontend/*": ["./frontend/*"],
+            "/plugins/*": ["./plugins/*"],
+        },
         "outDir": "./dist",
         "target": "ESNext",
         "module": "ESNext",

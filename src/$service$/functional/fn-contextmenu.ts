@@ -1,4 +1,4 @@
-import { placeWithCursor } from "../layout/ps-cursor.js";
+import { placeWithCursor } from "@service/layout/ps-cursor.js";
 
 //
 interface CTXMenuElement {

@@ -3,21 +3,23 @@
 // Behaviour: select, button
 
 // @ts-ignore
-import { css, html, unsafeCSS } from "../../$service$/shared/LitUse";
+import { html } from "../shared/LitUse";
 
 // @ts-ignore
 import { customElement } from "lit/decorators.js";
 
-// @ts-ignore
-import styles from "./ap-row.scss?inline";
-
-// @ts-ignore
-import htmlCode from "./ap-row.html?raw";
-
 //
-import UISelectBase from "../../behaviour/bh-select";
-import UIButtonBase from "../../behaviour/bh-button";
-import { setAttributes } from "../../$service$/shared/Utils";
+import UISelectBase from "@mods/inputs/in-select";
+import UIButtonBase from "@mods/inputs/in-button";
+import { setAttributes } from "@service/Utils";
+
+
+
+// @ts-ignore
+import styles from "@scss/design/ap-row.scss?inline";
+
+// @ts-ignore
+import htmlCode from "@temp/ap-row.html?raw";
 
 //
 const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;

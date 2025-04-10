@@ -1,4 +1,4 @@
-import { setAttributes } from "../shared/Utils";
+import { setAttributes } from "../Utils";
 
 //
 export const doIndication = (ev?: any, self?: HTMLElement, input?: HTMLInputElement)=>{

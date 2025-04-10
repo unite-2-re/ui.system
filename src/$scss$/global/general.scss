@@ -125,10 +125,7 @@
         syntax: "<length-percentage>";
         inherits: true;
     }
-};
 
-//
-@scope(:host, :root, :scope) {
     //
     @property --value {
         initial-value: 0;
@@ -173,8 +170,7 @@
         &:has(input[type="checkbox"]:checkbox) { --value: 1; }
     }
 
-
-
+    //
     ui-frame {
         //
         &[data-dragging]:not([data-maximized]) {
@@ -187,22 +183,6 @@
                 box-shadow: none !important;
             };
         };
-
-        // if has identified, do top level
-        /*&:has(:target),
-        &:target
-        {
-            & {
-                --z-index: 0;
-                z-index: calc(1099 + var(--z-index, 0));
-                display: inline grid;
-            }
-
-            // revert visibility if hidden (may not help)
-            ::slotted(.ui-content[data-hidden]) {
-                display: revert-layer;
-            }
-        }*/
 
         //
         &:where(
@@ -218,63 +198,6 @@
             block-size: 100%;
             overflow: hidden;
         }
-    }
-
-    // when any window is visible, affect to another elements
-    ui-frame:not([data-hidden]) {
-
-        //
-        body:not(:has(&)) {
-            &:not(:has(ui-taskbar:not([data-hidden]))) ui-navbar {&::part(ui-back-button) { display: none; }}
-            & ui-modal { --tm-bg-alpha: 0.9; }
-
-            //
-            & ui-navbar
-            {
-                //
-                & {
-                    --tm-bg-alpha: 0;
-                    --tm-chroma: 0;
-                    --hl-co: 0;
-                }
-
-                //
-                & {
-                    box-shadow: none;
-                    pointer-events: none;
-                }
-
-                //
-                &, & * { --hl-co: 0; }
-                &::part(ui-title-handle) { pointer-events: none; }
-            }
-
-            // make taskbar hiding when has window
-            & ui-taskbar
-            {
-                & { --data-taskbar-shift: 2.5rem; }
-                &:hover, &:active { --data-taskbar-shift: 0px; }
-                &:not(:hover, :active) { --data-taskbar-shift: 2.5rem; }
-            }
-        }
-
-        // make taskbar is transparent when has no any window
-        @at-root [data-device-type="desktop"] // in case if desktop
-        body:not(:has(&)) ui-taskbar
-        {
-            & {
-                --tm-bg-alpha: 0;
-                --tm-chroma: 0;
-                --hl-co: 0;
-            }
-
-            //
-            & {
-                box-shadow: none;
-                pointer-events: none;
-            }
-        }
-
     }
 
 }

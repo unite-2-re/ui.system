@@ -1,6 +1,5 @@
 // @ts-ignore /* @vite-ignore */
 import {importCdn} from "/externals/modules/cdnImport.mjs";
-export {importCdn};
 
 //
 const ROOT = document.documentElement;

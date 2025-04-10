@@ -1,22 +1,22 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { css, unsafeCSS } from "../../$service$/shared/LitUse";
-import LitElementTheme from "../../$service$/shared/LitElementTheme";
+import { css, unsafeCSS } from "@mods/shared/LitUse";
+import LitElementTheme from "@mods/shared/LitElementTheme";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
-// @ts-ignore
-import htmlCode from "./index.html?raw";
-
-// @ts-ignore
-import styles from "./index.scss?inline";
-
 //
-import {connect} from "../../$service$/shared/Status";
-import { onInteration } from "../../$service$/tasks/opening";
-import { setAttributesIfNull } from "../../$service$/shared/Utils";
+import { connect } from "@service/behaviour/bh-status";
+import { onInteration } from "@service/tasks/opening";
+import { setAttributesIfNull } from "@service/Utils";
+
+// @ts-ignore
+import htmlCode from "@temp/ov-statusbar.html?raw";
+
+// @ts-ignore
+import styles from "@scss/design/ov-statusbar.scss?inline";
 
 // @ts-ignore
 @customElement('ui-statusbar')

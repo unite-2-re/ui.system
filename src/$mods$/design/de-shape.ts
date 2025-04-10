@@ -3,14 +3,16 @@
 // this component (or lucide icons) may to be distributed with main package.
 
 // @ts-ignore
-import { html, LitElement } from "../../$service$/shared/LitUse";
+import { html, LitElement } from "@mods/shared/LitUse";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
+
+import { setAttributesIfNull } from "@service/Utils";
+
 // @ts-ignore
-import styles from "./index.scss?inline";
-import { setAttributesIfNull } from "../../$service$/shared/Utils";
+import styles from "@scss/design/de-shape.scss?inline";
 
 //
 const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;

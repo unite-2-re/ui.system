@@ -1,23 +1,23 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { css, unsafeCSS } from "../../$service$/shared/LitUse";
-import LitElementTheme from "../../$service$/shared/LitElementTheme";
+import { css, unsafeCSS } from "@mods/shared/LitUse";
+import LitElementTheme from "@mods/shared/LitElementTheme";
 
 // @ts-ignore
 import { customElement } from "lit/decorators.js";
 
-// @ts-ignore
-import htmlCode from "./window.html?raw";
+//
+import initTaskManager from "@service/tasks/manager";
+import { makeControl } from "@service/layout/ps-draggable.js";
+import { focusTask, onTasking } from "@service/tasks/binding";
+import { setAttributesIfNull } from "@service/Utils";
 
 // @ts-ignore
-import styles from "./window.scss?inline";
+import htmlCode from "@temp/ov-window.html?raw";
 
 // @ts-ignore
-import { makeControl } from "../../$service$/layout/ps-draggable.js";
-import { focusTask, onTasking } from "../../$service$/tasks/binding";
-import initTaskManager from "../../$service$/tasks/manager";
-import { setAttributesIfNull } from "../../$service$/shared/Utils";
+import styles from "@scss/design/ov-window.scss?inline";
 
 // @ts-ignore
 @customElement('ui-frame')

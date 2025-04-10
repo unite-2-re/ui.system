@@ -1,6 +1,6 @@
 // TODO! unify as "ps"
-@use "../../position/scss/ps-draggable.scss" as dg;
-@use "../../position/scss/ps-resizable.scss" as rs;
+@use "@scss/layout/ps-draggable.scss" as dg;
+@use "@scss/layout/ps-resizable.scss" as rs;
 
 //
 @layer ui-frame

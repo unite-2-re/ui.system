@@ -1,9 +1,8 @@
 // @ts-ignore /* @vite-ignore */
 import {importCdn} from "/externals/modules/cdnImport.mjs";
-export {importCdn};
 
 // @ts-ignore
-import styles from "./$scss$/Bundle.scss?inline&compress";
+import styles from "@scss/global/general.scss?inline&compress";
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 export const styleCode = {preInit, styles};
 

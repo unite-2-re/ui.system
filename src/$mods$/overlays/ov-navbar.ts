@@ -1,37 +1,22 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { html, css, unsafeCSS } from "../../$service$/shared/LitUse";
-import LitElementTheme from "../../$service$/shared/LitElementTheme";
+import { html, css, unsafeCSS } from "@mods/shared/LitUse";
+import LitElementTheme from "@mods/shared/LitElementTheme";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
-// @ts-ignore
-import htmlCode from "./index.html?raw";
-
-// @ts-ignore
-import styles from "./index.scss?inline";
-
-// @ts-ignore
-import initTaskManager, { blurTask } from "../../$service$/tasks/manager";
-import { setAttributesIfNull } from "../../$service$/shared/Utils";
-
 //
-import { onInteration } from "../../$service$/tasks/opening";
+import { setAttributesIfNull, setIdleInterval } from "@service/Utils";
+import { onInteration } from "@service/tasks/opening";
+import initTaskManager from "@service/tasks/manager";
 
-//
-const setIdleInterval = (cb, timeout = 1000, ...args)=>{
-    requestIdleCallback(async ()=>{
-        if (!cb || (typeof cb != "function")) return;
-        while (true) {
-            await Promise.try(cb, ...args);
-            await new Promise((r)=>setTimeout(r, timeout));
-            await new Promise((r)=>requestIdleCallback(r, {timeout: 100}));
-            await new Promise((r)=>requestAnimationFrame(r));
-        }
-    }, {timeout: 1000});
-}
+// @ts-ignore
+import htmlCode from "@temp/ov-navbar.html?raw";
+
+// @ts-ignore
+import styles from "@scss/design/ov-navbar.scss?inline";
 
 // @ts-ignore
 @customElement('ui-navbar')

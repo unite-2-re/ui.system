@@ -1,6 +1,6 @@
 
 // @ts-ignore
-import { importCdn } from "../../$scss$/index";
+import { importCdn } from "/externals/modules/cdnImport.mjs";
 
 //
 export const setStyle = async (self, confirm: boolean = false, exact: number = 0, val: number = 0)=>{

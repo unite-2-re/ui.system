@@ -3,21 +3,21 @@
 // Behaviour: spinner
 
 // @ts-ignore
-import { css, unsafeCSS } from "../../$service$/shared/LitUse";
-import { doIndication } from "../../behaviour/bh-indication.js";
+import { css, unsafeCSS } from "@mods/shared/LitUse";
+import LitElementTheme from "@mods/shared/LitElementTheme";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import styles from "./ap-number.scss?inline";
+import styles from "@scss/design/ap-number.scss?inline";
 
 // @ts-ignore
-import htmlCode from "./ap-number.html?raw";
+import htmlCode from "@temp/ap-number.html?raw";
 
 //
-import LitElementTheme from "../../$service$/shared/LitElementTheme";
-import { setAttributesIfNull } from "../../$service$/shared/Utils";
+import { doIndication } from "@service/behaviour/bh-indication";
+import { setAttributesIfNull } from "@service/Utils";
 
 //
 export const makeSpin = (weak?: WeakRef<any>, root?: any)=>{

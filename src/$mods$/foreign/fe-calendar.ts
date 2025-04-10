@@ -2,20 +2,20 @@
 
 // @ts-ignore
 import { Calendar } from 'vanilla-calendar-pro';
+import { setAttributesIfNull } from '@service/Utils';
 
 // @ts-ignore
-import { html, css, unsafeCSS } from "../../$service$/shared/LitUse.js";
-import LitElementTheme from "../../$service$/shared/LitElementTheme.js";
+import { css, unsafeCSS } from "@mods/shared/LitUse";
+import LitElementTheme from "@mods/shared/LitElementTheme";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import styles from "./calendar.scss?inline";
+import htmlCode from "@temp/fe-calendar.html?raw";
 
 // @ts-ignore
-import htmlCode from "./calendar.html?raw";
-import { setAttributesIfNull } from '../../$service$/shared/Utils.js';
+import styles from "@scss/foreign/fe-calendar.scss?inline";
 
 // @ts-ignore
 @customElement('ui-calendar')

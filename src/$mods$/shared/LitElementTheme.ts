@@ -8,7 +8,6 @@ import { property } from "lit/decorators.js";
 
 // @ts-ignore /* @vite-ignore */
 import {importCdn} from "/externals/modules/cdnImport.mjs";
-export {importCdn};
 
 //
 export class LitElementTheme extends LitElement {

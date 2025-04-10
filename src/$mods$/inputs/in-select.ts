@@ -4,9 +4,9 @@
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import { LitElement, html } from "../../$service$/shared/LitUse";
-import { setAttributes, setAttributesIfNull } from "../../$service$/shared/Utils";
-import { onItemSelect } from "../../$service$/behaviour/bh-select";
+import { LitElement, html } from "@mods/shared/LitUse";
+import { setAttributes, setAttributesIfNull } from "@service/Utils";
+import { onItemSelect } from "@service/behaviour/bh-select";
 
 // @ts-ignore
 @customElement('ui-select-base')

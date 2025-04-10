@@ -5,7 +5,7 @@
 import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
-import { LitElement, html } from "../../$service$/shared/LitUse";
+import { LitElement, html } from "@mods/shared/LitUse";
 
 // @ts-ignore
 @customElement('ui-button-base')

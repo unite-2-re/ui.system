@@ -1,6 +1,6 @@
 //@use "../../position/scss/ps-anchor.scss" as ps;
-@use "../../position/scss/ps-cursor.scss" as ps;
-@use "../../position/scss/ps-centered.scss" as ct;
+@use "@scss/layout/ps-cursor.scss" as ps;
+@use "@scss/layout/ps-centered.scss" as ct;
 
 //
 @layer ui-modal

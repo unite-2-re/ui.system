@@ -2,25 +2,25 @@
 // Type: standalone
 // Behaviour: select, button
 
-// @ts-ignore
-import { css, unsafeCSS } from "../../$service$/shared/LitUse";
-import { openDropMenu } from "../../$service$/functional/fn-dropmenu.js";
+//@ts-ignore
+import { css, unsafeCSS } from "@mods/shared/LitUse";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
-// @ts-ignore
-import styles from "./ap-button.scss?inline";
-
-// @ts-ignore
-import htmlCode from "./ap-button.html?raw";
+//
+import { openDropMenu } from "@service/functional/fn-dropmenu";
+import { setAttributesIfNull } from "@service/Utils";
 
 //
-import UIButtonBase from "../../behaviour/bh-button";
-import UISelectBase from "../../behaviour/bh-select";
-import { setAttributesIfNull } from "../../$service$/shared/Utils";
+import UIButtonBase from "@mods/inputs/in-button";
+import UISelectBase from "@mods/inputs/in-select";
 
-// selection derivative
+// @ts-ignore
+import styles from "@scss/design/ap-button.scss?inline";
+
+// @ts-ignore
+import htmlCode from "@temp/ap-button.html?raw";
 
 // @ts-ignore
 @customElement('ui-toggle')

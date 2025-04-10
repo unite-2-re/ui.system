@@ -1,16 +1,21 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { html, css, unsafeCSS } from "../../$service$/shared/LitUse.js";
-import LitElementTheme, { importCdn } from "../../$service$/shared/LitElementTheme.js";
-import { placeWithElement } from "../../$service$/layout/ps-anchor.js";
-import { setAttributesIfNull } from "../../$service$/shared/Utils.js";
+import { html, css, unsafeCSS } from "@mods/shared/LitUse";
+import LitElementTheme from "@mods/shared/LitElementTheme";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
+//
+import { placeWithElement } from "@service/layout/ps-anchor";
+import { setAttributesIfNull } from "@service/Utils";
+
 // @ts-ignore
-import styles from "./modal.scss?inline";
+import styles from "@scss/design/ov-modal.scss?inline";
+
+// @ts-ignore /* @vite-ignore */
+import {importCdn} from "/externals/modules/cdnImport.mjs";
 
 // @ts-ignore
 @customElement('ui-modal')

@@ -1,4 +1,6 @@
+import { setIdleInterval } from "@service/Utils";
 
+//
 const throttleMap = new Map<string, any>();
 
 //
@@ -26,19 +28,6 @@ const setElementIcon = (selector, value)=>{
     throttleMap.set(selector, ()=>roots.forEach((root)=>root.querySelectorAll(selector).forEach((element)=>{
         if (element?.getAttribute?.("icon") != value) { element?.setAttribute?.("icon", value); };
     })));
-}
-
-//
-const setIdleInterval = (cb, timeout = 1000, ...args)=>{
-    requestIdleCallback(async ()=>{
-        if (!cb || (typeof cb != "function")) return;
-        while (true) {
-            await Promise.try(cb, ...args);
-            await new Promise((r)=>setTimeout(r, timeout));
-            await new Promise((r)=>requestIdleCallback(r, {timeout: 100}));
-            await new Promise((r)=>requestAnimationFrame(r));
-        }
-    }, {timeout: 1000});
 }
 
 //
