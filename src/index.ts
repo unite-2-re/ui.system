@@ -3,7 +3,7 @@
 // may be, some UI components will be dedicated from that project
 
 //
-export * from "./$v2$/index";
-export * from "./$design$/index";
-import init from "./$design$/index";
+export * from "./$lit$/index";
+export * from "./$scss$/index";
+import init from "./$scss$/index";
 export default init;

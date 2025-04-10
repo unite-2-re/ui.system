@@ -1,3 +1,0 @@
-# Design Core EXP
-
-Will be merged to another project later...

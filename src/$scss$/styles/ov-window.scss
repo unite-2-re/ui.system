@@ -1,0 +1,506 @@
+// TODO! unify as "ps"
+@use "../../position/scss/ps-draggable.scss" as dg;
+@use "../../position/scss/ps-resizable.scss" as rs;
+
+//
+@layer ui-frame
+{   //
+    @media screen {
+
+        //
+        :host, :where(*), ::slotted(*)
+        {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
+            touch-action: none;
+
+            /* */
+            white-space: nowrap;
+            white-space-collapse: collapse;
+            text-wrap: nowrap;
+            text-spacing-trim: trim-start;
+
+            /* */
+            border: none 0px transparent;
+            outline: none 0px transparent;
+            content-visibility: auto;
+
+            /* */
+            font-family: 'Open Sans', 'Source Sans 3', 'Gill Sans Nova', Ubuntu, 'DejaVu Sans', Candara, Segoe, "Segoe UI", Optima, source-sans-pro, sans-serif;
+        }
+
+        //
+        ui-frame {
+
+            :host(&) {
+                --initial-inline-size: 48rem;
+                --initial-block-size : 32rem;
+                --title-bar-height   : 2rem;
+                --height-adjust      : 0px;
+
+                /* */
+                --safe-area-left : 0px;
+                --safe-area-right: 0px;
+
+                /* maximum available size */
+                --bound-inline-size: calc(100cqi);
+                --bound-block-size : calc(100cqb - var(--height-adjust, 0px));
+            }
+
+            :host(&) {
+                /* resizing relation */
+                //--rs-x: clamp(0px, calc(var(--resize-x, 0) * 1px), calc(var(--bound-inline-size, 100cqi) - var(--initial-inline-size, 0px) - max(0px, var(--shift-x, 0) * 1px + (var(--bound-inline-size, 100cqi) * 0.5 - var(--initial-inline-size, 0px) * 0.5))));
+                //--rs-y: clamp(0px, calc(var(--resize-y, 0) * 1px), calc(var(--bound-block-size , 100cqb) - var(--initial-block-size , 0px) - max(0px, var(--shift-y, 0) * 1px + (var(--bound-block-size , 100cqb) * 0.5 - var(--initial-block-size , 0px) * 0.5))));
+
+                //
+                --diff-inline: calc(var(--bound-inline-size, 100cqi) - var(--initial-inline-size, 0px));
+                --diff-block:  calc(var(--bound-block-size , 100cqb) - var(--initial-block-size , 0px));
+
+                //
+                --rs-x: clamp(0px, calc(var(--resize-x, 0) * 1px), calc(var(--diff-inline, 0px) - max(0px, var(--shift-x, 0) * 1px + 0.5 * var(--diff-inline, 0px))));
+                --rs-y: clamp(0px, calc(var(--resize-y, 0) * 1px), calc(var(--diff-block , 0px) - max(0px, var(--shift-y, 0) * 1px + 0.5 * var(--diff-block , 0px))));
+
+                /* resized window size */
+                --inline-size: min(calc(var(--initial-inline-size, 0px) + var(--rs-x, 0px)), var(--bound-inline-size, 100cqi));
+                --block-size : min(calc(var(--initial-block-size , 0px) + var(--rs-y, 0px)), var(--bound-block-size , 100cqb));
+            };
+
+            /* forbid clamping size while dragging */
+            :host(&[data-dragging]) {
+                --inline-size: calc(var(--initial-inline-size, 0px) + var(--rs-x, 0px)) !important;
+                --block-size : calc(var(--initial-block-size , 0px) + var(--rs-y, 0px)) !important;
+            };
+
+
+
+            //
+            :host(&) {
+                --limit-shift-x: calc(var(--bound-inline-size, 100cqi) - var(--inline-size, 100%));
+                --limit-shift-y: calc(var(--bound-block-size , 100cqi) - var(--block-size , 100%));
+
+                //
+                --sp-x: clamp(calc(var(--limit-shift-x, 100%) * -0.5 - var(--rs-x, 0px) * 0.5),   calc(var(--shift-x, 0) * 1px),   calc(var(--limit-shift-x, 100%) * 0.5 + var(--rs-x, 0px) * 0.5));
+                --sp-y: clamp(calc(var(--limit-shift-y, 100%) * -0.5 - var(--rs-y, 0px) * 0.5),   calc(var(--shift-y, 0) * 1px),   calc(var(--limit-shift-y, 100%) * 0.5 + var(--rs-y, 0px) * 0.5));
+            };
+
+            //
+            :host(&) {
+                /* for transform drag limit */
+                --limit-drag-x: calc(var(--bound-inline-size, 100cqi) - 100%);
+                --limit-drag-y: calc(var(--bound-block-size , 100cqb) - 100%);
+
+                /* logically correct drag... */
+                --ds-x: clamp(calc(var(--limit-drag-x, 100%) * -0.5 - var(--sp-x, 0px) - var(--rs-x, 0px) * 0.5), calc(var(--drag-x, 0) * 1px),  calc(var(--limit-drag-x, 100%) * 0.5 - var(--sp-x, 0px) - var(--rs-x, 0px) * 0.5));
+                --ds-y: clamp(calc(var(--limit-drag-y, 100%) * -0.5 - var(--sp-y, 0px) - var(--rs-y, 0px) * 0.5), calc(var(--drag-y, 0) * 1px),  calc(var(--limit-drag-y, 100%) * 0.5 - var(--sp-y, 0px) - var(--rs-y, 0px) * 0.5));
+            }
+
+            //
+            :host(&) {
+                inset-inline-start: 0px;
+                inset-block-start: 0px;
+            }
+
+            //
+            :host(&[data-dragging]) *,
+            :host(&[data-dragging]) ::slotted(*) {
+                pointer-events: none !important;
+                backdrop-filter: none !important;
+            }
+
+            //
+            :host(&)
+            {
+                //
+                & {
+                    inline-size: 100%;
+                    block-size: 100%;
+
+                    // by default not prefer
+                    direction: ltr;
+                    writing-mode: horizontal-tb;
+                };
+
+                /* */
+                & {
+                    position: fixed;
+                    display: inline grid;
+                    grid-template-columns: minmax(0px, 1fr);
+                    grid-template-rows:
+                        [title-bar] minmax(0px, max-content)
+                        [content]   minmax(0px, 1fr)
+                        [status]    minmax(1px, max-content);
+
+                    /* */
+                    container-name: ui-frame;
+                    container-type: size;
+                    isolation: isolate;
+
+                    /* */
+                    overflow: hidden !important;
+
+                    /* */
+                    border: none 0px transparent;
+                    outline: none 0px transparent;
+                    //outline: solid 0.5px oklch(from var(--rv-color, currentColor) l c h / 0.1);
+                    border-radius: 0.2rem;
+                    box-shadow: 0rem 0rem 1rem #10101060;
+
+                    /* */
+                    box-sizing: border-box;
+                    pointer-events: auto;
+                    z-index: calc(999 + var(--z-index, 0));
+
+                    /* */
+                    user-select: none;
+                    touch-action: none;
+                    resize: none;
+                }
+
+                /* */
+                & {
+                    direction: ltr !important;
+                    writing-mode: horizontal-tb !important;
+                }
+
+                /* */
+                & :where(*)
+                {
+                    user-select: none;
+                    touch-action: none;
+                }
+
+                /* */
+                & .ui-title-bar
+                {
+
+                    & {
+                        font-size: 0.8rem;
+                        font-weight: bold;
+
+                        inline-size: 100%;
+                        block-size: 100%;
+                        min-block-size: var(--title-bar-height, 2.5rem);
+                        text-align: start;
+
+                        overflow: hidden;
+                        box-sizing: border-box;
+                        background-color: transparent;
+
+                        display: grid;
+                        grid-template-rows: minmax(0px, 1fr);
+                        grid-template-columns:
+                            [title] minmax(0px, 1fr)
+                            [buttons] minmax(var(--title-bar-height, 2.5rem), max-content);
+
+                        grid-column: 1 / -1;
+                        grid-row: 1 / 1 span;
+                        grid-row: title-bar;
+
+                        place-items: safe center;
+                        place-content: safe center;
+                        align-items: safe center;
+                        align-content: safe center;
+                        isolation: isolate;
+
+                        /* */
+                        user-select: none;
+                        pointer-events: none;
+                        border-radius: 0px;
+                    }
+
+                    /* */
+                    ::slotted(*)
+                    {
+                        inline-size: 100%;
+                        block-size: 100%;
+                        place-items: safe center;
+                        place-content: safe center;
+                        align-items: safe center;
+                        align-content: safe center;
+                        pointer-events: none;
+                        user-select: none;
+                        box-sizing: border-box;
+                        text-align: start;
+                        content-visibility: visible;
+
+                        grid-column: 1 / -1;
+                        grid-row: 1 / 1 span;
+                        padding-inline: 1rem;
+                    }
+
+                    /* */
+                    & .ui-title-handle
+                    {
+                        & {
+                            display: flex;
+                            flex-direction: row;
+                            flex-wrap: no-wrap;
+                            box-sizing: border-box;
+                            text-align: start;
+
+                            inline-size: 100%;
+                            block-size: 100%;
+
+                            grid-column: title;
+                            grid-row: 1 / 1 span;
+
+                            background-color: transparent;
+                            place-content: safe center;
+                            place-items: safe center;
+
+                            //cursor: move;
+                            pointer-events: auto;
+                            user-select: none;
+                            touch-action: none;
+                            border-radius: 0px;
+                        }
+                    }
+                }
+
+                /* */
+                & .ui-phantom, ::slotted(.ui-phantom)
+                {
+                    object-fit: cover;
+                    object-position: center;
+                    background-color: transparent;
+                    position: relative;
+
+                    /* */
+                    inline-size: 100%;
+                    block-size: 100%;
+                    box-sizing: border-box;
+                    display: block;
+
+                    /* */
+                    grid-column: 1 / -1;
+                    grid-row: content;
+                    grid-row: 2 / 2 span;
+
+                    /* */
+                    pointer-events: none;
+                    user-select: none;
+                    overflow: hidden;
+                }
+
+                /* */
+                & .ui-content-box, ::slotted(.ui-content)
+                {
+                    isolation: isolate;
+                    inline-size: 100%;
+                    block-size: 100%;
+                    box-sizing: border-box;
+                    position: relative;
+
+                    /* */
+                    grid-column: 1 / -1;
+                    grid-row: content;
+                    grid-row: 2 / 2 span;
+
+                    /* */
+                    pointer-events: none;
+                    user-select: none;
+
+                    /* */
+                    container-type: size;
+                    container-name: ui-content;
+                    overflow: hidden;
+                }
+
+                /* */
+                & .ui-content-box {
+                    background-color: transparent;
+                    display: contents;
+                }
+
+                /* */
+                & .ui-buttons
+                {
+                    & {
+                        display: flex;
+                        place-items: safe center;
+                        place-content: safe center;
+                        inline-size: 100%;
+                        block-size: 90%;
+                        min-inline-size: max-content;
+                        grid-row: 1 / 1 span;
+                        grid-column: buttons;
+                        pointer-events: none;
+                        user-select: none;
+                        box-sizing: border-box;
+                        gap: 0px;
+                        padding: 0rem;
+
+                        //
+                        border-radius: 0px;
+                        border-end-start-radius: 1rem;
+                        //border-start-end-radius: 0.2rem;
+                        overflow: hidden;
+
+                        //
+                        place-self: start end;
+                    }
+
+                    /* */
+                    & > *
+                    {
+                        & {
+                            display: flex;
+                            inline-size: max-content;
+                            block-size: 100%;
+                            aspect-ratio: 5 / 4;
+                            background-image: transparent;
+                            place-items: safe center;
+                            place-content: safe center;
+                            cursor: pointer;
+                            pointer-events: auto;
+                            box-sizing: border-box;
+                            border: none 0px transparent;
+                            outline: none 0px transparent;
+                            padding: 0.4rem;
+                            padding-inline-start: 0.5rem;
+                            padding-block-end: 0.5rem;
+                            user-select: none;
+                            border-radius: 0rem;
+                        }
+
+                        /* */
+                        & > * {
+                            display: flex;
+                            inline-size: max-content;
+                            block-size: 100%;
+                            aspect-ratio: 1 / 1;
+                            box-sizing: border-box;
+                            border: none 0px transparent;
+                            outline: none 0px transparent;
+                            pointer-events: none;
+                            user-select: none;
+                            border-radius: 0px;
+                        }
+                    }
+                }
+
+                /* */
+                & .ui-resize
+                {
+                    position: absolute;
+                    inset: auto;
+                    inset-inline-end: 0px;
+                    inset-block-end: 0px;
+                    inline-size: 1rem;
+                    block-size: 1rem;
+                    box-sizing: border-box;
+
+                    /* */
+                    background-color: transparent;
+                    cursor: nwse-resize;
+
+                    /* */
+                    pointer-events: auto;
+                    user-select: none;
+                    touch-action: none;
+                    resize: none;
+                }
+            }
+
+            //
+            :host(&:empty) { display: none; };
+            :host(&:has(::slotted(.ui-content[data-hidden]))) { display: none; };
+            :host(&:not(:has(.ui-content))) { display: none; };
+            :host(&:not(:has(::slotted(.ui-content)))) { display: none; };
+
+            // if has identified, do top level
+            /*:host(&:has(*:target)),
+            :host(&:target)
+            {
+                --z-index: 0;
+                z-index: calc(1099 + var(--z-index, 0));
+                display: inline grid;
+
+                // revert visibility if hidden (may not help)
+                ::slotted(.ui-content[data-hidden]) { display: revert-layer; }
+            }*/
+
+            //
+            :host(&[data-maximized]) {
+                .ui-title-bar {
+                    padding-inline-end: max(calc(calc(100cqi - env(titlebar-area-width, 100cqi)) - env(titlebar-area-x, 0px)), 0px);
+                };
+
+                //
+                .ui-buttons {
+                    border-end-end-radius: clamp(0px, 100000 * max(calc(calc(100cqi - env(titlebar-area-width, 100cqi)) - env(titlebar-area-x, 0px)), 0px), 1rem);
+                };
+            };
+
+        };
+
+        // mobile always fullscreen
+        @at-root [data-device-type="mobile"]
+        {
+            :host-context(&) {
+                & {
+                    inline-size: 100%;
+                    block-size: 100%;
+                    inset-inline-start: 0px;
+                    inset-block-start : 0px;
+                    border-radius: 0px !important;
+
+                    //
+                    --title-bar-height: 2rem;
+                }
+
+                //
+                .ui-title-bar {  min-block-size: var(--title-bar-height, 2rem); }
+                .ui-title-bar :where(*),
+                .ui-title-bar ::slotted(*) {
+                    text-align: start;
+                    display: none !important;
+                }
+            }
+        }
+
+        // make desktop window maximizable
+        // desktop window also draggable and resizable
+        @at-root [data-device-type="desktop"] {
+            //
+            :host-context(&):host([data-dragging]:not([data-maximized]))
+            {
+                & { will-change: transform !important; };
+                & {
+                    --translate-x: calc(var(--ds-x, 0px) - 50%) !important;
+                    --translate-y: calc(var(--ds-y, 0px) - 50%) !important;
+                };
+                & {
+                    transition-behavior: allow-discrete !important;
+                    transition-property: --translate-x, --translate-y, inline-size, block-size !important;
+                    transition-duration: calc(var(--drag-d, 0.01) * 0.8ms), calc(var(--resize-d, 0.01) * 0.8ms), calc(var(--resize-d, 0.01) * 0.8ms) !important;
+                    transition-timing-function: linear !important;
+                    transition-delay: 0ms !important;
+                };
+
+                //
+                :where(*), ::slotted(*)
+                {
+                    animation: none !important;
+                    animation-duration: 0ms !important;
+                    transition: none !important;
+                    transition-duration: 0ms !important;
+                    box-shadow: none !important;
+                };
+            };
+
+            //
+            :host-context(&):host(:not([data-maximized])) {
+                @include dg.ps-draggable();
+                @include rs.ps-resizable();
+            };
+        };
+    };
+};
