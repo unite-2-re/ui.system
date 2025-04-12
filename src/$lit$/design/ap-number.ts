@@ -12,33 +12,40 @@ import { customElement, property } from "lit/decorators.js";
 // @ts-ignore
 import styles from "@scss/design/ap-number.scss?inline";
 
-// @ts-ignore
-import htmlCode from "@temp/ap-number.html?raw";
+//
+import { E } from "/externals/lib/blue";
 
 //
 import { doIndication } from "@service/behaviour/bh-indication";
 import { setAttributesIfNull } from "@service/Utils";
 
 //
-export const makeSpin = (weak?: WeakRef<any>, root?: any)=>{
-    //
-    requestIdleCallback(()=>{
-        //
-        root?.querySelector?.(".ui-step-up")?.addEventListener?.("click", (ev)=>{
-            const self  = weak?.deref?.() as (HTMLElement | undefined);
-            const input = self?.querySelector?.("input") as (HTMLInputElement | undefined);
-            input?.stepUp?.();
-            input?.dispatchEvent?.(new Event('change', {bubbles: true, cancelable: true}));
-        });
+export const makeSpin = (root?: any, weak?: WeakRef<any>)=>{
 
-        //
-        root?.querySelector?.(".ui-step-down")?.addEventListener?.("click", (ev)=>{
-            const self = weak?.deref?.() as (HTMLElement | undefined);
-            const input = self?.querySelector?.("input") as (HTMLInputElement | undefined);
-            input?.stepDown?.();
-            input?.dispatchEvent?.(new Event('change', {bubbles: true, cancelable: true}));
-        });
-    });
+    // TODO: make available with ".nodes" keys as element
+    if (weak?.deref?.()) weak.deref().nodes = [
+        E("button.ui-step-down", {
+            type: "button",
+            dataset: {alpha: 1, highlight: 2, chroma: 0.1, scheme: "inverse", highlightHover: 4},
+            on: {click: new Set([(ev)=>{
+                const self = weak?.deref?.() as (HTMLElement | undefined);
+                const input = self?.querySelector?.("input") as (HTMLInputElement | undefined);
+                input?.stepDown?.();
+                input?.dispatchEvent?.(new Event('change', {bubbles: true, cancelable: true}));
+            }])}
+        }, [E("ui-icon", {icon: "chevron-left"})]),
+        E("button.ui-step-up", {
+            type: "button",
+            dataset: {alpha: 1, highlight: 2, chroma: 0.1, scheme: "inverse", highlightHover: 4}, 
+            on: {click: new Set([(ev)=>{
+                const self = weak?.deref?.() as (HTMLElement | undefined);
+                const input = self?.querySelector?.("input") as (HTMLInputElement | undefined);
+                input?.stepUp?.();
+                input?.dispatchEvent?.(new Event('change', {bubbles: true, cancelable: true}));
+            }])}
+        }, [E("ui-icon", {icon: "chevron-right"})]),
+        E("label.ui-content", {dataset: {alpha: 0}}, [E("slot")])
+    ].map((e)=>e?.element);
 }
 
 // @ts-ignore
@@ -73,10 +80,7 @@ export class UINumber extends LitElementTheme {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        this.importFromTemplate(htmlCode);
-        requestAnimationFrame(()=>{
-            makeSpin(new WeakRef(this), root);
-        });
+        makeSpin(root, new WeakRef(this));
         return root;
     }
 

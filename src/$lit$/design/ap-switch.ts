@@ -11,14 +11,29 @@ import { customElement, property } from "lit/decorators.js";
 
 //
 import { doIndication } from "@service/behaviour/bh-indication";
-import { makeSwitch } from "@service/behaviour/bh-switch";
-
-// @ts-ignore
-import htmlCode from "@temp/ap-switch.html?raw";
+import { makeSwitchBH } from "@service/behaviour/bh-switch";
 
 // @ts-ignore
 import styles from "@scss/design/ap-switch.scss?inline";
 
+//
+import { E } from "/externals/lib/blue";
+
+//
+const makeSwitch = (root: HTMLElement, weak?: WeakRef<any>)=>{
+
+    // TODO: make available with ".nodes" keys as element
+    if (weak?.deref?.()) weak.deref().nodes = [
+        E("label.ui-contain", {part: "ui-contain"}, [
+            E("div.ui-fill", {part: "ui-fill", dataset: {scheme: "inverse", alpha: 1, highlight: 2, chroma: 0.1, highlightHover: 4}}, [
+                E("div.ui-fill-inactive", {inert: true, dataset: {alpha: 0}}),
+                E("div.ui-fill-active", {inert: true, dataset: {alpha: 0}})
+            ]),
+            E("div.ui-thumb", {part: "ui-thumb", dataset: {scheme: "solid", alpha: 1, highlight: 3, highlightHover: 0, highlightOp: "min", chroma: 0.1}}, [E("slot", {name: "icon"})]),
+            E("div.ui-inputs", {part: "ui-inputs"}),
+        ])
+    ].map((e)=>e?.element);
+}
 
 // @ts-ignore
 @customElement('ui-switch')
@@ -36,7 +51,7 @@ export class UISwitch extends LitElementTheme {
             self.classList?.add?.("ui-switch");
             self.classList?.add?.("u2-input");
             self.addEventListener("change", this.onSelect.bind(this));
-            makeSwitch(self);
+            makeSwitchBH(self);
         });
     }
 
@@ -50,7 +65,7 @@ export class UISwitch extends LitElementTheme {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        this.importFromTemplate(htmlCode);
+        makeSwitch(root, new WeakRef(this));
         return root;
     }
 

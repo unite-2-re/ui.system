@@ -9,6 +9,10 @@ import { css, unsafeCSS } from "@mods/shared/LitUse";
 import { customElement, property } from "lit/decorators.js";
 
 //
+import { E } from "/externals/lib/blue";
+
+
+//
 import { openDropMenu } from "@service/functional/fn-dropmenu";
 import { setAttributesIfNull } from "@service/Utils";
 
@@ -19,8 +23,28 @@ import UISelectBase from "@mods/inputs/in-select";
 // @ts-ignore
 import styles from "@scss/design/ap-button.scss?inline";
 
-// @ts-ignore
-import htmlCode from "@temp/ap-button.html?raw";
+//
+const makeButton = (root: HTMLElement, weak?: WeakRef<any>)=>{
+    /*return E(root, {}, [
+        E("button.ui-button", {
+            style: "background-color: transparent;",
+            type: "button",
+            part: "ui-button",
+            dataset: {alpha: 0}
+        }, [E("slot")])
+    ]);*/
+
+    // TODO: make available with ".nodes" keys as element
+    if (weak?.deref?.()) weak.deref().nodes = [
+        E("button.ui-button", {
+            style: "background-color: transparent;",
+            type: "button",
+            part: "ui-button",
+            dataset: {alpha: 0}
+        }, [E("slot")])
+    ].map((e)=>e?.element);
+}
+
 
 // @ts-ignore
 @customElement('ui-toggle')
@@ -62,14 +86,13 @@ export class UIToggle extends UISelectBase {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        this.importFromTemplate(htmlCode);
+        makeButton(root, new WeakRef(this));
+        //this.importFromTemplate(htmlCode);
         return root;
     }
 }
 
-
 // button derivative
-
 // @ts-ignore
 @customElement('ui-button')
 export class UIButton extends UIButtonBase {
@@ -129,9 +152,9 @@ export class UIButton extends UIButtonBase {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        const self = this as unknown as HTMLElement;
+        makeButton(root, new WeakRef(this));
         //root.addEventListener("click", ()=>{ self?.click?.(); });
-        this.importFromTemplate(htmlCode);
+        //this.importFromTemplate(htmlCode);
         return root;
     }
 }

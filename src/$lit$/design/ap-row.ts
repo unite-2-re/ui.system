@@ -13,16 +13,24 @@ import UISelectBase from "@mods/inputs/in-select";
 import UIButtonBase from "@mods/inputs/in-button";
 import { setAttributes } from "@service/Utils";
 
-
+//
+import { E } from "/externals/lib/blue";
 
 // @ts-ignore
 import styles from "@scss/design/ap-row.scss?inline";
 
-// @ts-ignore
-import htmlCode from "@temp/ap-row.html?raw";
-
 //
 const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
+
+//
+const makeRow = (root: HTMLElement, weak?: WeakRef<any>)=>{
+
+    // TODO: make available with ".nodes" keys as element
+    if (weak?.deref?.()) weak.deref().nodes = [
+        E("div.ui-columns", { part: "ui-columns", dataset: {alpha: 0}}, [E("slot")]),
+        E("slot", {name: "radio"})
+    ].map((e)=>e?.element);
+}
 
 // @ts-ignore
 @customElement('ui-select-row')
@@ -61,7 +69,7 @@ export class UISelectRow extends UISelectBase {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        this.importFromTemplate(htmlCode);
+        makeRow(root, new WeakRef(this));
         return root;
     }
 
@@ -120,7 +128,7 @@ export class UIButtonRow extends UIButtonBase {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        this.importFromTemplate(htmlCode);
+        makeRow(root, new WeakRef(this));
         return root;
     }
 

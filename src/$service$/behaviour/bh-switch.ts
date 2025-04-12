@@ -31,7 +31,7 @@ export const setStyle = async (self, confirm: boolean = false, exact: number = 0
 }
 
 //
-export const makeSwitch = async (self?: HTMLElement)=>{
+export const makeSwitchBH = async (self?: HTMLElement)=>{
     if (!self) return;
 
     // @ts-ignore

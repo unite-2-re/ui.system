@@ -16,7 +16,7 @@ export default {
     resolve: {
         alias: {
             "@": resolve(__dirname, "./src/"),
-            "@mods": resolve(__dirname, "./src/$mods$/"),
+            "@mods": resolve(__dirname, "./src/$lit$/"),
             "@scss": resolve(__dirname, "./src/$scss$/"),
             "@temp": resolve(__dirname, "./src/$temp$/"),
             "@service": resolve(__dirname, "./src/$service$/"),
