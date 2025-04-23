@@ -48,10 +48,12 @@ export class UISwitch extends LitElementTheme {
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
-            self.classList?.add?.("ui-switch");
-            self.classList?.add?.("u2-input");
-            self.addEventListener("change", this.onSelect.bind(this));
+            E(self, {
+                classList: new Set(["ui-switch", "u2-input"]),
+                on: { "change": new Set([this.onSelect.bind(this)]) }
+            })
             makeSwitchBH(self);
+            this.onSelect();
         });
     }
 
@@ -72,7 +74,7 @@ export class UISwitch extends LitElementTheme {
     //
     public connectedCallback() {
         super.connectedCallback();
-        requestIdleCallback(()=>this.onSelect(), {timeout: 100});
+        this.onSelect();
     }
 }
 

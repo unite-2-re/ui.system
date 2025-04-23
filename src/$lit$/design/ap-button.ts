@@ -10,7 +10,7 @@ import { customElement, property } from "lit/decorators.js";
 
 //
 import { E } from "/externals/lib/blue";
-
+import { conditional, checkedRef } from "/externals/lib/object";
 
 //
 import { openDropMenu } from "@service/functional/fn-dropmenu";
@@ -58,17 +58,12 @@ export class UIToggle extends UISelectBase {
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
-            self.classList?.add?.("ui-toggle");
-            self.classList?.add?.("u2-toggle");
-            self.classList?.add?.("u2-input");
+            E(self, {
+                classList: new Set(["ui-toggle", "u2-toggle", "u2-input"]),
+                dataset: { scheme: conditional(checkedRef(self), "inverse", "solid") }
+            });
         });
     }
-
-    //
-    protected updateStyles() {
-        const self = this as unknown as HTMLElement;
-        self.dataset.scheme = (this as any).checked ? "inverse" : "solid";
-    };
 
     //
     public connectedCallback() {
@@ -105,36 +100,39 @@ export class UIButton extends UIButtonBase {
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
-            self.classList?.add?.("ui-button");
-            self.classList?.add?.("u2-button");
-            self.addEventListener("click", (ev)=>{
-                if (self.querySelector("ui-select-row, ui-button-row")) {
-                    openDropMenu(self, ev);
-                }
-            });
-
-            //
             self.querySelectorAll("ui-select-row, ui-button-row")?.forEach?.((el: any)=>{ el.style.display = "none"; });
-            self.addEventListener("change", (ev)=>{
-                //console.log(el?.dataset?.value || el?.value || "");
-                if ((ev?.target as any)?.matches?.("input[type=\"text\"]")) {
-                    self?.querySelectorAll?.("ui-select-row, ui-button-row")?.forEach?.((el: any)=>{
-                        if ((el?.dataset?.value || el?.value) == (ev?.target as any)?.value) {
-                            el.style.removeProperty("display");
-                        } else {
-                            el.style.display = "none";
+            
+            //
+            E(self, {
+                classList: new Set(["ui-button", "u2-button"]),
+                on: {
+                    "click": new Set([(ev)=>{
+                        if (self.querySelector("ui-select-row, ui-button-row")) {
+                            openDropMenu(self, ev);
                         }
-                    });
+                    }]),
+                    "change": new Set([(ev)=>{
+                        //console.log(el?.dataset?.value || el?.value || "");
+                        if ((ev?.target as any)?.matches?.("input[type=\"text\"]")) {
+                            self?.querySelectorAll?.("ui-select-row, ui-button-row")?.forEach?.((el: any)=>{
+                                if ((el?.dataset?.value || el?.value) == (ev?.target as any)?.value) {
+                                    el.style.removeProperty("display");
+                                } else {
+                                    el.style.display = "none";
+                                }
+                            });
+                        }
+                    }])
                 }
-            });
+            })
         });
     }
 
     //
-    protected updateStyles() {
-        const self = this as unknown as HTMLElement;
+    //protected updateStyles() {
+        //const self = this as unknown as HTMLElement;
         //self.dataset.scheme = "inverse";//(this as any).checked ? "solid" : "inverse"
-    };
+    //};
 
     //
     public connectedCallback() {

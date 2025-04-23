@@ -63,10 +63,14 @@ export class UINumber extends LitElementTheme {
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
-            self.classList?.add?.("ui-number");
-            self.classList?.add?.("u2-input");
-            self.addEventListener("input", this.onSelect.bind(this));
-            self.addEventListener("change", this.onSelect.bind(this));
+            E(self, {
+                classList: new Set(["ui-number", "u2-input"]),
+                on: {
+                    "change": new Set([this.onSelect.bind(this)]),
+                    "input": new Set([this.onSelect.bind(this)])
+                }
+            })
+            this.onSelect();
         });
     }
 
@@ -87,11 +91,8 @@ export class UINumber extends LitElementTheme {
     //
     public connectedCallback() {
         super.connectedCallback();
-        requestIdleCallback(()=>this.onSelect(), {timeout: 100});
-
-        //
-        const self = this as unknown as HTMLElement;
-        setAttributesIfNull(self, {
+        this.onSelect();
+        setAttributesIfNull(this as unknown as HTMLElement, {
             "data-alpha": 0,
             "data-highlight": 0
         });

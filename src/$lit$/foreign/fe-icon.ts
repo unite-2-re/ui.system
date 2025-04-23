@@ -16,6 +16,7 @@ const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type
 
 // @ts-ignore /* @vite-ignore */
 import {importCdn} from "/externals/modules/cdnImport.mjs";
+import { E } from "/externals/lib/blue";
 
 // @ts-ignore
 const toCamelCase = (str: string) => {
@@ -52,17 +53,13 @@ const rasterizeSVG = async (blob)=>{
 //
 const iconMap = new Map<string, Promise<string>>();
 const loadAsImage = (name: string, creator?: (name: string)=>any)=>{
-    if (iconMap.has(name)) {
-        return iconMap.get(name);
-    };
+    if (iconMap.has(name)) { return iconMap.get(name); };
 
     //
     const element = creator ? creator(name) : null;
     //const serializer = new XMLSerializer();
     const text = element.outerHTML;//element ? serializer.serializeToString(element) : "";
-    const file = new Blob([`<?xml version=\"1.0\" encoding=\"UTF-8\"?>`, text], {
-        type: "image/svg+xml"
-    });
+    const file = new Blob([`<?xml version=\"1.0\" encoding=\"UTF-8\"?>`, text], { type: "image/svg+xml" });
     const url = rasterizeSVG(file);//URL.createObjectURL(file);
     iconMap.set(name, url);
     return url;
@@ -75,44 +72,26 @@ export class UILucideIcon extends LitElement {
     @property({attribute: true, reflect: true, type: String}) icon?: string;// = "";
     @property({attribute: true, reflect: true, type: Number}) width?: number; //= 1;
 
+    //
+    constructor(options = {icon: "", padding: ""}) {
+        super(); const self = this as unknown as HTMLElement;
+        requestAnimationFrame(()=>{
+            E(self, {
+                classList: new Set(["ui-icon", "u2-icon"]),
+                inert: true
+            })
+            if (!self?.style.getPropertyValue("padding") && options?.padding) { self.style.setProperty("padding", options?.padding); };
+            if (!this?.icon && options?.icon) { this.icon = options?.icon; }
+            this.updateIcon();
+        });
+    }
+
     // also "display" may be "contents"
     protected render() { return html`<style>${importStyle}</style><div class="fill"></div>`; }
 
     //
-    constructor(options = {icon: "", padding: ""}) {
-        super(); const self = this as unknown as HTMLElement;
-        requestIdleCallback(()=>{
-            if (options?.icon) { this.icon = options?.icon; };
-            if (options?.padding) { self.style.setProperty("padding", options?.padding); };
-            self.inert = true;
-            this.updateIcon();
-        }, {timeout: 100});
-    }
-
-    //
-    public connectedCallback() {
-        super.connectedCallback();
-        this.updateIcon();
-
-        //
-        const self = this as unknown as HTMLElement;
-        if (!self.classList?.contains?.("ui-icon")) self.classList?.add?.("ui-icon");
-        if (!self.classList?.contains?.("u2-icon")) self.classList?.add?.("u2-icon");
-    }
-
-    //
-    public firstUpdated() {
-        this.updateIcon();
-    }
-
-    //
-    protected createRenderRoot() {
-        const root = super.createRenderRoot();
-        requestAnimationFrame(()=>{
-            this.updateIcon();
-        });
-        return root;
-    }
+    public connectedCallback() { super.connectedCallback(); this.updateIcon(); }
+    public firstUpdated() { this.updateIcon(); }
 
     //
     protected updateIcon($icon?: string) {

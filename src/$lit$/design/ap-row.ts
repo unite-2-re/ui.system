@@ -18,6 +18,7 @@ import { E } from "/externals/lib/blue";
 
 // @ts-ignore
 import styles from "@scss/design/ap-row.scss?inline";
+import { checkedRef, conditional } from "/externals/lib/object";
 
 //
 const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
@@ -36,79 +37,48 @@ const makeRow = (root: HTMLElement, weak?: WeakRef<any>)=>{
 @customElement('ui-select-row')
 export class UISelectRow extends UISelectBase {
     constructor() { super(); };
-
+    
     //
-    protected updateStyles() {
-        const self = this as unknown as HTMLElement;
-
-        // in selection mode
-        if (this.$parentNode?.matches?.("ui-button, ui-toggle")) {
-            setAttributes(self, {
-                "data-highlight": 0,
-                "data-highlight-hover": 0,
-                "data-alpha": 0,
-                "data-chroma": 0,
-                "data-scheme": "dynamic-transparent"
-            });
-        } else {
-            setAttributes(self, {
-                "data-highlight": this.checked ? "2" : "0",
-                "data-highlight-hover": this.checked ? "4" : "1",
-                "data-alpha" : this.checked ? "1"   : "0",
-                "data-chroma": this.checked ? "0.1" : "0",
-                "data-scheme": this.checked ? "inverse": "solid"
-            });
-        }
-    }
-
-    //
-    protected render() {
-        return html`<style>${importStyle}</style>${this.nodes}`;
-    }
-
-    //
+    #checked: any = null;
+    protected render() { return html`<style>${importStyle}</style>${this.nodes}`; }
     protected createRenderRoot() {
+        const self = this as unknown as HTMLElement;
         const root = super.createRenderRoot();
         makeRow(root, new WeakRef(this));
+        requestAnimationFrame(()=>{
+            const bt = this.$parentNode?.matches?.("ui-button, ui-toggle");
+            const ch = checkedRef(self);
+            this.#checked = ch;
+            E(self, {
+                style: { "display": bt ? conditional(ch, null, "none") : null },
+                dataset: bt ? {
+                    highlight: 0,
+                    highlightHover: 0,
+                    alpha: 0,
+                    chroma: 0,
+                    scheme: "dynamic-transparent"
+                } : {
+                    highlight: conditional(ch, 2, 0),
+                    highlightHover: conditional(ch, 4, 1),
+                    alpha: conditional(ch, 1, 0),
+                    chroma: conditional(ch, 0.1, 0),
+                    scheme: conditional(ch, "inverse", "solid")
+                }
+            })
+        });
         return root;
     }
 
     //
     protected updateAttributes() {
         super.updateAttributes?.();
-
-        // mono element mode (for drop-menu indicator)
-        if (this.$parentNode?.matches?.("ui-button, ui-toggle")) {
-            const self = this as unknown as HTMLElement;
-            if (this.checked) {
-                self.style.removeProperty("display");
-            } else {
-                self.style.setProperty("display", "none", "important");
-            }
-        }
+        if (this.#checked) { this.#checked.value = this.checked; };
     }
 
     //
     public connectedCallback() {
         super.connectedCallback();
-
-        // mono element mode (for drop-menu indicator)
-        if (this.$parentNode?.matches?.("ui-button, ui-toggle")) {
-            const self = this as unknown as HTMLElement;
-            if (this.checked) {
-                self.style.removeProperty("display");
-            } else {
-                self.style.setProperty("display", "none", "important");
-            }
-        };
-
-        //
         this.updateAttributes();
-    }
-
-    //
-    protected onSelect(ev){
-        super.onSelect?.(ev);
     }
 }
 

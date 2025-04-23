@@ -2,6 +2,9 @@
 // whole dedicated, separate element for lucide icons...
 // this component (or lucide icons) may to be distributed with main package.
 
+//
+import { E } from "/externals/lib/blue";
+
 // @ts-ignore
 import { html, LitElement } from "@mods/shared/LitUse";
 
@@ -33,6 +36,7 @@ export class UIShaped extends LitElement {
     constructor(options = {icon: "", padding: ""}) {
         super(); const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
+            E(self, { classList: new Set(["ui-shaped", "u2-shaped"]) })
             if (options?.icon) { this.icon = options?.icon || ""; };
         });
     }
@@ -40,18 +44,13 @@ export class UIShaped extends LitElement {
     //
     public connectedCallback() {
         super.connectedCallback();
-
-        //
-        const self = this as unknown as HTMLElement;
-        setAttributesIfNull(self, {
+        setAttributesIfNull(this as unknown as HTMLElement, {
             "data-transparent": "",
             "data-alpha": 0,
             "data-chroma": 0.1,
             "data-scheme": "solid",
             "data-highlight": 0
         });
-        if (!self.classList?.contains?.("ui-shaped")) { self.classList?.add?.("ui-shaped"); };
-        if (!self.classList?.contains?.("u2-shaped")) { self.classList?.add?.("u2-shaped"); };
     }
 }
 

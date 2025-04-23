@@ -49,10 +49,12 @@ export class UISlider extends LitElementTheme {
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
-            self.classList?.add?.("ui-slider");
-            self.classList?.add?.("u2-input");
-            self.addEventListener("change", this.onSelect.bind(this));
+            E(self, {
+                classList: new Set(["ui-slider", "u2-input"]),
+                on: { "change": new Set([this.onSelect.bind(this)]) }
+            })
             makeSwitchBH(self);
+            this.onSelect();
         });
     }
 
@@ -73,7 +75,7 @@ export class UISlider extends LitElementTheme {
     //
     public connectedCallback() {
         super.connectedCallback();
-        requestIdleCallback(()=>this.onSelect(), {timeout: 100});
+        this.onSelect();
     }
 }
 

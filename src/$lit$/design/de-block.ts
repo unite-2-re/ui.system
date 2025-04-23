@@ -2,25 +2,21 @@
 // whole dedicated, separate element for lucide icons...
 // this component (or lucide icons) may to be distributed with main package.
 
+//
+import { E } from "/externals/lib/blue";
+import { setAttributesIfNull } from "@service/Utils";
+
 // @ts-ignore
 import { html, LitElement } from "@mods/shared/LitUse";
 
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
-//
-import { setAttributesIfNull } from "@service/Utils";
-
 // @ts-ignore
 import styles from "@scss/design/de-block.scss?inline";
 
 //
 const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
-
-//
-import { E } from "/externals/lib/blue";
-
-//
 const makeBlock = (root: HTMLElement, weak?: WeakRef<any>)=>{
 
     // TODO: make available with ".nodes" keys as element
@@ -34,17 +30,12 @@ const makeBlock = (root: HTMLElement, weak?: WeakRef<any>)=>{
 // @ts-ignore
 @customElement('ui-block')
 export class UIBlock extends LitElement {
-    constructor() { super(); }
-
     // theme style property
     @property({ type: Array }) protected nodes?: HTMLElement[];
 
     //
-    protected render() {
-        return html`<style>${importStyle}</style>${this.nodes}`;
-    }
-
-    //
+    constructor() { super(); }
+    protected render() { return html`<style>${importStyle}</style>${this.nodes}`; }
     protected importFromTemplate(htmlCode: string) {
         const parser = new DOMParser();
         const dom = parser.parseFromString(htmlCode, "text/html");
@@ -64,14 +55,14 @@ export class UIBlock extends LitElement {
             "data-scheme": "solid",
             "data-highlight": 0
         });
-        if (!self.classList?.contains?.("ui-block")) self.classList?.add?.("ui-block");
-        if (!self.classList?.contains?.("u2-block")) self.classList?.add?.("u2-block");
     }
 
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
+        const self = this as unknown as HTMLElement;
         makeBlock(root, new WeakRef(this));
+        E(self, { classList: new Set(["ui-block", "u2-block"]), })
         return root;
     }
 }
