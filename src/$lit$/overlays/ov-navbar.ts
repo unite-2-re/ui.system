@@ -13,9 +13,6 @@ import { onInteration } from "@service/tasks/opening";
 import initTaskManager from "@service/tasks/manager";
 
 // @ts-ignore
-import htmlCode from "@temp/ov-navbar.html?raw";
-
-// @ts-ignore
 import styles from "@scss/design/ov-navbar.scss?inline";
 
 // @ts-ignore
@@ -36,20 +33,21 @@ export class UINavBar extends LitElementTheme {
             self.style.setProperty("z-index", "9999", "important");
             self.style.setProperty("background-color", "transparent", "important");
             this.taskManager ??= options?.taskManager || initTaskManager();
+            setAttributesIfNull(self, {
+                "data-alpha": 0.6,
+                "data-chroma": 0.1,
+                "data-scheme": "base",
+                "data-highlight": 2,
+                "data-highlight-hover": 0,
+            });
         });
     }
 
     //
     protected render() { return html`${this.themeStyle}
-        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button ui-anchor"  part="ui-menu-button"  data-popup="app-menu">
-            <ui-icon inert icon="layout-grid"></ui-icon>
-        </button>
-        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button ui-anchor"  part="ui-back-button"  @click=${this.backAction.bind(this)}>
-            <ui-icon inert icon="chevron-right"></ui-icon>
-        </button>
-        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle ui-anchor" part="ui-title-handle" @contextmenu=${this.menuAction.bind(this)} @click=${this.menuAction.bind(this)}>
-            <span>${this.label}</span><ui-icon inert icon=${this.icon||""}></ui-icon>
-        </button>`;
+        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button ui-anchor"  part="ui-menu-button"  data-popup="app-menu"><ui-icon inert icon="layout-grid"></ui-icon></button>
+        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button ui-anchor"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-right"></ui-icon></button>
+        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle ui-anchor" part="ui-title-handle" @contextmenu=${this.menuAction.bind(this)} @click=${this.menuAction.bind(this)}><span>${this.label}</span><ui-icon inert icon=${this.icon||""}></ui-icon></button>`;
     }
 
     //
@@ -60,13 +58,6 @@ export class UINavBar extends LitElementTheme {
             const newScheme = factor ? "solid" : "base";
             if (newScheme != self.getAttribute("data-scheme")) { self.setAttribute("data-scheme", newScheme); };
             (self as any).shadowRoot.querySelector(".ui-title-handle").dataset.visible = "";
-
-            //
-            /*if (document.body.matches(":has(ui-taskbar:not([data-hidden]))")) {
-                (self as any).shadowRoot.querySelector(".ui-title-handle").dataset.visible = "";
-            } else {
-                delete (self as any).shadowRoot.querySelector(".ui-title-handle").dataset.visible;
-            }*/
         }
 
         //
@@ -94,6 +85,7 @@ export class UINavBar extends LitElementTheme {
     }
 
     //
+    protected backAction(ev) { history.back?.(); }
     protected menuAction(ev) {
         ev?.preventDefault?.();
 
@@ -109,40 +101,13 @@ export class UINavBar extends LitElementTheme {
     }
 
     //
-    protected backAction(ev) {
-        // @ts-ignore
-        //(navigator?.back ? navigator?.back : history.back)?.();
-        history.back?.(); // za-e-ball-o1
-        //blurTask(this.taskManager, true);
-        //if (!blurTask()) { history.back(); };
-    }
-
-    //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        this.importFromTemplate(htmlCode);
         requestAnimationFrame(()=>{
-            root.addEventListener("click", (ev)=>{
-                onInteration(ev);
-            });
+            root.addEventListener("click", onInteration);
             this.adaptiveTheme();
         });
         return root;
-    }
-
-    //
-    public connectedCallback() {
-        super.connectedCallback();
-
-        //
-        const self = this as unknown as HTMLElement;
-        setAttributesIfNull(self, {
-            "data-alpha": 0.6,
-            "data-chroma": 0.1,
-            "data-scheme": "base",
-            "data-highlight": 2,
-            "data-highlight-hover": 0,
-        });
     }
 
 }

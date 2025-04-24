@@ -30,27 +30,20 @@ export class UIStatusBar extends LitElementTheme {
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        this.importFromTemplate(htmlCode);
+        if (root) { connect?.(root); this.statusSW = true; }
+        root.addEventListener("click", onInteration);
 
         //
+        this.importFromTemplate(htmlCode);
+        const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
-            if (root) { connect?.(root); this.statusSW = true; }
-            root.addEventListener("click", onInteration);
+            self.style.setProperty("z-index", "999999", "important");
+            setAttributesIfNull(self, {
+                "data-scheme": "dynamic-transparent",
+                "data-chroma": 0
+            });
         });
         return root;
-    }
-
-    //
-    public connectedCallback() {
-        super.connectedCallback();
-
-        //
-        const self = this as unknown as HTMLElement;
-        self.style.setProperty("z-index", "999999", "important");
-        setAttributesIfNull(self, {
-            "data-scheme": "dynamic-transparent",
-            "data-chroma": 0
-        });
     }
 };
 

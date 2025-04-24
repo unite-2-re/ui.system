@@ -32,15 +32,17 @@ export class UISelectBase extends LitElement {
                     self?.querySelector?.("input")?.click?.();
                 }
             });
+            setAttributesIfNull(self, {
+                "data-highlight": 0,
+                "data-alpha": 0
+            });
         });
     }
 
     //
-    protected render() {
-        return html`${this.nodes}`;
-    }
-
-    //
+    protected updateStyles() {};
+    protected render() { return html`${this.nodes}`; }
+    protected onSelect(ev?: any) { onItemSelect?.(ev, this); }
     protected importFromTemplate(htmlCode: string) {
         const parser = new DOMParser();
         const dom = parser.parseFromString(htmlCode, "text/html");
@@ -60,21 +62,13 @@ export class UISelectBase extends LitElement {
         if (this?.checked == null) this.checked = false;
 
         //
-        const self = this as unknown as HTMLElement;
-        setAttributesIfNull(self, {
-            "data-highlight": 0,
-            "data-alpha": 0
-        });
-
-        //
-        this.$parentNode = self?.parentNode;
+        this.$parentNode = (this as unknown as HTMLElement)?.parentNode;
         this.$parentNode?.addEventListener("change", this.#onSelect ??= this.onSelect.bind(this));
         this.$parentNode?.addEventListener("click", this.#onSelect ??= this.onSelect.bind(this));
         requestIdleCallback(()=>this.onSelect(), {timeout: 100});
     }
 
     //
-    protected updateStyles() {};
     protected updateAttributes() {
         const self = this as unknown as HTMLElement;
 
@@ -84,17 +78,7 @@ export class UISelectBase extends LitElement {
 
         //
         const ownBox = self.shadowRoot?.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])") ?? self.querySelector?.("input:where([type=\"radio\"], [type=\"checkbox\"])");
-        if (ownBox) {
-            setAttributes(ownBox, {
-                "name" : (self.parentNode as HTMLElement)?.dataset?.name || self?.dataset?.name || (ownBox as any)?.name || "dummy-radio",
-                "value": this.value
-            });
-        };
-    }
-
-    //
-    protected onSelect(ev?: any) {
-        onItemSelect?.(ev, this);
+        if (ownBox) { setAttributes(ownBox, { "value": this.value, "name" : (self.parentNode as HTMLElement)?.dataset?.name || self?.dataset?.name || (ownBox as any)?.name || "dummy-radio" }); };
     }
 
     //

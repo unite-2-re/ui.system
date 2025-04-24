@@ -10,6 +10,7 @@ import { customElement, property } from "lit/decorators.js";
 //
 import { placeWithElement } from "@service/layout/ps-anchor";
 import { setAttributesIfNull } from "@service/Utils";
+import { E } from "/externals/lib/blue";
 
 // @ts-ignore
 import styles from "@scss/design/ov-modal.scss?inline";
@@ -30,10 +31,7 @@ export class UIModal extends LitElementTheme {
 
     //
     constructor() {
-        super();
-
-        //
-        const self = this as unknown as HTMLElement;
+        super(); const self = this as unknown as HTMLElement;
 
         // @ts-ignore
         Promise.try(importCdn, ["/externals/core/agate.js"])?.then?.(({whenAnyScreenChanges})=>{
@@ -42,6 +40,21 @@ export class UIModal extends LitElementTheme {
 
         //
         requestAnimationFrame(()=>{
+            const place = (e)=>{ if (e.target == this) requestAnimationFrame(()=>this.placeWithElement()); };
+
+            //
+            E(self, {style: {zIndex: 9999}, on:{
+                "u2-appear": new Set([place]),
+                "u2-before-show": new Set([place]),
+                "click": new Set([(e)=>{
+                    requestAnimationFrame(()=>{
+                        const target = e.target as HTMLElement;
+                        if (self.dataset.hidden == null && self.matches("ui-modal[type=\"contextmenu\"]") && (target?.matches?.("ui-button-row, ui-select-row, li") || target?.closest?.("ui-button-row, ui-select-row, li"))) { self.dataset.hidden = ""; };
+                    });
+                }])
+            }})
+
+            //
             setAttributesIfNull(self, {
                 //"type": "modal",
                 "data-hidden": "",
@@ -50,59 +63,18 @@ export class UIModal extends LitElementTheme {
                 "data-alpha": 1
             });
 
-            //
-            self.addEventListener("u2-appear", (e)=>{
-                //self.style.removeProperty("display");
-                const target = e.target as HTMLElement;
-                if (e.target == this) requestAnimationFrame(()=>this.placeWithElement());
-            });
-
             // when something is appear, close contextmenu (except contextmenu itself)
             document.documentElement.addEventListener("u2-appear", (e)=>{
                 const target = e.target as HTMLElement;
                 if (!(target?.matches?.("ui-modal[type=\"contextmenu\"]") || target?.closest?.("ui-modal[type=\"contextmenu\"]")) && self?.matches?.("ui-modal[type=\"contextmenu\"]")) { self.dataset.hidden = ""; };
             });
-
-            //
-            self.addEventListener("u2-before-show", (e)=>{
-                if (e.target == this) requestAnimationFrame(()=> this.placeWithElement());
-            });
-
-            //
-            self.addEventListener("click", (e)=>{
-                requestAnimationFrame(()=>{
-                    const target = e.target as HTMLElement;
-                    if (self.dataset.hidden == null && self.matches("ui-modal[type=\"contextmenu\"]") && (target?.matches?.("ui-button-row, ui-select-row, li") || target?.closest?.("ui-button-row, ui-select-row, li"))) { self.dataset.hidden = ""; };
-                });
-            });
         });
-
-        // force fix phantom appear
-        /*document.documentElement.addEventListener("u2-before-show", (e)=>{
-            self.style.display = "none";
-        }, {once: true});*/
-
-        //
-        //self.style.display = "none";
-        //self.dataset.hidden = "";
     }
 
     //
     public connectedCallback() {
         super.connectedCallback();
-
-        //
-        const self = this as unknown as HTMLElement;
-        setAttributesIfNull(self, {
-            //"type": "modal",
-            "data-hidden": "",
-            "data-chroma": "0.001",
-            "data-scheme": "solid",
-            "data-alpha": 1
-        });
-
-        //
-        self.style.setProperty("z-index", "9999", "important");
+        (this as unknown as HTMLElement).dataset.hidden = "";
     }
 
     //
@@ -114,7 +86,6 @@ export class UIModal extends LitElementTheme {
         } else {
             self.dataset.hidden = "";
         }
-        //this.placeWithElement();
         return this;
     }
 

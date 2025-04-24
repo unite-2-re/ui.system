@@ -13,9 +13,6 @@ import { setAttributes, setAttributesIfNull } from "@service/Utils";
 import initTaskManager from "@service/tasks/manager";
 
 // @ts-ignore
-import htmlCode from "@temp/ov-taskitem.html?raw";
-
-// @ts-ignore
 import styles from "@scss/design/ov-taskitem.scss?inline";
 
 // @ts-ignore
@@ -24,10 +21,6 @@ export class UITaskItem extends LitElementTheme {
     @property({attribute: "data-id", reflect: true, type: String}) taskId?: string; //= "";
     @property({attribute: true, reflect: true, type: Object}) desc?: any;// = {};
     @property() public taskManager?: any;
-
-    // TODO: implicit state managment
-    //@property({attribute: true, reflect: true, type: String}) active: boolean = false;
-    //@property({attribute: true, reflect: true, type: String}) focused: boolean = false;
 
     // also "display" may be "contents"
     static styles = css`${unsafeCSS(styles)}`;
@@ -57,6 +50,15 @@ export class UITaskItem extends LitElementTheme {
                 focusTask(this.taskManager, self, true);
                 this.updateState();
             });
+
+            //
+            setAttributesIfNull(self, {
+                //"data-scheme": "dynamic-transparent",
+                "data-chroma": 0.01,
+                "data-alpha": 0,
+                "data-highlight": 0,
+                "data-highlight-hover": 3
+            });
         });
 
         //
@@ -64,11 +66,12 @@ export class UITaskItem extends LitElementTheme {
         addEventListener("hashchange", ()=>{ this.updateState(); });
     }
 
-    //
+    // TODO: improve classList system
     protected updateState() {
         const self = this as unknown as HTMLElement;
         const hash = "#" + (self.dataset?.id?.replace("#","") || this.taskId?.replace?.("#","") || "").trim?.()?.replace?.("#","")?.trim?.();
         const task = this.taskManager?.get?.(hash);
+        const focused = task?.active && (this.taskManager?.getOnFocus?.()?.taskId?.replace("#","") == hash?.replace("#",""));
 
         //
         if (task?.active) {
@@ -78,7 +81,6 @@ export class UITaskItem extends LitElementTheme {
         }
 
         //
-        let focused = task?.active && (this.taskManager?.getOnFocus?.()?.taskId?.replace("#","") == hash?.replace("#",""));
         if (focused) {
             if (!self.classList.contains("ui-focus")) self.classList.add("ui-focus");
         } else {
@@ -87,22 +89,14 @@ export class UITaskItem extends LitElementTheme {
     }
 
     //
-    public bindTaskManager(taskManager: any) {
-        const self = this as unknown as HTMLElement;
-
-        //
-        { this.updateState(); }
-    }
-
-    //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        this.importFromTemplate(htmlCode);
         taskManage(this,this.taskManager);
         return root;
     }
 
     //
+    public bindTaskManager(taskManager: any) { this.updateState(); }
     public connectedCallback() {
         super.connectedCallback();
 
@@ -114,15 +108,6 @@ export class UITaskItem extends LitElementTheme {
 
         //
         setAttributes(self, {"data-id": (this.taskId || self.dataset.id || "")?.replace?.("#","")});
-        setAttributesIfNull(self, {
-            //"data-scheme": "dynamic-transparent",
-            "data-chroma": 0.01,
-            "data-alpha": 0,
-            "data-highlight": 0,
-            "data-highlight-hover": 3
-        });
-
-        //
         this.updateState();
     }
 }

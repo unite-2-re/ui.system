@@ -31,46 +31,49 @@ export class UITaskBar extends LitElementTheme {
     static styles = css`${unsafeCSS(styles)}`;
     constructor(options = {icon: "", padding: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
-        const taskManager = options?.taskManager || initTaskManager();
-        this.taskManager ??= taskManager;
 
         // cupola
-        const media = matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))");
         requestAnimationFrame(()=>{
+            const media = matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))");
+            if (media.matches) { delete self.dataset.hidden; } else { self.dataset.hidden = ""; };
             media.addEventListener("change", ({matches}) => {
                 if (matches) { delete self.dataset.hidden; } else { self.dataset.hidden = ""; };
             });
-            if (media.matches) { delete self.dataset.hidden; } else { self.dataset.hidden = ""; };
-            //.addTasks(this.tasks || []);
         });
 
         //
-        this?.taskManager?.on?.("focus", ()=>{
+        const whenFocus = ()=>{
             const isMobile = matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches;
             const taskbar = isMobile ? document.querySelector("ui-taskbar:not([data-hidden])") : null;
             if (taskbar) (taskbar as HTMLElement).dataset.hidden = "";
-        });
+        };
 
         //
-        this?.taskManager?.on?.("activate", ()=>{
-            const isMobile = matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches;
-            const taskbar = isMobile ? document.querySelector("ui-taskbar:not([data-hidden])") : null;
-            if (taskbar) (taskbar as HTMLElement).dataset.hidden = "";
-        });
+        const taskManager = options?.taskManager || initTaskManager();
+        this.taskManager ??= taskManager;
+        this?.taskManager?.on?.("focus", whenFocus);
+        this?.taskManager?.on?.("activate", whenFocus);
     }
 
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
-        const self = this as unknown as HTMLElement;
+        if (root) { connect?.(root); this.statusSW = true; }
+        root.addEventListener("click", onInteration);
         root.addEventListener("click", (ev)=>{
             if (!ev.target.matches("button, .ui-indicator")) { document.documentElement.querySelectorAll("ui-modal:not([data-hidden])")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; }); }
-        }); //.composed
+        });
+
+        //.composed
+        const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
             this.importFromTemplate(htmlCode);
             this.adaptiveTheme();
-            if (root) { connect?.(root); this.statusSW = true; }
-            root.addEventListener("click", onInteration);
+            
+            //
+            self.style.setProperty("z-index", "9998", "important");
+            self.classList?.add?.("ui-taskbar");
+            self.addEventListener("u2-appear", (ev)=>document.documentElement.querySelectorAll("ui-modal:not([data-hidden])")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; }));
             self.addEventListener("click", (ev)=>{
                 if (ev?.composedPath?.()?.[0] == self) {
                     if (document.documentElement?.querySelector?.("ui-modal:not([data-hidden])")) {
@@ -83,7 +86,17 @@ export class UITaskBar extends LitElementTheme {
                     }
                 }
             });
+
+            //
+            setAttributesIfNull(self, {
+                "data-scheme": "dynamic-transparent",
+                "data-chroma": 0.001,
+                "data-alpha": 1,
+                "data-highlight": 0
+            });
         });
+
+        //
         return root;
     }
 
@@ -107,13 +120,8 @@ export class UITaskBar extends LitElementTheme {
         setTheme();
 
         //
-        document.addEventListener("u2-appear", ()=>requestIdleCallback(setTheme));
-        document.addEventListener("u2-hidden", ()=>requestIdleCallback(setTheme));
-
-        //
-        self.addEventListener("u2-appear", (ev)=>{
-            document.documentElement.querySelectorAll("ui-modal:not([data-hidden])")?.forEach?.((el: any)=>{ el.dataset.hidden = ""; });
-        });
+        document.addEventListener("u2-appear", ()=>requestAnimationFrame(setTheme));
+        document.addEventListener("u2-hidden", ()=>requestAnimationFrame(setTheme));
     }
 
     //
@@ -122,19 +130,7 @@ export class UITaskBar extends LitElementTheme {
         this.taskManager?.addTasks?.(this.tasks || []);
 
         //
-        const self = this as unknown as HTMLElement;
-        self.style.setProperty("z-index", "9998", "important");
-        self.classList?.add?.("ui-taskbar");
-
-        //
-        setAttributesIfNull(self, {
-            "data-scheme": "dynamic-transparent",
-            "data-chroma": 0.001,
-            "data-alpha": 1,
-            "data-highlight": 0
-        });
-
-        //
+        const self  = this as unknown as HTMLElement;
         const media = matchMedia("(((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))");
 
         // if mobile, hide it

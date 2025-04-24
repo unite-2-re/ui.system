@@ -25,26 +25,19 @@ export class UITooltip extends LitElementTheme {
     }
 
     //
-    constructor() { super(); }
-    public connectedCallback() {
-        super.connectedCallback();
+    constructor() { 
+        super(); const self = this as unknown as HTMLElement;
+        requestAnimationFrame(()=>{
+            setAttributesIfNull(self, {
+                "data-chroma": "0.001",
+                "data-scheme": "solid",
+                "data-alpha": 1
+            });
 
-        //
-        const self = this as unknown as HTMLElement;
-
-        //
-        setAttributesIfNull(self, {
-            "data-chroma": "0.001",
-            "data-scheme": "solid",
-            "data-alpha": 1
+            //
+            self.style.setProperty("z-index", "9999", "important");
+            self.classList?.add?.("ui-tooltip");
+            self.classList?.add?.("u2-tooltip");
         });
-
-        //
-        self.style.setProperty("z-index", "9999", "important");
-        self.classList?.add?.("ui-tooltip");
-        self.classList?.add?.("u2-tooltip");
-
-        //
-        //runTooltip();
     }
 }

@@ -29,8 +29,7 @@ export class UIFrame extends LitElementTheme {
     static styles = css`${unsafeCSS(styles)}`;
     constructor(options = {icon: "", padding: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
-        const taskManager = options.taskManager || initTaskManager();
-        this.taskManager ??= taskManager;
+        this.taskManager ??= options.taskManager || initTaskManager();
 
         //
         requestAnimationFrame(()=>{
@@ -52,6 +51,12 @@ export class UIFrame extends LitElementTheme {
 
             //
             this.fixZLayer();
+            setAttributesIfNull(self, {
+                "data-maximized": null,
+                "data-chroma": 0.001,
+                "data-scheme": "inverse",
+                "data-highlight": 0
+            });
         });
     }
 
@@ -66,35 +71,17 @@ export class UIFrame extends LitElementTheme {
     }
 
     //
-    public disconnectedCallback() {
-        super.disconnectedCallback();
-    }
-
-    //
     public connectedCallback() {
         super.connectedCallback();
-        this.updateAttributes();
+        this.fixZLayer();
+
+        //
         requestAnimationFrame(()=>makeControl(this as any));
 
         //
         const self      = this as unknown as HTMLElement;
         const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || (location.hash ? self.querySelector(location.hash) : null)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
         if (isInFocus) { delete self.dataset.hidden; };
-
-        //
-        this.fixZLayer();
-    }
-
-    //
-    protected updateAttributes() {
-        const self = this as unknown as HTMLElement;
-        setAttributesIfNull(self, {
-            //"data-hidden": true,
-            "data-maximized": null,
-            "data-chroma": 0.001,
-            "data-scheme": "inverse",
-            "data-highlight": 0
-        });
     }
 
     //
@@ -103,6 +90,8 @@ export class UIFrame extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         onTasking(this, this.taskManager);
         this.importFromTemplate(htmlCode);
+
+        //
         root.addEventListener("click", (ev)=>{
             if (ev.target.matches(".ui-btn-close")) {
                 //const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;

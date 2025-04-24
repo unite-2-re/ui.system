@@ -54,28 +54,31 @@ export class UIToggle extends UISelectBase {
     @property({}) dropMenu?: any = null;
 
     //
+    #checked: any;
+
+    //
     static styles = css`${unsafeCSS(styles)}`;
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
+            setAttributesIfNull(self, {
+                "data-scheme": "solid",
+                "data-highlight": 0,
+                "data-highlight-hover": 1
+            });
+
+            //
             E(self, {
                 classList: new Set(["ui-toggle", "u2-toggle", "u2-input"]),
-                dataset: { scheme: conditional(checkedRef(self), "inverse", "solid") }
+                dataset: { scheme: conditional(this.#checked = checkedRef(self), "inverse", "solid") }
             });
         });
     }
 
     //
-    public connectedCallback() {
-        super.connectedCallback();
-        const self = this as unknown as HTMLElement;
-
-        //
-        setAttributesIfNull(self, {
-            "data-scheme": "solid",
-            "data-highlight": 0,
-            "data-highlight-hover": 1
-        });
+    protected updateAttributes() {
+        super.updateAttributes?.();
+        if (this.#checked) { this.#checked.value = this.checked; };
     }
 
     //
@@ -101,7 +104,12 @@ export class UIButton extends UIButtonBase {
         super(); const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
             self.querySelectorAll("ui-select-row, ui-button-row")?.forEach?.((el: any)=>{ el.style.display = "none"; });
-            
+            setAttributesIfNull(self, {
+                "data-scheme": "solid",
+                "data-highlight": 0,
+                "data-highlight-hover": 1
+            });
+
             //
             E(self, {
                 classList: new Set(["ui-button", "u2-button"]),
@@ -125,25 +133,6 @@ export class UIButton extends UIButtonBase {
                     }])
                 }
             })
-        });
-    }
-
-    //
-    //protected updateStyles() {
-        //const self = this as unknown as HTMLElement;
-        //self.dataset.scheme = "inverse";//(this as any).checked ? "solid" : "inverse"
-    //};
-
-    //
-    public connectedCallback() {
-        super.connectedCallback();
-        const self = this as unknown as HTMLElement;
-
-        //
-        setAttributesIfNull(self, {
-            "data-scheme": "solid",
-            "data-highlight": 0,
-            "data-highlight-hover": 1
         });
     }
 
