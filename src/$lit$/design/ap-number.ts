@@ -12,8 +12,8 @@ import { customElement, property } from "lit/decorators.js";
 // @ts-ignore
 import styles from "@scss/design/ap-number.scss?inline";
 
-//
-import { E } from "/externals/lib/blue";
+// @ts-ignore /* @vite-ignore */
+import { E } from "/externals/lib/blue.js";
 
 //
 import { doIndication } from "@service/behaviour/bh-indication";

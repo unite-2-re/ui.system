@@ -16,8 +16,8 @@ import { makeSwitchBH } from "@service/behaviour/bh-switch";
 // @ts-ignore
 import styles from "@scss/design/ap-switch.scss?inline";
 
-//
-import { E } from "/externals/lib/blue";
+// @ts-ignore /* @vite-ignore */
+import { E } from "/externals/lib/blue.js";
 
 //
 const makeSwitch = (root: HTMLElement, weak?: WeakRef<any>)=>{

@@ -16,7 +16,9 @@ const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type
 
 // @ts-ignore /* @vite-ignore */
 import {importCdn} from "/externals/modules/cdnImport.mjs";
-import { E } from "/externals/lib/blue";
+
+// @ts-ignore /* @vite-ignore */
+import { E } from "/externals/lib/blue.js";
 
 // @ts-ignore
 const toCamelCase = (str: string) => {

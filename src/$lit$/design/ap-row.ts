@@ -13,12 +13,14 @@ import UISelectBase from "@mods/inputs/in-select";
 import UIButtonBase from "@mods/inputs/in-button";
 import { setAttributes } from "@service/Utils";
 
-//
-import { E } from "/externals/lib/blue";
+// @ts-ignore /* @vite-ignore */
+import { E } from "/externals/lib/blue.js";
 
 // @ts-ignore
 import styles from "@scss/design/ap-row.scss?inline";
-import { checkedRef, conditional } from "/externals/lib/object";
+
+// @ts-ignore /* @vite-ignore */
+import { checkedRef, conditional } from "/externals/lib/object.js";
 
 //
 const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;

@@ -8,9 +8,11 @@ import { css, unsafeCSS } from "@mods/shared/LitUse";
 // @ts-ignore
 import { customElement, property } from "lit/decorators.js";
 
-//
-import { E } from "/externals/lib/blue";
-import { conditional, checkedRef } from "/externals/lib/object";
+// @ts-ignore /* @vite-ignore */
+import { E } from "/externals/lib/blue.js";
+
+// @ts-ignore /* @vite-ignore */
+import { conditional, checkedRef } from "/externals/lib/object.js";
 
 //
 import { openDropMenu } from "@service/functional/fn-dropmenu";

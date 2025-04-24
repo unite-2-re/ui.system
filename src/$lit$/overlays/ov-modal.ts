@@ -10,7 +10,9 @@ import { customElement, property } from "lit/decorators.js";
 //
 import { placeWithElement } from "@service/layout/ps-anchor";
 import { setAttributesIfNull } from "@service/Utils";
-import { E } from "/externals/lib/blue";
+
+// @ts-ignore /* @vite-ignore */
+import { E } from "/externals/lib/blue.js";
 
 // @ts-ignore
 import styles from "@scss/design/ov-modal.scss?inline";

@@ -2,8 +2,8 @@
 // whole dedicated, separate element for lucide icons...
 // this component (or lucide icons) may to be distributed with main package.
 
-//
-import { E } from "/externals/lib/blue";
+// @ts-ignore /* @vite-ignore */
+import { E } from "/externals/lib/blue.js";
 
 // @ts-ignore
 import { html, LitElement } from "@mods/shared/LitUse";

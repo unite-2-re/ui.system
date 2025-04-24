@@ -13,7 +13,9 @@ import { customElement, property } from "lit/decorators.js";
 
 // @ts-ignore
 import styles from "@scss/foreign/fe-calendar.scss?inline";
-import { E } from '/externals/lib/blue';
+
+// @ts-ignore /* @vite-ignore */
+import { E } from '/externals/lib/blue.js';
 
 // @ts-ignore
 @customElement('ui-calendar')
