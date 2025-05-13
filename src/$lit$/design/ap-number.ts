@@ -57,7 +57,7 @@ export class UINumber extends LitElementTheme {
     @property({attribute: true, reflect: true, type: Boolean}) public checked?: boolean;// = false;
 
     //
-    static styles = css`${unsafeCSS(styles)}`;
+    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
 
     //
     constructor() {

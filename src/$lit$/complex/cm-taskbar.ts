@@ -28,7 +28,7 @@ export class UITaskBar extends LitElementTheme {
     @property() public taskManager?: any;
 
     // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`;
+    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
     constructor(options = {icon: "", padding: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
 
@@ -69,7 +69,7 @@ export class UITaskBar extends LitElementTheme {
         requestAnimationFrame(()=>{
             this.importFromTemplate(htmlCode);
             this.adaptiveTheme();
-            
+
             //
             self.style.setProperty("z-index", "9998", "important");
             self.classList?.add?.("ui-taskbar");

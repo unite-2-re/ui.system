@@ -39,7 +39,7 @@ const makeRow = (root: HTMLElement, weak?: WeakRef<any>)=>{
 @customElement('ui-select-row')
 export class UISelectRow extends UISelectBase {
     constructor() { super(); };
-    
+
     //
     #checked: any = null;
     protected render() { return html`<style>${importStyle}</style>${this.nodes}`; }

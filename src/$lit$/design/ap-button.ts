@@ -59,7 +59,7 @@ export class UIToggle extends UISelectBase {
     #checked: any;
 
     //
-    static styles = css`${unsafeCSS(styles)}`;
+    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{
@@ -101,7 +101,7 @@ export class UIButton extends UIButtonBase {
     @property({}) dropMenu?: any = null;
 
     //
-    static styles = css`${unsafeCSS(styles)}`;
+    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
     constructor() {
         super(); const self = this as unknown as HTMLElement;
         requestAnimationFrame(()=>{

@@ -24,7 +24,7 @@ export class UIStatusBar extends LitElementTheme {
     @property() protected statusSW?: boolean = false;
 
     //
-    static styles = css`${unsafeCSS(styles)}`;
+    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
     constructor() { super(); }
 
     //

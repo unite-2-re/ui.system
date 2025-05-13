@@ -18,7 +18,7 @@ export class UITooltip extends LitElementTheme {
     @property() protected current?: string;// = "";
 
     //
-    static styles = css`${unsafeCSS(styles)}`;
+    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
     protected render() {
         // use theme module if available
         return html`${this.themeStyle}<slot></slot>`;

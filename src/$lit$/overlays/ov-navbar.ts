@@ -23,7 +23,7 @@ export class UINavBar extends LitElementTheme {
     @property() public taskManager?: any;
 
     // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`;
+    static styles = css`${unsafeCSS(`@layer ux-layer {${styles};};`)}`;
 
     //
     constructor(options = {icon: "", padding: "", taskManager: null}) {

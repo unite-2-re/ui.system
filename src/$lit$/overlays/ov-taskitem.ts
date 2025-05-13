@@ -23,7 +23,7 @@ export class UITaskItem extends LitElementTheme {
     @property() public taskManager?: any;
 
     // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`;
+    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
     protected render() {
         return html`${this.themeStyle} <ui-icon inert icon=${this.desc?.icon} data-highlight="0" data-alpha="0"></ui-icon> <span inert data-highlight="0" data-alpha="0">${this.desc?.label}</span>`;
     }

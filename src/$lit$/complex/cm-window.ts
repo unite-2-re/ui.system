@@ -26,7 +26,7 @@ export class UIFrame extends LitElementTheme {
     protected taskManager?: any;
 
     // also "display" may be "contents"
-    static styles = css`${unsafeCSS(styles)}`;
+    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
     constructor(options = {icon: "", padding: "", taskManager: null}) {
         super(); const self = this as unknown as HTMLElement;
         this.taskManager ??= options.taskManager || initTaskManager();
@@ -53,6 +53,7 @@ export class UIFrame extends LitElementTheme {
             this.fixZLayer();
             setAttributesIfNull(self, {
                 "data-maximized": null,
+                "data-alpha": 1,
                 "data-chroma": 0.001,
                 "data-scheme": "inverse",
                 "data-highlight": 0

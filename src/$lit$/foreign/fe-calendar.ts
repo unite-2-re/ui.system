@@ -24,7 +24,7 @@ export class UICalendar extends LitElementTheme {
     #calendar?: any;
 
     //
-    static styles = css`${unsafeCSS(styles)}`;
+    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;

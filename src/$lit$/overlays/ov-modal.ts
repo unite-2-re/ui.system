@@ -28,7 +28,7 @@ export class UIModal extends LitElementTheme {
     @property({ attribute: true, reflect: true, type: String }) public type?: string;// = "modal";
 
     //
-    static styles = css`${unsafeCSS(styles)}`;
+    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
     protected render() { return html`${this.themeStyle}<slot></slot>`; }
 
     //
