@@ -3,11 +3,7 @@
 // Behaviour: switch (combined)
 
 // @ts-ignore
-import { css, unsafeCSS } from "@mods/shared/LitUse";
-import LitElementTheme from "@mods/shared/LitElementTheme";
-
-// @ts-ignore
-import { customElement, property } from "lit/decorators.js";
+import ThemedElement from "@mods/shared/LitElementTheme";
 
 //
 import { doIndication } from "@service/behaviour/bh-indication";
@@ -17,45 +13,33 @@ import { makeSwitchBH } from "@service/behaviour/bh-switch";
 import styles from "@scss/design/ap-slider.scss?inline";
 
 // @ts-ignore /* @vite-ignore */
-import { E } from "/externals/lib/blue.js";
-
-//
-const makeSlider = (root: HTMLElement, weak?: WeakRef<any>)=>{
-
-    // TODO: make available with ".nodes" keys as element
-    if (weak?.deref?.()) weak.deref().nodes = [
-        E("label.ui-contain", {part: "ui-contain"},[
-            E("div.ui-fill", {part: "ui-fill", dataset: {scheme: "inverse", alpha: 1, highlight: 2, chroma: 0.6}}, [
-                E("div.ui-fill-inactive", {inert: true, dataset: {alpha: 0.5, scheme: "solid"}}),
-                E("div.ui-fill-active", {inert: true, dataset: {alpha: 0}})
-            ]),
-            E("div.ui-thumb", {part: "ui-thumb", dataset: {scheme: "solid", alpha: 1, highlight: 6, highlightHover: 0, highlightOp: "min", chroma: 0.4}}, [E("slot", {name: "icon"})]),
-            E("div.ui-inputs", {part: "ui-inputs"}),
-        ])
-    ].map((e)=>e?.element);
-}
-
+import { defineElement, E, H, property } from "/externals/lib/blue.js";
 
 // @ts-ignore
-@customElement('ui-slider')
-export class UISlider extends LitElementTheme {
-
-    // theme style property
-    @property({attribute: true, reflect: true, type: String}) public value?: string|number;// = "";
-    @property({attribute: true, reflect: true, type: Boolean}) public checked?: boolean; //= false;
+@defineElement('ui-slider')
+export class UISlider extends ThemedElement {
+    @property({source: "value", from: "input", name: "valueAsNumber"}) value;
+    @property({source: "checked", from: "input"}) checked;
 
     //
-    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
-    constructor() {
-        super(); const self = this as unknown as HTMLElement;
-        requestAnimationFrame(()=>{
-            E(self, {
-                classList: new Set(["ui-slider", "u2-input"]),
-                on: { "change": new Set([this.onSelect.bind(this)]) }
-            })
-            makeSwitchBH(self);
-            this.onSelect();
-        });
+    public styles = ()=>styles;
+    public render = ()=> H`<${"label.ui-contain"} part="ui-contain">
+    <${"div.ui-fill"} part="ui-fill" dataset=${{scheme: "inverse", alpha: 1, highlight: 2, chroma: 0.6}}>
+        <${"div.ui-fill-inactive"} inert="" dataset=${{alpha: 0.5, scheme: "solid"}}></div>
+        <${"div.ui-fill-active"} inert="" dataset=${{alpha: 0}}></div>
+    </div>
+    <${"div.ui-thumb"} part="ui-thumb" dataset=${{scheme: "solid", alpha: 1, highlight: 6, highlightHover: 0, highlightOp: "min", chroma: 0.4}}><slot name="icon"/></div>
+    <${"div.ui-inputs"} part="ui-inputs"><slot/></div>
+</label>`
+
+    //
+    protected onInitialize() {
+        super.onInitialize?.();
+        const self = this as unknown as HTMLElement;
+        E(self, { classList: new Set(["ui-slider", "u2-input"]), on: { "change": new Set([this.onSelect.bind(this)]) }})
+        makeSwitchBH(self);
+        this.onSelect();
+        return this;
     }
 
     //
@@ -63,19 +47,6 @@ export class UISlider extends LitElementTheme {
         const self = this as unknown as HTMLElement;
         const input = (ev?.target?.matches?.("input") ? ev?.target : null) ?? self?.querySelector?.("input:checked") ?? self?.querySelector?.("input");
         doIndication(ev, self, input);
-    }
-
-    //
-    protected createRenderRoot() {
-        const root = super.createRenderRoot();
-        makeSlider(root, new WeakRef(this));
-        return root;
-    }
-
-    //
-    public connectedCallback() {
-        super.connectedCallback();
-        this.onSelect();
     }
 }
 

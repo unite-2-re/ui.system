@@ -1,53 +1,50 @@
 /// <reference types="lit" />
-
-// @ts-ignore
-import { html, css, unsafeCSS } from "@mods/shared/LitUse";
-import LitElementTheme from "@mods/shared/LitElementTheme";
-
-// @ts-ignore
-import { customElement, property } from "lit/decorators.js";
-
-//
-import { setAttributesIfNull, setIdleInterval } from "@service/Utils";
+import ThemedElement from "@mods/shared/LitElementTheme";
+import { setIdleInterval } from "@service/Utils";
 import { onInteration } from "@service/tasks/opening";
 import initTaskManager from "@service/tasks/manager";
 
 // @ts-ignore
 import styles from "@scss/design/ov-navbar.scss?inline";
+import { H, property, defineElement } from "/externals/lib/blue.js";
 
 // @ts-ignore
-@customElement('ui-navbar')
-export class UINavBar extends LitElementTheme {
-    @property({attribute: true, reflect: true, type: String}) icon ?: string;// = "";
-    @property({attribute: true, reflect: true, type: String}) label?: string;// = "";
+@defineElement('ui-navbar')
+export class UINavBar extends ThemedElement {
+    @property({ source: "attr" }) icon ?: string;
+    @property({ source: "attr" }) label?: string;
     @property() public taskManager?: any;
 
+    //
+    protected initialAttributes = {
+        "data-alpha": 0.6,
+        "data-chroma": 0.1,
+        "data-scheme": "base",
+        "data-highlight": 2,
+        "data-highlight-hover": 0,
+    };
+
     // also "display" may be "contents"
-    static styles = css`${unsafeCSS(`@layer ux-layer {${styles};};`)}`;
-
-    //
-    constructor(options = {icon: "", padding: "", taskManager: null}) {
-        super(); const self = this as unknown as HTMLElement;
-        requestAnimationFrame(()=>{
-            self.classList?.add?.("ui-navbar");
-            self.style.setProperty("z-index", "9999", "important");
-            self.style.setProperty("background-color", "transparent", "important");
-            this.taskManager ??= options?.taskManager || initTaskManager();
-            setAttributesIfNull(self, {
-                "data-alpha": 0.6,
-                "data-chroma": 0.1,
-                "data-scheme": "base",
-                "data-highlight": 2,
-                "data-highlight-hover": 0,
-            });
-        });
-    }
-
-    //
-    protected render() { return html`${this.themeStyle}
+    public styles = () => styles;
+    public render = () => H`
         <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button ui-anchor"  part="ui-menu-button"  data-popup="app-menu"><ui-icon inert icon="layout-grid"></ui-icon></button>
         <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button ui-anchor"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-right"></ui-icon></button>
         <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle ui-anchor" part="ui-title-handle" @contextmenu=${this.menuAction.bind(this)} @click=${this.menuAction.bind(this)}><span>${this.label}</span><ui-icon inert icon=${this.icon||""}></ui-icon></button>`;
+
+    //
+    protected onInitialize(): this {
+        super.onInitialize?.();
+        const self = this as unknown as HTMLElement;
+        self.classList?.add?.("ui-navbar");
+        self.style.setProperty("z-index", "9999", "important");
+        self.style.setProperty("background-color", "transparent", "important");
+        this.adaptiveTheme();
+        return this;
+    }
+
+    //
+    constructor(options = {icon: "", padding: "", taskManager: null}) {
+        super(); this.taskManager ??= options?.taskManager || initTaskManager();
     }
 
     //
@@ -61,14 +58,6 @@ export class UINavBar extends LitElementTheme {
         }
 
         //
-        setIdleInterval(setTheme, 200);
-        setTheme();
-
-        //
-        document.addEventListener("u2-appear", ()=>requestIdleCallback(setTheme));
-        document.addEventListener("u2-hidden", ()=>requestIdleCallback(setTheme));
-
-        //
         const showLabel = (ev?)=>{
             const onFocus = this.taskManager.getOnFocus(false);
             (self as any).shadowRoot.querySelector(".ui-title-handle span").textContent = onFocus?.desc?.label || "";
@@ -76,15 +65,24 @@ export class UINavBar extends LitElementTheme {
         }
 
         //
+        setIdleInterval(setTheme, 200);
+        document.addEventListener("u2-appear", ()=>requestIdleCallback(setTheme));
+        document.addEventListener("u2-hidden", ()=>requestIdleCallback(setTheme));
+
+        //
         this.taskManager.on("focus", showLabel);
         this.taskManager.on("addTask", showLabel);
         this.taskManager.on("activate", showLabel);
         this.taskManager.on("deactivate", showLabel);
         this.taskManager.on("removeTask", showLabel);
+
+        //
+        setTheme();
         showLabel();
     }
 
     //
+    protected createRenderRoot() { const root = super.createRenderRoot(); root.addEventListener("click", onInteration); return root; }
     protected backAction(ev) { history.back?.(); }
     protected menuAction(ev) {
         ev?.preventDefault?.();
@@ -99,15 +97,4 @@ export class UINavBar extends LitElementTheme {
             if (navbar) { if (navbar.dataset.hidden != null) { delete navbar.dataset.hidden; } else { navbar.dataset.hidden = ""; } };
         }
     }
-
-    //
-    protected createRenderRoot() {
-        const root = super.createRenderRoot();
-        requestAnimationFrame(()=>{
-            root.addEventListener("click", onInteration);
-            this.adaptiveTheme();
-        });
-        return root;
-    }
-
 }

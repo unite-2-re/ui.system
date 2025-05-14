@@ -1,64 +1,67 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { css, unsafeCSS } from "@mods/shared/LitUse";
-import LitElementTheme from "@mods/shared/LitElementTheme";
-
-// @ts-ignore
-import { customElement } from "lit/decorators.js";
+import ThemedElement from "@mods/shared/LitElementTheme";
 
 //
 import initTaskManager from "@service/tasks/manager";
 import { makeControl } from "@service/layout/ps-draggable.js";
 import { focusTask, onTasking } from "@service/tasks/binding";
-import { setAttributesIfNull } from "@service/Utils";
 
 // @ts-ignore
 import htmlCode from "@temp/ov-window.html?raw";
 
 // @ts-ignore
 import styles from "@scss/design/ov-window.scss?inline";
+import { defineElement, H } from "/externals/lib/blue";
 
 // @ts-ignore
-@customElement('ui-frame')
-export class UIFrame extends LitElementTheme {
+@defineElement('ui-frame')
+export class UIFrame extends ThemedElement {
     // theme style property
     protected taskManager?: any;
+    protected initialAttributes = {
+        "data-maximized": null,
+        "data-alpha": 1,
+        "data-chroma": 0.001,
+        "data-scheme": "inverse",
+        "data-highlight": 0
+    };
 
-    // also "display" may be "contents"
-    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
+    //
     constructor(options = {icon: "", padding: "", taskManager: null}) {
-        super(); const self = this as unknown as HTMLElement;
-        this.taskManager ??= options.taskManager || initTaskManager();
+        super(); this.taskManager ??= options.taskManager || initTaskManager();
+    }
+
+    //
+    public render() { return H(htmlCode); };
+    public styles = ()=>styles;
+    public onInitialize() {
+        super.onInitialize?.();
+        const self = this as unknown as HTMLElement;
+        self.classList?.add?.("ui-frame");
+        self.classList?.add?.("u2-frame");
+        self.addEventListener("pointerdown", (ev)=>{ this.whenTaskActive(); });
 
         //
-        requestAnimationFrame(()=>{
-            self.classList?.add?.("ui-frame");
-            self.classList?.add?.("u2-frame");
+        this.fixZLayer();
+        makeControl(this as any);
+        onTasking(this, this.taskManager);
+        return this;
+    }
 
-            //
-            if (!this?.taskManager?.isActive?.("#" + self?.querySelector?.(".ui-content")?.id)) {
-                self.dataset.hidden = "";
-            } else {
-                delete self.dataset.hidden;
-            }
+    //
+    public connectedCallback() {
+        super.connectedCallback();
+        this.whenTaskActive();
+        this.fixZLayer();
+    }
 
-            //
-            self.addEventListener("pointerdown", (ev)=>{
-                const id = "#" + (self.querySelector(".ui-content")?.id || self?.id || location.hash)?.replace?.("#", "");
-                if (this?.taskManager?.isActive?.(id)) focusTask(this?.taskManager, self);
-            });
-
-            //
-            this.fixZLayer();
-            setAttributesIfNull(self, {
-                "data-maximized": null,
-                "data-alpha": 1,
-                "data-chroma": 0.001,
-                "data-scheme": "inverse",
-                "data-highlight": 0
-            });
-        });
+    //
+    protected whenTaskActive() {
+        const self = this as unknown as HTMLElement;
+        const id = "#" + (self.querySelector(".ui-content")?.id || self?.id || location.hash)?.replace?.("#", "");
+        if (!this?.taskManager?.isActive?.(id)) { self.dataset.hidden = ""; } else { delete self.dataset.hidden; focusTask(this?.taskManager, self) }
     }
 
     //
@@ -72,27 +75,9 @@ export class UIFrame extends LitElementTheme {
     }
 
     //
-    public connectedCallback() {
-        super.connectedCallback();
-        this.fixZLayer();
-
-        //
-        requestAnimationFrame(()=>makeControl(this as any));
-
-        //
-        const self      = this as unknown as HTMLElement;
-        const isInFocus = ("#" + (self.querySelector(".ui-content")?.id || self.id || (location.hash ? self.querySelector(location.hash) : null)?.id || "")?.trim?.()?.replace?.("#","")?.trim?.()) == location.hash;
-        if (isInFocus) { delete self.dataset.hidden; };
-    }
-
-    //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         const self = this as unknown as HTMLElement;
-        onTasking(this, this.taskManager);
-        this.importFromTemplate(htmlCode);
-
-        //
         root.addEventListener("click", (ev)=>{
             if (ev.target.matches(".ui-btn-close")) {
                 //const content = location.hash && location.hash != "#" ? document.querySelector(location.hash) : null;

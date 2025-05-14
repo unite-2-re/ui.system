@@ -3,22 +3,14 @@
 // this component (or lucide icons) may to be distributed with main package.
 
 // @ts-ignore
-import { html, PropertyValues, LitElement } from "@mods/shared/LitUse";
-
-// @ts-ignore
-import { customElement, property } from "lit/decorators.js";
-
-// @ts-ignore
 import styles from "@scss/foreign/fe-icon.scss?inline";
-
-//
-const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
 
 // @ts-ignore /* @vite-ignore */
 import {importCdn} from "/externals/modules/cdnImport.mjs";
 
 // @ts-ignore /* @vite-ignore */
-import { E } from "/externals/lib/blue.js";
+import { BLitElement, defineElement, E, H, property } from "/externals/lib/blue.js";
+import { subscribe } from "/externals/lib/object";
 
 // @ts-ignore
 const toCamelCase = (str: string) => {
@@ -68,40 +60,31 @@ const loadAsImage = (name: string, creator?: (name: string)=>any)=>{
 };
 
 // @ts-ignore
-@customElement('ui-icon')
-export class UILucideIcon extends LitElement {
+@defineElement('ui-icon')
+export class UILucideIcon extends BLitElement() {
     @property() protected iconElement?: SVGElement;
-    @property({attribute: true, reflect: true, type: String}) icon?: string;// = "";
-    @property({attribute: true, reflect: true, type: Number}) width?: number; //= 1;
+    @property({ source: "attr" }) icon?: string = "circle-help";
+    @property({ source: "attr" }) width?: number;
+    #options = { padding: 0 };
 
     //
     constructor(options = {icon: "", padding: ""}) {
-        super(); const self = this as unknown as HTMLElement;
-        requestAnimationFrame(()=>{
-            E(self, {
-                classList: new Set(["ui-icon", "u2-icon"]),
-                inert: true
-            })
-            if (!self?.style.getPropertyValue("padding") && options?.padding) { self.style.setProperty("padding", options?.padding); };
-            if (!this?.icon && options?.icon) { this.icon = options?.icon; }
-            this.updateIcon();
-        });
+        super(); Object.assign(this.#options, options);
+        if (!this?.icon && options?.icon) { this.icon = options?.icon; }
     }
 
     // also "display" may be "contents"
-    protected render() { return html`<style>${importStyle}</style><div class="fill"></div>`; }
+    protected styles = ()=>styles
+    protected render = ()=>{
+        subscribe([this.icon, "value"], (icon)=>{ this.updateIcon(icon); });
+        return H`<div class="fill"></div>`;
+    }
 
     //
-    public connectedCallback() { super.connectedCallback(); this.updateIcon(); }
-    public firstUpdated() { this.updateIcon(); }
-
-    //
-    protected updateIcon($icon?: string) {
-        const self = this as unknown as HTMLElement;
-        const icon = this.icon || self.getAttribute("icon") || $icon || "circle-help";
+    protected updateIcon(icon?: string) {
         // @ts-ignore
-        if (icon) Promise.try(importCdn, ["/externals/vendor/lucide.min.js"])?.then?.((icons)=>{
-            const ICON = toCamelCase(icon);
+        if (icon ||= this.icon || "circle-help") Promise.try(importCdn, ["/externals/vendor/lucide.min.js"])?.then?.((icons)=>{
+            const ICON = toCamelCase(icon || this.icon || "circle-help");
             if (icons?.[ICON]) {
                 const self = this as any;
                 loadAsImage(ICON, (U)=>icons?.createElement?.(icons?.[U]))?.then?.((url)=>{
@@ -113,13 +96,25 @@ export class UILucideIcon extends LitElement {
                 });
             }
         }).catch(console.warn.bind(console));
+        return this;
     }
 
     //
-    protected updated(changedProperties: PropertyValues<this>) {
+    protected updated(changedProperties) {
         if (changedProperties?.has?.("icon") || !changedProperties) {
             this.updateIcon(changedProperties?.get?.("icon"));
         }
+    }
+
+    //
+    public connectedCallback() { super.connectedCallback(); this.updateIcon(); }
+    public firstUpdated() { this.updateIcon(); }
+    public onInitialize() {
+        super.onInitialize?.();
+        const self = this as unknown as HTMLElement;
+        E(self, { classList: new Set(["ui-icon", "u2-icon"]), inert: true });
+        if (!self?.style.getPropertyValue("padding") && this.#options?.padding) { self.style.setProperty("padding", "" + this.#options?.padding); };
+        this.updateIcon();
     }
 }
 

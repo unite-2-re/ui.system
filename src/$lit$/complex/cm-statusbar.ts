@@ -1,48 +1,42 @@
-/// <reference types="lit" />
-
-// @ts-ignore
-import { css, unsafeCSS } from "@mods/shared/LitUse";
-import LitElementTheme from "@mods/shared/LitElementTheme";
-
-// @ts-ignore
-import { customElement, property } from "lit/decorators.js";
-
-//
 import { connect } from "@service/behaviour/bh-status";
 import { onInteration } from "@service/tasks/opening";
-import { setAttributesIfNull } from "@service/Utils";
 
 // @ts-ignore
 import htmlCode from "@temp/ov-statusbar.html?raw";
 
 // @ts-ignore
 import styles from "@scss/design/ov-statusbar.scss?inline";
+import ThemedElement from "../shared/LitElementTheme";
+import { H, property } from "/externals/lib/blue.js";
 
 // @ts-ignore
-@customElement('ui-statusbar')
-export class UIStatusBar extends LitElementTheme {
+@defineElement('ui-statusbar')
+export class UIStatusBar extends ThemedElement {
     @property() protected statusSW?: boolean = false;
 
     //
-    static styles = css`${unsafeCSS(`@layer ux-layer {${styles}};`)}`;
+    protected initialAttributes = {
+        "data-scheme": "dynamic-transparent",
+        "data-chroma": 0
+    };
+
+    //
+    public styles = ()=>styles;
+    public render() { return H(htmlCode); }
+
+    //
     constructor() { super(); }
+    protected onInitialize() {
+        super.onInitialize?.();
+        this.style.setProperty("z-index", "999999", "important");
+        return this;
+    }
 
     //
     protected createRenderRoot() {
         const root = super.createRenderRoot();
         if (root) { connect?.(root); this.statusSW = true; }
         root.addEventListener("click", onInteration);
-
-        //
-        this.importFromTemplate(htmlCode);
-        const self = this as unknown as HTMLElement;
-        requestAnimationFrame(()=>{
-            self.style.setProperty("z-index", "999999", "important");
-            setAttributesIfNull(self, {
-                "data-scheme": "dynamic-transparent",
-                "data-chroma": 0
-            });
-        });
         return root;
     }
 };

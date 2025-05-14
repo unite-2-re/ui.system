@@ -3,55 +3,30 @@
 // this component (or lucide icons) may to be distributed with main package.
 
 // @ts-ignore /* @vite-ignore */
-import { E } from "/externals/lib/blue.js";
-
-// @ts-ignore
-import { html, LitElement } from "@mods/shared/LitUse";
-
-// @ts-ignore
-import { customElement, property } from "lit/decorators.js";
-
-
-import { setAttributesIfNull } from "@service/Utils";
+import { BLitElement, defineElement, E, H, property } from "/externals/lib/blue.js";
 
 // @ts-ignore
 import styles from "@scss/design/de-shape.scss?inline";
 
-//
-const importStyle = `@import url("${URL.createObjectURL(new Blob([styles], {type: "text/css"}))}");`;
-
 // @ts-ignore
-@customElement('ui-shaped')
-export class UIShaped extends LitElement {
-
-    // theme style property
-    @property({attribute: true, reflect: true, type: String}) icon?: string;
-
-    // also "display" may be "contents"
-    protected render() {
-        return html`<style>${importStyle}</style><slot></slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" part="icon" icon=${this.icon||""}></ui-icon>`;
-    }
+@defineElement('ui-shaped')
+export class UIShaped extends BLitElement() {
+    @property({ source: "attr" }) icon?: string;
 
     //
-    constructor(options = {icon: "", padding: ""}) {
-        super(); const self = this as unknown as HTMLElement;
-        requestAnimationFrame(()=>{
-            E(self, { classList: new Set(["ui-shaped", "u2-shaped"]) })
-            if (options?.icon) { this.icon = options?.icon || ""; };
-        });
-    }
+    public styles = ()=>styles;
+    public render = (w)=>H`<slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" part="icon" icon=${w?.deref()?.icon||""}>`
+    public initialAttributes = {
+        "data-transparent": "",
+        "data-alpha": 0,
+        "data-chroma": 0.1,
+        "data-scheme": "solid",
+        "data-highlight": 0
+    };
 
     //
-    public connectedCallback() {
-        super.connectedCallback();
-        setAttributesIfNull(this as unknown as HTMLElement, {
-            "data-transparent": "",
-            "data-alpha": 0,
-            "data-chroma": 0.1,
-            "data-scheme": "solid",
-            "data-highlight": 0
-        });
-    }
+    constructor(options = {icon: "", padding: ""}) { super(); if (options?.icon) { this.icon = options?.icon || ""; }; }
+    protected onInitialize() { super.onInitialize?.(); E(this, { classList: new Set(["ui-shaped", "u2-shaped"]) }); return this; }
 }
 
 //

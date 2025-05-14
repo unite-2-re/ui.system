@@ -2,59 +2,21 @@
 // Type: standalone
 
 // @ts-ignore
-import { customElement, property } from "lit/decorators.js";
-
-// @ts-ignore
-import { LitElement, html } from "@mods/shared/LitUse";
+import { BLitElement, property } from "/externals/lib/blue";
 
 // @ts-ignore
 @customElement('ui-button-base')
-export class UIButtonBase extends LitElement {
-    @property({ type: Array }) protected nodes?: HTMLElement[];
-
-    //
+export class UIButtonBase extends BLitElement() {
     $parentNode?: any;
-    constructor() {
-        super(); const self = this as unknown as HTMLElement;
-        requestAnimationFrame(()=>{
-            self.addEventListener("contextmenu", (ev)=>{
-                ev?.stopPropagation?.();
-                ev?.preventDefault?.();
-            });
+    public onInitialize() {
+        super.onInitialize?.(); const self = this as unknown as HTMLElement;
+        if (!self.querySelector("input") && self.querySelector("ui-button-row[data-value], ui-select-row[data-value]")) {
+            self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" hidden data-alpha="0" part="ui-radio" placeholder=" " label=" " type="text" value="" name="${(self?.parentNode as HTMLElement)?.dataset?.name || self?.dataset?.name || "dummy-radio"}">`);
+        }
+        self.addEventListener("contextmenu", (ev)=>{
+            ev?.stopPropagation?.();
+            ev?.preventDefault?.();
         });
-    }
-
-    //
-    protected importFromTemplate(htmlCode: string) {
-        const parser = new DOMParser();
-        const dom = parser.parseFromString(htmlCode, "text/html");
-        this.nodes = Array.from((dom.querySelector("template") as HTMLTemplateElement)?.content?.childNodes) as HTMLElement[];
-    }
-
-    //
-    protected render() {
-        return html`${this.nodes}`;
-    }
-
-    //
-    public connectedCallback() {
-        super.connectedCallback();
-    }
-
-    //
-    protected createRenderRoot() {
-        const root = super.createRenderRoot();
-        const self = this as unknown as HTMLElement;
-
-        //
-        requestAnimationFrame(()=>{
-            if (!self.querySelector("input") && self.querySelector("ui-button-row[data-value], ui-select-row[data-value]")) {
-                self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" hidden data-alpha="0" part="ui-radio" placeholder=" " label=" " type="text" value="" name="${(self?.parentNode as HTMLElement)?.dataset?.name || self?.dataset?.name || "dummy-radio"}">`);
-            }
-        });
-
-
-        return root;
     }
 }
 
