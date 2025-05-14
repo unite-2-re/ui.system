@@ -7,7 +7,9 @@ import htmlCode from "@temp/ov-statusbar.html?raw";
 // @ts-ignore
 import styles from "@scss/design/ov-statusbar.scss?inline";
 import ThemedElement from "../shared/LitElementTheme";
-import { H, property } from "/externals/lib/blue.js";
+
+// @ts-ignore /* @vite-ignore */
+import { H, property, defineElement } from "/externals/lib/blue.js";
 
 // @ts-ignore
 @defineElement('ui-statusbar')
@@ -21,8 +23,8 @@ export class UIStatusBar extends ThemedElement {
     };
 
     //
-    public styles = ()=>styles;
-    public render() { return H(htmlCode); }
+    public styles = () => styles;
+    public render = () => H(htmlCode);
 
     //
     constructor() { super(); }
@@ -33,8 +35,8 @@ export class UIStatusBar extends ThemedElement {
     }
 
     //
-    protected createRenderRoot() {
-        const root = super.createRenderRoot();
+    protected onRender() {
+        const root = this.shadowRoot;
         if (root) { connect?.(root); this.statusSW = true; }
         root.addEventListener("click", onInteration);
         return root;

@@ -16,7 +16,7 @@ import { E, H, property, defineElement } from "/externals/lib/blue.js";
 // @ts-ignore
 @defineElement('ui-switch')
 export class UISwitch extends ThemedElement {
-    @property({source: "value", from: "input", name: "valueAsNumber"}) value;
+    @property({source: "valueAsNumber", from: "input" }) value;
     @property({source: "checked", from: "input"}) checked;
 
     //
@@ -26,8 +26,8 @@ export class UISwitch extends ThemedElement {
         <${"div.ui-fill-inactive"} inert="" data-alpha="0"></div>
         <${"div.ui-fill-active"} inert="" data-alpha="0"></div>
     </div>
-    <${"div.ui-thumb"} part="ui-thumb" dataset=${{scheme: "solid", alpha: 1, highlight: 3, highlightHover: 0, highlightOp: "min", chroma: 0.1}}><slot name="icon"/></div>
-    <${"div.ui-inputs"} inert="" data-alpha="0"><slot/></div>
+    <${"div.ui-thumb"} part="ui-thumb" dataset=${{scheme: "solid", alpha: 1, highlight: 3, highlightHover: 0, highlightOp: "min", chroma: 0.1}}><slot name="icon"></slot></div>
+    <${"div.ui-inputs"} inert="" data-alpha="0"><slot></slot></div>
 </label>`;
 
     //

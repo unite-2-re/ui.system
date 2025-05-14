@@ -63,7 +63,7 @@
             display: inline grid;
             grid-template-columns:
                 [down] minmax(2rem, max-content)
-                [content] minmax(0px, 1fr)
+                [cent] minmax(0px, 1fr)
                 [up] minmax(2rem, max-content);
             grid-template-rows: minmax(0px, 1fr);
         }
@@ -84,9 +84,9 @@
         }
 
         //
-        & > .ui-content   { grid-column: content; }
-        & > .ui-step-up   { grid-column: up; }
-        & > .ui-step-down { grid-column: down; }
+        & .ui-content   { grid-column: cent !important; }
+        & .ui-step-up   { grid-column: up !important; }
+        & .ui-step-down { grid-column: down !important; }
 
         //
         & :where(.ui-step-up, .ui-step-down)

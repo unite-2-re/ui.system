@@ -1,0 +1,110 @@
+@layer ui-task {
+  @media screen {
+    :host, :where(*), ::slotted(*) {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-tap-highlight-color: transparent;
+      user-drag: none;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+              user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      touch-action: none;
+      /* */
+      box-sizing: border-box;
+      pointer-events: none;
+    }
+    :host(ui-task) :where(span), :host(ui-task) ::slotted(span) {
+      background-color: transparent;
+    }
+    :host(ui-task) {
+      border-block-start: solid 0.25rem transparent;
+      pointer-events: auto;
+      padding: 0.6666rem;
+      cursor: pointer;
+      box-sizing: border-box;
+      min-inline-size: 3.5rem;
+      inline-size: -moz-max-content;
+      inline-size: max-content;
+      block-size: 100%;
+      display: flex;
+      flex-direction: row;
+      place-content: center;
+      place-items: center;
+      overflow: hidden;
+      z-index: calc(9999 + var(--z-index, 0));
+    }
+    :host(ui-task)::slotted(*) {
+      display: none;
+    }
+    :host(ui-task)::slotted(ui-icon:first-child), :host(ui-task) ui-icon {
+      inline-size: -moz-max-content;
+      inline-size: max-content;
+      block-size: 100%;
+      box-sizing: border-box;
+      aspect-ratio: 1/1;
+      pointer-events: none;
+      interactivity: inert;
+      translate: 0px -0.125rem;
+    }
+    :host(ui-task:not(.ui-active)) {
+      opacity: 0.5;
+      --opacity: 0.5 !important;
+    }
+    :host-context([data-device-type=desktop]) span {
+      display: none;
+    }
+    :host-context([data-device-type=desktop]):host(.ui-focus) {
+      --tm-bg-alpha: 1;
+      border-block-start: solid 0.25rem oklch(from var(--rv-color, currentColor) l c h/1) !important;
+    }
+    :host-context([data-device-type=mobile]) {
+      display: inline grid;
+      grid-template-columns: minmax(4rem, max-content) minmax(0px, 1fr);
+      grid-template-rows: minmax(0px, 1fr);
+      max-block-size: 4rem;
+      inline-size: 100%;
+      overflow: hidden;
+    }
+    :host-context([data-device-type=mobile]) ::slotted(ui-icon:first-child), :host-context([data-device-type=mobile]) ui-icon {
+      padding: 0.5rem;
+      grid-column: 1/1 span;
+      grid-row: 1/1 span;
+    }
+    :host-context([data-device-type=mobile]) span {
+      flex-direction: row;
+      place-content: center;
+      place-items: center;
+      translate: 0px -0.125rem;
+      padding-inline-start: 0rem;
+      display: inline flow;
+      text-align: start;
+      justify-self: start;
+      justify-content: start;
+      min-block-size: -moz-max-content;
+      min-block-size: max-content;
+      block-size: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-inline-size: 100%;
+      inline-size: -moz-max-content;
+      inline-size: max-content;
+      grid-column: 2/2 span;
+      grid-row: 1/1 span;
+      line-height: 1.4;
+    }
+    :host-context([data-device-type=mobile]):host(.ui-focus) {
+      --tm-bg-alpha: 1;
+    }
+    :host-context([data-device-type=mobile]):host(.ui-focus) {
+      background-color: oklch(from var(--rv-color, currentColor) l c h/1) !important;
+    }
+    :host-context([data-device-type=mobile]):host(.ui-focus), :host-context([data-device-type=mobile]):host(.ui-focus) :where(*) {
+      color: oklch(from var(--rv-bg-color, currentColor) l c h/1) !important;
+    }
+    :host-context([data-device-type=mobile]):host(.ui-focus) :where(ui-icon) {
+      --rv-color: oklch(from var(--rv-bg-color, currentColor) l c h / 1) !important;
+    }
+  }
+}/*# sourceMappingURL=ov-taskitem.css.map */

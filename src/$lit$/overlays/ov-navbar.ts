@@ -6,6 +6,8 @@ import initTaskManager from "@service/tasks/manager";
 
 // @ts-ignore
 import styles from "@scss/design/ov-navbar.scss?inline";
+
+// @ts-ignore /* @vite-ignore */
 import { H, property, defineElement } from "/externals/lib/blue.js";
 
 // @ts-ignore
@@ -27,9 +29,9 @@ export class UINavBar extends ThemedElement {
     // also "display" may be "contents"
     public styles = () => styles;
     public render = () => H`
-        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-menu-button ui-anchor"  part="ui-menu-button"  data-popup="app-menu"><ui-icon inert icon="layout-grid"></ui-icon></button>
-        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-back-button ui-anchor"  part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-right"></ui-icon></button>
-        <button data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" class="ui-title-handle ui-anchor" part="ui-title-handle" @contextmenu=${this.menuAction.bind(this)} @click=${this.menuAction.bind(this)}><span>${this.label}</span><ui-icon inert icon=${this.icon||""}></ui-icon></button>`;
+        <${"button.ui-menu-button.ui-anchor"}  data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" part="ui-menu-button"  data-popup="app-menu"><ui-icon inert icon="layout-grid"></ui-icon></button>
+        <${"button.ui-back-button.ui-anchor"}  data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-right"></ui-icon></button>
+        <${"button.ui-title-handle.ui-anchor"} data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" part="ui-title-handle" @contextmenu=${this.menuAction.bind(this)} @click=${this.menuAction.bind(this)}><span>${this.label}</span><ui-icon inert icon=${this.icon||""}></ui-icon></button>`;
 
     //
     protected onInitialize(): this {
@@ -38,7 +40,6 @@ export class UINavBar extends ThemedElement {
         self.classList?.add?.("ui-navbar");
         self.style.setProperty("z-index", "9999", "important");
         self.style.setProperty("background-color", "transparent", "important");
-        this.adaptiveTheme();
         return this;
     }
 
@@ -54,14 +55,17 @@ export class UINavBar extends ThemedElement {
             const factor = document.body.matches(":has(ui-frame:not([data-hidden]))");
             const newScheme = factor ? "solid" : "base";
             if (newScheme != self.getAttribute("data-scheme")) { self.setAttribute("data-scheme", newScheme); };
-            (self as any).shadowRoot.querySelector(".ui-title-handle").dataset.visible = "";
+            const title = (self as any).shadowRoot.querySelector(".ui-title-handle");
+            if (title) { title.dataset.visible = ""; };
         }
 
         //
         const showLabel = (ev?)=>{
             const onFocus = this.taskManager.getOnFocus(false);
-            (self as any).shadowRoot.querySelector(".ui-title-handle span").textContent = onFocus?.desc?.label || "";
-            (self as any).shadowRoot.querySelector(".ui-title-handle ui-icon").icon = onFocus?.desc?.icon || "menu";
+            const a = (self as any).shadowRoot.querySelector(".ui-title-handle span");
+            const b = (self as any).shadowRoot.querySelector(".ui-title-handle ui-icon");
+            if (a) a.textContent = onFocus?.desc?.label || "";
+            if (b) b.icon = onFocus?.desc?.icon || "menu";
         }
 
         //
@@ -82,7 +86,7 @@ export class UINavBar extends ThemedElement {
     }
 
     //
-    protected createRenderRoot() { const root = super.createRenderRoot(); root.addEventListener("click", onInteration); return root; }
+    protected onRender() { const root = this.shadowRoot; root.addEventListener("click", onInteration); this.adaptiveTheme(); return root; }
     protected backAction(ev) { history.back?.(); }
     protected menuAction(ev) {
         ev?.preventDefault?.();

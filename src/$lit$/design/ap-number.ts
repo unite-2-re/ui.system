@@ -15,8 +15,7 @@ import { defineElement, E, H, property } from "/externals/lib/blue.js";
 // @ts-ignore
 @defineElement('ui-number')
 export class UINumber extends ThemedElement {
-    @property({source: "value", from: "input", name: "valueAsNumber"}) value;
-    @property({source: "checked", from: "input"}) checked;
+    @property({source: "valueAsNumber", from: "input" }) value;
 
     //
     public styles = ()=>styles;
@@ -35,9 +34,9 @@ export class UINumber extends ThemedElement {
         };
         const ds = {alpha: 1, highlight: 2, chroma: 0.1, scheme: "inverse", highlightHover: 4};
         return H`
-            <${"button.ui-step-down"} type="button" dataset=${ds} @click=${down}><ui-icon icon="chevron-right"/></button>
-            <${"button.ui-step-up"} type="button" dataset=${ds} @click=${up}><ui-icon icon="chevron-left"/></button>
-            <${"label.ui-content"} data-alpha="0"><slot/></button>`;
+<${"button.ui-step-up"}   type="button" dataset=${ds} on:click=${up}><ui-icon icon="chevron-right"></ui-icon></button>
+<${"button.ui-step-down"} type="button" dataset=${ds} on:click=${down}><ui-icon icon="chevron-left"></ui-icon></button>
+<${"label.ui-content"} data-alpha="0"><slot></slot></label>`;
     }
 
     //

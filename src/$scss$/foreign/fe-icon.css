@@ -1,0 +1,89 @@
+@layer ui-icon {
+  @property --mask-image {
+    syntax: "<image> | <url>";
+    initial-value: none;
+    inherits: true;
+  }
+  /* */
+  :host {
+    /* */
+    /* temporary workaround */
+    /* */
+    /* */
+    /* */
+  }
+  :host, :host :where(*), :host ::slotted(*) {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    box-sizing: border-box;
+    touch-action: none;
+    interactivity: inert;
+    pointer-events: none;
+    touch-action: none;
+  }
+  :host ::slotted(*) {
+    display: none !important;
+    content-visibility: hidden !important;
+    opacity: 0 !important;
+  }
+  :host {
+    --rv-color: inherit;
+    isolation: isolate;
+    background-color: transparent;
+    color: transparent;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    overflow: visible;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    inline-size: -moz-max-content;
+    inline-size: max-content;
+    block-size: 100%;
+    aspect-ratio: 1/1;
+    transform: translateZ(0);
+    content-visibility: auto;
+  }
+  :host .fill {
+    -webkit-mask-size: 100%;
+            mask-size: 100%;
+    -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+            mask-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+    -webkit-mask-origin: content-box;
+            mask-origin: content-box;
+    -webkit-mask-clip: content-box;
+            mask-clip: content-box;
+    mask-mode: alpha;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+            mask-position: center;
+    content-visibility: auto;
+    transform: translateZ(0);
+    block-size: 100%;
+    inline-size: -moz-max-content;
+    inline-size: max-content;
+    max-inline-size: 100%;
+    aspect-ratio: 1/1;
+    overflow: visible;
+    color: var(--rv-color, currentColor);
+    background-color: var(--rv-color, currentColor);
+  }
+  :host :where(style, script, link) {
+    display: none !important;
+    content-visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  :host(ui-icon:not([icon])),
+  :host(ui-icon[icon=""]) {
+    visibility: hidden !important;
+    content-visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}/*# sourceMappingURL=fe-icon.css.map */

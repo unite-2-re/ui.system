@@ -15,7 +15,9 @@ export class UIShaped extends BLitElement() {
 
     //
     public styles = ()=>styles;
-    public render = (w)=>H`<slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" part="icon" icon=${w?.deref()?.icon||""}>`
+    public render = (w)=>{
+        return H`<slot></slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" part="icon" icon=${w.deref().icon||""}/>`
+    }
     public initialAttributes = {
         "data-transparent": "",
         "data-alpha": 0,

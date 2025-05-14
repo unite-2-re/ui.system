@@ -13,7 +13,9 @@ import htmlCode from "@temp/ov-window.html?raw";
 
 // @ts-ignore
 import styles from "@scss/design/ov-window.scss?inline";
-import { defineElement, H } from "/externals/lib/blue";
+
+// @ts-ignore /* @vite-ignore */
+import { defineElement, H } from "/externals/lib/blue.js";
 
 // @ts-ignore
 @defineElement('ui-frame')
@@ -34,8 +36,8 @@ export class UIFrame extends ThemedElement {
     }
 
     //
-    public render() { return H(htmlCode); };
-    public styles = ()=>styles;
+    public render = ()=> H(htmlCode);
+    public styles = ()=> styles;
     public onInitialize() {
         super.onInitialize?.();
         const self = this as unknown as HTMLElement;
@@ -75,8 +77,8 @@ export class UIFrame extends ThemedElement {
     }
 
     //
-    protected createRenderRoot() {
-        const root = super.createRenderRoot();
+    protected onRender() {
+        const root = this.shadowRoot;
         const self = this as unknown as HTMLElement;
         root.addEventListener("click", (ev)=>{
             if (ev.target.matches(".ui-btn-close")) {

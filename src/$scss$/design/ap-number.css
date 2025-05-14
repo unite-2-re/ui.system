@@ -1,0 +1,120 @@
+@layer ui-number {
+  :host(ui-number), :host(ui-number) :where(*), :host(ui-number) ::slotted(*) {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+    user-drag: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    touch-action: none;
+    /* */
+    box-sizing: border-box;
+    pointer-events: none;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+    font-smooth: 0px;
+    font-smooth: never;
+    shape-rendering: crispEdges;
+    shape-rendering: optimizeSpeed;
+    image-rendering: auto;
+    image-rendering: crisp-edges;
+    image-rendering: optimizeSpeed;
+    image-rendering: pixelated;
+    direction: ltr !important;
+    font-family: "Open Sans", "Ubuntu Sans", Ubuntu, Segoe, "Segoe UI", source-sans-pro, "Source Sans 3", "Gill Sans Nova", Candara, sans-serif, ui-sans-serif, system-ui;
+    font-size: 0.8rem;
+  }
+  :host(ui-number), :host(ui-number) ::where(*) {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    touch-action: none;
+  }
+  :host(ui-number) {
+    inline-size: 7.5rem;
+    min-inline-size: -moz-max-content;
+    min-inline-size: max-content;
+    box-sizing: border-box;
+    border-radius: 0.45rem;
+    block-size: 2rem;
+    overflow: hidden;
+    cursor: default;
+    display: inline grid;
+    grid-template-columns: [down] minmax(2rem, max-content) [content] minmax(0px, 1fr) [up] minmax(2rem, max-content);
+    grid-template-rows: minmax(0px, 1fr);
+  }
+  :host(ui-number) > :where(div, button, label) {
+    box-sizing: border-box;
+    block-size: 100%;
+    inline-size: 100%;
+    grid-row: 1/1 span;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    pointer-events: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    touch-action: none;
+  }
+  :host(ui-number) > .ui-content {
+    grid-column: content;
+  }
+  :host(ui-number) > .ui-step-up {
+    grid-column: up;
+  }
+  :host(ui-number) > .ui-step-down {
+    grid-column: down;
+  }
+  :host(ui-number) :where(.ui-step-up, .ui-step-down) {
+    aspect-ratio: 1/1;
+    pointer-events: auto;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0.4rem;
+  }
+  :host(ui-number) :where(.ui-step-up, .ui-step-down) ::slotted(*) {
+    inline-size: -moz-max-content;
+    inline-size: max-content;
+    block-size: 100%;
+    aspect-ratio: 1/1;
+    pointer-events: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    touch-action: none;
+  }
+  :host(ui-number) :where(button, label), :host(ui-number) ::slotted(input) {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
+    outline: none 0px transparent;
+    border: none 0px transparent;
+    margin: 0;
+    overflow: hidden;
+  }
+  :host(ui-number) ::slotted(input) {
+    text-align: center;
+    pointer-events: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    touch-action: none;
+    background-color: transparent;
+    -moz-appearance: textfield;
+  }
+  :host(ui-number) ::slotted(input)::-webkit-outer-spin-button, :host(ui-number) ::slotted(input)::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    pointer-events: none;
+    -webkit-user-select: none;
+            user-select: none;
+    touch-action: none;
+  }
+}/*# sourceMappingURL=ap-number.css.map */

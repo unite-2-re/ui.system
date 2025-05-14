@@ -18,7 +18,7 @@ import { defineElement, E, H, property } from "/externals/lib/blue.js";
 // @ts-ignore
 @defineElement('ui-slider')
 export class UISlider extends ThemedElement {
-    @property({source: "value", from: "input", name: "valueAsNumber"}) value;
+    @property({source: "valueAsNumber", from: "input" }) value;
     @property({source: "checked", from: "input"}) checked;
 
     //
@@ -28,8 +28,8 @@ export class UISlider extends ThemedElement {
         <${"div.ui-fill-inactive"} inert="" dataset=${{alpha: 0.5, scheme: "solid"}}></div>
         <${"div.ui-fill-active"} inert="" dataset=${{alpha: 0}}></div>
     </div>
-    <${"div.ui-thumb"} part="ui-thumb" dataset=${{scheme: "solid", alpha: 1, highlight: 6, highlightHover: 0, highlightOp: "min", chroma: 0.4}}><slot name="icon"/></div>
-    <${"div.ui-inputs"} part="ui-inputs"><slot/></div>
+    <${"div.ui-thumb"} part="ui-thumb" dataset=${{scheme: "solid", alpha: 1, highlight: 6, highlightHover: 0, highlightOp: "min", chroma: 0.4}}><slot name="icon"></slot></div>
+    <${"div.ui-inputs"} part="ui-inputs"><slot></slot></div>
 </label>`
 
     //

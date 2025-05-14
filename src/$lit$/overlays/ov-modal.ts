@@ -5,7 +5,7 @@ import { ThemedElement } from "@mods/shared/LitElementTheme";
 import { placeWithElement } from "@service/layout/ps-anchor";
 
 // @ts-ignore /* @vite-ignore */
-import { E, property } from "/externals/lib/blue.js";
+import { E, property, defineElement } from "/externals/lib/blue.js";
 
 // @ts-ignore
 import styles from "@scss/design/ov-modal.scss?inline";
@@ -14,7 +14,7 @@ import styles from "@scss/design/ov-modal.scss?inline";
 import {importCdn} from "/externals/modules/cdnImport.mjs";
 
 // @ts-ignore
-@customElement('ui-modal')
+@defineElement('ui-modal')
 export class UIModal extends ThemedElement {
     public boundElement?: WeakRef<HTMLElement> | null;
     @property({ source: "attr" }) public type?: string;

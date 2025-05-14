@@ -8,6 +8,8 @@ import initTaskManager from "@service/tasks/manager";
 
 // @ts-ignore
 import styles from "@scss/design/ov-taskitem.scss?inline";
+
+// @ts-ignore /* @vite-ignore */
 import { defineElement, H, property } from "/externals/lib/blue.js";
 
 // @ts-ignore

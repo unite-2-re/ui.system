@@ -12,8 +12,12 @@ import htmlCode from "@temp/ov-taskbar.html?raw";
 
 // @ts-ignore
 import styles from "@scss/design/ov-taskbar.scss?inline";
-import { E, H, property } from "/externals/lib/blue.ts";
-import { matchMediaRef } from "/externals/lib/object.ts";
+
+// @ts-ignore /* @vite-ignore */
+import { E, H, property, defineElement } from "/externals/lib/blue.js";
+
+// @ts-ignore /* @vite-ignore */
+import { matchMediaRef } from "/externals/lib/object.js";
 
 //
 const whenFocus = ()=>{
@@ -48,7 +52,6 @@ export class UITaskBar extends ThemedElement {
         E(this, { dataset: { hidden: matchMediaRef("(not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape))))") } })
         this?.taskManager?.on?.("focus", whenFocus);
         this?.taskManager?.on?.("activate", whenFocus);
-        this.importFromTemplate(htmlCode);
         this.adaptiveTheme();
 
         //
@@ -79,8 +82,8 @@ export class UITaskBar extends ThemedElement {
     }
 
     //
-    protected createRenderRoot() {
-        const root = super.createRenderRoot();
+    protected onRender() {
+        const root = this.shadowRoot;
         if (root) { connect?.(root); this.statusSW = true; }
         root.addEventListener("click", (ev)=>{
             onInteration(ev);

@@ -1,0 +1,308 @@
+@layer ui-taskbar {
+  @media screen {
+    @property --data-taskbar-shift {
+      inherits: true;
+      syntax: "<length-percentage>";
+      initial-value: 0px;
+    }
+    :host, :where(*), ::slotted(*) {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-tap-highlight-color: transparent;
+      user-drag: none;
+      /* */
+      -webkit-user-select: none;
+         -moz-user-select: none;
+              user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      /* */
+      box-sizing: border-box;
+      will-change: contents;
+      pointer-events: none;
+      touch-action: none;
+      /* */
+      font-size: 0.85rem;
+    }
+    :host(ui-taskbar) :where(button) {
+      border: none 0px transparent;
+    }
+    :host(ui-taskbar) :where(span), :host(ui-taskbar) ::slotted(span) {
+      background-color: transparent;
+    }
+    :host(ui-taskbar) {
+      --data-taskbar-shift: 0px;
+      display: none;
+      block-size: var(--taskbar-size, 3rem);
+      pointer-events: none;
+      font-weight: bold;
+      grid-template-rows: minmax(0px, 1fr);
+      grid-template-columns: [app-menu] minmax(var(--taskbar-size, 3rem), max-content) [task-bar] minmax(0px, max-content) [ui-status] minmax(4rem, max-content);
+      inline-size: 100%;
+      position: fixed !important;
+      inset: 0px;
+      inset-block-start: auto;
+      z-index: calc(9999 + var(--z-index, 0));
+      box-sizing: border-box;
+      transition-property: --data-taskbar-shift;
+      transition-duration: 0.25s;
+      transition-timing-function: linear;
+      transition-delay: 0.2s;
+      filter: drop-shadow(0px 0px 0.6rem rgba(0, 0, 0, 0.2509803922)) !important;
+      container-type: size;
+      contain: content;
+      place-content: center;
+      place-items: center;
+      justify-content: space-between;
+      padding: 0.1rem;
+      background-color: transparent !important;
+      --tm-bg-alpha: 1;
+    }
+    :host(ui-taskbar) > :where(*) {
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+    :host(ui-taskbar) :where(*), :host(ui-taskbar) ::slotted(*) {
+      --tm-bg-alpha: 0;
+      border-radius: 0.5rem;
+    }
+    :host(ui-taskbar) ::slotted(ui-task) {
+      border-radius: 0rem;
+    }
+    :host(ui-taskbar) ::slotted(ui-task), :host(ui-taskbar) ui-task {
+      pointer-events: auto;
+    }
+    :host(ui-taskbar) ::slotted(ui-icon), :host(ui-taskbar) ui-icon {
+      inline-size: -moz-max-content;
+      inline-size: max-content;
+      block-size: 100%;
+      box-sizing: border-box;
+      aspect-ratio: 1/1;
+      position: relative;
+    }
+    :host(ui-taskbar) a {
+      display: inline;
+      pointer-events: auto;
+      inline-size: -moz-max-content;
+      inline-size: max-content;
+      block-size: -moz-max-content;
+      block-size: max-content;
+      place-self: center;
+      place-content: center;
+      place-items: center;
+      box-sizing: border-box;
+    }
+    :host(ui-taskbar):active {
+      transition-delay: 0s;
+    }
+    :host(ui-taskbar) > :where(*) {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+    :host(ui-taskbar) .ui-task-bar {
+      place-content: center;
+      place-items: center;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+      gap: 0rem;
+      pointer-events: none;
+      grid-column: task-bar;
+      box-sizing: border-box;
+      inline-size: -moz-max-content;
+      inline-size: max-content;
+    }
+    :host(ui-taskbar) .ui-status {
+      grid-column: ui-status;
+    }
+    :host(ui-taskbar) .ui-app-menu {
+      grid-column: app-menu;
+    }
+    :host(ui-taskbar) :where(.ui-app-menu, .ui-status) {
+      gap: 0rem;
+      padding: 0rem;
+      padding-block: 0rem;
+      inline-size: 100%;
+      block-size: 100%;
+      display: inline flex;
+      flex-direction: row;
+      box-sizing: border-box;
+      padding: 0rem;
+      cursor: pointer;
+      pointer-events: none;
+    }
+    :host(ui-taskbar) :where(.ui-app-menu, .ui-status) ::slotted(ui-icon), :host(ui-taskbar) :where(.ui-app-menu, .ui-status) ui-icon {
+      aspect-ratio: 1/1;
+      inline-size: -moz-max-content;
+      inline-size: max-content;
+      block-size: 100%;
+      box-sizing: border-box;
+      position: relative;
+      padding: 0.125rem;
+      --tm-chroma: 0;
+    }
+    :host(ui-taskbar) :where(.ui-app-menu, .ui-status) > * {
+      inline-size: 2rem;
+      block-size: 100%;
+      padding: 0.125rem;
+      box-sizing: border-box;
+      border-radius: 0.25rem;
+      cursor: pointer;
+    }
+    :host(ui-taskbar) :where(.ui-app-menu, .ui-status) .button {
+      aspect-ratio: 5/4;
+      pointer-events: auto;
+      border-radius: 0rem;
+      block-size: 100%;
+      inline-size: -moz-max-content;
+      inline-size: max-content;
+      box-sizing: border-box;
+      border: none 0px transparent;
+      outline: none 0px transparent;
+      padding: 0.75rem;
+      cursor: pointer;
+      place-self: center;
+      place-content: center;
+      place-items: center;
+      display: inline flex;
+    }
+    :host(ui-taskbar) :where(.ui-app-menu, .ui-status) .ui-indicator, :host(ui-taskbar) :where(.ui-app-menu, .ui-status) .ui-indicator a {
+      aspect-ratio: 1/1;
+      inline-size: -moz-max-content;
+      inline-size: max-content;
+      block-size: 100%;
+      place-self: center;
+      place-content: center;
+      place-items: center;
+      box-sizing: border-box;
+      pointer-events: auto;
+      display: inline flex;
+      flex-direction: row;
+    }
+    :host(ui-taskbar) :where(.ui-app-menu, .ui-status) .ui-indicator {
+      padding: 0.6666rem;
+      min-inline-size: 2rem;
+      pointer-events: auto;
+      max-block-size: none;
+      max-inline-size: none;
+      contain: none;
+      border-radius: 0px;
+    }
+    :host(ui-taskbar) :where(.ui-app-menu, .ui-status) .ui-indicator a {
+      display: inline;
+    }
+    :host(ui-taskbar) :where(.ui-app-menu, .ui-status) .ui-time {
+      aspect-ratio: auto;
+      place-self: center;
+      place-content: center;
+      place-items: center;
+      display: inline flex;
+      padding-inline: 1rem;
+      flex-direction: row;
+      box-sizing: border-box;
+      block-size: 100%;
+      line-height: 0;
+    }
+    :host(ui-taskbar) :where(.ui-app-menu, .ui-status) .ui-time span {
+      display: inline;
+      block-size: -moz-max-content;
+      block-size: max-content;
+      line-height: 0;
+    }
+    ui-taskbar[data-hidden], ui-taskbar :host([data-hidden]) {
+      display: none !important;
+    }
+    :host-context(body:has(.ui-app-frame:not([data-hidden]))) {
+      --data-taskbar-shift: 2.5rem;
+    }
+    :host-context(body:has(.ui-app-frame:not([data-hidden]))):host(:hover, :active) {
+      --data-taskbar-shift: 0px;
+    }
+    :host-context(body:has(.ui-app-frame:not([data-hidden]))):host(:not(:hover, :active)) {
+      --data-taskbar-shift: 2.5rem;
+    }
+    :host-context(body:not(:has(.ui-app-frame:not([data-hidden])))) {
+      --tm-bg-alpha: 0;
+      --tm-chroma: 0;
+      --hl-co: 0;
+    }
+    :host-context(body:not(:has(.ui-app-frame:not([data-hidden])))) {
+      box-shadow: none;
+      pointer-events: none;
+    }
+    :host-context([data-device-type=desktop]) {
+      display: inline grid;
+    }
+    :host-context([data-device-type=mobile]) {
+      /*.ui-app-menu {
+          place-content: center;
+          place-self: center;
+          place-items: center;
+          grid-row: 2 / 2 span;
+          grid-column: 1 / -1;
+          max-block-size: 3rem;
+          display: flex;
+          flex-direction: row;
+          overflow: hidden;
+          pointer-events: auto !important;
+
+          //
+          & > * {
+              flex-grow: 0;
+              flex-basis: auto;
+              max-block-size: 3rem;
+              pointer-events: auto;
+          }
+
+          & .ui-github {
+              order: 2;
+              visibility: hidden;
+              pointer-events: none;
+              & * { pointer-events: none; }
+          }
+
+          & .app-menu {
+              order: 1;
+          }
+
+          & [data-action="fullscreen"] {
+              order: 0;
+          }
+      }*/
+    }
+    :host-context([data-device-type=mobile]) {
+      flex-direction: column;
+      inline-size: 100%;
+      block-size: 100%;
+      padding: 0.3rem;
+      padding-block-start: 2.5rem;
+      padding-block-end: 0.2rem;
+      display: inline grid;
+      grid-template-rows: minmax(0px, 1fr) minmax(0px, 3rem);
+      grid-template-columns: minmax(0px, 1fr);
+      pointer-events: auto;
+      -webkit-backdrop-filter: blur(1rem) !important;
+              backdrop-filter: blur(1rem) !important;
+      grid-auto-flow: column;
+      gap: 0.5rem;
+    }
+    :host-context([data-device-type=mobile]) .ui-status {
+      display: none !important;
+    }
+    :host-context([data-device-type=mobile]) .ui-app-menu {
+      display: none !important;
+    }
+    :host-context([data-device-type=mobile]) .ui-task-bar {
+      grid-row: 1/1 span;
+      pointer-events: auto;
+      grid-column: 1/-1;
+      inline-size: 100%;
+      block-size: 100%;
+      flex-direction: column;
+      justify-content: start;
+      gap: 0px;
+    }
+    :host-context([data-device-type=mobile]) .ui-task-bar:has(:not(:has-slotted)) {
+      display: none !important;
+    }
+  }
+}/*# sourceMappingURL=ov-taskbar.css.map */

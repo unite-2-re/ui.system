@@ -1,11 +1,11 @@
 /// <reference types="lit" />
 // Type: standalone
 
-// @ts-ignore
-import { BLitElement, property } from "/externals/lib/blue";
+// @ts-ignore /* @vite-ignore */
+import { BLitElement, defineElement } from "/externals/lib/blue.js";
 
 // @ts-ignore
-@customElement('ui-button-base')
+@defineElement('ui-button-base')
 export class UIButtonBase extends BLitElement() {
     $parentNode?: any;
     public onInitialize() {

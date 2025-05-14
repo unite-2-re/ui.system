@@ -3,6 +3,8 @@ import LitElementTheme from "@mods/shared/LitElementTheme";
 
 // @ts-ignore
 import styles from "@scss/design/ov-tooltip.scss?inline";
+
+// @ts-ignore /* @vite-ignore */
 import { defineElement, property } from "/externals/lib/blue.js";
 
 // @ts-ignore
