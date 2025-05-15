@@ -50,11 +50,10 @@ export class UITaskItem extends ThemedElement {
         super.onInitialize?.();
         const self = this as unknown as HTMLElement;
         self.classList?.add?.("ui-task");
-        this.taskManager ??= (self.parentNode as any).taskManager ?? this.taskManager;
+        this.taskManager ??= (self.parentNode as any)?.taskManager ?? this.taskManager;
         self.addEventListener("click", () => { focusTask(this.taskManager, self, true); this.updateState(); });
         addEventListener("popstate"  , () => { this.updateState(); });
         addEventListener("hashchange", () => { this.updateState(); });
-        setAttributes(self, {"data-id": (this.taskId || self.dataset.id || "")?.replace?.("#","")});
         taskManage(this, this.taskManager);
         this.updateState(); return this;
     }
