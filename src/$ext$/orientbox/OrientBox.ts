@@ -12,7 +12,6 @@ import {importCdn} from "/externals/modules/cdnImport.mjs";
 export {importCdn};
 
 //
-export const elementPointerMap = new WeakMap<any>()
 export class UIOrientBox extends HTMLElement {
     static observedAttributes = ["orient", "zoom"];
     public size: [number, number] = [0, 0];
