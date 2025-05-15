@@ -1,6 +1,6 @@
 /// <reference types="lit" />
-import ThemedElement from "@mods/shared/LitElementTheme";
-import { setIdleInterval } from "@service/Utils";
+import ThemedElement from "@blit/shared/ThemedElement";
+import { setIdleInterval } from "@/$ext$/shared/Utils";
 import { onInteration } from "@service/tasks/opening";
 import initTaskManager from "@service/tasks/manager";
 

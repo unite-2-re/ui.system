@@ -1,7 +1,7 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import { ThemedElement } from "@mods/shared/LitElementTheme";
+import { ThemedElement } from "@blit/shared/ThemedElement";
 import { placeWithElement } from "@service/layout/ps-anchor";
 
 // @ts-ignore /* @vite-ignore */

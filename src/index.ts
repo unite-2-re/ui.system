@@ -14,7 +14,7 @@ export * from "@service/tasks/opening";
 export * from "@service/tasks/binding";
 
 //
-export * from "@mods/index";
+export * from "@blit/index";
 export * from "@scss/index";
 import init from "@scss/index";
 export default init;

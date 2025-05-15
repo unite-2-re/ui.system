@@ -1,3 +1,0 @@
-# BLit (BLU.E + Lit) Web Components
-
-Or UI components V3...

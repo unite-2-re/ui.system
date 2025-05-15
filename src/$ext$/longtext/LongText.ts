@@ -1,9 +1,9 @@
 //
-import { importCdn, makeInput, styles } from "../../../../longtext.wcomp/src/$core$/Utils.js";
+import { importCdn, makeInput, styles } from "/externals/lib/dom.ts";
 
 // @ts-ignore
 import html from "./LongText.html?raw";
-import { measureText } from "../../$service$/Measure.js";
+import { measureText } from "../shared/Measure.js";
 
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));

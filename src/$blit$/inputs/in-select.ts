@@ -1,5 +1,5 @@
 /// <reference types="lit" />
-import { setAttributes } from "@service/Utils";
+import { setAttributes } from "@/$ext$/shared/Utils";
 import { onItemSelect } from "@service/behaviour/bh-select";
 
 // @ts-ignore /* @vite-ignore */

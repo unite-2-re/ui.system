@@ -1,11 +1,11 @@
 /// <reference types="lit" />
-import ThemedElement from "@mods/shared/LitElementTheme";
+import ThemedElement from "@blit/shared/ThemedElement";
 
 //
 import initTaskManager from "@service/tasks/manager";
 import { connect } from "@service/behaviour/bh-status";
 import { onInteration } from "@service/tasks/opening";
-import { setAttributes, setIdleInterval } from "@service/Utils";
+import { setAttributes, setIdleInterval } from "@/$ext$/shared/Utils";
 
 // @ts-ignore
 import htmlCode from "@temp/ov-taskbar.html?raw";

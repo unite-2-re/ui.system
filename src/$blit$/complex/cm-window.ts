@@ -1,7 +1,7 @@
 /// <reference types="lit" />
 
 // @ts-ignore
-import ThemedElement from "@mods/shared/LitElementTheme";
+import ThemedElement from "@blit/shared/ThemedElement";
 import initTaskManager from "@service/tasks/manager";
 import { makeControl } from "@service/layout/ps-draggable.js";
 import { focusTask, onTasking } from "@service/tasks/binding";

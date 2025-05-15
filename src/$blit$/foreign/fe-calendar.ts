@@ -4,7 +4,7 @@
 import { Calendar } from 'vanilla-calendar-pro';
 
 // @ts-ignore
-import ThemedElement from "@mods/shared/LitElementTheme";
+import ThemedElement from "@blit/shared/ThemedElement";
 
 // @ts-ignore
 import styles from "@scss/foreign/fe-calendar.scss?inline";

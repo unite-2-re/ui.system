@@ -3,7 +3,7 @@
 // Behaviour: switch (combined)
 
 // @ts-ignore
-import ThemedElement from "@mods/shared/LitElementTheme";
+import ThemedElement from "@blit/shared/ThemedElement";
 
 //
 import { doIndication } from "@service/behaviour/bh-indication";

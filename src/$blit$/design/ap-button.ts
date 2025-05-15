@@ -12,8 +12,8 @@ import { conditional } from "/externals/lib/object.js";
 import { openDropMenu } from "@service/functional/fn-dropmenu";
 
 //
-import UIButtonBase from "@mods/inputs/in-button";
-import UISelectBase from "@mods/inputs/in-select";
+import UIButtonBase from "@blit/inputs/in-button";
+import UISelectBase from "@blit/inputs/in-select";
 
 // @ts-ignore
 import styles from "@scss/design/ap-button.scss?inline";

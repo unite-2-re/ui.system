@@ -1,4 +1,4 @@
-import { setIdleInterval } from "@service/Utils";
+import { setIdleInterval } from "@/$ext$/shared/Utils";
 
 //
 const throttleMap = new Map<string, any>();

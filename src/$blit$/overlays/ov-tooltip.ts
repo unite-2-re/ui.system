@@ -1,5 +1,5 @@
 // @ts-ignore
-import LitElementTheme from "@mods/shared/LitElementTheme";
+import LitElementTheme from "@blit/shared/ThemedElement";
 
 // @ts-ignore
 import styles from "@scss/design/ov-tooltip.scss?inline";

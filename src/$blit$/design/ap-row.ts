@@ -1,8 +1,8 @@
 /// <reference types="lit" />
 // Type: standalone
 // Behaviour: select, button
-import UISelectBase from "@mods/inputs/in-select";
-import UIButtonBase from "@mods/inputs/in-button";
+import UISelectBase from "@blit/inputs/in-select";
+import UIButtonBase from "@blit/inputs/in-button";
 
 // @ts-ignore /* @vite-ignore */
 import { defineElement, E, H } from "/externals/lib/blue.js";

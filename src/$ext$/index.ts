@@ -27,3 +27,14 @@ Promise.try(importCdn, ["/externals/core/theme.js"])?.then?.((module)=>{
     module?.default?.();
 }).catch(console.warn.bind(console));
 */
+
+import AxGesture from "./shared/Gesture";
+
+//
+export * from "./shared/Selection";
+export * from "./shared/Gesture";
+export * from "./shared/Interaction";
+export * from "./shared/Scrollbar";
+
+//
+//export default AxGesture;

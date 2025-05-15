@@ -4,7 +4,8 @@
     "compilerOptions": {
         "paths": {
             "@/*": ["./src/*"],
-            "@mods/*": ["./src/$lit$/*"],
+            "@blit/*": ["./src/$blit$/*"],
+            "@mods/*": ["./src/$blit$/*"],
             "@scss/*": ["./src/$scss$/*"],
             "@temp/*": ["./src/$temp$/*"],
             "@service/*": ["./src/$service$/*"],

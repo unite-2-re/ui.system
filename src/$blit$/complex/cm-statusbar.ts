@@ -6,7 +6,7 @@ import htmlCode from "@temp/ov-statusbar.html?raw";
 
 // @ts-ignore
 import styles from "@scss/design/ov-statusbar.scss?inline";
-import ThemedElement from "../shared/LitElementTheme";
+import ThemedElement from "../shared/ThemedElement";
 
 // @ts-ignore /* @vite-ignore */
 import { H, property, defineElement } from "/externals/lib/blue.js";
