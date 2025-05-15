@@ -43,7 +43,7 @@
     overflow: hidden;
     cursor: default;
     display: inline grid;
-    grid-template-columns: [down] minmax(2rem, max-content) [content] minmax(0px, 1fr) [up] minmax(2rem, max-content);
+    grid-template-columns: [down] minmax(2rem, max-content) [cent] minmax(0px, 1fr) [up] minmax(2rem, max-content);
     grid-template-rows: minmax(0px, 1fr);
   }
   :host(ui-number) > :where(div, button, label) {
@@ -60,14 +60,14 @@
             user-select: none;
     touch-action: none;
   }
-  :host(ui-number) > .ui-content {
-    grid-column: content;
+  :host(ui-number) .ui-content {
+    grid-column: cent !important;
   }
-  :host(ui-number) > .ui-step-up {
-    grid-column: up;
+  :host(ui-number) .ui-step-up {
+    grid-column: up !important;
   }
-  :host(ui-number) > .ui-step-down {
-    grid-column: down;
+  :host(ui-number) .ui-step-down {
+    grid-column: down !important;
   }
   :host(ui-number) :where(.ui-step-up, .ui-step-down) {
     aspect-ratio: 1/1;

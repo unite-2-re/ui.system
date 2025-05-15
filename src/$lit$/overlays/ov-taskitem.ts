@@ -3,7 +3,6 @@
 // @ts-ignore
 import ThemedElement from "@mods/shared/LitElementTheme";
 import { focusTask, taskManage } from "@service/tasks/binding";
-import { setAttributes, setAttributesIfNull } from "@service/Utils";
 import initTaskManager from "@service/tasks/manager";
 
 // @ts-ignore
