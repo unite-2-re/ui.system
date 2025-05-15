@@ -1,0 +1,232 @@
+@use "./Profile" as ps;
+@use "./Shape" as s;
+
+//
+@layer u2-grid {
+
+    //
+    [data-shape="wavy"] .u2-item-design, .u2-item-design[data-shape="wavy"] {
+        & {
+            --clip-amplitude: 0.05;
+            --clip-freq: 8;
+            --clip-path: #{s.Integrate("WavyFx", 100)};
+            --corrector: 1.1;
+        }
+
+        //
+        & {
+            clip-path: var(--clip-path);
+            border-radius: calc(var(--icon-size, 100%) * 0.5);
+        }
+    }
+
+    //
+    *[data-shape="circle"] .u2-item-design, .u2-item-design[data-shape="circle"] {
+        border-radius: calc(var(--icon-size, 100%) * 0.5);
+    }
+
+    //
+    *[data-shape="tear"] .u2-item-design, .u2-item-design[data-shape="tear"] {
+        border-radius: calc(var(--icon-size, 100%) * 0.5);
+        border-end-end-radius: calc(var(--icon-size, 100%) * 0.125);
+    }
+
+    //
+    *[data-shape="square"] .u2-item-design, .u2-item-design[data-shape="square"] {
+        border-radius: calc(var(--icon-size, 100%) * 0.25);
+    }
+
+    //
+    .u2-grid-pages,
+    .u2-desktop-grid {
+        @include ps.stretch;
+        @include ps.grid-layout();
+
+        //
+        & {
+            --padding-h: min(6cqmin, 3rem);
+            --padding-v: min(4cqmax, 4rem);
+        }
+
+        //
+        & {
+            direction: ltr;
+            zoom: 1;
+
+            //
+            container-type: size;
+            contain: strict;
+
+            //
+            pointer-events: none;
+            overflow: visible;
+
+            //
+            padding-inline: var(--padding-h);
+            padding-block: var(--padding-v);
+        }
+
+        //
+        @media (orientation: portrait) {
+            padding-inline: var(--padding-h);
+            padding-block: var(--padding-v);
+        }
+
+        //
+        @media (orientation: landscape) {
+            padding-inline: var(--padding-v);
+            padding-block: var(--padding-h);
+        }
+
+        //
+        & > :where(*) {
+            grid-column: 1 / 1 span;
+            grid-row: 1 / 1 span;
+        };
+    }
+
+    //
+    .u2-grid-page {
+        & { pointer-events: none; };
+
+        //
+        .u2-grid-item {
+            @include ps.grid-layout(
+                minmax(0px, 1fr),
+                minmax(0px, 1fr)
+            );
+
+            //
+            & {
+                min-inline-size: 1px;
+                min-block-size: 1px;
+
+                //
+                inline-size: 100%;//max-content;
+                block-size: 100%;//max-content;
+
+                //
+                max-inline-size: var(--icon-size, 1px);
+                max-block-size: var(--icon-size, 1px);
+
+                //
+                overflow: visible;
+                filter: drop-shadow(0px 0px 0.25rem #00000060) !important;
+                isolation: isolate;
+                backdrop-filter: none;
+                border: none 0px transparent;
+                outline: none 0px transparent;
+                line-height: 0;
+            }
+
+            // if interpolation keywords supported
+            @supports (min-inline-size: max(1px, max-content)) {
+                min-inline-size: max(1px, max-content);
+                min-block-size: max(1px, max-content);
+            }
+
+            //
+            &[data-dragging] { z-index: calc(99 + var(--z-index, 0)) !important; }
+
+            //
+            & > :where(*) {
+                line-height: 0;
+                grid-column: 1 / 1 span;
+                grid-row: 1 / 1 span;
+                overflow: visible;
+
+                //
+                inline-size: 100%;//max-content;
+                block-size: 100%;//max-content;
+            }
+        }
+
+        //
+        .u2-grid-item.u2-item-label {
+            @include ps.no-wrap;
+
+            //
+            & {
+                --translate-x: 0px;
+                --translate-y: calc(var(--icon-size) * 0.6);
+            }
+
+            //
+            & {
+                font-family: 'Open Sans', 'Ubuntu Sans', Ubuntu, Segoe, "Segoe UI", source-sans-pro, 'Source Sans 3', 'Gill Sans Nova', Candara, sans-serif, ui-sans-serif, system-ui;
+                font-weight: 600;
+                pointer-events: none;
+                display: inline flow;
+                overflow: visible;
+
+                //
+                inline-size: max-content !important;
+                block-size: max-content !important;
+                max-inline-size: none !important;
+
+                //
+                justify-content: center;
+                align-content: center;
+                justify-items: center;
+                align-items: center;
+                justify-self: center;
+                align-self: center;
+                text-align: center;
+
+                //
+                font-size: calc(var(--icon-size) * 0.15);
+                filter: drop-shadow(0px 0px 0.25rem #00000060) !important;
+            }
+        }
+
+        //
+        .u2-item-icon {
+            @include ps.limited-block(var(--icon-size));
+            @include ps.limited-inline(var(--icon-size));
+
+            //
+            padding: calc(var(--icon-size) * 0.265);
+        }
+
+        //
+        .u2-item-design {
+            @include ps.limited-block(var(--icon-size));
+            @include ps.limited-inline(var(--icon-size));
+
+            //
+            & {
+                --scale: var(--corrector, 1);
+                --translate-x: 0px;
+                --translate-y: 0px;
+            };
+
+            //
+            & {
+                position: relative;
+                aspect-ratio: 1 / 1;
+                inset: 0px;
+
+                //
+                overflow: hidden;
+                pointer-events: auto;
+                cursor: pointer;
+
+                //
+                display: flex;
+
+                //
+                inline-size: 100%;
+                block-size: 100%;
+            }
+        }
+    }
+
+    //
+    /*:where(body, html, :root, :host, :scope):has(*[data-dragging]), *[data-dragging],
+    :where(body, html, :root, :host, :scope):has(*[data-dragging]:active), *[data-dragging]:active,
+    :where(body, html, :root, :host, :scope):has(*[data-dragging]:hover), *[data-dragging]:hover {
+        &, & > :where(*) {
+            cursor: grabbing !important;
+        }
+    }*/
+};

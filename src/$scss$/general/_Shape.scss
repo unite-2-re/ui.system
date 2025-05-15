@@ -1,0 +1,71 @@
+@use '@sass-fairy/list' as fl;
+
+//
+@use "sass:math";
+@use "sass:list";
+@use "sass:meta";
+
+// if you don't want to use deps...
+@function join($list, $glue: '', $is-nested: false) {
+    $result: null;
+    @for $i from 1 through length($list) {
+        $e: nth($list, $i);
+        @if type-of($e) == list {
+            $result: $result#{join($e, $glue, true)};
+        } @else {
+            $result: if(
+                $i != length($list) or $is-nested,
+                $result#{$e}#{$glue},
+                $result#{$e}
+            );
+        }
+    }
+    @return $result;
+};
+
+// F(X):[x,y] where X:[0..1]
+@function WavyFx($step: 0) {
+    $angle: calc(($step * 2) * 1rad * #{"pi"});
+    $variant: calc(cos(var(--clip-freq, 8) * #{$angle}) * 0.5 + 0.5);
+    $adjust: calc($variant * var(--clip-amplitude, 0));
+    $x: calc((0.5 + (cos(#{$angle}) * (0.5 - #{$adjust}))) * var(--icon-size, 100%));
+    $y: calc((0.5 + (sin(#{$angle}) * (0.5 - #{$adjust}))) * var(--icon-size, 100%));
+    @return "#{$x} #{$y}";
+}
+
+// space cadet or cheater-tale
+@function Integrate($name, $steps: 100) {
+    $fx: meta.get-function($name);
+    $points: ();
+    @for $i from 1 through $steps {
+        $points: list.append($points, meta.call($fx, math.div($i, $steps)));
+    }
+    @return polygon(#{fl.join($points, ", ")});
+}
+
+//
+:where(.wavy-shaped) {
+    --clip-amplitude: 0.05;
+    --clip-freq: 8;
+    --clip-path: #{Integrate("WavyFx", 100)};
+    --corrector: 1.1;
+    //--icon-size: 100%;
+    clip-path: var(--clip-path);
+    border-radius: calc(var(--icon-size, 100%) * 0.5);
+}
+
+//
+:where(.tear-shaped) {
+    border-radius: calc(var(--icon-size, 100%) * 0.5);
+    border-end-end-radius: calc(var(--icon-size, 100%) * 0.125);
+}
+
+//
+:where(.circle-shaped) {
+    border-radius: calc(var(--icon-size, 100%) * 0.5);
+}
+
+//
+:where(.square-shaped) {
+    border-radius: calc(var(--icon-size, 100%) * 0.25);
+}
