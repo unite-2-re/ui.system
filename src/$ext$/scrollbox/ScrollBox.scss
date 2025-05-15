@@ -1,0 +1,318 @@
+@scope(:host, :scope, :root)
+{
+    @property --scrollbar-color {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #10101060;
+    };
+
+    @property --percent-x {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 0;
+    };
+
+    @property --percent-y {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 0;
+    };
+
+    @property --scroll-coef {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 0;
+    };
+
+    @property --scroll-size {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 1;
+    };
+
+    @property --scroll-left {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 0;
+    };
+
+    @property --scroll-top {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 0;
+    };
+
+    @property --fit-unit {
+        syntax: "<length-percentage>";
+        inherits: true;
+        initial-value: 1px;
+    };
+
+    @property --content-size {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 1;
+    };
+};
+
+//
+@layer u2-scrollbox
+{
+    :host(ui-scrollbox)
+    {
+        & {
+            --percent-x: 0.0;
+            --percent-y: 0.0;
+            --scrollbar-color: var(--rv-color, #10101060);
+        }
+
+        //
+        & {
+            contain-intrinsic-inline-size: auto 100cqi;
+
+            //
+            place-content: safe start;
+            place-items: safe start;
+
+            //
+            position: relative;
+            overflow: hidden;
+            inset: 0px;
+            box-sizing: border-box;
+
+            //
+            inline-size: 100%;
+            block-size: 100%;
+
+            //
+            display: inline grid !important;
+            padding: 0px !important;
+            grid-template-columns: minmax(0px, 1fr) 1rem !important;
+            grid-template-rows: minmax(0px, 1fr) 1rem !important;
+
+            //
+            container-type: size !important;
+            background-color: transparent;
+
+            //
+            rotate: none;
+            scale: none;
+            translate: none;
+            transform: none;
+
+            //
+            transform-origin: 50% 50%;
+
+            //
+            filter: none;
+            backdrop-filter: none;
+            perspective: none;
+            isolation: auto;
+
+            // unsupported
+            writing-mode: horizontal-tb !important;
+        }
+
+        //
+        &, & *, ::slotted(*)
+        {
+            transition-behavior: allow-discrete;
+            interpolate-size: allow-keywords;
+            content-visibility: auto;
+
+            //
+            white-space: nowrap;
+            white-space-collapse: collapse;
+            text-wrap: nowrap;
+            box-sizing: border-box;
+            text-spacing-trim: trim-start;
+        }
+
+        //
+        &:not([data-hidden]) { display: grid !important; }
+
+        //
+        &, & > :where(*)
+        {
+            box-sizing: border-box;
+            touch-action: none; //manipulation;
+
+            //
+            pointer-events: auto;
+
+            //
+            white-space: nowrap;
+            white-space-collapse: collapse;
+            text-wrap: nowrap;
+            text-spacing-trim: trim-start;
+        }
+
+        //
+        & :where(.content-box)
+        {
+            contain-intrinsic-inline-size: auto 100cqi;
+            background-color: transparent !important;
+            content-visibility: auto;
+            //touch-action: pan-x pan-y;
+            pointer-events: auto;
+
+            //
+            isolation: isolate;
+            overflow: scroll;
+            display: block flow;
+            padding: 0px;
+
+            //
+            scrollbar-color: transparent !important;
+            scrollbar-gutter: auto !important;
+            scrollbar-width: none !important;
+            grid-row: 1 / -1 !important;
+            grid-column: 1 / -1 !important;
+            inline-size: 100% !important;
+            block-size: 100% !important;
+            border: none 0px transparent !important;
+            outline: none 0px transparent !important;
+            box-sizing: border-box !important;
+            z-index: 0;
+        }
+
+        //
+        /*::slotted(*) {
+            touch-action: pan-x pan-y;
+        }*/
+
+        //
+        & :where(.scrollbar-x, .scrollbar-y)
+        {
+            //
+            & { --fit-unit: calc((var(--content-size, 1) * 1px - 1rem) / var(--content-size, 1)); };
+            & { --scroll-coef: 0; }
+            & {
+                user-select: none;
+                touch-action: none;
+                pointer-events: none;
+                //mix-blend-mode: darken;
+
+                //
+                z-index: 9999;
+                container-type: normal;
+                position: relative;//sticky;
+                display: block flow;
+                inset: 0px;
+                box-sizing: border-box;
+
+                //
+                line-height: 0px;
+                background-color: transparent !important;
+
+                //
+                inline-size: 100%;
+                block-size: 100%;
+
+                //
+                writing-mode: horizontal-tb !important;
+                direction: ltr !important;
+            }
+
+            //
+            //@media (prefers-color-scheme: dark) { mix-blend-mode: lighten; };
+            //@media (prefers-color-scheme: light) { mix-blend-mode: darken; };
+
+            //
+            & :where(.thumb)
+            {
+                & {
+                    mix-blend-mode: darken;
+                    pointer-events: auto;
+                    box-sizing: border-box;
+
+                    position: static;
+                    display: block flow;
+                    line-height: 0px;
+
+                    border-radius: 0.125rem;
+                    background-color: oklch(from var(--scrollbar-color, #10101060) l c h / 0.8) !important;
+
+                    user-select: none;
+                    touch-action: none;
+
+                    //
+                    writing-mode: horizontal-tb !important;
+                    direction: ltr !important;
+                }
+
+                //
+                //@media (prefers-color-scheme: dark)  { mix-blend-mode: lighten; };
+                //@media (prefers-color-scheme: light) { mix-blend-mode: darken; };
+            }
+        }
+
+        //
+        & :is(.scrollbar-y)
+        {
+            & {
+                grid-row: 1 / 1 span;
+                grid-column: 2 / 2 span;
+            }
+
+            //
+            & :where(.thumb)
+            {
+                inline-size: 100%;
+                block-size: min(calc(100% * var(--scroll-coef, 1)), 100%);
+                translate: 0px calc(var(--scroll-top, 0) * var(--scroll-coef, 1) * var(--fit-unit, 1px));
+            }
+        }
+
+        //
+        & :is(.scrollbar-x)
+        {
+            & {
+                grid-column: 1 / 1 span;
+                grid-row: 2 / 2 span;
+            }
+
+            //
+            & :where(.thumb)
+            {
+                block-size: 100%;
+                inline-size: min(calc(100% * var(--scroll-coef, 1)), 100%);
+                translate: calc(var(--scroll-left, 0) * var(--scroll-coef, 0) * var(--fit-unit, 1px)) 0px;
+            }
+        }
+
+    }
+
+    //
+    :host(ui-scrollbox) {
+        :where(.content-box) { overflow: scroll; }
+        :where(.content-box), ::slotted(*) {
+            touch-action: pan-x pan-y;
+        }
+    }
+
+    //
+    :host(ui-scrollbox.has-scroll-x:not(.has-scroll-y)) {
+        :where(.content-box) { overflow-y: hidden; }
+        :where(.content-box), ::slotted(*) {
+            touch-action: pan-x;
+        }
+    }
+
+    //
+    :host(ui-scrollbox.has-scroll-y:not(.has-scroll-x)) {
+        :where(.content-box) { overflow-x: hidden; }
+        :where(.content-box), ::slotted(*) {
+            touch-action: pan-y;
+        }
+    }
+
+    //
+    :host(ui-scrollbox.has-scroll-y.has-scroll-x) {
+        :where(.content-box) { overflow: scroll; }
+        :where(.content-box), ::slotted(*) {
+            touch-action: pan-x pan-y;
+        }
+    }
+
+}

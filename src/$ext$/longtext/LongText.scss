@@ -1,0 +1,610 @@
+
+
+@scope(:host, :scope, :root)
+{
+    //
+    @property --scroll-left   { initial-value: 0; syntax: "<number>"; inherits: true; };
+    @property --scroll-coef   { initial-value: 0; syntax: "<number>"; inherits: true; };
+    @property --scroll-size   { initial-value: 1; syntax: "<number>"; inherits: true; };
+    @property --content-size  { initial-value: 1; syntax: "<number>"; inherits: true; };
+
+    //
+    @property --size-base { initial-value: 1px; syntax: "<length-percentage>"; inherits: true; };
+
+    //
+    @property --percent-x { initial-value: 0; syntax: "<number>"; inherits: true; };
+    @property --percent-y { initial-value: 0; syntax: "<number>"; inherits: true; };
+
+    //
+    @property --scrollbar-color {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #10101060;
+    };
+};
+
+//
+@keyframes scroll-side
+{
+    0% {
+        mask-image: linear-gradient(to left, black, white 1rem);
+    }
+
+    1% {
+        mask-image:
+            linear-gradient(to left, black, white 1rem),
+            linear-gradient(to right, black, white 1rem);
+    }
+
+    99% {
+        mask-image:
+            linear-gradient(to left, black, white 1rem),
+            linear-gradient(to right, black, white 1rem);
+    }
+
+    100% {
+        mask-image: linear-gradient(to right, black, white 1rem);
+    }
+};
+
+//
+@layer u2-long-text
+{
+    //
+    *[inert]
+    {
+        pointer-events: none !important;
+        interactivity: inert !important;
+        user-select: none !important;
+        touch-action: none !important;
+    }
+
+    //
+    @media print {
+        :host { display: none !important; };
+    }
+
+    //
+    @media screen {
+
+        //
+        :host(:empty) { display: none !important; };
+        :host
+        {
+            & {
+                --scrollbar-color: #10101060;
+                --percent-x: 0.0;
+                --percent-y: 0.0;
+            }
+
+            //
+            &:not(:has-slotted) {
+                display: none !important;
+            }
+
+            //
+            & { // not implemented
+                transform: none !important;
+                translate: 0px 0px !important;
+                scale: 1 !important;
+                rotate: 0deg !important;
+                perspective: none !important;
+
+                // not implemented
+                writing-mode: horizontal-tb !important;
+                direction: ltr !important;
+            }
+
+            //
+            & {
+                inset: 0px;
+                padding: 0px !important;
+                border: none 0px transparent !important;
+
+                //
+                max-inline-size: 100%;
+                inline-size: max-content;
+                min-block-size: 1ch;
+                max-block-size: 100%;
+                block-size: max-content;
+                min-inline-size: 0px;
+                box-sizing: border-box;
+
+                //
+                container-type: inline-size !important;
+                place-content: center;
+                place-items: center;
+                overflow: hidden;
+
+                //
+                justify-content: safe center;
+                justify-items: safe center;
+
+                //
+                display: inline grid;
+                grid-template-columns:
+                    [input] minmax(0px, 1fr)
+                    [button] minmax(0px, max-content) !important;
+                grid-template-rows:
+                    [input] minmax(0px, 1fr)
+                    [scroll] minmax(0px, 0.5rem) !important;
+
+                //
+                overflow-anchor: auto;
+                text-overflow: clip;
+
+                //
+                -webkit-user-drag: none;
+                -moz-user-drag: none;
+
+                //
+                user-select: none;
+                white-space: nowrap;
+                word-break: keep-all;
+                word-wrap: normal;
+                flex-wrap: nowrap;
+
+                //
+                user-drag: none;
+            }
+
+            //
+            svg {
+                aspect-ratio: 1 / 1;
+                inline-size: max-content;
+                block-size: 100%;
+                stroke: currentColor;
+
+                //
+                interactivity: inert;
+                pointer-events: none;
+                user-select: none;
+                touch-action: none;
+            }
+
+            // all slotted will be force hidden, except inputs
+            ::slotted(*:not(input:first-of-type))
+            {
+                font-size: 0px !important;
+                line-height: 0 !important;
+                display: none !important;
+                inline-size: 0px !important;
+                block-size: 0px !important;
+                max-inline-size: 0px !important;
+                max-block-size: 0px !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
+                touch-action: none !important;
+                user-select: none !important;
+                opacity: 0 !important;
+                position: absolute !important;
+                inset: auto !important;
+                z-index: -1 !important;
+                background: transparent !important;
+                background-color: transparent !important;
+                color: transparent !important;
+                border: none 0px transparent !important;
+                outline: none 0px transparent !important;
+                padding: 0px !important;
+                margin: 0px !important;
+                box-sizing: border-box !important;
+                transform: none !important;
+                translate: 0px 0px !important;
+                scale: 1 !important;
+                rotate: 0deg !important;
+                perspective: none !important;
+            }
+
+            //
+            ::slotted(input[inert])
+            {
+                pointer-events: none !important;
+                touch-action: none !important;
+                user-select: none !important;
+            }
+
+            //
+            ::slotted(input)
+            {   //
+                &[inert] {
+                    pointer-events: none !important;
+                    touch-action: none !important;
+                    user-select: none !important;
+                }
+
+                //
+                & {
+                    --tm-bg-alpha: 0;
+
+                    //
+                    inset: 0px;
+                    user-select: auto;
+                    overflow: visible;
+                    padding: 0.4rem;
+                    padding-inline: 0.6rem;
+
+                    //
+                    pointer-events: auto;
+
+                    //
+                    z-index: 1;
+                    flex-direction: row;
+                    place-content: center;
+                    place-items: center;
+                    place-self: center;
+
+                    //
+                    text-align: start;
+                    justify-items: start;
+                    justify-content: center;
+                    touch-action: pan-x !important;
+
+                    //
+                    stroke: currentColor;
+                    overflow-anchor: auto;
+
+                    //
+                    container-type: normal;
+                    contain: none;
+
+                    //
+                    font-stretch: ultra-condensed;
+                    letter-spacing: -1px;
+                    font-size: 0.9rem;
+                    font-weight: normal;
+                    font-family:
+                        "Fira Code",
+                        "Consolas",
+                        "Segoe UI Mono",
+                        "Fira Mono",
+                        "Droid Sans Mono",
+                        "Roboto Mono",
+                        "Oxygen Mono",
+                        "Ubuntu Mono",
+                        "Cascadia Mono",
+                        "Source Code Pro",
+                        "Courier New",
+                        Menlo, Monaco,
+                        ui-monospace, monospace;
+
+                    //
+                    display: inline flex;
+                    background-color: transparent !important;
+                    min-block-size: max(100%, 1ch);
+                    block-size: max-content;
+                    min-inline-size: 100%;
+                    inline-size: max-content;
+                    max-inline-size: none;
+                    max-block-size: 100%;
+                    box-sizing: border-box;
+
+                    //
+                    outline: none 0px transparent;
+                    border: none 0px transparent;
+                    margin: 0px;
+
+                    //
+                    -webkit-user-drag: none;
+                    -moz-user-drag: none;
+
+                    //
+                    white-space: nowrap;
+                    text-overflow: clip;
+                    word-break: keep-all;
+                    word-wrap: normal;
+                    flex-wrap: nowrap;
+
+                    // IMPORTANT!
+                    field-sizing: content;
+                    user-drag: none;
+
+                    // not implemented
+                    transform: none !important;
+                    translate: 0px 0px !important;
+                    scale: 1 !important;
+                    rotate: 0deg !important;
+
+                    // not implemented
+                    writing-mode: horizontal-tb !important;
+                    direction: ltr !important;
+                }
+
+                //
+                &[readonly], &[disabled], &[inert], &:read-only, &:disabled
+                {
+                    user-select: none;
+                    pointer-events: none;
+                }
+            };
+
+            //
+            .u2-input-box {
+
+                //
+                & {
+                    //place-self: start;
+                    inset: 0px;
+                    z-index: 1;
+
+                    //
+                    cursor: text;
+
+                    //
+                    display: block;
+                    padding: 0px !important;
+                    contain: content;
+
+                    //
+                    container-type: inline-size !important;
+
+                    //
+                    block-size: 100%;
+                    min-inline-size: 100%;
+                    inline-size: 100%;
+                    max-inline-size: 100%;
+                    max-block-size: 100%;
+                    min-block-size: 1ch;
+                    box-sizing: border-box;
+
+                    //
+                    overflow-y: hidden;
+                    overflow-x: auto;
+                    overflow-anchor: auto;
+                    overflow-block: hidden;
+                    overflow-inline: auto;
+                    overscroll-behavior: none;
+
+                    //
+                    border: none 0px transparent !important;
+                    scrollbar-width: none !important;
+                    scrollbar-gutter: stable !important;
+                    scroll-behavior: smooth;
+
+                    //
+                    touch-action: pan-x !important;
+                    pointer-events: auto !important;
+
+                    //
+                    grid-column: input;
+                    grid-row: 1 / 2 span;
+
+                    //
+                    white-space: nowrap;
+                    text-overflow: clip;
+                    word-break: keep-all;
+                    word-wrap: normal;
+                    flex-wrap: nowrap;
+
+                    //
+                    -webkit-user-drag: none;
+                    -moz-user-drag: none;
+                    user-drag: none;
+
+                    //
+                    user-select: none;
+                    background-color: transparent;
+                    mask-mode: luminance;
+                    mask-composite: intersect;
+                }
+
+                //
+                &:has(*::selection)
+                { overflow-x: hidden !important; }
+
+                //
+                @supports (animation-timeline: scroll(inline))
+                {
+                    transition-behavior: allow-discrete;
+                    animation-name: scroll-side;
+                    animation-timeline: scroll(inline);
+                    animation-range: contain;
+                    animation-fill-mode: both;
+                    animation-timing-function: linear;
+                    animation-duration: 1ms;
+                }
+            }
+
+            //
+            .u2-button-box {
+                & {
+                    --tm-bg-alpha: 0;
+
+                    display: flex;
+                    border-radius: 0.5rem;
+                    grid-column: button;
+                    grid-row: 1 / 2 span;
+                    flex-direction: row;
+
+                    place-content: center;
+                    place-items: center;
+
+                    block-size: 100%;
+                    inline-size: max-content;
+                    min-inline-size: max-content;//max(96%, 24rem);
+                    background-color: transparent !important;
+                    padding: 0px;
+
+                    user-select: none;
+                    touch-action: none;
+                    pointer-events: none;
+                    overflow: hidden;
+                    gap: 0px;
+
+                    //
+                    inset: 0px;
+                    z-index: 9;
+                }
+
+                //
+                button {
+                    --tm-bg-alpha: 0;
+
+                    //
+                    display: inline flex;
+                    place-content: center;
+                    place-items: center;
+
+                    //
+                    background-color: transparent;
+                    outline: none 0px transparent;
+                    border: none 0px transparent;
+                    margin: 0px;
+                    z-index: 10;
+                    padding: 0.8rem;
+                    aspect-ratio: 1 / 1;
+                    inline-size: max-content;
+                    block-size: 100%;
+                    border-radius: 0rem;
+
+                    //
+                    cursor: pointer;
+
+                    //
+                    user-select: none;
+                    touch-action: none;
+                    pointer-events: auto;
+                }
+            }
+
+            //
+            .u2-scroll-box {
+                & { --scroll-coef: 0; };
+                & {
+                    transform: none;
+                    container-type: size;
+                    contain: content;
+                    position: relative;
+                    background-color: transparent !important;
+
+                    //
+                    grid-column: 1 / 1 span;
+                    grid-row: scroll;
+                    inline-size: 100%;
+                    block-size: 100%;
+
+                    //
+                    user-select: none;
+                    touch-action: none;
+                    pointer-events: none;
+
+                    //
+                    place-self: start start;
+                    place-content: center start;
+                    place-items: center start;
+                    inset: 0px;
+
+                    //
+                    visibility: collapse;
+                    z-index: 99;
+
+                    //
+                    writing-mode: horizontal-tb !important;
+                    direction: ltr !important;
+                };
+
+                //
+                .u2-scroll-bar {
+                    & { //
+                        transform: none;
+                        place-self: start start;
+                        inset: 0px;
+                        cursor: pointer;
+
+                        //
+                        block-size: 100%;
+                        inline-size: min(calc(100% * var(--scroll-coef, 0)), 100%);
+                        translate: calc(var(--scroll-left, 0) * var(--scroll-coef, 0) * 1px) 0px;
+
+                        //
+                        background-color: oklch(from var(--scrollbar-color, #10101060) l c h / 0.8) !important;
+
+                        //
+                        user-select: none;
+                        touch-action: none;
+                        pointer-events: auto;
+
+                        //
+                        writing-mode: horizontal-tb !important;
+                        direction: ltr !important;
+                    };
+                }
+            }
+        }
+
+        //
+        :host(ui-focustext)
+        {
+            & {
+                gap: 0.5rem;
+                overflow: hidden;
+                z-index : 9999999;
+                position: fixed !important;
+                inset   : auto !important;
+                inset-block-end: 0px !important;
+                inset-inline-start: 0px !important;
+                inline-size: 100%;
+                max-inline-size: 100%;
+                overflow-anchor: none;
+                min-block-size: 3rem;
+                block-size: 3rem;
+                transform: none !important;
+                translate: 0px 0px !important;
+                scale: 1 !important;
+                rotate: 0deg !important;
+                filter: drop-shadow(0px 0px 0.6rem #00000040) !important;
+                padding: 0.2rem;
+                padding-inline: 0.5rem;
+
+                // fix bouncing problems
+                transition: inset-block-end 100ms step-end !important;
+                //box-shadow: 0px 0px 1rem 1px #00000070;
+            }
+
+            //
+            & { inset-block-end: max(max(max(env(keyboard-inset-bottom, 0px), env(keyboard-inset-height, 0px)), 0px), max(calc(100dvb - var(--screen-height, 100dvb)), 0px)) !important; }
+
+            //
+            @media (display-mode: fullscreen) {
+                & { inset-block-end: max(max(max(env(keyboard-inset-bottom, 0px), env(keyboard-inset-height, 0px)), 0px), max(calc(100dvb - var(--screen-height, 100dvb)), 0px)) !important; }
+            }
+
+            //
+            @at-root :fullscreen & {
+                & { inset-block-end: max(max(max(env(keyboard-inset-bottom, 0px), env(keyboard-inset-height, 0px)), 0px), max(calc(100dvb - var(--screen-height, 100dvb)), 0px)) !important; }
+            }
+
+            //
+            .u2-input-box {
+                overflow-block: hidden;
+                overflow-inline: auto;
+                border-radius: 0.5rem;
+            }
+
+            //
+            ::slotted(input)
+            {
+                font-size: 1.4rem;
+                overflow-anchor: none;
+                user-select: auto;
+                font-weight: bold;
+                padding: 0rem;
+                padding-inline: 0.5rem;
+                pointer-events: auto !important;
+            }
+        }
+
+
+        // when has physical keyboard, ignore this type
+        // but currently, detecting input type was not implemented
+
+        //@at-root [data-input-type="keyboard"]
+        @at-root [data-device-type="desktop"] {
+            :host-context(&):host(ui-focustext) { display: none !important; };
+        };
+    }
+
+    //
+    /*:host([data-hidden])
+        { display: none !important; };*/
+
+}
