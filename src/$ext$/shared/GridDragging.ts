@@ -6,16 +6,30 @@ export const ROOT = document.documentElement;
 export const bindInteraction = async (newItem: any, pArgs: any)=>{
 
     // @ts-ignore
-    const { grabForDrag, redirectCell, reflectCell, getBoundingOrientRect, agWrapEvent, orientOf, convertOrientPxToCX } = await Promise.try(importCdn, ["/externals/dom.js"]);
-    const {item, list, items} = pArgs;
-    const layout = [pArgs?.layout?.columns || pArgs?.layout?.[0] || 4, pArgs?.layout?.rows || pArgs?.layout?.[1] || 8];
+    const { grabForDrag, redirectCell, reflectCell, getBoundingOrientRect, agWrapEvent, orientOf, convertOrientPxToCX, doAnimate } = await Promise.try(importCdn, ["/externals/dom.js"]);
+
+    // @ts-ignore
+    const { ref, subscribe } = await Promise.try(importCdn, ["/externals/object.js"]);
+
+    // @ts-ignore
+    const { E } = await Promise.try(importCdn, ["/externals/blue.js"]);
 
     //
-    await new Promise((r)=>requestAnimationFrame(r));
-    reflectCell(newItem, pArgs, true);
+    await new Promise((r)=>requestAnimationFrame(r)); reflectCell(newItem, pArgs, true);
+    const {item, list, items} = pArgs, layout = [pArgs?.layout?.columns || pArgs?.layout?.[0] || 4, pArgs?.layout?.rows || pArgs?.layout?.[1] || 8];
+    const beh = (axis="x")=>([val, set, old], [signal, prop, wel])=>doAnimate(wel?.deref?.(), val, axis, true)?.then?.(()=>set());
 
     //
     const gesture = new AxGesture(newItem);
+    const dragging = [ ref(0), ref(0) ];
+    const currentCell = [ ref(item?.cell?.[0] || 0, beh("x")), ref(item?.cell?.[1] || 0, beh("y")) ];
+
+    //
+    E(newItem, { style: { "--cell-x": currentCell[0], "--cell-y": currentCell[1], "--drag-x": dragging[0], "--drag-y": dragging[1] } });
+    subscribe([currentCell[0], "value"], (val)=> item.cell[0] = val);
+    subscribe([currentCell[1], "value"], (val)=> item.cell[1] = val);
+
+    //
     gesture?.longPress?.({
         handler: "*",
         anyPointer: true,
@@ -24,7 +38,6 @@ export const bindInteraction = async (newItem: any, pArgs: any)=>{
         maxHoldTime: 100
     }, agWrapEvent((evc)=>{
         const ev = evc?.detail || evc;
-
         if (!newItem.dataset.dragging)
         {
             const n_coord: [number, number] = (ev.orient ? [...ev.orient] : [ev?.clientX || 0, ev?.clientY || 0]) as [number, number];
@@ -44,12 +57,8 @@ export const bindInteraction = async (newItem: any, pArgs: any)=>{
                     if (Math.hypot(...shift) > 10) {
                         ROOT.removeEventListener("pointermove", shifting);
                         grabForDrag(newItem, ev_l, {
-                            propertyName: "drag",
+                            result: dragging,
                             shifting: [0, 0]
-                            /*shifting: [
-                                parseFloat(newItem?.style?.getPropertyValue("--drag-x")) || 0,
-                                parseFloat(newItem?.style?.getPropertyValue("--drag-y")) || 0
-                            ],*/
                         });
                     }
                 }
@@ -95,22 +104,15 @@ export const bindInteraction = async (newItem: any, pArgs: any)=>{
         //
         const args = {item, list, items, layout, size: [gridSystem?.clientWidth, gridSystem?.clientHeight]};
         const CXa  = convertOrientPxToCX(rel, args, orientOf(gridSystem));
-        const prev = [item.cell[0], item.cell[1]];
         const cell = redirectCell([Math.floor(CXa[0]), Math.floor(CXa[1])], args);
 
         //
-        if (prev[0] != cell[0] || prev[1] != cell[1]) {
-            if (ev?.detail?.holding?.modified != null) {
-                setProperty(newItem, "--drag-x", ev.detail.holding.modified[0] = 0);
-                setProperty(newItem, "--drag-y", ev.detail.holding.modified[1] = 0);
-            } else {
-                setProperty(newItem, "--drag-x", 0);
-                setProperty(newItem, "--drag-y", 0);
-            }
-            item.cell = cell;
-            setProperty(newItem, "--p-cell-x", item.cell[0]);
-            setProperty(newItem, "--p-cell-y", item.cell[1]);
-        }
+        if (ev?.detail?.holding?.modified != null) { ev.detail.holding.modified[0] = dragging[0].value = 0; } else { dragging[0].value = 0; };
+        if (ev?.detail?.holding?.modified != null) { ev.detail.holding.modified[1] = dragging[1].value = 0; } else { dragging[1].value = 0; };
+
+        //
+        if (currentCell[0].value != cell[0]) { setProperty(newItem, "--p-cell-x", currentCell[0].value = cell[0]); };
+        if (currentCell[1].value != cell[1]) { setProperty(newItem, "--p-cell-y", currentCell[1].value = cell[1]); };
 
         //
         newItem.dataset.dragging = "";
@@ -120,8 +122,6 @@ export const bindInteraction = async (newItem: any, pArgs: any)=>{
     newItem.addEventListener("m-dragend", async (ev)=>{
         // TOOD: detect another grid system
         const gridSystem = newItem?.parentElement;
-
-        //
         const cbox = getBoundingOrientRect(newItem) || newItem?.getBoundingClientRect?.();
         const pbox = getBoundingOrientRect?.(gridSystem) || gridSystem?.getBoundingClientRect?.();
         const rel : [number, number] = [(cbox.left + cbox.right)/2 - pbox.left, (cbox.top + cbox.bottom)/2 - pbox.top];
@@ -133,15 +133,18 @@ export const bindInteraction = async (newItem: any, pArgs: any)=>{
         //
         const args = {item, list, items, layout, size: [gridSystem?.clientWidth, gridSystem?.clientHeight]};
         const CXa  = convertOrientPxToCX(rel, args, orientOf(gridSystem));
+        const clamped = [Math.floor(CXa[0]), Math.floor(CXa[1])];
 
         //
-        const clamped = [Math.floor(CXa[0]), Math.floor(CXa[1])];
         clamped[0] = Math.max(Math.min(clamped[0], layout[0]-1), 0);
         clamped[1] = Math.max(Math.min(clamped[1], layout[1]-1), 0);
-        item.cell = redirectCell(clamped, args)
-        //doAnimate(newItem, );
 
         //
-        //await doAnimate(newItem, item.cell = redirectCell(clamped, args));
+        const cell = redirectCell(clamped, args);
+        currentCell[0].value = cell[0];
+        currentCell[1].value = cell[0];
     });
+
+    //
+    return currentCell;
 }
