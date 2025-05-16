@@ -1,10 +1,12 @@
+import AxGesture from "./Gesture";
+import { setProperty } from "./Utils";
+
 // shifting - reactive basis
+export const ROOT = document.documentElement;
 export const bindInteraction = async (newItem: any, pArgs: any)=>{
 
     // @ts-ignore
-    const { getBoundingOrientRect, agWrapEvent, orientOf, redirectCell, convertOrientPxToCX } = await Promise.try(importCdn, ["/externals/core/agate.js"]);
-
-    //
+    const { grabForDrag, redirectCell, reflectCell, getBoundingOrientRect, agWrapEvent, orientOf, convertOrientPxToCX } = await Promise.try(importCdn, ["/externals/dom.js"]);
     const {item, list, items} = pArgs;
     const layout = [pArgs?.layout?.columns || pArgs?.layout?.[0] || 4, pArgs?.layout?.rows || pArgs?.layout?.[1] || 8];
 

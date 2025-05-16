@@ -3,16 +3,11 @@ import {importCdn} from "/externals/modules/cdnImport.mjs";
 export {importCdn};
 
 // @ts-ignore
-const { setProperty } = await Promise.try(importCdn, ["/externals/core/dom.js"]);
-
-// @ts-ignore
-const { zoomOf } = await Promise.try(importCdn, ["/externals/core/agate.js"]);
-export const UUIDv4 = () => {
-    return crypto?.randomUUID ? crypto?.randomUUID() : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c => (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16));
-};
+const { setProperty, zoomOf } = await Promise.try(importCdn, ["/externals/core/dom.js"]);
+const onBorderObserve = new WeakMap<HTMLElement, Function[]>();
 
 //
-const onBorderObserve = new WeakMap<HTMLElement, Function[]>();
+export const UUIDv4 = () => { return crypto?.randomUUID ? crypto?.randomUUID() : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c => (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16)); };
 export const observeBorderBox = (element, cb) => {
     if (!onBorderObserve.has(element)) {
         const callbacks: Function[] = [];
@@ -55,8 +50,6 @@ export interface ScrollBarStatus {
 //
 const borderBoxWidth  = Symbol("@content-box-width");
 const borderBoxHeight = Symbol("@content-box-height");
-
-//
 const axisConfig = [
     {
         name: "x", tName: "inline",

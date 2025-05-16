@@ -4,37 +4,11 @@ export {importCdn};
 
 // @ts-ignore
 import styles from "./LongText.scss?inline&compress";
-
-//
+import { includeSelf } from "./Utils";
 export { styles };
 
-//
-export const MOC = (element: HTMLElement | null, selector: string): boolean => {
-    return (!!element?.matches?.(selector) || !!element?.closest?.(selector));
-};
-
-//
-export const MOCElement = (element: HTMLElement | null, selector: string): HTMLElement | null => {
-    return ((!!element?.matches?.(selector) ? element : null) || element?.closest?.(selector)) as HTMLElement | null;
-};
-
-//
-export const setProperty = (target, name, value, importance = "")=>{
-    if ("attributeStyleMap" in target) {
-        const raw = target.attributeStyleMap.get(name);
-        const prop = raw?.[0] ?? raw?.value;
-        if (parseFloat(prop) != value && prop != value || prop == null) {
-            //if (raw?.[0] != null) { raw[0] = value; } else
-            if (raw?.value != null) { raw.value = value; } else
-            { target.attributeStyleMap.set(name, value); };
-        }
-    } else {
-        const prop = target?.style?.getPropertyValue?.(name);
-        if (parseFloat(prop) != value && prop != value || prop == null) {
-            target?.style?.setProperty?.(name, value, importance);
-        }
-    }
-}
+// @ts-ignore
+const { observeBySelector } = await Promise.try(importCdn, ["/externals/dom.js"]);
 
 //
 export const doButtonAction = (button, input: HTMLInputElement)=>{
@@ -67,8 +41,6 @@ export const doButtonAction = (button, input: HTMLInputElement)=>{
     }
 }
 
-
-
 //
 export const holdFocus = (input)=>{
     let pointerId = -1;
@@ -98,7 +70,6 @@ export const holdFocus = (input)=>{
         }
     });
 }
-
 
 //
 export const makeInput = (host?: HTMLElement, ROOT = document.documentElement)=>{
@@ -163,7 +134,7 @@ export const makeInput = (host?: HTMLElement, ROOT = document.documentElement)=>
             }
         }, {passive: false});
 
-        //
+        // @ts-ignore
         Promise.try(importCdn, ["/externals/core/interact.js"])?.then?.(({ScrollBar})=>{
             new ScrollBar({
                 content: box,
@@ -237,4 +208,95 @@ export const makeInput = (host?: HTMLElement, ROOT = document.documentElement)=>
         host?.addEventListener?.("focus", toFocus);
         input?.addEventListener?.("dragstart", preventDrag);
     }
+}
+
+//
+export const updateInput = (state, target)=>{
+    const selector = "input:where([type=\"text\"], [type=\"number\"], [type=\"range\"])";
+    const input    = includeSelf(target, "input");
+    const name     = input?.name || target?.dataset?.name || "";
+
+    //
+    if (state?.[name] != null) { // not exists not preferred...
+        if (state && input?.matches?.(selector)) {
+            if (input.value != state[name]) {
+                input.value = state[name];
+                input.dispatchEvent(new Event("change", { bubbles: true, cancelable: true, }));
+            }
+        }
+
+        // setup radio boxes (requires wrapper)
+        if (state) {
+            const radio = includeSelf(target, `input:where([type=\"radio\"][name=\"${name}\"][value=\"${state?.[name]}\"])`);
+            if (state && radio && state[name] == radio.value && !radio?.checked) { radio?.click?.(); };
+        }
+
+        // setup check boxes
+        const checkbox = includeSelf(target, "input:where([type=\"checkbox\"])");
+        if (state && checkbox) {
+            if (state[name] != checkbox.checked) {
+                checkbox.checked = !!state[name];
+                checkbox.dispatchEvent(new Event("change", { bubbles: true, cancelable: true, }))
+            }
+        }
+    }
+}
+
+//
+export const synchronizeInputs = (state, wrapper = ".u2-input", fields = document.documentElement, subscribe?: Function)=>{
+
+    //
+    const onChange = (ev)=>{
+        const input  = ev?.target?.matches("input") ? ev?.target : ev?.target?.querySelector?.("input");
+        const target = ev?.target?.matches(wrapper) ? ev?.target : input?.closest?.(wrapper);
+        const name   = input?.name || target?.dataset?.name;
+
+        //
+        if (state?.[name] != null) { // not exists not preferred...
+            if (input?.matches?.("input:where([type=\"text\"], [type=\"number\"], [type=\"range\"])")) {
+                const value = (input.valueAsNumber != null && !isNaN(input.valueAsNumber)) ? input.valueAsNumber : input.value;
+                if (state[name] != value) { state[name] = value; };
+            }
+
+            // any radio-box
+            if (input?.matches?.("input[type=\"radio\"]")) {
+                if (input?.checked && state[name] != input.value) { state[name] = input.value; };
+            }
+
+            // any check-box
+            if (input?.matches?.("input[type=\"checkbox\"]")) {
+                if (state[name] != input.checked) { state[name] = input.checked; };
+            }
+        }
+    };
+
+    //
+    fields.addEventListener("input", onChange);
+    fields.addEventListener("change", onChange);
+
+    //
+    requestIdleCallback(()=>{
+        fields.querySelectorAll(wrapper).forEach((target)=>updateInput(state, target));
+    }, {timeout: 100});
+
+    // cross-window or frame syncretism
+    subscribe?.(state, (value, property)=>{
+        fields.querySelectorAll(wrapper).forEach((target)=>updateInput(state, target));
+    });
+
+    //
+    observeBySelector(fields, wrapper, (mutations)=>{
+        mutations.addedNodes.forEach((target)=>{
+            requestIdleCallback(()=>{
+                updateInput(state, target);
+            }, {timeout: 100});
+        });
+    });
+
+    //
+    fields.addEventListener("u2-appear", ()=>{
+        requestIdleCallback(()=>{
+            fields.querySelectorAll(wrapper).forEach((target)=>updateInput(state, target));
+        }, {timeout: 100});
+    });
 }

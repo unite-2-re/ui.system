@@ -2,39 +2,14 @@ import initLong from "./longtext/LongText";
 import initFocus from "./focustext/FocusText";
 
 //
-export * from "./focustext/FocusText";
-export * from "./longtext/LongText";
-
-//
-export const initializeLT = (ROOT = document.documentElement)=>{
-    initLong(ROOT);
-    initFocus(ROOT);
-}
-
-//
+export const initializeLT = (ROOT = document.documentElement)=>{ initLong(ROOT); initFocus(ROOT); }
 export default initializeLT;
 
-/*
-import ScrollBox, {importCdn } from "./$core$/ScrollBox";
-
 //
-export * from "./$core$/ScrollBox";
-export default ScrollBox;
-
-// @ts-ignore
-Promise.try(importCdn, ["/externals/core/theme.js"])?.then?.((module)=>{
-    // @ts-ignore
-    module?.default?.();
-}).catch(console.warn.bind(console));
-*/
-
-import AxGesture from "./shared/Gesture";
-
-//
+export * from "./shared/Gesture";
 export * from "./shared/Selection";
 export * from "./shared/Gesture";
-export * from "./shared/Interaction";
+export * from "./shared/GridDragging";
 export * from "./shared/Scrollbar";
-
-//
-//export default AxGesture;
+export * from "./focustext/FocusText";
+export * from "./longtext/LongText";
