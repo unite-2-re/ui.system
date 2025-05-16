@@ -13,7 +13,7 @@ import htmlCode from "@temp/ov-window.html?raw";
 import styles from "@scss/design/ov-window.scss?inline";
 
 // @ts-ignore /* @vite-ignore */
-import { defineElement, H } from "/externals/lib/blue.js";
+import { defineElement, H } from "/externals/modules/dom.js";
 
 // @ts-ignore
 @defineElement('ui-frame')

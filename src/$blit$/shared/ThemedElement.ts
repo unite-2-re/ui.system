@@ -1,7 +1,5 @@
 // @ts-ignore /* @vite-ignore */
-import { BLitElement, H } from "/externals/lib/blue.js";
-
-//@defineElement("")
+import { BLitElement, H } from "/externals/modules/dom.js";
 export class ThemedElement extends BLitElement() {
     constructor() {super();}
     render = ()=>H("<slot/>");
@@ -11,6 +9,4 @@ export class ThemedElement extends BLitElement() {
         return this;
     }
 }
-
-//
 export default ThemedElement;

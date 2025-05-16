@@ -1,6 +1,6 @@
 /// <reference types="lit" />
 import ThemedElement from "@blit/shared/ThemedElement";
-import { setIdleInterval } from "@/$ext$/shared/Utils";
+import { setIdleInterval } from "@ext/shared/Utils";
 import { onInteration } from "@service/tasks/opening";
 import initTaskManager from "@service/tasks/manager";
 
@@ -8,7 +8,7 @@ import initTaskManager from "@service/tasks/manager";
 import styles from "@scss/design/ov-navbar.scss?inline";
 
 // @ts-ignore /* @vite-ignore */
-import { H, property, defineElement } from "/externals/lib/blue.js";
+import { H, property, defineElement } from "/externals/modules/dom.js";
 
 // @ts-ignore
 @defineElement('ui-navbar')

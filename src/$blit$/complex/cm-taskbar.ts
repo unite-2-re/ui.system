@@ -5,7 +5,7 @@ import ThemedElement from "@blit/shared/ThemedElement";
 import initTaskManager from "@service/tasks/manager";
 import { connect } from "@service/behaviour/bh-status";
 import { onInteration } from "@service/tasks/opening";
-import { setAttributes, setIdleInterval } from "@/$ext$/shared/Utils";
+import { setAttributes, setIdleInterval } from "@ext/shared/Utils";
 
 // @ts-ignore
 import htmlCode from "@temp/ov-taskbar.html?raw";
@@ -14,7 +14,7 @@ import htmlCode from "@temp/ov-taskbar.html?raw";
 import styles from "@scss/design/ov-taskbar.scss?inline";
 
 // @ts-ignore /* @vite-ignore */
-import { E, H, property, defineElement, matchMediaRef } from "/externals/lib/blue.js";
+import { E, H, property, defineElement, matchMediaRef } from "/externals/modules/dom.js";
 
 //
 const whenFocus = ()=>{

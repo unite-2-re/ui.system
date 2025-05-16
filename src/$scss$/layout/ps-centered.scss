@@ -8,10 +8,10 @@
 
         //
         translate: 0% 0% 0%;
-        transform: 
+        transform:
             scale3d(var(--scale, 1), var(--scale, 1), var(--scale, 1))
             translate3d(
-                round(nearest, -50%, calc(1px / var(--pixel-ratio, 1))), 
+                round(nearest, -50%, calc(1px / var(--pixel-ratio, 1))),
                 round(nearest, -50%, calc(1px / var(--pixel-ratio, 1)))
             , 0%);
         transform-origin: 0% 0%;

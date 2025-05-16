@@ -5,7 +5,7 @@ import { ThemedElement } from "@blit/shared/ThemedElement";
 import { placeWithElement } from "@service/layout/ps-anchor";
 
 // @ts-ignore /* @vite-ignore */
-import { E, property, defineElement } from "/externals/lib/blue.js";
+import { E, property, defineElement } from "/externals/modules/dom.js";
 
 // @ts-ignore
 import styles from "@scss/design/ov-modal.scss?inline";

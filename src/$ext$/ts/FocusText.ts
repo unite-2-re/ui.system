@@ -1,14 +1,16 @@
-//
-import { doButtonAction, makeInput, MOC, styles, importCdn } from "../../../../longtext.wcomp/src/$core$/Utils";
-import { computeCaretPositionFromClient, measureInputInFocus, measureText } from "../../$service$/Measure";
+// @ts-ignore /* @vite-ignore */
+import { importCdn } from "/externals/modules/cdnImport.mjs";
+import { doButtonAction, makeInput } from "../shared/Input";
+import { MOC } from "../shared/Utils";
 
 // @ts-ignore
-const { zoomOf } = await Promise.try(importCdn, ["/externals/core/agate.js"]);
+import html from "../html/FocusText.html?raw";
 
 // @ts-ignore
-import html from "./FocusText.html?raw";
+const { computeCaretPositionFromClient, measureInputInFocus, measureText, zoomOf } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 
-//
+// @ts-ignore
+import styles from "../scss/LongText.scss?inline&compress";
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 export class UIFocusTextElement extends HTMLElement {
     //#input?: HTMLInputElement | null;

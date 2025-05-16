@@ -1,17 +1,15 @@
-// @ts-ignore
-import styles from "./OrientBox.scss?inline&compress";
-
-// @ts-ignore
-import html from "./OrientBox.html?raw";
-
-//
-const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+// @ts-ignore /* @vite-ignore */
+import { importCdn } from "/externals/modules/cdnImport.mjs";
 
 // @ts-ignore /* @vite-ignore */
-import {importCdn} from "/externals/modules/cdnImport.mjs";
-export {importCdn};
+import { elementPointerMap } from "/externals/modules/dom.ts";
 
-//
+// @ts-ignore
+import html from "../html/OrientBox.html?raw";
+
+// @ts-ignore
+import styles from "../scss/OrientBox.scss?inline&compress";
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 export class UIOrientBox extends HTMLElement {
     static observedAttributes = ["orient", "zoom"];
     public size: [number, number] = [0, 0];

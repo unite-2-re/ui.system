@@ -1,17 +1,12 @@
-// @ts-ignore
-import styles from "./ScrollBox.scss?inline&compress";
-
-// @ts-ignore
-import html from "./ScrollBox.html?raw";
-
-//
-const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
-
 // @ts-ignore /* @vite-ignore */
 import {importCdn} from "/externals/modules/cdnImport.mjs";
-export {importCdn};
 
-//
+// @ts-ignore
+import html from "../html/ScrollBox.html?raw";
+
+// @ts-ignore
+import styles from "../scss/ScrollBox.scss?inline&compress";
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 export default class UIScrollBox extends HTMLElement {
     static observedAttributes = ["data-scroll-top", "data-scroll-left"];
 

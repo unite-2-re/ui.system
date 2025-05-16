@@ -1,11 +1,11 @@
-//
-import { importCdn, makeInput, styles } from "/externals/lib/dom.ts";
+// @ts-ignore
+import { importCdn, makeInput, measureText } from "/externals/modules/dom.js";
 
 // @ts-ignore
-import html from "./LongText.html?raw";
-import { measureText } from "../shared/Measure.js";
+import html from "../html/LongText.html?raw";
 
-//
+// @ts-ignore
+import styles from "../scss/LongText.scss?inline&compress";
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 export class UILongTextElement extends HTMLElement {
     //#input?: HTMLInputElement | null;

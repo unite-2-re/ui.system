@@ -1,12 +1,9 @@
 // @ts-ignore /* @vite-ignore */
 import {importCdn} from "/externals/modules/cdnImport.mjs";
-export {importCdn};
-
-//
 import { bbh, bbw, blockClickTrigger, borderBoxHeight, borderBoxWidth, cbh, cbw, clamp, contentBoxHeight, contentBoxWidth, doBorderObserve, doContentObserve, ROOT, setProperty, type InteractStatus } from "./Utils";
 
 // @ts-ignore
-const { fixedClientZoom, agWrapEvent, getBoundingOrientRect, grabForDrag } = await Promise.try(importCdn, ["/externals/dom.js"]);
+const { fixedClientZoom, agWrapEvent, getBoundingOrientRect, grabForDrag } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 
 //
 export class AxGesture {

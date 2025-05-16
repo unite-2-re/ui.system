@@ -1,10 +1,6 @@
 @layer ui-icon {
     //
-    @property --mask-image {
-        syntax: "<image> | <url>";
-        initial-value: none;
-        inherits: true;
-    };
+    @property --mask-image { syntax: "<image> | <url>"; initial-value: none; inherits: true; };
 
     /* */
     :host {

@@ -1,16 +1,9 @@
 // @ts-ignore /* @vite-ignore */
-import {importCdn} from "/externals/modules/cdnImport.mjs";
-export {importCdn};
-
-// @ts-ignore
-import styles from "./LongText.scss?inline&compress";
+import { importCdn } from "/externals/modules/cdnImport.mjs";
 import { includeSelf } from "./Utils";
-export { styles };
 
 // @ts-ignore
-const { observeBySelector } = await Promise.try(importCdn, ["/externals/dom.js"]);
-
-//
+const { observeBySelector } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 export const doButtonAction = (button, input: HTMLInputElement)=>{
     //
     if (button.matches(".u2-copy") && input?.matches?.("input") && (input?.selectionStart != input?.selectionEnd)) {

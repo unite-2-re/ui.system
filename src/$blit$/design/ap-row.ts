@@ -5,10 +5,10 @@ import UISelectBase from "@blit/inputs/in-select";
 import UIButtonBase from "@blit/inputs/in-button";
 
 // @ts-ignore /* @vite-ignore */
-import { defineElement, E, H } from "/externals/lib/blue.js";
+import { defineElement, E, H } from "/externals/modules/dom.js";
 
 // @ts-ignore /* @vite-ignore */
-import { conditional } from "/externals/lib/object.js";
+import { conditional } from "/externals/modules/object.js";
 
 // @ts-ignore
 import styles from "@scss/design/ap-row.scss?inline";

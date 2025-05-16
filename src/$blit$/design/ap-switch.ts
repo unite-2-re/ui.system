@@ -11,7 +11,7 @@ import { makeSwitchBH } from "@service/behaviour/bh-switch";
 import styles from "@scss/design/ap-switch.scss?inline";
 
 // @ts-ignore /* @vite-ignore */
-import { E, H, property, defineElement } from "/externals/lib/blue.js";
+import { E, H, property, defineElement } from "/externals/modules/dom.js";
 
 // @ts-ignore
 @defineElement('ui-switch')

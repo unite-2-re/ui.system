@@ -1,14 +1,10 @@
-import { placeWithCursor } from "@service/layout/ps-cursor.js";
-
-//
-interface CTXMenuElement {
-    icon: HTMLElement;
-    content: string;
-    callback: Function;
-};
+import { placeWithCursor } from "@service/layout/ps-anchor.js";
 
 //
 const excSel = "ui-button";
+const ctx: string = "ui-modal[type=\"contextmenu\"]";
+
+//
 export const hideOnClick = (ev?)=>{
     const t = ev.target as HTMLElement;
 
@@ -29,7 +25,6 @@ export const hideOnClick = (ev?)=>{
 
 //
 const evt: [any, any] = [ hideOnClick, {} ];
-const ctx: string = "ui-modal[type=\"contextmenu\"]";
 
 //
 export const closeContextMenu = (ev?)=>{
@@ -85,7 +80,11 @@ export const openContextMenu = (event, toggle: boolean = false, content?: (ctxMe
 
 //
 export const makeCtxMenuItems = (ctxMenu?: any, initiator?: any, content?: any[])=>{
-    content?.map?.((el: CTXMenuElement)=>{
+    content?.map?.((el: {
+    icon: HTMLElement;
+    content: string;
+    callback: Function;
+})=>{
         const li = document.createElement("ui-button-row");
         if (!li.dataset.highlightHover) { li.dataset.highlightHover = "1"; }
 

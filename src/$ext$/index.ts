@@ -1,5 +1,5 @@
-import initLong from "./longtext/LongText";
-import initFocus from "./focustext/FocusText";
+import initLong from "./ts/LongText";
+import initFocus from "./ts/FocusText";
 
 //
 export const initializeLT = (ROOT = document.documentElement)=>{ initLong(ROOT); initFocus(ROOT); }
@@ -11,5 +11,7 @@ export * from "./shared/Selection";
 export * from "./shared/Gesture";
 export * from "./shared/GridDragging";
 export * from "./shared/Scrollbar";
-export * from "./focustext/FocusText";
-export * from "./longtext/LongText";
+export * from "./ts/FocusText";
+export * from "./ts/LongText";
+export * from "./ts/ScrollBox";
+export * from "./ts/OrientBox";

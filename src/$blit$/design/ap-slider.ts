@@ -13,7 +13,7 @@ import { makeSwitchBH } from "@service/behaviour/bh-switch";
 import styles from "@scss/design/ap-slider.scss?inline";
 
 // @ts-ignore /* @vite-ignore */
-import { defineElement, E, H, property } from "/externals/lib/blue.js";
+import { defineElement, E, H, property } from "/externals/modules/dom.js";
 
 // @ts-ignore
 @defineElement('ui-slider')

@@ -10,7 +10,7 @@ import { doIndication } from "@service/behaviour/bh-indication";
 import styles from "@scss/design/ap-number.scss?inline";
 
 // @ts-ignore /* @vite-ignore */
-import { defineElement, E, H, property } from "/externals/lib/blue.js";
+import { defineElement, E, H, property } from "/externals/modules/dom.js";
 
 // @ts-ignore
 @defineElement('ui-number')

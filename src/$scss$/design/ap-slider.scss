@@ -1,26 +1,11 @@
-@scope(:host, :root, :scope) {
-    //
-    @property --value {
-        initial-value: 0;
-        syntax: "<number>";
-        inherits: true;
-    }
-
-    //
-    @property --max-value {
-        initial-value: 0;
-        syntax: "<number>";
-        inherits: true;
-    }
+@scope(:scope, :host, :root) {
+    @property --value { initial-value: 0; syntax: "<number>"; inherits: true; }
+    @property --max-value { initial-value: 0; syntax: "<number>"; inherits: true; }
 };
 
 // Type: contained
 @layer ui-switch {
-
-    //
-    :host
-    {
-        /* */
+    :host {
         &, :where(*), ::slotted(*) {
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;

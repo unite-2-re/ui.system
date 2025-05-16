@@ -1,12 +1,7 @@
 // Type: standalone
-
-@layer ui-ap-row
-{
-    //
-    :host
-    {
-        &, :where(*), ::slotted(*)
-        {
+@layer ui-ap-row {
+    :host {
+        &, :where(*), ::slotted(*) {
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-tap-highlight-color: transparent;
             user-drag: none;

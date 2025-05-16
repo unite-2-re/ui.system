@@ -1,4 +1,4 @@
-import { setIdleInterval } from "@/$ext$/shared/Utils";
+import { setIdleInterval } from "@ext/shared/Utils";
 
 //
 const throttleMap = new Map<string, any>();
@@ -121,10 +121,8 @@ export const initStatus = ()=>{
 }
 
 //
+export default initStatus;
 export const connect = (receiver = document)=>{
     if (!initialized) initStatus();
     roots.push(receiver);
 }
-
-//
-export default initStatus;

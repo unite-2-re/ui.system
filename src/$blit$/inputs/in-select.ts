@@ -1,10 +1,12 @@
 /// <reference types="lit" />
-import { setAttributes } from "@/$ext$/shared/Utils";
+import { setAttributes } from "@ext/shared/Utils";
 import { onItemSelect } from "@service/behaviour/bh-select";
 
 // @ts-ignore /* @vite-ignore */
-import { BLitElement, property, defineElement } from "/externals/lib/blue.js";
-import { link } from "/externals/lib/object";
+import { BLitElement, property, defineElement } from "/externals/modules/dom.js";
+
+// @ts-ignore /* @vite-ignore */
+import { link } from "/externals/modules/object.js";
 
 // @ts-ignore
 @defineElement('ui-select-base')

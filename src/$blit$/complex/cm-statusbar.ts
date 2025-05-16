@@ -9,7 +9,7 @@ import styles from "@scss/design/ov-statusbar.scss?inline";
 import ThemedElement from "../shared/ThemedElement";
 
 // @ts-ignore /* @vite-ignore */
-import { H, property, defineElement } from "/externals/lib/blue.js";
+import { H, property, defineElement } from "/externals/modules/dom.js";
 
 // @ts-ignore
 @defineElement('ui-statusbar')
@@ -30,13 +30,13 @@ export class UIStatusBar extends ThemedElement {
     constructor() { super(); }
     protected onInitialize() {
         super.onInitialize?.();
-        this.style.setProperty("z-index", "999999", "important");
+        (this as HTMLElement).style.setProperty("z-index", "999999", "important");
         return this;
     }
 
     //
     protected onRender() {
-        const root = this.shadowRoot;
+        const root = (this as HTMLElement).shadowRoot;
         if (root) { connect?.(root); this.statusSW = true; }
         root.addEventListener("click", onInteration);
         return root;

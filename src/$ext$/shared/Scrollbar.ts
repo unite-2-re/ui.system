@@ -1,9 +1,8 @@
 // @ts-ignore /* @vite-ignore */
 import {importCdn} from "/externals/modules/cdnImport.mjs";
-export {importCdn};
 
 // @ts-ignore
-const { setProperty, zoomOf } = await Promise.try(importCdn, ["/externals/core/dom.js"]);
+const { setProperty, zoomOf } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 const onBorderObserve = new WeakMap<HTMLElement, Function[]>();
 
 //

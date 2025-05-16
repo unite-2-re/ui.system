@@ -1,10 +1,8 @@
 // @ts-ignore
-const { fixedClientZoom, orientOf } = await Promise.try(importCdn, ["/externals/dom.js"]);
+const { fixedClientZoom, orientOf } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 
 //
 export interface InteractStatus { pointerId?: number; };
-
-//
 export const ROOT = document.documentElement;
 export const setAttributesIfNull = (element, attrs = {})=>{
     return Array.from(Object.entries(attrs)).map(([name, value])=>{
