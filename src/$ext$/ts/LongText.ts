@@ -1,11 +1,15 @@
-// @ts-ignore
-import { importCdn, makeInput, measureText } from "/externals/modules/dom.js";
+// @ts-ignore /* @vite-ignore */
+import { importCdn } from "/externals/modules/cdnImport.mjs";
+
+// @ts-ignore /* @vite-ignore */
+import { measureText } from "/externals/modules/dom.js";
 
 // @ts-ignore
 import html from "../html/LongText.html?raw";
 
 // @ts-ignore
 import styles from "../scss/LongText.scss?inline&compress";
+import { makeInput } from "../shared/Input";
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 export class UILongTextElement extends HTMLElement {
     //#input?: HTMLInputElement | null;
@@ -29,7 +33,7 @@ export class UILongTextElement extends HTMLElement {
             });
 
             // @ts-ignore
-            Promise.try(importCdn, ["/externals/core/theme.js"])?.then?.((module)=>{
+            Promise.try(importCdn, ["/externals/modules/theme.js"])?.then?.((module)=>{
                 // @ts-ignore
                 this.#themeStyle = module?.default?.(shadowRoot);
                 if (this.#themeStyle) { shadowRoot?.appendChild?.(this.#themeStyle); }

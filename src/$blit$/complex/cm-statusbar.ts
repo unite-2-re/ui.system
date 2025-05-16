@@ -9,7 +9,7 @@ import styles from "@scss/design/ov-statusbar.scss?inline";
 import ThemedElement from "../shared/ThemedElement";
 
 // @ts-ignore /* @vite-ignore */
-import { H, property, defineElement } from "/externals/modules/dom.js";
+import { H, property, defineElement } from "/externals/modules/blue.js";
 
 // @ts-ignore
 @defineElement('ui-statusbar')

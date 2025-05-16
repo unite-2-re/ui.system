@@ -1,8 +1,11 @@
 // @ts-ignore /* @vite-ignore */
 import { importCdn } from "/externals/modules/cdnImport.mjs";
-import { includeSelf } from "./Utils";
 
-// @ts-ignore
+//
+import { includeSelf } from "./Utils";
+import { ScrollBar } from "./Scrollbar";
+
+// @ts-ignore /* @vite-ignore */
 const { observeBySelector } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 export const doButtonAction = (button, input: HTMLInputElement)=>{
     //
@@ -127,14 +130,12 @@ export const makeInput = (host?: HTMLElement, ROOT = document.documentElement)=>
             }
         }, {passive: false});
 
-        // @ts-ignore
-        Promise.try(importCdn, ["/externals/core/interact.js"])?.then?.(({ScrollBar})=>{
-            new ScrollBar({
-                content: box,
-                holder: host,
-                scrollbar: bar
-            }, 0);
-        });
+        //
+        new ScrollBar({
+            content: box,
+            holder: host,
+            scrollbar: bar
+        }, 0);
     }
 
     //

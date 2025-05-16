@@ -6,7 +6,7 @@ import { MOC } from "../shared/Utils";
 // @ts-ignore
 import html from "../html/FocusText.html?raw";
 
-// @ts-ignore
+// @ts-ignore /* @vite-ignore */
 const { computeCaretPositionFromClient, measureInputInFocus, measureText, zoomOf } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 
 // @ts-ignore
@@ -35,8 +35,8 @@ export class UIFocusTextElement extends HTMLElement {
                 shadowRoot.appendChild(cp.cloneNode(true));
             });
 
-            // @ts-ignore
-            Promise.try(importCdn, ["/externals/core/theme.js"])?.then?.((module)=>{
+            // @ts-ignore /* @vite-ignore */
+            Promise.try(importCdn, ["/externals/modules/theme.js"])?.then?.((module)=>{
                 // @ts-ignore
                 this.#themeStyle = module?.default?.(shadowRoot);
                 if (this.#themeStyle) { shadowRoot?.appendChild?.(this.#themeStyle); }

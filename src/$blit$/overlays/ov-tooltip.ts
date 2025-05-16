@@ -5,7 +5,7 @@ import LitElementTheme from "@blit/shared/ThemedElement";
 import styles from "@scss/design/ov-tooltip.scss?inline";
 
 // @ts-ignore /* @vite-ignore */
-import { defineElement, property } from "/externals/modules/dom.js";
+import { defineElement, property } from "/externals/modules/blue.js";
 
 // @ts-ignore
 @defineElement('ui-tooltip')

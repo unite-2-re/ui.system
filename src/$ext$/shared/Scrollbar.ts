@@ -1,5 +1,5 @@
 // @ts-ignore /* @vite-ignore */
-import {importCdn} from "/externals/modules/cdnImport.mjs";
+import { importCdn } from "/externals/modules/cdnImport.mjs";
 
 // @ts-ignore
 const { setProperty, zoomOf } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
@@ -294,7 +294,7 @@ export class ScrollBar {
         // inputs support also needed...
         if (this.holder?.["@target"] || this.holder) {
             // @ts-ignore
-            Promise.try(importCdn, ["/externals/lib/dom.js"])?.then?.(({observeBySelector})=>{
+            Promise.try(importCdn, ["/externals/modules/dom.js"])?.then?.(({observeBySelector})=>{
                 observeBySelector?.(this.holder, "*", computeScroll);
             });
 

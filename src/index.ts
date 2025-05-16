@@ -3,7 +3,6 @@
 // may be, some UI components will be dedicated from that project
 
 //
-export * from "@ext/index"
 export * from "@service/functional/fn-contextmenu";
 export * from "@service/functional/fn-dropmenu";
 export * from "@service/functional/fn-modal";
@@ -14,6 +13,7 @@ export * from "@service/tasks/opening";
 export * from "@service/tasks/binding";
 export * from "@blit/index";
 export * from "@scss/index";
+export * from "@ext/index";
 
 //
 import init2 from "@ext/index";

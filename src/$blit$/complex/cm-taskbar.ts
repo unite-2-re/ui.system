@@ -14,7 +14,7 @@ import htmlCode from "@temp/ov-taskbar.html?raw";
 import styles from "@scss/design/ov-taskbar.scss?inline";
 
 // @ts-ignore /* @vite-ignore */
-import { E, H, property, defineElement, matchMediaRef } from "/externals/modules/dom.js";
+import { E, H, defineElement, matchMediaRef, property } from "/externals/modules/blue.js";
 
 //
 const whenFocus = ()=>{

@@ -1,18 +1,41 @@
 import AxGesture from "./Gesture";
 import { setProperty } from "./Utils";
 
+// @ts-ignore /* @vite-ignore */
+import { importCdn } from "/externals/modules/cdnImport.mjs";
+
+//
+export const reflectCell = async (newItem: any, pArgs: any, withAnimate = false)=>{
+    // @ts-ignore /* @vite-ignore */
+    const { redirectCell } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
+    // @ts-ignore
+    const {subscribe, makeObjectAssignable, makeReactive } = await Promise.try(importCdn, ["/externals/modules/object.js"]);
+    const layout = [pArgs?.layout?.columns || pArgs?.layout?.[0] || 4, pArgs?.layout?.rows || pArgs?.layout?.[1] || 8];
+    const {item, list, items} = pArgs;
+    await new Promise((r)=>requestAnimationFrame(r));
+    subscribe?.(item, (state, property)=>{
+        const gridSystem = newItem?.parentElement;
+        layout[0] = parseInt(gridSystem?.style?.getPropertyValue?.("--layout-c")) || layout[0];
+        layout[1] = parseInt(gridSystem?.style?.getPropertyValue?.("--layout-r")) || layout[1];
+        const args = {item, list, items, layout, size: [gridSystem?.clientWidth, gridSystem?.clientHeight]};
+        if (item && !item?.cell) { item.cell = makeObjectAssignable(makeReactive([0, 0])); };
+        if (item && args) { const nc = redirectCell(item?.cell, args); if (nc[0] != item?.cell?.[0] || nc[1] != item?.cell?.[1]) { item.cell = nc; } };
+        if (property == "cell") { redirectCell(item?.cell, args); }
+    });
+}
+
 // shifting - reactive basis
 export const ROOT = document.documentElement;
 export const bindInteraction = async (newItem: any, pArgs: any)=>{
 
-    // @ts-ignore
-    const { grabForDrag, redirectCell, reflectCell, getBoundingOrientRect, agWrapEvent, orientOf, convertOrientPxToCX, doAnimate } = await Promise.try(importCdn, ["/externals/dom.js"]);
+    // @ts-ignore /* @vite-ignore */
+    const { grabForDrag, redirectCell, getBoundingOrientRect, agWrapEvent, orientOf, convertOrientPxToCX, doAnimate } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 
-    // @ts-ignore
-    const { ref, subscribe } = await Promise.try(importCdn, ["/externals/object.js"]);
+    // @ts-ignore /* @vite-ignore */
+    const { ref, subscribe } = await Promise.try(importCdn, ["/externals/modules/object.js"]);
 
-    // @ts-ignore
-    const { E } = await Promise.try(importCdn, ["/externals/blue.js"]);
+    // @ts-ignore /* @vite-ignore */
+    const { E } = await Promise.try(importCdn, ["/externals/modules/blue.js"]);
 
     //
     await new Promise((r)=>requestAnimationFrame(r)); reflectCell(newItem, pArgs, true);

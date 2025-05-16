@@ -1,3 +1,6 @@
+// @ts-ignore /* @vite-ignore */
+import { importCdn } from "/externals/modules/cdnImport.mjs";
+
 // @ts-ignore
 const { fixedClientZoom, orientOf } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 

@@ -1,4 +1,4 @@
-import initLong from "./ts/LongText";
+import initLong  from "./ts/LongText";
 import initFocus from "./ts/FocusText";
 
 //
@@ -11,6 +11,7 @@ export * from "./shared/Selection";
 export * from "./shared/Gesture";
 export * from "./shared/GridDragging";
 export * from "./shared/Scrollbar";
+export * from "./shared/Input";
 export * from "./ts/FocusText";
 export * from "./ts/LongText";
 export * from "./ts/ScrollBox";

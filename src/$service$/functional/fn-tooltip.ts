@@ -5,9 +5,7 @@ import {importCdn} from "/externals/modules/cdnImport.mjs";
 const ROOT = document.documentElement;
 export const runTooltip = async ()=>{
     // @ts-ignore
-    const { getBoundingOrientRect, agWrapEvent } = await Promise.try(importCdn, ["/externals/core/agate.js"]);
-    // @ts-ignore
-    const { AxGesture, pointerMap } = await Promise.try(importCdn, "/externals/core/interact.js");
+    const { getBoundingOrientRect, agWrapEvent, pointerMap } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 
     //
     const timer = Symbol("@disappear");

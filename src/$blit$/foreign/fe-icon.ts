@@ -9,7 +9,7 @@ import styles from "@scss/foreign/fe-icon.scss?inline";
 import {importCdn} from "/externals/modules/cdnImport.mjs";
 
 // @ts-ignore /* @vite-ignore */
-import { BLitElement, defineElement, E, H, property } from "/externals/modules/dom.js";
+import { BLitElement, defineElement, E, H, property } from "/externals/modules/blue.js";
 
 // @ts-ignore /* @vite-ignore */
 import { subscribe } from "/externals/modules/object.js";

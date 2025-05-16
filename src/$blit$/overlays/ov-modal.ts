@@ -5,7 +5,7 @@ import { ThemedElement } from "@blit/shared/ThemedElement";
 import { placeWithElement } from "@service/layout/ps-anchor";
 
 // @ts-ignore /* @vite-ignore */
-import { E, property, defineElement } from "/externals/modules/dom.js";
+import { E, property, defineElement } from "/externals/modules/blue.js";
 
 // @ts-ignore
 import styles from "@scss/design/ov-modal.scss?inline";
@@ -55,7 +55,7 @@ export class UIModal extends ThemedElement {
         super(); const self = this as unknown as HTMLElement;
 
         // @ts-ignore
-        Promise.try(importCdn, ["/externals/core/agate.js"])?.then?.(({whenAnyScreenChanges})=>{
+        Promise.try(importCdn, ["/externals/modules/dom.js"])?.then?.(({whenAnyScreenChanges})=>{
             whenAnyScreenChanges?.(()=>this.placeWithElement());
         });
     }

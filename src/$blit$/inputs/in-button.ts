@@ -2,7 +2,7 @@
 // Type: standalone
 
 // @ts-ignore /* @vite-ignore */
-import { BLitElement, defineElement } from "/externals/modules/dom.js";
+import { BLitElement, defineElement } from "/externals/modules/blue.js";
 
 // @ts-ignore
 @defineElement('ui-button-base')

@@ -3,12 +3,10 @@
 // Behaviour: select, button
 
 // @ts-ignore /* @vite-ignore */
-import { E, H, property, defineElement } from "/externals/modules/dom.js";
+import { E, H, property, defineElement } from "/externals/modules/blue.js";
 
 // @ts-ignore /* @vite-ignore */
-import { conditional } from "/externals/modules/object.js";
-
-//
+import { conditional  } from "/externals/modules/object.js";
 import { openDropMenu } from "@service/functional/fn-dropmenu";
 
 //

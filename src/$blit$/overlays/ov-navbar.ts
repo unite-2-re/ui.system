@@ -8,7 +8,7 @@ import initTaskManager from "@service/tasks/manager";
 import styles from "@scss/design/ov-navbar.scss?inline";
 
 // @ts-ignore /* @vite-ignore */
-import { H, property, defineElement } from "/externals/modules/dom.js";
+import { H, property, defineElement } from "/externals/modules/blue.js";
 
 // @ts-ignore
 @defineElement('ui-navbar')

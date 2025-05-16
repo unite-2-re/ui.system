@@ -10,7 +10,7 @@ import ThemedElement from "@blit/shared/ThemedElement";
 import styles from "@scss/foreign/fe-calendar.scss?inline";
 
 // @ts-ignore /* @vite-ignore */
-import { defineElement, E, H, property } from "/externals/modules/dom.js";
+import { defineElement, E, H, property } from "/externals/modules/blue.js";
 
 // @ts-ignore
 @defineElement('ui-calendar')

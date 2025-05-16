@@ -5,7 +5,7 @@ import UISelectBase from "@blit/inputs/in-select";
 import UIButtonBase from "@blit/inputs/in-button";
 
 // @ts-ignore /* @vite-ignore */
-import { defineElement, E, H } from "/externals/modules/dom.js";
+import { defineElement, E, H } from "/externals/modules/blue.js";
 
 // @ts-ignore /* @vite-ignore */
 import { conditional } from "/externals/modules/object.js";

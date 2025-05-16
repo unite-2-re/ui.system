@@ -15,7 +15,7 @@ export const placeWithElement = async (self?: HTMLElement, element?: HTMLElement
         self && self?.dataset?.hidden == null
     ) {
         // @ts-ignore
-        const {getBoundingOrientRect} = await Promise.try(importCdn, ["/externals/core/agate.js"]);
+        const {getBoundingOrientRect} = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 
         //
         const box      = getBoundingOrientRect(element);

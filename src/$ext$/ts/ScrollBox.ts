@@ -6,6 +6,7 @@ import html from "../html/ScrollBox.html?raw";
 
 // @ts-ignore
 import styles from "../scss/ScrollBox.scss?inline&compress";
+import { ScrollBar } from "../shared/Scrollbar";
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 export default class UIScrollBox extends HTMLElement {
     static observedAttributes = ["data-scroll-top", "data-scroll-left"];
@@ -24,8 +25,8 @@ export default class UIScrollBox extends HTMLElement {
         const shadowRoot = this.shadowRoot; const parser = new DOMParser();
         const dom = parser.parseFromString(html, "text/html");
 
-        // @ts-ignore
-        Promise.try(importCdn, ["/externals/core/theme.js"])?.then?.((module)=>{
+        // @ts-ignore /* @vite-ignore */
+        Promise.try(importCdn, ["/externals/modules/theme.js"])?.then?.((module)=>{
             // @ts-ignore
             this.#themeStyle = module?.default?.(this.shadowRoot);
             if (this.#themeStyle) { this.shadowRoot?.appendChild?.(this.#themeStyle); }
@@ -44,27 +45,25 @@ export default class UIScrollBox extends HTMLElement {
         //
         const content = shadowRoot?.querySelector?.(".content-box");
 
-        // @ts-ignore
-        Promise.try(importCdn, ["/externals/core/interact.js"])?.then?.(({ScrollBar})=>{
-            this["@scrollbar-x"] = new ScrollBar(
-                {
-                    holder: this,
-                    content: shadowRoot?.querySelector(".content-box"),
-                    scrollbar: shadowRoot?.querySelector(".scrollbar-x"),
-                },
-                0
-            );
+        //
+        this["@scrollbar-x"] = new ScrollBar(
+            {
+                holder: this,
+                content: shadowRoot?.querySelector(".content-box"),
+                scrollbar: shadowRoot?.querySelector(".scrollbar-x"),
+            },
+            0
+        );
 
-            //
-            this["@scrollbar-y"] = new ScrollBar(
-                {
-                    holder: this,
-                    content: shadowRoot?.querySelector(".content-box"),
-                    scrollbar: shadowRoot?.querySelector(".scrollbar-y"),
-                },
-                1
-            );
-        });
+        //
+        this["@scrollbar-y"] = new ScrollBar(
+            {
+                holder: this,
+                content: shadowRoot?.querySelector(".content-box"),
+                scrollbar: shadowRoot?.querySelector(".scrollbar-y"),
+            },
+            1
+        );
 
 
         //

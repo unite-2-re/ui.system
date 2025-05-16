@@ -3,7 +3,7 @@ import { setAttributes } from "@ext/shared/Utils";
 import { onItemSelect } from "@service/behaviour/bh-select";
 
 // @ts-ignore /* @vite-ignore */
-import { BLitElement, property, defineElement } from "/externals/modules/dom.js";
+import { BLitElement, property, defineElement } from "/externals/modules/blue.js";
 
 // @ts-ignore /* @vite-ignore */
 import { link } from "/externals/modules/object.js";

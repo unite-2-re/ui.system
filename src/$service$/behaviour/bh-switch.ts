@@ -35,7 +35,7 @@ export const makeSwitchBH = async (self?: HTMLElement)=>{
     if (!self) return;
 
     // @ts-ignore
-    const { getBoundingOrientRect, agWrapEvent } = await Promise.try(importCdn, ["/externals/core/agate.js"]);
+    const { getBoundingOrientRect, agWrapEvent } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
 
     //
     const sws  = { pointerId: -1 };

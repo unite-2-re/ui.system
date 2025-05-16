@@ -2,7 +2,7 @@
 import { importCdn } from "/externals/modules/cdnImport.mjs";
 
 // @ts-ignore /* @vite-ignore */
-import { elementPointerMap } from "/externals/modules/dom.ts";
+import { elementPointerMap } from "/externals/modules/dom.js";
 
 // @ts-ignore
 import html from "../html/OrientBox.html?raw";
@@ -31,8 +31,8 @@ export class UIOrientBox extends HTMLElement {
         super();
         const shadowRoot = this.attachShadow({mode: "open"});
 
-        // @ts-ignore
-        Promise.try(importCdn, ["/externals/core/theme.js"]).then((module)=>{
+        // @ts-ignore /* @vite-ignore */
+        Promise.try(importCdn, ["/externals/modules/theme.js"]).then((module)=>{
             // @ts-ignore
             this.#themeStyle = module?.default?.(this.shadowRoot);
             if (this.#themeStyle) { this.shadowRoot?.appendChild?.(this.#themeStyle); }

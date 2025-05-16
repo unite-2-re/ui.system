@@ -1,12 +1,10 @@
 // @ts-ignore /* @vite-ignore */
+import { AxGesture } from "@ext/index";
 import {importCdn} from "/externals/modules/cdnImport.mjs";
 
 //
 export const $control$ = Symbol("@control");
 export const makeControl = async (frameElement: HTMLElement)=>{
-    // @ts-ignore
-    const {AxGesture} = await Promise.try(importCdn, ["/externals/core/interact.js"]);
-
     //
     let gestureControl: any = null;
     if (frameElement && !frameElement[$control$]) {

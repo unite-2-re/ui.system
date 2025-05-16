@@ -9,7 +9,7 @@ import initTaskManager from "@service/tasks/manager";
 import styles from "@scss/design/ov-taskitem.scss?inline";
 
 // @ts-ignore /* @vite-ignore */
-import { defineElement, H, property } from "/externals/modules/dom.js";
+import { defineElement, H, property } from "/externals/modules/blue.js";
 
 // @ts-ignore
 @defineElement('ui-task')

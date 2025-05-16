@@ -3,7 +3,7 @@
 // this component (or lucide icons) may to be distributed with main package.
 
 // @ts-ignore /* @vite-ignore */
-import { BLitElement, defineElement, E, H, property } from "/externals/modules/dom.js";
+import { BLitElement, defineElement, E, H, property } from "/externals/modules/blue.js";
 
 // @ts-ignore
 import styles from "@scss/design/de-shape.scss?inline";
