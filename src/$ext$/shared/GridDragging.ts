@@ -36,16 +36,10 @@ export const bindInteraction = async (newItem: any, pArgs: any)=>{
 
     // @ts-ignore /* @vite-ignore */
     const { E } = await Promise.try(importCdn, ["/externals/modules/blue.js"]);
-
-    //
     await new Promise((r)=>requestAnimationFrame(r)); reflectCell(newItem, pArgs, true);
     const {item, list, items} = pArgs, layout = [pArgs?.layout?.columns || pArgs?.layout?.[0] || 4, pArgs?.layout?.rows || pArgs?.layout?.[1] || 8];
-    const beh = (axis="x")=>([val, set, old], [signal, prop, wel])=>doAnimate(wel?.deref?.(), val, axis, true)?.then?.(()=>set());
-
-    //
-    const gesture = new AxGesture(newItem);
-    const dragging = [ ref(0), ref(0) ];
-    const currentCell = [ ref(item?.cell?.[0] || 0, beh("x")), ref(item?.cell?.[1] || 0, beh("y")) ];
+    const dragging    = [ ref(0), ref(0) ], gesture = new AxGesture(newItem);
+    const currentCell = [ ref(item?.cell?.[0] || 0), ref(item?.cell?.[1] || 0) ];
 
     //
     E(newItem, { style: { "--cell-x": currentCell[0], "--cell-y": currentCell[1], "--drag-x": dragging[0], "--drag-y": dragging[1] } });
@@ -78,6 +72,7 @@ export const bindInteraction = async (newItem: any, pArgs: any)=>{
                     const coord: [number, number] = (ev_l.orient ? [...ev_l.orient] : [ev_l?.clientX || 0, ev_l?.clientY || 0]) as [number, number];
                     const shift: [number, number] = [coord[0] - n_coord[0], coord[1] - n_coord[1]];
                     if (Math.hypot(...shift) > 10) {
+                        dragging[0].value = 0, dragging[1].value = 0;
                         ROOT.removeEventListener("pointermove", shifting);
                         grabForDrag(newItem, ev_l, {
                             result: dragging,
@@ -130,15 +125,15 @@ export const bindInteraction = async (newItem: any, pArgs: any)=>{
         const cell = redirectCell([Math.floor(CXa[0]), Math.floor(CXa[1])], args);
 
         //
-        if (ev?.detail?.holding?.modified != null) { ev.detail.holding.modified[0] = dragging[0].value = 0; } else { dragging[0].value = 0; };
-        if (ev?.detail?.holding?.modified != null) { ev.detail.holding.modified[1] = dragging[1].value = 0; } else { dragging[1].value = 0; };
-
-        //
-        if (currentCell[0].value != cell[0]) { setProperty(newItem, "--p-cell-x", currentCell[0].value = cell[0]); };
-        if (currentCell[1].value != cell[1]) { setProperty(newItem, "--p-cell-y", currentCell[1].value = cell[1]); };
-
-        //
+        try { dragging[0].value = 0, dragging[1].value = 0; } catch(e){};
+        if (ev?.detail?.holding?.modified != null) { ev.detail.holding.modified[0] = 0, ev.detail.holding.modified[1] = 0; }
+        if (currentCell[0].value != cell[0]) { try { currentCell[0].value = cell[0]; } catch(e){}; };
+        if (currentCell[1].value != cell[1]) { try { currentCell[1].value = cell[1]; } catch(e){}; };
         newItem.dataset.dragging = "";
+
+        //
+        setProperty(newItem, "--p-cell-x", newItem.style.getPropertyValue("--cell-x") || 0);
+        setProperty(newItem, "--p-cell-y", newItem.style.getPropertyValue("--cell-y") || 0);
     });
 
     //
@@ -157,15 +152,21 @@ export const bindInteraction = async (newItem: any, pArgs: any)=>{
         const args = {item, list, items, layout, size: [gridSystem?.clientWidth, gridSystem?.clientHeight]};
         const CXa  = convertOrientPxToCX(rel, args, orientOf(gridSystem));
         const clamped = [Math.floor(CXa[0]), Math.floor(CXa[1])];
-
-        //
         clamped[0] = Math.max(Math.min(clamped[0], layout[0]-1), 0);
         clamped[1] = Math.max(Math.min(clamped[1], layout[1]-1), 0);
 
         //
+        if (ev?.detail?.holding?.modified != null) { ev.detail.holding.modified[0] = 0, ev.detail.holding.modified[1] = 0; }
+        setProperty(newItem, "--p-cell-x", newItem.style.getPropertyValue("--cell-x") || 0);
+        setProperty(newItem, "--p-cell-y", newItem.style.getPropertyValue("--cell-y") || 0);
+
+        //
         const cell = redirectCell(clamped, args);
-        currentCell[0].value = cell[0];
-        currentCell[1].value = cell[0];
+        doAnimate(newItem, cell[0], "x", true)?.then(()=>{if (currentCell[0].value != cell[0]) { try { currentCell[0].value = cell[0]; } catch(e) {}}; });
+        doAnimate(newItem, cell[1], "y", true)?.then(()=>{if (currentCell[1].value != cell[1]) { try { currentCell[1].value = cell[1]; } catch(e) {}}; });
+        try { dragging[0].value = 0; } catch(e) {};
+        try { dragging[1].value = 0; } catch(e) {};
+        delete newItem.dataset.dragging;
     });
 
     //
