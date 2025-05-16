@@ -1,5 +1,5 @@
 {
-    "include": ["./src/**/*"],
+    "include": ["./src/**/*", "src/$ext$/shared/Gesture.ts"],
     "exclude": ["./test/**/*", "./externals/**/*", "./dist/**/*"],
     "compilerOptions": {
         "paths": {

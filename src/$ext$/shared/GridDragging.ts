@@ -1,108 +1,4 @@
-//
-import AxGesture from "../shared/Gesture";
-import { grabForDrag, setProperty } from "/externals/modules/dom.ts";
-
-// @ts-ignore /* @vite-ignore */
-import {importCdn} from "/externals/modules/cdnImport.mjs";
-export {importCdn};
-
-//
-const ROOT = document.documentElement;
-
-//
-export const reflectCell = async (newItem: any, pArgs: any, withAnimate = false)=>{
-    // @ts-ignore
-    const { getBoundingOrientRect, agWrapEvent, orientOf, redirectCell, convertOrientPxToCX } = await Promise.try(importCdn, ["/externals/core/agate.js"]);
-    // @ts-ignore
-    const {subscribe, makeObjectAssignable, makeReactive } = await Promise.try(importCdn, ["/externals/lib/object.js"]);
-
-    //
-    const layout = [pArgs?.layout?.columns || pArgs?.layout?.[0] || 4, pArgs?.layout?.rows || pArgs?.layout?.[1] || 8];
-    const {item, list, items} = pArgs;
-
-    //
-    await new Promise((r)=>requestAnimationFrame(r));
-    subscribe?.(item, (state, property)=>{
-        const gridSystem = newItem?.parentElement;
-        layout[0] = parseInt(gridSystem.style.getPropertyValue("--layout-c")) || layout[0];
-        layout[1] = parseInt(gridSystem.style.getPropertyValue("--layout-r")) || layout[1];
-
-        //
-        const pbox = getBoundingOrientRect(gridSystem) || gridSystem?.getBoundingClientRect?.();
-        const args = {item, list, items, layout, size: [gridSystem?.clientWidth, gridSystem?.clientHeight]};
-        if (item && !item?.cell) { item.cell = makeObjectAssignable(makeReactive([0, 0])); };
-        if (item && args) { const nc = redirectCell(item?.cell, args); if (nc[0] != item?.cell?.[0] || nc[1] != item?.cell?.[1]) { item.cell = nc; } };
-        if (property == "cell") { subscribe(state, (v,p)=>{
-            doAnimate(newItem, redirectCell(item?.cell, args), withAnimate);
-        }); }
-    });
-}
-
-//
-export const animationSequence = (DragCoord = [0, 0], CellStart: any = null, CellEnd: any = null) => {
-    return [{
-        "--drag-x": DragCoord?.[0] || 0,
-        "--drag-y": DragCoord?.[1] || 0,
-        "--grid-c": CellStart?.[0] != null ? (CellStart?.[0]+1) : "var(--fp-cell-x)",
-        "--grid-r": CellStart?.[1] != null ? (CellStart?.[1]+1) : "var(--fp-cell-y)",
-    }, // starting...
-    {
-        "--drag-x": 0,
-        "--drag-y": 0,
-        "--grid-c": CellEnd?.[0] != null ? (CellEnd?.[0]+1) : "var(--fc-cell-x)",
-        "--grid-r": CellEnd?.[1] != null ? (CellEnd?.[1]+1) : "var(--fc-cell-y)",
-    }];
-};
-
-//
-export const doAnimate = async (newItem, cell, animate = false)=>{
-    setProperty(newItem, "--cell-x", cell[0]);
-    setProperty(newItem, "--cell-y", cell[1]);
-
-    //
-    const animation = animate && !matchMedia("(prefers-reduced-motion: reduce)")?.matches ? newItem.animate(animationSequence([
-        parseInt(newItem.style.getPropertyValue("--drag-x")),
-        parseInt(newItem.style.getPropertyValue("--drag-y"))
-    ], [
-        parseInt(newItem.style.getPropertyValue("--p-cell-x")),
-        parseInt(newItem.style.getPropertyValue("--p-cell-y"))
-    ], cell), {
-        fill: "both",
-        duration: 150,
-        easing: "linear"
-    }) : null;
-
-    //
-    let shifted = false;
-    const onShift: [any, any] = [(ev)=>{
-        if (!shifted) {
-            shifted = true;
-            //animation?.commitStyles?.();
-            animation?.cancel?.();
-        }
-
-        //
-        newItem?.removeEventListener?.("m-dragstart", ...onShift);
-    }, {once: true}];
-
-    // not fact, but for animation
-    newItem?.addEventListener?.("m-dragstart", ...onShift);
-    //await new Promise((r)=>requestAnimationFrame(r));
-    await animation?.finished?.catch?.(console.warn.bind(console));
-    delete newItem.dataset.dragging;
-
-    //
-    if (!shifted) {
-        // commit dragging result
-        onShift?.[0]?.();
-        setProperty(newItem, "--p-cell-x", cell[0]);
-        setProperty(newItem, "--p-cell-y", cell[1]);
-        setProperty(newItem, "--drag-x", 0);
-        setProperty(newItem, "--drag-y", 0);
-    }
-}
-
-//
+// shifting - reactive basis
 export const bindInteraction = async (newItem: any, pArgs: any)=>{
 
     // @ts-ignore
@@ -147,10 +43,11 @@ export const bindInteraction = async (newItem: any, pArgs: any)=>{
                         ROOT.removeEventListener("pointermove", shifting);
                         grabForDrag(newItem, ev_l, {
                             propertyName: "drag",
-                            shifting: [
+                            shifting: [0, 0]
+                            /*shifting: [
                                 parseFloat(newItem?.style?.getPropertyValue("--drag-x")) || 0,
                                 parseFloat(newItem?.style?.getPropertyValue("--drag-y")) || 0
-                            ],
+                            ],*/
                         });
                     }
                 }
@@ -245,11 +142,4 @@ export const bindInteraction = async (newItem: any, pArgs: any)=>{
         //
         //await doAnimate(newItem, item.cell = redirectCell(clamped, args));
     });
-}
-
-//
-export const getSpan = (el, ax)=>{
-    const prop = el.style.getPropertyValue(["--ox-c-span", "--ox-r-span"][ax]);
-    const factor = ((parseFloat(prop || "1") || 1) - 1);
-    return Math.min(Math.max(factor-1, 0), 1);
 }
