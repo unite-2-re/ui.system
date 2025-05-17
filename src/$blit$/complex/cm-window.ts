@@ -15,6 +15,9 @@ import styles from "@scss/design/ov-window.scss?inline";
 // @ts-ignore /* @vite-ignore */
 import { defineElement, H } from "/externals/modules/blue.js";
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore
 @defineElement('ui-frame')
 export class UIFrame extends ThemedElement {
@@ -35,7 +38,7 @@ export class UIFrame extends ThemedElement {
 
     //
     public render = ()=> H(htmlCode);
-    public styles = ()=> styles;
+    public styles = ()=> preInit;
     public onInitialize() {
         super.onInitialize?.();
         const self = this as unknown as HTMLElement;

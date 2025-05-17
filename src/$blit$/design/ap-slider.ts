@@ -12,6 +12,9 @@ import { makeSwitchBH } from "@service/behaviour/bh-switch";
 // @ts-ignore
 import styles from "@scss/design/ap-slider.scss?inline";
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore /* @vite-ignore */
 import { defineElement, E, H, property } from "/externals/modules/blue.js";
 
@@ -22,7 +25,7 @@ export class UISlider extends ThemedElement {
     @property({source: "checked", from: "input"}) checked;
 
     //
-    public styles = ()=>styles;
+    public styles = ()=>preInit;
     public render = ()=> H`<${"label.ui-contain"} part="ui-contain">
     <${"div.ui-fill"} part="ui-fill" dataset=${{scheme: "inverse", alpha: 1, highlight: 2, chroma: 0.6}}>
         <${"div.ui-fill-inactive"} inert="" dataset=${{alpha: 0.5, scheme: "solid"}}></div>

@@ -9,6 +9,9 @@ import { doIndication } from "@service/behaviour/bh-indication";
 // @ts-ignore
 import styles from "@scss/design/ap-number.scss?inline";
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore /* @vite-ignore */
 import { defineElement, E, H, property } from "/externals/modules/blue.js";
 
@@ -18,7 +21,7 @@ export class UINumber extends ThemedElement {
     @property({source: "valueAsNumber", from: "input" }) value;
 
     //
-    public styles = ()=>styles;
+    public styles = ()=>preInit;
     public render = (weak)=>{
         const down = (ev)=>{
             const self = weak?.deref?.() as (HTMLElement | undefined);

@@ -8,6 +8,9 @@ import { BLitElement, defineElement, E, H } from "/externals/modules/blue.js";
 // @ts-ignore
 import styles from "@scss/design/de-block.scss?inline";
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore
 @defineElement('ui-block')
 export class UIBlock extends BLitElement() {
@@ -20,7 +23,7 @@ export class UIBlock extends BLitElement() {
     };
 
     //
-    public styles = ()=>styles;
+    public styles = ()=>preInit;
     public render = ()=>H`
 <div part="ui-block-icon" data-place="icon"><slot name="icon"/></div>
 <div part="ui-block-label" data-place="label"><slot name="label"/></div>

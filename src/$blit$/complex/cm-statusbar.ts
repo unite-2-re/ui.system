@@ -11,6 +11,9 @@ import ThemedElement from "../shared/ThemedElement";
 // @ts-ignore /* @vite-ignore */
 import { H, property, defineElement } from "/externals/modules/blue.js";
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore
 @defineElement('ui-statusbar')
 export class UIStatusBar extends ThemedElement {
@@ -23,7 +26,7 @@ export class UIStatusBar extends ThemedElement {
     };
 
     //
-    public styles = () => styles;
+    public styles = () => preInit;
     public render = () => H(htmlCode);
 
     //

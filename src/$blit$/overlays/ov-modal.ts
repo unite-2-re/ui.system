@@ -13,6 +13,9 @@ import styles from "@scss/design/ov-modal.scss?inline";
 // @ts-ignore /* @vite-ignore */
 import {importCdn} from "/externals/modules/cdnImport.mjs";
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore
 @defineElement('ui-modal')
 export class UIModal extends ThemedElement {
@@ -21,7 +24,7 @@ export class UIModal extends ThemedElement {
     @property() protected current?: string;
 
     //
-    public styles = () => styles;
+    public styles = () => preInit;
     public initialAttributes = {
         "data-hidden": "",
         "data-chroma": "0.001",

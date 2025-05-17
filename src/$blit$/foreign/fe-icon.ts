@@ -58,6 +58,9 @@ const loadAsImage = (name: string, creator?: (name: string)=>any)=>{
     return url;
 };
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore
 @defineElement('ui-icon')
 export class UILucideIcon extends BLitElement() {
@@ -67,7 +70,7 @@ export class UILucideIcon extends BLitElement() {
     #options = { padding: 0, icon: "" };
 
     // also "display" may be "contents"
-    public styles = ()=>styles;
+    public styles = ()=>preInit;
     public render = (we)=>{ return H(`<div class="fill"></div>`); }
     public onRender() { this.icon = this.#options?.icon || this.icon; this.updateIcon(); subscribe([this.getProperty("icon"), "value"], (icon)=>{ this.updateIcon() }); }
     constructor(options = {icon: "", padding: ""}) { super(); Object.assign(this.#options, options); }

@@ -4,6 +4,9 @@ import LitElementTheme from "@blit/shared/ThemedElement";
 // @ts-ignore
 import styles from "@scss/design/ov-tooltip.scss?inline";
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore /* @vite-ignore */
 import { defineElement, property } from "/externals/modules/blue.js";
 
@@ -13,7 +16,7 @@ export class UITooltip extends LitElementTheme {
     @property() protected current?: string;
 
     //
-    public styles = () => styles;
+    public styles = () => preInit;
     public initialAttributes = {
         "data-chroma": "0.001",
         "data-scheme": "solid",

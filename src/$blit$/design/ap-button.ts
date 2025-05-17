@@ -16,6 +16,9 @@ import UISelectBase from "@blit/inputs/in-select";
 // @ts-ignore
 import styles from "@scss/design/ap-button.scss?inline";
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore
 @defineElement('ui-toggle')
 export class UIToggle extends UISelectBase {
@@ -23,7 +26,7 @@ export class UIToggle extends UISelectBase {
     @property({}) dropMenu?: any = null;
 
     //
-    public styles = ()=> styles;
+    public styles = ()=> preInit;
     public render = ()=> H`<${"button.ui-button"} part="ui-button" type="button" style="background-color: transparent;" data-alpha="0"><slot/></button>`;
     public initialAttributes = {
         "data-alpha": 0,
@@ -50,7 +53,7 @@ export class UIButton extends UIButtonBase {
     @property({}) dropMenu?: any = null;
 
     //
-    public styles = ()=> styles;
+    public styles = ()=> preInit;
     public render = ()=> H`<${"button.ui-button"} part="ui-button" type="button" style="background-color: transparent;" data-alpha="0"><slot/></button>`;
     public initialAttributes = {
         "data-scheme": "solid",

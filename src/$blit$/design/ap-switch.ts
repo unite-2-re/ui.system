@@ -10,6 +10,9 @@ import { makeSwitchBH } from "@service/behaviour/bh-switch";
 // @ts-ignore
 import styles from "@scss/design/ap-switch.scss?inline";
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore /* @vite-ignore */
 import { E, H, property, defineElement } from "/externals/modules/blue.js";
 
@@ -20,7 +23,7 @@ export class UISwitch extends ThemedElement {
     @property({source: "checked", from: "input"}) checked;
 
     //
-    public styles = ()=>styles;
+    public styles = ()=>preInit;
     public render = ()=>H`<${"label.ui-contain"} part="ui-contain">
     <${"div.ui-fill"} dataset=${{scheme: "inverse", alpha: 1, highlight: 2, chroma: 0.1, highlightHover: 4}}>
         <${"div.ui-fill-inactive"} inert="" data-alpha="0"></div>

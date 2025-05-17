@@ -8,13 +8,16 @@ import { BLitElement, defineElement, E, H, property } from "/externals/modules/b
 // @ts-ignore
 import styles from "@scss/design/de-shape.scss?inline";
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore
 @defineElement('ui-shaped')
 export class UIShaped extends BLitElement() {
     @property({ source: "attr" }) icon?: string;
 
     //
-    public styles = ()=>styles;
+    public styles = ()=>preInit;
     public render = (w)=>{
         return H`<slot></slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" part="icon" icon=${w.deref().icon||""}/>`
     }

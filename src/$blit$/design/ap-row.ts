@@ -13,11 +13,13 @@ import { conditional } from "/externals/modules/object.js";
 // @ts-ignore
 import styles from "@scss/design/ap-row.scss?inline";
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 
 // @ts-ignore
 @defineElement('ui-select-row')
 export class UISelectRow extends UISelectBase {
-    protected styles = () => styles;
+    protected styles = () => preInit;
     protected render = () => H`<${"div.ui-columns"} part="ui-columns" data-alpha="0"><slot></slot></div><slot name="radio"></slot>`;
     protected onInitialize() {
         super.onInitialize?.();
@@ -46,7 +48,7 @@ export class UISelectRow extends UISelectBase {
 // @ts-ignore
 @defineElement('ui-button-row')
 export class UIButtonRow extends UIButtonBase {
-    protected styles = () => styles;
+    protected styles = () => preInit;
     protected render = () => H`<${"div.ui-columns"} part="ui-columns" data-alpha="0"><slot></slot></div><slot name="radio"></slot>`;
 }
 

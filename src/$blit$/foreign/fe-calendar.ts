@@ -12,6 +12,9 @@ import styles from "@scss/foreign/fe-calendar.scss?inline";
 // @ts-ignore /* @vite-ignore */
 import { defineElement, E, H, property } from "/externals/modules/blue.js";
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore
 @defineElement('ui-calendar')
 export class UICalendar extends ThemedElement {
@@ -20,7 +23,7 @@ export class UICalendar extends ThemedElement {
     wrapper?: any;
 
     //
-    public styles = () => styles;
+    public styles = () => preInit;
     public render = () => H(`<div class="ui-calendar"></div>`);
 
     //

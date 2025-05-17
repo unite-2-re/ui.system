@@ -7,6 +7,7 @@ import initTaskManager from "@service/tasks/manager";
 
 // @ts-ignore
 import styles from "@scss/design/ov-taskitem.scss?inline";
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 
 // @ts-ignore /* @vite-ignore */
 import { defineElement, H, property } from "/externals/modules/blue.js";
@@ -19,7 +20,7 @@ export class UITaskItem extends ThemedElement {
     @property() public taskManager?: any;
 
     // also "display" may be "contents"
-    public styles = ()=>styles;
+    public styles = ()=>preInit;
     public render = ()=>{
         return H`${this.themeStyle} <ui-icon inert icon=${this.desc?.icon} data-highlight="0" data-alpha="0"></ui-icon> <span inert data-highlight="0" data-alpha="0">${this.desc?.label}</span>`;
     }

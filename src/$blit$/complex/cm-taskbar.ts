@@ -23,6 +23,9 @@ const whenFocus = ()=>{
     if (taskbar) (taskbar as HTMLElement).dataset.hidden = "";
 };
 
+//
+const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
 // @ts-ignore
 @defineElement('ui-taskbar')
 export class UITaskBar extends ThemedElement {
@@ -32,7 +35,7 @@ export class UITaskBar extends ThemedElement {
     @property() public taskManager?: any;
 
     //
-    public styles = () => styles;
+    public styles = () => preInit;
     public render = () => H(htmlCode);
 
     //

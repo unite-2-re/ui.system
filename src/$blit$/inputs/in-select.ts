@@ -47,7 +47,7 @@ export class UISelectBase extends BLitElement() {
         });
         if (!self.querySelector("input")) {
             let save = this.value, name = this.name;
-            self.insertAdjacentHTML?.("afterbegin", `<input slot="radio" data-alpha="0" part="ui-radio" placeholder=" " label=" " type="radio">`);
+            self.insertAdjacentHTML?.("afterbegin", `<input style="display:none;" slot="radio" data-alpha="0" part="ui-radio" placeholder=" " label=" " type="radio">`);
             save ||= this.getAttribute("value") || this.getAttribute("data-value");
             name ||= this.getAttribute("name") || this.getAttribute("data-name") || this.parentNode?.getAttribute?.("data-name");
             const input = self.querySelector("input");
