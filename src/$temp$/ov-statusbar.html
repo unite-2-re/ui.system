@@ -1,6 +1,6 @@
 <template>
-    <div class="left ui-anchor">
-        <div class="ui-indicator ui-time" data-popup="calendar" style="pointer-events: auto;">
+    <div class="left ui-anchor" style="background-color: transparent;">
+        <div class="ui-indicator ui-time" data-popup="calendar" style="pointer-events: auto; background-color: transparent;">
             <!--<span class="ui-time-hour" inert>00</span>:<span class="ui-time-minute" inert>00</span>-->
         </div>
         <!--<button
@@ -26,16 +26,16 @@
             ></ui-icon>
         </a>-->
     </div>
-    <div class="center"><slot></slot></div>
-    <div class="right">
+    <div class="center" style="background-color: transparent;"><slot></slot></div>
+    <div class="right" style="background-color: transparent;">
         <slot name="status"></slot>
 
-        <div class="ui-indicator ui-icon" data-popup="quick-settings">
-            <ui-icon inert icon="wifi-off" class="icon-wrap ui-icon-state ui-network"
+        <div class="ui-indicator ui-icon" data-popup="quick-settings" style="background-color: transparent;">
+            <ui-icon style="background-color: transparent;" inert icon="wifi-off" class="icon-wrap ui-icon-state ui-network"
             ></ui-icon>
         </div>
-        <div class="ui-indicator ui-icon">
-            <ui-icon inert icon="battery" class="icon-wrap ui-icon-state ui-battery"
+        <div class="ui-indicator ui-icon" style="background-color: transparent;">
+            <ui-icon style="background-color: transparent;" inert icon="battery" class="icon-wrap ui-icon-state ui-battery"
             ></ui-icon>
         </div>
     </div>

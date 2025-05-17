@@ -21,6 +21,7 @@ export class UIStatusBar extends ThemedElement {
 
     //
     protected initialAttributes = {
+        "data-alpha": 0,
         "data-scheme": "dynamic-transparent",
         "data-chroma": 0
     };
@@ -33,7 +34,8 @@ export class UIStatusBar extends ThemedElement {
     constructor() { super(); }
     protected onInitialize() {
         super.onInitialize?.();
-        (this as HTMLElement).style.setProperty("z-index", "999999", "important");
+        this.style.setProperty("z-index", "999999", "important");
+        this.style.setProperty("background-color", "transparent");
         return this;
     }
 
@@ -41,7 +43,7 @@ export class UIStatusBar extends ThemedElement {
     protected onRender() {
         const root = (this as HTMLElement).shadowRoot;
         if (root) { connect?.(root); this.statusSW = true; }
-        root.addEventListener("click", onInteration);
+        root?.addEventListener?.("click", onInteration);
         return root;
     }
 };

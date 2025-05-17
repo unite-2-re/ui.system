@@ -43,8 +43,8 @@ export class UINumber extends ThemedElement {
     }
 
     //
-    protected onInitialize() { super.onInitialize?.(); E(this, { classList: new Set(["ui-number", "u2-input"]), on: { "change": new Set([this.onSelect.bind(this)]), "input": new Set([this.onSelect.bind(this)])} }); this.onSelect(); return this; }
     protected initialAttributes = { "data-alpha": 0, "data-highlight": 0 };
+    protected onInitialize() { super.onInitialize?.(); E(this, { classList: new Set(["ui-number", "u2-input"]), on: { "change": new Set([this.onSelect.bind(this)]), "input": new Set([this.onSelect.bind(this)])} }); this.onSelect(); return this; };
     protected onSelect(ev?: any){
         const self = this as unknown as HTMLElement;
         const input = (ev?.target?.matches?.("input") ? ev?.target : null) ?? self?.querySelector?.("input:checked") ?? self?.querySelector?.("input");
