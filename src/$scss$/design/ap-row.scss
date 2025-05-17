@@ -79,12 +79,13 @@
             grid-column: 1 / -1;
             grid-template-rows: minmax(0px, 1fr);
             grid-template-columns: subgrid;
+            content-visibility: visible;
 
+            //
             gap: 0.5rem;
-            column-gap: 0.5rem;
             row-gap: 0px;
-
             line-height: 0;
+            column-gap: 0.5rem;
 
             /* flex-version */
             //display: inline flex;
@@ -189,11 +190,15 @@
                 /* */
                 user-select: none;
                 touch-action: none;
+
+                /* */
+                content-visibility: auto;
             }
         }
 
         /* */
         ::slotted(span) {
+            content-visibility: auto;
             background-color: transparent !important;
             text-align: start;
         }
@@ -204,6 +209,7 @@
             flex-basis: stretch;
 
             //
+            content-visibility: auto;
             background-color: transparent;
             text-align: start;
         }
