@@ -44,7 +44,7 @@
                     --data-taskbar-shift: 0px;
 
                     //
-                    display: none;//inline grid;
+                    display: inline grid;
                     block-size: var(--taskbar-size, 3rem);
                     pointer-events: none;
                     font-weight: bold;
