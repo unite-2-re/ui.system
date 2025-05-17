@@ -26,10 +26,10 @@ export class UISlider extends ThemedElement {
     public render = ()=> H`<${"label.ui-contain"} part="ui-contain">
     <${"div.ui-fill"} part="ui-fill" dataset=${{scheme: "inverse", alpha: 1, highlight: 2, chroma: 0.6}}>
         <${"div.ui-fill-inactive"} inert="" dataset=${{alpha: 0.5, scheme: "solid"}}></div>
-        <${"div.ui-fill-active"} inert="" dataset=${{alpha: 0}}></div>
+        <${"div.ui-fill-active"} inert="" dataset=${{alpha: 0, scheme: "inverse"}}></div>
     </div>
     <${"div.ui-thumb"} part="ui-thumb" dataset=${{scheme: "solid", alpha: 1, highlight: 6, highlightHover: 0, highlightOp: "min", chroma: 0.4}}><slot name="icon"></slot></div>
-    <${"div.ui-inputs"} part="ui-inputs"><slot></slot></div>
+    <${"div.ui-inputs"} part="ui-inputs" style="background-color: transparent;"><slot></slot></div>
 </label>`
 
     //
