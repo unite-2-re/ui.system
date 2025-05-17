@@ -1,6 +1,4 @@
-// @ts-ignore /* @vite-ignore */
-import { AxGesture } from "@ext/index";
-import {importCdn} from "/externals/modules/cdnImport.mjs";
+import { AxGesture } from "@ext/shared/Gesture";
 
 //
 export const $control$ = Symbol("@control");
@@ -9,8 +7,8 @@ export const makeControl = async (frameElement: HTMLElement)=>{
     let gestureControl: any = null;
     if (frameElement && !frameElement[$control$]) {
         gestureControl = new AxGesture(frameElement);
-        gestureControl.draggable({ handler: frameElement?.shadowRoot?.querySelector(".ui-title-handle") });
         gestureControl.resizable({ handler: frameElement?.shadowRoot?.querySelector(".ui-resize") });
+        gestureControl.draggable({ handler: frameElement?.shadowRoot?.querySelector(".ui-title-handle") });
         frameElement[$control$] = gestureControl;
     }
 

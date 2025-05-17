@@ -4,10 +4,18 @@ import { bbh, bbw, blockClickTrigger, borderBoxHeight, borderBoxWidth, cbh, cbw,
 
 // @ts-ignore /* @vite-ignore */
 const { fixedClientZoom, agWrapEvent, getBoundingOrientRect, grabForDrag } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
+// @ts-ignore /* @vite-ignore */
+const { ref } = await Promise.try(importCdn, ["/externals/modules/object.js"]);
+// @ts-ignore /* @vite-ignore */
+const { E } = await Promise.try(importCdn, ["/externals/modules/blue.js"]);
 
-//
+//resizing = [ref(0), ref(0)];
 export class AxGesture {
     #holder: HTMLElement;
+    #resizing = [{value: 0}, {value: 0}];
+    #dragging = [{value: 0}, {value: 0}];
+
+    //
     constructor(holder) {
         if (!holder) {
             throw Error("Element is null...");
@@ -32,6 +40,10 @@ export class AxGesture {
             const self = weak?.deref?.();
             try { updSize_w?.deref?.call?.(self); } catch(e) {};
         });
+
+        //
+        this.#resizing = [ref(0), ref(0)], this.#dragging = [ref(0), ref(0)];
+        E(this.#holder, { style: { "--drag-x": this.#dragging[0], "--drag-y": this.#dragging[1], "--resize-x": this.#resizing[0], "--resize-y": this.#resizing[1] } });
     }
 
     //
@@ -48,7 +60,6 @@ export class AxGesture {
     //
     swipe(options) {
         if (options?.handler) {
-            //
             const swipes = new Map<number, any>([]);
             const swipes_w = new WeakRef(swipes);
 
@@ -88,11 +99,7 @@ export class AxGesture {
             };
 
             //
-            const compAngle = (a, c) => {
-                return ((a - c + 540) % 360) - 180;
-            };
-
-            //
+            const compAngle = (a, c) => { return ((a - c + 540) % 360) - 180; };
             const completeSwipe = (pointerId) => {
                 if (swipes?.has?.(pointerId)) {
                     const swipe = swipes_w?.deref()?.get?.(pointerId);
@@ -101,8 +108,6 @@ export class AxGesture {
                         swipe.start[1] - swipe.current[1],
                     ];
                     const diffT = performance.now() - swipe.startTime;
-
-                    //
                     const speed = Math.hypot(...diffP) / diffT;
                     swipe.speed = speed;
 
@@ -177,9 +182,9 @@ export class AxGesture {
     //
     limitResize(real, virtual, holder, container) {
         //const box = this.#holder.getBoundingClientRect();
-        const box    = getBoundingOrientRect(holder) || holder?.getBoundingClientRect?.();
-        const widthDiff  = cbw(container) - (bbw(holder) - (this.propGet("--resize-x") || 0) + ((box.left || 0) * fixedClientZoom(this.#holder)));
-        const heightDiff = cbh(container) - (bbh(holder) - (this.propGet("--resize-y") || 0) + ((box.top  || 0) * fixedClientZoom(this.#holder)));
+        const box        = getBoundingOrientRect(holder) || holder?.getBoundingClientRect?.();
+        const widthDiff  = cbw(container) - (bbw(holder) - (this.#resizing[0].value || 0) + ((box.left || 0) * fixedClientZoom(this.#holder)));
+        const heightDiff = cbh(container) - (bbh(holder) - (this.#resizing[1].value || 0) + ((box.top  || 0) * fixedClientZoom(this.#holder)));
 
         // if relative of un-resized to edge corner max-size
         // discount of dragging offset!
@@ -190,19 +195,14 @@ export class AxGesture {
         return real;
     }
 
-    //
-    get #parent() {
-        // @ts-ignore
-        return this.#holder.offsetParent ?? this.#holder?.host ?? ROOT;
-    }
+    // @ts-ignore
+    get #parent() { return this.#holder.offsetParent ?? this.#holder?.host ?? ROOT; }
 
     //
     resizable(options) {
-        const handler = options.handler ?? this.#holder;
-        const status: InteractStatus = { pointerId: -1 };
-        const weak = new WeakRef(this.#holder);
-        const self_w = new WeakRef(this);
-        const upd_w = new WeakRef(this.#updateSize);
+        const handler  = options.handler ?? this.#holder, status: InteractStatus = { pointerId: -1 };
+        const weak     = new WeakRef(this.#holder), self_w = new WeakRef(this), upd_w = new WeakRef(this.#updateSize);
+        const resizing = this.#resizing;
 
         //
         handler.addEventListener("pointerdown", agWrapEvent((evc) => {
@@ -211,17 +211,14 @@ export class AxGesture {
 
             //
             status.pointerId = ev.pointerId; try { upd_w?.deref?.call?.(self); } catch(e) {};
-            const starting = [self?.propGet?.("--resize-x") || 0, self?.propGet?.("--resize-y") || 0];
+            const starting = [resizing[0].value || 0, resizing[1].value || 0];
             const holder = weak?.deref?.() as any;
             const parent = holder?.offsetParent ?? holder?.host ?? ROOT;
 
             //
             if (holder) {
                 holder.style.setProperty("will-change", "contents, inline-size, block-size, width, height, transform", "important");
-                grabForDrag(holder, ev, {
-                    propertyName: "resize",
-                    shifting: self?.limitResize?.(starting, starting, holder, parent),
-                });
+                grabForDrag(holder, ev, { result: resizing, shifting: self?.limitResize?.(starting, starting, holder, parent) });
             }
 
             //
@@ -249,9 +246,8 @@ export class AxGesture {
     //
     draggable(options) {
         const handler = options.handler ?? this.#holder;
-        const status: InteractStatus = {
-            pointerId: -1,
-        };
+        const status: InteractStatus = { pointerId: -1, };
+        const dragging = this.#dragging;
 
         //
         const weak   = new WeakRef(this.#holder);
@@ -283,7 +279,7 @@ export class AxGesture {
                         try { upd_w?.deref?.call?.(self); } catch(e) {};
                         const starting = [0, 0]
                         grabForDrag(holder, (evp?.detail || evp), {
-                            propertyName: "drag",
+                            result: dragging,
                             shifting: starting
                         });
                     }
@@ -331,12 +327,12 @@ export class AxGesture {
             const box    = getBoundingOrientRect(holder) || holder?.getBoundingClientRect?.();
 
             //
-            setProperty(holder, "--shift-x", (box?.left || 0) - Math.max(this.propGet("--resize-x") || 0, 0) * 0.5 - (this.#parent[contentBoxWidth ] - this.#holder[borderBoxWidth ]) * 0.5);
-            setProperty(holder, "--shift-y", (box?.top  || 0) - Math.max(this.propGet("--resize-y") || 0, 0) * 0.5 - (this.#parent[contentBoxHeight] - this.#holder[borderBoxHeight]) * 0.5);
+            setProperty(holder, "--shift-x", (box?.left || 0) - Math.max(this.#resizing[0].value || 0, 0) * 0.5 - (this.#parent[contentBoxWidth ] - this.#holder[borderBoxWidth ]) * 0.5);
+            setProperty(holder, "--shift-y", (box?.top  || 0) - Math.max(this.#resizing[1].value || 0, 0) * 0.5 - (this.#parent[contentBoxHeight] - this.#holder[borderBoxHeight]) * 0.5);
 
             //
-            setProperty(holder, "--drag-x", 0);
-            setProperty(holder, "--drag-y", 0);
+            setProperty(holder, "--drag-x", dragging[0].value = 0);
+            setProperty(holder, "--drag-y", dragging[1].value = 0);
         });
     }
 

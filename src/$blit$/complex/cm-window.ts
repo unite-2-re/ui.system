@@ -45,7 +45,6 @@ export class UIFrame extends ThemedElement {
 
         //
         this.fixZLayer();
-        makeControl(this as any);
         onTasking(this, this.taskManager);
         return this;
     }
@@ -76,7 +75,7 @@ export class UIFrame extends ThemedElement {
 
     //
     protected onRender() {
-        const root = this.shadowRoot;
+        const root = this.shadowRoot; makeControl(this as any);
         const self = this as unknown as HTMLElement;
         root.addEventListener("click", (ev)=>{
             if (ev.target.matches(".ui-btn-close")) {

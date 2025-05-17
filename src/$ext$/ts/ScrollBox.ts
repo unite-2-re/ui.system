@@ -1,14 +1,14 @@
 // @ts-ignore /* @vite-ignore */
-import {importCdn} from "/externals/modules/cdnImport.mjs";
+import { importCdn } from "/externals/modules/cdnImport.mjs";
+import { ScrollBar } from "../shared/Scrollbar";
 
 // @ts-ignore
 import html from "../html/ScrollBox.html?raw";
 
 // @ts-ignore
 import styles from "../scss/ScrollBox.scss?inline&compress";
-import { ScrollBar } from "../shared/Scrollbar";
-const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
-export default class UIScrollBox extends HTMLElement {
+const  preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+export class UIScrollBox extends HTMLElement {
     static observedAttributes = ["data-scroll-top", "data-scroll-left"];
 
     //
@@ -16,16 +16,18 @@ export default class UIScrollBox extends HTMLElement {
     #initialized: boolean = false;
 
     //
-    constructor() {super(); this.attachShadow({ mode: "open"  }); }
+    constructor() { super(); this.#initialized = false; this.attachShadow({ mode: "open" }); }
     #initialize() {
         if (this.#initialized) return this;
         this.#initialized = true;
 
         //
-        const shadowRoot = this.shadowRoot; const parser = new DOMParser();
+        const shadowRoot = this.shadowRoot ?? this.attachShadow({ mode: "open" }); const parser = new DOMParser();
         const dom = parser.parseFromString(html, "text/html");
+        dom.querySelector("template")?.content?.childNodes.forEach(cp => { shadowRoot?.appendChild(cp.cloneNode(true)); });
+        const content = shadowRoot?.querySelector?.(".content-box");
 
-        // @ts-ignore /* @vite-ignore */
+        //
         Promise.try(importCdn, ["/externals/modules/theme.js"])?.then?.((module)=>{
             // @ts-ignore
             this.#themeStyle = module?.default?.(this.shadowRoot);
@@ -33,17 +35,9 @@ export default class UIScrollBox extends HTMLElement {
         }).catch(console.warn.bind(console));
 
         //
-        dom.querySelector("template")?.content?.childNodes.forEach(cp => {
-            shadowRoot?.appendChild(cp.cloneNode(true));
-        });
-
-        //
         const style = document.createElement("style");
         style.innerHTML = `@import url("${preInit}");`;
         shadowRoot?.appendChild(style);
-
-        //
-        const content = shadowRoot?.querySelector?.(".content-box");
 
         //
         this["@scrollbar-x"] = new ScrollBar(
@@ -91,13 +85,8 @@ export default class UIScrollBox extends HTMLElement {
     }
 
     //
-    connectedCallback() {
-        this.#initialize();
-    }
-
-    //
-    attributeChangedCallback(name/*, oldValue, newValue*/) {
-        //
+    connectedCallback() { this.#initialize(); }
+    attributeChangedCallback(name) {
         const content = this.shadowRoot?.querySelector(".content-box") as HTMLElement;
 
         //
@@ -143,4 +132,6 @@ export default class UIScrollBox extends HTMLElement {
 }
 
 //
-customElements.define("ui-scrollbox", UIScrollBox);
+export default UIScrollBox;
+try { customElements.define("ui-scrollbox", UIScrollBox); } catch(e) {};
+console.log(UIScrollBox);
