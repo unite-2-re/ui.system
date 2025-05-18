@@ -139,9 +139,11 @@ export const doContentObserve = (element) => {
 };
 
 //
-export const doBorderObserve = (element) => {
+export const doBorderObserve = (element, cb: any = ()=>{}) => {
     if (!(element instanceof HTMLElement)) return;
     if (!onBorderObserve.has(element)) {
+        element[borderBoxWidth]  = element.offsetWidth  * fixedClientZoom(element);
+        element[borderBoxHeight] = element.offsetHeight * fixedClientZoom(element);
         const observer = new ResizeObserver((entries) => {
             for (const entry of entries) {
                 if (entry.borderBoxSize) {
@@ -149,14 +151,11 @@ export const doBorderObserve = (element) => {
                     if (borderBoxSize) {
                         element[borderBoxWidth]  = borderBoxSize.inlineSize * fixedClientZoom(element);
                         element[borderBoxHeight] = borderBoxSize.blockSize  * fixedClientZoom(element);
+                        cb?.(element);
                     }
                 }
             }
         });
-
-        //
-        element[borderBoxWidth]  = element.offsetWidth  * fixedClientZoom(element);
-        element[borderBoxHeight] = element.offsetHeight * fixedClientZoom(element);
 
         //
         onBorderObserve.set(element, observer);
@@ -187,3 +186,6 @@ export const blockClickTrigger = (_: MouseEvent | PointerEvent | TouchEvent | nu
         ROOT.removeEventListener("contextmenu", blocker, options);
     }, 100);
 }
+
+//
+export const UUIDv4 = () => { return crypto?.randomUUID ? crypto?.randomUUID() : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c => (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16)); };

@@ -1,54 +1,9 @@
 // @ts-ignore /* @vite-ignore */
 import { importCdn } from "/externals/modules/cdnImport.mjs";
+import { borderBoxHeight, borderBoxWidth, doBorderObserve, UUIDv4 } from "./Utils";
 
-// @ts-ignore
+// @ts-ignore /* @vite-ignore */
 const { setProperty, zoomOf } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
-const onBorderObserve = new WeakMap<HTMLElement, Function[]>();
-
-//
-export const UUIDv4 = () => { return crypto?.randomUUID ? crypto?.randomUUID() : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c => (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16)); };
-export const observeBorderBox = (element, cb) => {
-    if (!onBorderObserve.has(element)) {
-        const callbacks: Function[] = [];
-
-        //
-        const observer = new ResizeObserver((entries) => {
-            for (const entry of entries) {
-                if (entry.borderBoxSize) {
-                    const borderBoxSize = entry.borderBoxSize[0];
-                    if (borderBoxSize) {
-                        callbacks.forEach((cb) => cb?.(borderBoxSize, observer));
-                    }
-                }
-            }
-        });
-
-        //
-        cb?.({
-            inlineSize: element?.offsetWidth || 1,
-            blockSize: element?.offsetHeight || 1,
-        }, observer);
-
-        //
-        onBorderObserve.set(element, callbacks);
-        observer.observe(element, {box: "border-box"});
-    }
-
-    //
-    onBorderObserve.get(element)?.push(cb);
-}
-
-//
-export interface ScrollBarStatus {
-    pointerId: number;
-    scroll: number;
-    delta: number;
-    point: number;
-};
-
-//
-const borderBoxWidth  = Symbol("@content-box-width");
-const borderBoxHeight = Symbol("@content-box-height");
 const axisConfig = [
     {
         name: "x", tName: "inline",
@@ -63,6 +18,14 @@ const axisConfig = [
         //getValue: () => content.scrollTop
     }
 ];
+
+//
+export interface ScrollBarStatus {
+    pointerId: number;
+    scroll: number;
+    delta: number;
+    point: number;
+};
 
 //
 const effectProperty = {
@@ -301,15 +264,13 @@ export class ScrollBar {
             //
             requestIdleCallback(computeScroll, {timeout: 100});
             requestAnimationFrame(computeScroll);
-            if (this.content) {
-                observeBorderBox(this.content, (box) => {
-                    const self = weak?.deref?.();
-                    if (self) {
-                        setProperty(self.scrollbar, "--content-size", self.content[[borderBoxWidth, borderBoxHeight][axis]] = box[["inlineSize", "blockSize"][axis]]);
-                        computeScroll();
-                    }
-                });
-            }
+            doBorderObserve(this.content, (box) => {
+                const self = weak?.deref?.();
+                if (self) {
+                    setProperty(self.scrollbar, "--content-size", self.content[[borderBoxWidth, borderBoxHeight][axis]] = box[["inlineSize", "blockSize"][axis]]);
+                    computeScroll();
+                }
+            });
         }
     }
 }
