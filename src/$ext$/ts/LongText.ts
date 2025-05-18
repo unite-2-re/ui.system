@@ -11,6 +11,7 @@ import html from "../html/LongText.html?raw";
 import styles from "../scss/LongText.scss?inline&compress";
 import { makeInput } from "../shared/Input";
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
 export class UILongTextElement extends HTMLElement {
     //#input?: HTMLInputElement | null;
     #selectionRange?: [number, number] | null;

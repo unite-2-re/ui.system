@@ -6,6 +6,7 @@ import styles from "@scss/design/ov-tooltip.scss?inline";
 
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
 
 // @ts-ignore /* @vite-ignore */
 import { defineElement, property } from "/externals/modules/blue.js";

@@ -8,6 +8,7 @@ import html from "../html/ScrollBox.html?raw";
 // @ts-ignore
 import styles from "../scss/ScrollBox.scss?inline&compress";
 const  preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+const  loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
 export class UIScrollBox extends HTMLElement {
     static observedAttributes = ["data-scroll-top", "data-scroll-left"];
 

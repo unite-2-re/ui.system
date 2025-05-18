@@ -12,6 +12,7 @@ const { computeCaretPositionFromClient, measureInputInFocus, measureText, zoomOf
 // @ts-ignore
 import styles from "../scss/LongText.scss?inline&compress";
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
 export class UIFocusTextElement extends HTMLElement {
     //#input?: HTMLInputElement | null;
     #focus?: HTMLInputElement | null;

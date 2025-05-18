@@ -60,6 +60,7 @@ const loadAsImage = (name: string, creator?: (name: string)=>any)=>{
 
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
 
 // @ts-ignore
 @defineElement('ui-icon')

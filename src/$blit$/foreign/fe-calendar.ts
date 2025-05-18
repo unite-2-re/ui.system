@@ -14,6 +14,7 @@ import { defineElement, E, H, property } from "/externals/modules/blue.js";
 
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
 
 // @ts-ignore
 @defineElement('ui-calendar')

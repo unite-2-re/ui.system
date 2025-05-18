@@ -13,6 +13,7 @@ import { H, property, defineElement } from "/externals/modules/blue.js";
 
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
 
 // @ts-ignore
 @defineElement('ui-statusbar')
@@ -41,7 +42,7 @@ export class UIStatusBar extends ThemedElement {
 
     //
     protected onRender() {
-        const root = (this as HTMLElement).shadowRoot;
+        const root = this.shadowRoot;
         if (root) { connect?.(root); this.statusSW = true; }
         root?.addEventListener?.("click", onInteration);
         return root;

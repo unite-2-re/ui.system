@@ -9,6 +9,7 @@ import styles from "@scss/design/ov-navbar.scss?inline";
 
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
 
 // @ts-ignore /* @vite-ignore */
 import { H, property, defineElement } from "/externals/modules/blue.js";

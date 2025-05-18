@@ -10,6 +10,7 @@ import html from "../html/OrientBox.html?raw";
 // @ts-ignore
 import styles from "../scss/OrientBox.scss?inline&compress";
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
 export class UIOrientBox extends HTMLElement {
     static observedAttributes = ["orient", "zoom"];
     public size: [number, number] = [0, 0];
