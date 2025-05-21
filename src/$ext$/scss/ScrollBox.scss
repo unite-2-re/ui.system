@@ -56,63 +56,25 @@
 };
 
 //
+@mixin scroll-box {
+    & {
+        contain-intrinsic-inline-size: auto;
+        content-visibility: auto;
+        pointer-events: auto;
+        isolation: isolate;
+        overflow-x: hidden;
+        overflow-y: auto !important;
+        scrollbar-color: transparent !important;
+        scrollbar-gutter: auto !important;
+        scrollbar-width: none !important;
+    }
+}
+
+//
 @layer u2-scrollbox
 {
     :host(ui-scrollbox)
     {
-        & {
-            --percent-x: 0.0;
-            --percent-y: 0.0;
-            --scrollbar-color: var(--rv-color, #10101060);
-        }
-
-        //
-        & {
-            contain-intrinsic-inline-size: auto 100cqi;
-
-            //
-            place-content: safe start;
-            place-items: safe start;
-
-            //
-            position: relative;
-            overflow: hidden;
-            inset: 0px;
-            box-sizing: border-box;
-
-            //
-            inline-size: 100%;
-            block-size: 100%;
-
-            //
-            display: inline grid !important;
-            padding: 0px !important;
-            grid-template-columns: minmax(0px, 1fr) 1rem !important;
-            grid-template-rows: minmax(0px, 1fr) 1rem !important;
-
-            //
-            container-type: size !important;
-            background-color: transparent;
-
-            //
-            rotate: none;
-            scale: none;
-            translate: none;
-            transform: none;
-
-            //
-            transform-origin: 50% 50%;
-
-            //
-            filter: none;
-            backdrop-filter: none;
-            perspective: none;
-            isolation: auto;
-
-            // unsupported
-            writing-mode: horizontal-tb !important;
-        }
-
         //
         &, & *, ::slotted(*)
         {
@@ -129,43 +91,85 @@
         }
 
         //
-        &:not([data-hidden]) { display: grid !important; }
-
-        //
-        &, & > :where(*)
-        {
-            box-sizing: border-box;
-            touch-action: none; //manipulation;
-
-            //
-            pointer-events: auto;
-
-            //
-            white-space: nowrap;
-            white-space-collapse: collapse;
-            text-wrap: nowrap;
-            text-spacing-trim: trim-start;
+        & {
+            --percent-x: 0.0;
+            --percent-y: 0.0;
+            --scrollbar-color: var(--rv-color, #101010A0);
         }
 
         //
-        & :where(.content-box)
-        {
-            contain-intrinsic-inline-size: auto 100cqi;
-            background-color: transparent !important;
-            content-visibility: auto;
-            //touch-action: pan-x pan-y;
-            pointer-events: auto;
+        & {
+            place-content: safe start;
+            place-items: safe start;
+            anchor-name: --ux-scrollbox;
+            scroll-timeline-name: --ux-scrollbox-x, --ux-scrollbox-y;
+            timeline-scope: --ux-scrollbox-x, --ux-scrollbox-y;
 
             //
-            isolation: isolate;
-            overflow: scroll;
-            display: block flow;
+            position: relative;
+            overflow: hidden;
+            inset: 0px;
+            box-sizing: border-box;
+
+            //
+            inline-size: 100%;
+            block-size: 100%;
+
+            //
+            padding: 0px;
+            display: block;
+            //display: inline grid;
+            //grid-template-columns: minmax(0px, 1fr) 1rem;
+            //grid-template-rows: minmax(0px, 1fr) 1rem;
+
+            //
+            container-type: size;
+            background-color: transparent;
+
+            //
+            rotate: none;
+            scale: none;
+            translate: none;
+            transform: none;
+            transform-origin: 50% 50%;
+
+            //
+            filter: none;
+            backdrop-filter: none;
+            perspective: none;
+            isolation: auto;
+
+            // unsupported
+            writing-mode: horizontal-tb !important;
+
+            //
+            & > :where(*)
+            {
+                box-sizing: border-box;
+                touch-action: none;
+                pointer-events: auto;
+
+                //
+                white-space: nowrap;
+                white-space-collapse: collapse;
+                text-wrap: nowrap;
+                text-spacing-trim: trim-start;
+            }
+        }
+
+        //
+        @include scroll-box;
+        & :where(.content-box)
+        {
+            display: contents !important;
+            background-color: transparent !important;
+            position: absolute;
+            inset: auto;
+
+            //block flow;
             padding: 0px;
 
             //
-            scrollbar-color: transparent !important;
-            scrollbar-gutter: auto !important;
-            scrollbar-width: none !important;
             grid-row: 1 / -1 !important;
             grid-column: 1 / -1 !important;
             inline-size: 100% !important;
@@ -175,11 +179,6 @@
             box-sizing: border-box !important;
             z-index: 0;
         }
-
-        //
-        /*::slotted(*) {
-            touch-action: pan-x pan-y;
-        }*/
 
         //
         & :where(.scrollbar-x, .scrollbar-y)
@@ -196,7 +195,6 @@
                 //
                 z-index: 9999;
                 container-type: normal;
-                position: relative;//sticky;
                 display: block flow;
                 inset: 0px;
                 box-sizing: border-box;
@@ -206,12 +204,17 @@
                 background-color: transparent !important;
 
                 //
-                inline-size: 100%;
-                block-size: 100%;
-
-                //
                 writing-mode: horizontal-tb !important;
                 direction: ltr !important;
+
+                //
+                //position: relative;
+                position: fixed;
+                position-anchor: --ux-scrollbox;
+
+                //
+                visibility: collapse;
+                overflow: hidden;
             }
 
             //
@@ -222,23 +225,28 @@
             & :where(.thumb)
             {
                 & {
-                    mix-blend-mode: darken;
-                    pointer-events: auto;
+                    //mix-blend-mode: darken;
+                    pointer-events: auto !important;
                     box-sizing: border-box;
 
                     position: static;
                     display: block flow;
                     line-height: 0px;
 
-                    border-radius: 0.125rem;
-                    background-color: oklch(from var(--scrollbar-color, #10101060) l c h / 0.8) !important;
+                    border-radius: 0.25rem;
+                    background-color: oklch(from var(--scrollbar-color, #101010A0) l c h / 0.8) !important;
 
+                    //
                     user-select: none;
                     touch-action: none;
 
                     //
+                    overflow: hidden;
+                    visibility: auto;
                     writing-mode: horizontal-tb !important;
                     direction: ltr !important;
+                    position: relative;
+                    position-anchor: --ux-scrollbox;
                 }
 
                 //
@@ -248,39 +256,60 @@
         }
 
         //
-        & :is(.scrollbar-y)
-        {
-            & {
-                grid-row: 1 / 1 span;
-                grid-column: 2 / 2 span;
-            }
-
-            //
-            & :where(.thumb)
-            {
-                inline-size: 100%;
-                block-size: min(calc(100% * var(--scroll-coef, 1)), 100%);
-                translate: 0px calc(var(--scroll-top, 0) * var(--scroll-coef, 1) * var(--fit-unit, 1px));
-            }
-        }
-
-        //
         & :is(.scrollbar-x)
         {
             & {
                 grid-column: 1 / 1 span;
                 grid-row: 2 / 2 span;
+                block-size: 0.5rem;
+                inline-size: calc(100cqi - 1rem);
+
+                //
+                animation-timeline: --ux-scrollbox-x;
+                inset-block-start: auto;
+                inset-block-end: calc(anchor(end, 0px) + 1px);
+                inset-inline-start: calc(anchor(start, 0px) + 0.5rem);
+                inset-inline-end: auto;
             }
 
             //
             & :where(.thumb)
-            {
+            {   --max-inline: min(100%, calc(100cqi - 1rem));//min(100%, anchor-size(inline, 100%));
+
+                //
                 block-size: 100%;
-                inline-size: min(calc(100% * var(--scroll-coef, 1)), 100%);
+                inline-size: min(calc(var(--max-inline, 100%) * var(--scroll-coef, 1)), var(--max-inline, 100%));
                 translate: calc(var(--scroll-left, 0) * var(--scroll-coef, 0) * var(--fit-unit, 1px)) 0px;
             }
         }
 
+        //
+        & :is(.scrollbar-y)
+        {
+            & {
+                grid-row: 1 / 1 span;
+                grid-column: 2 / 2 span;
+                inline-size: 0.5rem;
+                block-size: calc(100cqb - 1rem);
+
+                //
+                animation-timeline: --ux-scrollbox-y;
+                inset-block-start: calc(anchor(start, 0px) + 0.5rem);
+                inset-block-end: auto;
+                inset-inline-start: auto;
+                inset-inline-end: calc(anchor(end, 0px) + 1px);
+            }
+
+            //
+            & :where(.thumb)
+            {   --max-block: min(100%, calc(100cqb - 1rem));//min(100%, anchor-size(block, 100%));
+
+                //
+                inline-size: 100%;
+                block-size: min(calc(var(--max-block, 100%) * var(--scroll-coef, 1)), var(--max-block, 100%));
+                translate: 0px calc(var(--scroll-top, 0) * var(--scroll-coef, 1) * var(--fit-unit, 1px));
+            }
+        }
     }
 
     //

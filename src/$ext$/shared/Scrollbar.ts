@@ -1,6 +1,6 @@
 // @ts-ignore /* @vite-ignore */
 import { importCdn } from "/externals/modules/cdnImport.mjs";
-import { borderBoxHeight, borderBoxWidth, doBorderObserve, UUIDv4 } from "./Utils";
+import { contentBoxHeight, contentBoxWidth, doContentObserve, UUIDv4 } from "./Utils";
 
 // @ts-ignore /* @vite-ignore */
 const { setProperty, zoomOf } = await Promise.try(importCdn, ["/externals/modules/dom.js"]);
@@ -44,7 +44,7 @@ const makeTimeline = (source, axis: number)=>{
     //
     source.addEventListener("scroll", (ev)=>{ // borderBoxWidth и borderBoxHeight происходит из ResizeObserver
         const tg = ev.target;
-        curr.currTime = tg[["scrollLeft", "scrollTop"][axis]] / Math.max((tg[["scrollWidth", "scrollHeight"][axis]] || 1) - (tg[[borderBoxWidth, borderBoxHeight][axis]] || 1), 1);
+        curr.currTime = tg[["scrollLeft", "scrollTop"][axis]] / Math.max((tg[["scrollWidth", "scrollHeight"][axis]] || 1) - (tg[[contentBoxWidth, contentBoxHeight][axis]] || 1), 1);
         curr.changed  = true;
     });
 
@@ -125,27 +125,22 @@ export class ScrollBar {
             animateByTimeline(bar, properties, timeline);
         }
 
-
-
         //
         const status_w = new WeakRef(this.status);
         const weak     = new WeakRef(this);
         const computeScroll = (ev: any | null = null) => {
             const self = weak?.deref?.();
             if (self) {
-                const sizePercent = Math.max(Math.min(
-                    (self.content?.[[borderBoxWidth, borderBoxHeight][axis]] || 1) /
-                    (self.content?.[["scrollWidth", "scrollHeight"][axis]] || 1),
-                    1
-                ), 0);
+                const scrollSize  = (self.content?.[["scrollWidth", "scrollHeight"][axis]] || .01);
+                const sizePercent = Math.max(Math.min(parseInt(self.content?.[[contentBoxWidth, contentBoxHeight][axis]] || 0) / scrollSize, 1), 0);
 
                 //
-                setProperty(self.scrollbar, "--scroll-coef", sizePercent);
-                setProperty(self.scrollbar, "--scroll-size", (self?.content?.[["scrollWidth", "scrollHeight"][axis]] || 1));
+                setProperty(self.scrollbar, "--scroll-coef", sizePercent || 0);
+                setProperty(self.scrollbar, "--scroll-size", scrollSize || 0);
 
                 //
-                const pt = sizePercent >= 0.99;
-                setProperty(self.scrollbar, "visibility", pt ? "collapse" : "visible", "important");
+                const pt = sizePercent > 0.99 || sizePercent < 0.01;
+                self.scrollbar?.style?.setProperty?.("visibility", pt ? "collapse" : "visible", "important");
                 setProperty(self.scrollbar?.querySelector?.("*"), "pointer-events", pt ? "none" : "auto", "important");
 
                 //
@@ -162,7 +157,7 @@ export class ScrollBar {
 
             //
             if (status && status?.pointerId >= 0) {
-                status.scroll += (status.point - status.delta) * ((self?.content?.[["scrollWidth", "scrollHeight"][axis]] || 0) / (self?.content?.[[borderBoxWidth, borderBoxHeight][axis]] || 1));
+                status.scroll += (status.point - status.delta) * ((self?.content?.[["scrollWidth", "scrollHeight"][axis]] || 0) / parseInt(self?.content?.[[contentBoxWidth, contentBoxHeight][axis]] || 1));
                 status.delta   = status.point;
 
                 //
@@ -264,10 +259,10 @@ export class ScrollBar {
             //
             requestIdleCallback(computeScroll, {timeout: 100});
             requestAnimationFrame(computeScroll);
-            doBorderObserve(this.content, (box) => {
+            doContentObserve(this.content?.["@target"] || this.content, (box) => {
                 const self = weak?.deref?.();
                 if (self) {
-                    setProperty(self.scrollbar, "--content-size", self.content[[borderBoxWidth, borderBoxHeight][axis]] = box[["inlineSize", "blockSize"][axis]]);
+                    setProperty(self.scrollbar, "--content-size", parseInt(self.content[[contentBoxWidth, contentBoxHeight][axis]] || 0));
                     computeScroll();
                 }
             });

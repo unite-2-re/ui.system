@@ -113,24 +113,27 @@ export const getPxValue = (element, name)=>{
 }
 
 //
-export const doContentObserve = (element) => {
+export const doContentObserve = (element, cb: any = ()=>{}) => {
     if (!(element instanceof HTMLElement)) return;
     if (!onContentObserve.has(element)) {
+        element[contentBoxWidth]  = (element.clientWidth );
+        element[contentBoxHeight] = (element.clientHeight);
+
+        //
         const observer = new ResizeObserver((entries) => {
             for (const entry of entries) {
                 if (entry.contentBoxSize) {
                     const contentBoxSize = entry.contentBoxSize[0];
                     if (contentBoxSize) {
-                        element[contentBoxWidth]  = (contentBoxSize.inlineSize + (getPxValue(element, "padding-left") + getPxValue(element, "padding-right" ))) * fixedClientZoom(element);
-                        element[contentBoxHeight] = (contentBoxSize.blockSize  + (getPxValue(element, "padding-top")  + getPxValue(element, "padding-bottom"))) * fixedClientZoom(element);
+                        element[contentBoxWidth]  = Math.min(contentBoxSize.inlineSize, element.clientWidth);
+                        element[contentBoxHeight] = Math.min(contentBoxSize.blockSize, element.clientHeight);
+                        //element[contentBoxWidth]  = (contentBoxSize.inlineSize + (getPxValue(element, "padding-left") + getPxValue(element, "padding-right" ))) * fixedClientZoom(element);
+                        //element[contentBoxHeight] = (contentBoxSize.blockSize  + (getPxValue(element, "padding-top")  + getPxValue(element, "padding-bottom"))) * fixedClientZoom(element);
+                        cb?.(element);
                     }
                 }
             }
         });
-
-        //
-        element[contentBoxWidth]  = (element.clientWidth ) * fixedClientZoom(element);
-        element[contentBoxHeight] = (element.clientHeight) * fixedClientZoom(element);
 
         //
         onContentObserve.set(element, observer);
@@ -142,15 +145,15 @@ export const doContentObserve = (element) => {
 export const doBorderObserve = (element, cb: any = ()=>{}) => {
     if (!(element instanceof HTMLElement)) return;
     if (!onBorderObserve.has(element)) {
-        element[borderBoxWidth]  = element.offsetWidth  * fixedClientZoom(element);
-        element[borderBoxHeight] = element.offsetHeight * fixedClientZoom(element);
+        element[borderBoxWidth]  = element.offsetWidth;
+        element[borderBoxHeight] = element.offsetHeight;
         const observer = new ResizeObserver((entries) => {
             for (const entry of entries) {
                 if (entry.borderBoxSize) {
                     const borderBoxSize = entry.borderBoxSize[0];
                     if (borderBoxSize) {
-                        element[borderBoxWidth]  = borderBoxSize.inlineSize * fixedClientZoom(element);
-                        element[borderBoxHeight] = borderBoxSize.blockSize  * fixedClientZoom(element);
+                        element[borderBoxWidth]  = Math.min(borderBoxSize.inlineSize, element.offsetWidth);
+                        element[borderBoxHeight] = Math.min(borderBoxSize.blockSize, element.offsetHeight);
                         cb?.(element);
                     }
                 }

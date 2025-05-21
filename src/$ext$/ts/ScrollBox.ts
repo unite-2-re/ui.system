@@ -26,7 +26,7 @@ export class UIScrollBox extends HTMLElement {
         const shadowRoot = this.shadowRoot ?? this.attachShadow({ mode: "open" }); const parser = new DOMParser();
         const dom = parser.parseFromString(html, "text/html");
         dom.querySelector("template")?.content?.childNodes.forEach(cp => { shadowRoot?.appendChild(cp.cloneNode(true)); });
-        const content = shadowRoot?.querySelector?.(".content-box");
+        const content = this;//shadowRoot?.querySelector?.(".content-box");
 
         //
         Promise.try(importCdn, ["/externals/modules/theme.js"])?.then?.((module)=>{
@@ -41,25 +41,24 @@ export class UIScrollBox extends HTMLElement {
         shadowRoot?.appendChild(style);
 
         //
-        this["@scrollbar-x"] = new ScrollBar(
-            {
-                holder: this,
-                content: shadowRoot?.querySelector(".content-box"),
-                scrollbar: shadowRoot?.querySelector(".scrollbar-x"),
-            },
-            0
-        );
-
-        //
         this["@scrollbar-y"] = new ScrollBar(
             {
                 holder: this,
-                content: shadowRoot?.querySelector(".content-box"),
+                content: content,//shadowRoot?.querySelector(".content-box"),
                 scrollbar: shadowRoot?.querySelector(".scrollbar-y"),
             },
             1
         );
 
+        //
+        this["@scrollbar-x"] = new ScrollBar(
+            {
+                holder: this,
+                content: content,//shadowRoot?.querySelector(".content-box"),
+                scrollbar: shadowRoot?.querySelector(".scrollbar-x"),
+            },
+            0
+        );
 
         //
         if (this.dataset.scrollTop || this.dataset.scrollLeft) {
@@ -88,7 +87,7 @@ export class UIScrollBox extends HTMLElement {
     //
     connectedCallback() { this.#initialize(); }
     attributeChangedCallback(name) {
-        const content = this.shadowRoot?.querySelector(".content-box") as HTMLElement;
+        const content = this;//this.shadowRoot?.querySelector(".content-box") as HTMLElement;
 
         //
         if (name == this?.dataset.scrollTop) {
