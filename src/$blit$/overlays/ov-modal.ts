@@ -13,9 +13,13 @@ import styles from "@scss/design/ov-modal.scss?inline";
 // @ts-ignore /* @vite-ignore */
 import {importCdn} from "/externals/modules/cdnImport.mjs";
 
+// @ts-ignore /* @vite-ignore */
+import { loadInlineStyle } from "/externals/modules/dom.js";
+
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
+const styled  = loadInlineStyle(preInit, null, "ux-layer");
 
 // @ts-ignore
 @defineElement('ui-modal')
@@ -25,7 +29,7 @@ export class UIModal extends ThemedElement {
     @property() protected current?: string;
 
     //
-    public styles = () => preInit;
+    public styles = () => styled.cloneNode(true);
     public initialAttributes = {
         "data-hidden": "",
         "data-chroma": "0.001",

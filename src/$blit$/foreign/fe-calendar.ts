@@ -12,9 +12,14 @@ import styles from "@scss/foreign/fe-calendar.scss?inline";
 // @ts-ignore /* @vite-ignore */
 import { defineElement, E, H, property } from "/externals/modules/blue.js";
 
+// @ts-ignore /* @vite-ignore */
+import { loadInlineStyle } from "/externals/modules/dom.js";
+
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
+const styled  = loadInlineStyle(preInit, null, "ux-layer");
+const marked  = H`<div class="ui-calendar"></div>`;
 
 // @ts-ignore
 @defineElement('ui-calendar')
@@ -24,8 +29,8 @@ export class UICalendar extends ThemedElement {
     wrapper?: any;
 
     //
-    public styles = () => preInit;
-    public render = () => H(`<div class="ui-calendar"></div>`);
+    public styles = () => styled.cloneNode(true);
+    public render = () => marked.cloneNode(true);
 
     //
     protected initialAttributes = { "data-alpha": 0 };

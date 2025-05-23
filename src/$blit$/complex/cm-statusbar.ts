@@ -11,9 +11,15 @@ import ThemedElement from "../shared/ThemedElement";
 // @ts-ignore /* @vite-ignore */
 import { H, property, defineElement } from "/externals/modules/blue.js";
 
+// @ts-ignore /* @vite-ignore */
+import { loadInlineStyle } from "/externals/modules/dom.js";
+
+
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
+const styled  = loadInlineStyle(preInit, null, "ux-layer");
+const markup  = H(htmlCode);;
 
 // @ts-ignore
 @defineElement('ui-statusbar')
@@ -28,8 +34,8 @@ export class UIStatusBar extends ThemedElement {
     };
 
     //
-    public styles = () => preInit;
-    public render = () => H(htmlCode);
+    public render = ()=> markup.cloneNode(true);
+    public styles = ()=> styled.cloneNode(true);
 
     //
     constructor() { super(); }

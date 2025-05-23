@@ -14,6 +14,9 @@ import { BLitElement, defineElement, E, H, property } from "/externals/modules/b
 // @ts-ignore /* @vite-ignore */
 import { subscribe } from "/externals/modules/object.js";
 
+// @ts-ignore /* @vite-ignore */
+import { loadInlineStyle } from "/externals/modules/dom.js";
+
 // @ts-ignore
 const toCamelCase = (str: string) => {
     return str?.split?.(/[-_]/).map((word, index) => {
@@ -61,6 +64,8 @@ const loadAsImage = (name: string, creator?: (name: string)=>any)=>{
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
+const styled  = loadInlineStyle(preInit, null, "ux-layer");
+const marked  = H`<div class="fill"></div>`;
 
 // @ts-ignore
 @defineElement('ui-icon')
@@ -71,8 +76,8 @@ export class UILucideIcon extends BLitElement() {
     #options = { padding: 0, icon: "" };
 
     // also "display" may be "contents"
-    public styles = ()=>preInit;
-    public render = (we)=>{ return H(`<div class="fill"></div>`); }
+    public styles = ()  => styled.cloneNode(true);
+    public render = (we)=> marked.cloneNode(true);
     public onRender() { this.icon = this.#options?.icon || this.icon; this.updateIcon(); subscribe([this.getProperty("icon"), "value"], (icon)=>{ this.updateIcon() }); }
     constructor(options = {icon: "", padding: ""}) { super(); Object.assign(this.#options, options); }
 

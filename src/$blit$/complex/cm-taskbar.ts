@@ -16,6 +16,10 @@ import styles from "@scss/design/ov-taskbar.scss?inline";
 // @ts-ignore /* @vite-ignore */
 import { E, H, defineElement, matchMediaRef, property } from "/externals/modules/blue.js";
 
+// @ts-ignore /* @vite-ignore */
+import { loadInlineStyle } from "/externals/modules/dom.js";
+
+
 //
 const whenFocus = ()=>{
     const isMobile = matchMedia("not (((hover: hover) or (pointer: fine)) and ((width >= 9in) or (orientation: landscape)))").matches;
@@ -26,6 +30,8 @@ const whenFocus = ()=>{
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
+const styled  = loadInlineStyle(preInit, null, "ux-layer");
+const markup  = H(htmlCode);;
 
 // @ts-ignore
 @defineElement('ui-taskbar')
@@ -36,8 +42,8 @@ export class UITaskBar extends ThemedElement {
     @property() public taskManager?: any;
 
     //
-    public styles = () => preInit;
-    public render = () => H(htmlCode);
+    public render = ()=> markup.cloneNode(true);
+    public styles = ()=> styled.cloneNode(true);
 
     //
     protected initialAttributes = {

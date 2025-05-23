@@ -2,9 +2,13 @@
 // Type: contained
 // Behaviour: spinner
 
-// @ts-ignore
-import ThemedElement from "@blit/shared/ThemedElement";
+// @ts-ignore /* @vite-ignore */
+import { defineElement, E, H, property } from "/externals/modules/blue.js";
+
+// @ts-ignore /* @vite-ignore */
+import { loadInlineStyle } from "/externals/modules/dom.js";
 import { doIndication } from "@service/behaviour/bh-indication";
+import   ThemedElement  from "@blit/shared/ThemedElement";
 
 // @ts-ignore
 import styles from "@scss/design/ap-number.scss?inline";
@@ -12,9 +16,7 @@ import styles from "@scss/design/ap-number.scss?inline";
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
-
-// @ts-ignore /* @vite-ignore */
-import { defineElement, E, H, property } from "/externals/modules/blue.js";
+const styled  = loadInlineStyle(preInit, null, "ux-layer");
 
 // @ts-ignore
 @defineElement('ui-number')
@@ -22,7 +24,7 @@ export class UINumber extends ThemedElement {
     @property({source: "valueAsNumber", from: "input" }) value;
 
     //
-    public styles = ()=>preInit;
+    public styles = ()=> styled.cloneNode(true);
     public render = (weak)=>{
         const down = (ev)=>{
             const self = weak?.deref?.() as (HTMLElement | undefined);

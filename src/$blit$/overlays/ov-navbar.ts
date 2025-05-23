@@ -4,12 +4,16 @@ import { setIdleInterval } from "@ext/shared/Utils";
 import { onInteration } from "@service/tasks/opening";
 import initTaskManager from "@service/tasks/manager";
 
+// @ts-ignore /* @vite-ignore */
+import { loadInlineStyle } from "/externals/modules/dom.js";
+
 // @ts-ignore
 import styles from "@scss/design/ov-navbar.scss?inline";
 
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
+const styled  = loadInlineStyle(preInit, null, "ux-layer");
 
 // @ts-ignore /* @vite-ignore */
 import { H, property, defineElement } from "/externals/modules/blue.js";
@@ -31,7 +35,7 @@ export class UINavBar extends ThemedElement {
     };
 
     // also "display" may be "contents"
-    public styles = () => preInit;
+    public styles = () => styled.cloneNode(true);
     public render = () => H`
         <${"button.ui-menu-button.ui-anchor"}  data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" part="ui-menu-button"  data-popup="app-menu"><ui-icon inert icon="layout-grid"></ui-icon></button>
         <${"button.ui-back-button.ui-anchor"}  data-alpha="0" data-highlight="0" data-highlight-hover="2" type="button" part="ui-back-button"  @click=${this.backAction.bind(this)}><ui-icon inert icon="chevron-right"></ui-icon></button>

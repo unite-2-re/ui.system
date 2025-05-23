@@ -20,7 +20,7 @@ import styles from "@scss/design/ap-row.scss?inline";
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
 const markup  = H`<${"div.ui-columns"} part="ui-columns" data-alpha="0"><slot></slot></div><slot name="radio"></slot>`;
-const element = loadInlineStyle(preInit, null, "ux-layer");
+const styled  = loadInlineStyle(preInit, null, "ux-layer");
 
 //
 const initialize = (self)=>{
@@ -47,14 +47,14 @@ const initialize = (self)=>{
 // @ts-ignore
 @defineElement('ui-button-row')
 export class UIButtonRow extends UIButtonBase {
-    protected styles = () => element.cloneNode(true);
+    protected styles = () => styled.cloneNode(true);
     protected render = () => markup.cloneNode(true);
 }
 
 // @ts-ignore
 @defineElement('ui-select-row')
 export class UISelectRow extends UISelectBase {
-    protected styles = () => element.cloneNode(true);
+    protected styles = () => styled.cloneNode(true);
     protected render = () => markup.cloneNode(true);
     protected onInitialize() { super.onInitialize?.(); initialize(this); };
 }

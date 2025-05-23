@@ -8,9 +8,13 @@ import { BLitElement, defineElement, E, H, property } from "/externals/modules/b
 // @ts-ignore
 import styles from "@scss/design/de-shape.scss?inline";
 
+// @ts-ignore /* @vite-ignore */
+import { loadInlineStyle } from "/externals/modules/dom.js";
+
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
+const styled  = loadInlineStyle(preInit, null, "ux-layer");
 
 // @ts-ignore
 @defineElement('ui-shaped')
@@ -18,10 +22,8 @@ export class UIShaped extends BLitElement() {
     @property({ source: "attr" }) icon?: string;
 
     //
-    public styles = ()=>preInit;
-    public render = (w)=>{
-        return H`<slot></slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" part="icon" icon=${w.deref().icon||""}/>`
-    }
+    public styles = () => styled.cloneNode(true);
+    public render = (w)=> H`<slot></slot><ui-icon data-chroma="0" data-alpha="0" style="padding: 25%;" part="icon" icon=${w.deref().icon||""}/>`;
     public initialAttributes = {
         "data-transparent": "",
         "data-alpha": 0,

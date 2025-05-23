@@ -6,6 +6,9 @@
 import { E, H, property, defineElement } from "/externals/modules/blue.js";
 
 // @ts-ignore /* @vite-ignore */
+import { loadInlineStyle } from "/externals/modules/dom.js";
+
+// @ts-ignore /* @vite-ignore */
 import { conditional  } from "/externals/modules/object.js";
 import { openDropMenu } from "@service/functional/fn-dropmenu";
 
@@ -18,7 +21,11 @@ import styles from "@scss/design/ap-button.scss?inline";
 
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
+
+//
 const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
+const markup = H`<${"button.ui-button"} part="ui-button" type="button" style="background-color: transparent;" data-alpha="0"><slot/></button>`;
+const styled = loadInlineStyle(preInit, null, "ux-layer");
 
 // @ts-ignore
 @defineElement('ui-toggle')
@@ -27,8 +34,8 @@ export class UIToggle extends UISelectBase {
     @property({}) dropMenu?: any = null;
 
     //
-    public styles = ()=> preInit;
-    public render = ()=> H`<${"button.ui-button"} part="ui-button" type="button" style="background-color: transparent;" data-alpha="0"><slot/></button>`;
+    public styles = ()=> styled.cloneNode(true);
+    public render = ()=> markup.cloneNode(true);
     public initialAttributes = {
         "data-alpha": 0,
         "data-scheme": "solid",
@@ -54,8 +61,8 @@ export class UIButton extends UIButtonBase {
     @property({}) dropMenu?: any = null;
 
     //
-    public styles = ()=> preInit;
-    public render = ()=> H`<${"button.ui-button"} part="ui-button" type="button" style="background-color: transparent;" data-alpha="0"><slot/></button>`;
+    public styles = ()=> styled.cloneNode(true);
+    public render = ()=> markup.cloneNode(true);
     public initialAttributes = {
         "data-scheme": "solid",
         "data-highlight": 0,

@@ -15,9 +15,14 @@ import styles from "@scss/design/ov-window.scss?inline";
 // @ts-ignore /* @vite-ignore */
 import { defineElement, H } from "/externals/modules/blue.js";
 
+// @ts-ignore /* @vite-ignore */
+import { loadInlineStyle } from "/externals/modules/dom.js";
+
 //
 const preInit = URL.createObjectURL(new Blob([styles], {type: "text/css"}));
 const loading = fetch(preInit, {priority: "high", keepalive: true, cache: "force-cache", mode: "same-origin"});
+const styled  = loadInlineStyle(preInit, null, "ux-layer");
+const markup  = H(htmlCode);;
 
 // @ts-ignore
 @defineElement('ui-frame')
@@ -38,8 +43,8 @@ export class UIFrame extends ThemedElement {
     }
 
     //
-    public render = ()=> H(htmlCode);
-    public styles = ()=> preInit;
+    public render = ()=> markup.cloneNode(true);
+    public styles = ()=> styled.cloneNode(true);
     public onInitialize() {
         super.onInitialize?.();
         const self = this as unknown as HTMLElement;
