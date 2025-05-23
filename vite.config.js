@@ -13,6 +13,21 @@ import tailWindNested from "tailwindcss/nesting";
 export const __dirname = resolve(import.meta.dirname, "./");
 export default {
     plugins,
+    resolve: {
+        alias: {
+            "@": resolve(__dirname, "./src/"),
+            "@mods": resolve(__dirname, "./src/$blit$/"),
+            "@ext": resolve(__dirname, "./src/$ext$/"),
+            "@blit": resolve(__dirname, "./src/$blit$/"),
+            "@scss": resolve(__dirname, "./src/$scss$/"),
+            "@temp": resolve(__dirname, "./src/$temp$/"),
+            "@service": resolve(__dirname, "./src/$service$/"),
+            "/externals/": resolve(__dirname, "./externals/"),
+            "/assets/": resolve(__dirname, "./assets/"),
+            "/frontend/": resolve(__dirname, "./frontend/"),
+            "/plugins/": resolve(__dirname, "./plugins/"),
+        },
+    },
     server: {
         port: 5173,
         open: false,

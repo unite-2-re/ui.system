@@ -1,0 +1,313 @@
+@scope(:scope, :host, :root) {
+    @property --value { initial-value: 0; syntax: "<number>"; inherits: true; }
+    @property --max-value { initial-value: 0; syntax: "<number>"; inherits: true; }
+};
+
+// Type: contained
+@layer ui-switch {
+    :host {
+        &, :where(*), ::slotted(*) {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            user-drag: none;
+            user-select: none;
+            touch-action: none;
+            pointer-events: none;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+
+            /* */
+            box-sizing: border-box;
+
+            //
+            -webkit-font-smoothing: none;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeSpeed;
+            font-smooth: 0px;
+            font-smooth: never;
+            shape-rendering: crispEdges;
+            shape-rendering: optimizeSpeed;
+            image-rendering: auto;
+            image-rendering: crisp-edges;
+            image-rendering: optimizeSpeed;
+            image-rendering: pixelated;
+
+            // brokes layout and interaction
+            direction: ltr !important;
+
+            // term '!important' added due of unsupported
+            // if support will added, we remove importance
+            writing-mode: horizontal-tb !important;
+            background-color: transparent;
+
+            //
+            font-family: 'Open Sans', 'Ubuntu Sans', Ubuntu, Segoe, "Segoe UI", source-sans-pro, 'Source Sans 3', 'Gill Sans Nova', Candara, sans-serif, ui-sans-serif, system-ui;
+        }
+
+        //
+        & {
+            --thumb-content: "🔆";
+
+            //
+            inline-size: 1rem;
+            block-size: 1rem;
+            display: inline flex;
+            padding: 0px;
+            box-sizing: border-box;
+            place-items: safe center;
+            place-content: safe center;
+            border-radius: 0px;
+            background-color: transparent !important;
+
+            //
+            overflow: visible;
+        }
+
+        //
+        & :where(*)
+        {
+            user-select: none;
+            touch-action: none;
+        }
+
+        //
+        & slot {
+            background-color: transparent !important;
+            display: contents !important;
+            overflow: visible !important;
+        }
+
+        //
+        .ui-indicator, ::slotted(.ui-indicator) { background-color: transparent !important; };
+
+        //
+        & > label
+        {
+            & {
+                container-type: size;
+                container-name: ui-contain;
+                contain: none;
+                overflow: visible;
+
+                //
+                border-radius: 0px;
+                cursor: pointer;
+                display: flex;
+                max-inline-size: 100%;
+                max-block-size: 100%;
+                inline-size: 100%;
+                block-size: 100%;
+                position: relative;
+                padding: 0px;
+                box-sizing: border-box;
+                place-items: center;
+                place-content: center;
+                background-color: transparent;
+
+                //
+                pointer-events: none;
+                touch-action: none;
+                user-select: none;
+            }
+
+            //
+            & > .ui-inputs
+            {
+                display: flex;
+                flex-direction: row;
+                place-content: space-around;
+                place-items: stretch;
+                box-sizing: border-box;
+
+                //
+                user-select: none;
+                touch-action: none;
+            }
+
+            //
+            & > .ui-thumb
+            {
+                & {
+                    pointer-events: auto;
+                    z-index: 99;
+                    display: flex;
+                    place-content: center;
+                    place-items: center;
+                    box-sizing: border-box;
+                    min-inline-size: max-content;
+                    min-block-size: max-content;
+                    aspect-ratio: 1 / 1;
+                    overflow: hidden;
+                    cursor: pointer;
+                }
+
+                //
+                & {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    word-break: keep-all;
+                    word-wrap: normal;
+                    flex-wrap: nowrap;
+                    line-height: 0;
+                }
+
+                /* */
+                ::slotted(*) { display: none; }
+                ::slotted(ui-icon:first-child),
+                ::slotted(.ui-indicator:first-child:first-child)
+                {
+                    //
+                    display: flex;
+                    place-content: center;
+                    place-items: center;
+                    flex-direction: row;
+                    overflow: visible;
+
+                    //
+                    aspect-ratio: 1 / 1;
+                    box-sizing: border-box;
+                    text-align: center;
+
+                    //
+                    padding: 0.25rem;
+                    font-size: 0.7rem;
+
+                    //
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    word-break: keep-all;
+                    word-wrap: normal;
+                    flex-wrap: nowrap;
+                    line-height: 0;
+                }
+            }
+
+            //
+            & > .ui-fill {
+                //
+                & {
+                    overflow: hidden;
+                    //background-color: transparent;
+                    display: grid;
+                    grid-template-columns: minmax(0px, 1fr);
+                    grid-template-rows: minmax(0px, 1fr);
+                    box-sizing: border-box;
+                    pointer-events: auto;
+                }
+
+                //
+                & > *
+                {
+                    max-inline-size: 100%;
+                    max-block-size: 100%;
+                    inline-size: 100%;
+                    block-size: 100%;
+
+                    //
+                    grid-column: 1 / -1;
+                    grid-row: 1 / -1;
+                }
+            }
+
+            //
+            & > *
+            {
+                padding: 0px;
+                inset: 0px;
+                position: absolute;
+                max-inline-size: 100%;
+                max-block-size: 100%;
+                inline-size: 100%;
+                block-size: 100%;
+                box-sizing: border-box;
+                border-radius: 0px;
+
+                //
+                translate: calc(50cqi - 50%) calc(50cqb - 50%);
+            }
+        }
+
+        //
+        ::slotted(input)
+        {
+            box-sizing: border-box;
+            padding: 0px;
+            margin: 0px;
+            max-inline-size: 100%;
+            max-block-size: 100%;
+            inline-size: auto;//100%;
+            block-size: auto;//100%;
+            border-radius: 0px;
+            opacity: 0;
+            flex-grow: 1;
+
+            //
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+    }
+
+};
+
+//
+@layer u2-design {
+
+    //
+    :host {
+        & { --value: 0; --max-value: 1; }
+        & {
+            block-size: 1rem;
+            inline-size: calc(0.5rem + 1.5rem * (var(--max-value, 1) + 1));
+        }
+
+        //
+        & .ui-fill
+        {
+            border-radius: 50cqmin;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns:
+                [on-active] minmax(0px, calc(var(--value, 0) / (var(--max-value, 1) /*- 0.999*/) * 100%))
+                [in-active] minmax(0px, 1fr);
+
+            --hl-co: inherit;
+            --hl-co-hover: inherit;
+            --hl-co-state: inherit;
+
+            background-color: var(--tm-bg-color, transparent);
+        }
+
+        //
+        & .ui-fill-active {
+            grid-column: on-active;
+            border-radius: 0px;
+        }
+
+        //
+        & .ui-fill-inactive {
+            grid-column: in-active;
+            border-radius: 0px;
+            background-color: var(--tm-bg-color, transparent);
+        }
+
+        //
+        & .ui-thumb {
+            aspect-ratio: 1 / 1;
+            min-inline-size: 1px;
+            min-block-size: 1px;
+            inline-size: 120cqmin;
+            block-size: 120cqmin;
+            border-radius: 50%;
+            overflow: hidden;
+
+            max-inline-size: none;
+            max-block-size: none;
+
+            //
+            translate: calc(10cqmin * ((var(--value, 0) / (var(--max-value, 1) /*- 0.999*/)) * 2 - 1) + (100cqi - 100%) * (var(--value, 0) / var(--max-value, 1))) calc(50cqb - 50%);
+            background-color: var(--tm-bg-color, transparent);
+        }
+    }
+
+};

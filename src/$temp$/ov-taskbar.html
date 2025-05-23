@@ -1,0 +1,92 @@
+<template>
+    <div class="ui-app-menu ui-anchor" data-alpha="0">
+        <button class="app-menu button" type="button" data-popup="app-menu" data-highlight="0" data-highlight-hover="2" data-alpha="0"><ui-icon inert icon="layout-grid"></ui-icon></button>
+
+        <!-- -->
+        <!--<button
+            class="button ui-icon"
+            data-action="fullscreen"
+            data-alpha="0"
+            data-highlight-hover="2"
+        >
+            <ui-icon inert
+                icon="fullscreen" class="icon-wrap ui-icon-state"
+                data-alpha="0"
+                data-transparent
+            ></ui-icon>
+        </button>-->
+
+        <!-- -->
+        <!--<a
+            target="_blank" rel="noopener noreferrer"
+            draggable="false"
+            class="button ui-icon ui-github" style="pointer-events: auto;" href="https://github.com/orgs/unite-2-re"
+            data-tooltip="Our Github Repository"
+            data-alpha="0"
+            data-action="open-link"
+            data-href="https://github.com/orgs/unite-2-re"
+            data-highlight-hover="2">
+            <ui-icon inert
+                icon="github" class="icon-wrap ui-icon-state ui-github"
+                data-alpha="0"
+                data-transparent
+            ></ui-icon>
+        </a>-->
+    </div>
+
+    <div class="ui-task-bar ui-anchor" data-alpha="0">
+        <!--<div v-for="task in tasks"
+            :class="{'ui-focus': task.id == currentHash, 'ui-active': task.active}"
+            :key="task.id"
+            :style="{'order': task.order||0}"
+            class="ui-task"
+            :data-id="task.id"
+            data-highlight-hover="1"
+            data-transparent
+            @click="focusTask"
+        >
+            <ui-icon inert :name="task.icon"></ui-icon>
+        </div>-->
+
+        <slot></slot>
+    </div>
+    <div class="ui-status ui-anchor" data-alpha="0">
+        <!-- -->
+        <slot name="status"></slot>
+
+        <!-- -->
+        <div
+            class="ui-indicator ui-icon"
+            data-alpha="0"
+            data-highlight-hover="2"
+            data-popup="quick-settings">
+            <ui-icon inert
+                icon="wifi-off" class="icon-wrap ui-icon-state ui-network"
+                data-alpha="0"
+                data-transparent
+            ></ui-icon>
+        </div>
+
+        <!-- -->
+        <div
+            class="ui-indicator ui-icon"
+            data-alpha="0"
+            data-highlight-hover="2"
+            data-popup="power-settings">
+            <ui-icon inert
+                icon="battery" class="icon-wrap ui-icon-state ui-battery"
+                data-alpha="0"
+                data-transparent
+            ></ui-icon>
+        </div>
+
+        <!-- -->
+        <div
+            class="ui-indicator ui-time"
+            data-alpha="0"
+            data-highlight-hover="2"
+            data-popup="calendar">
+            <!--<span class="ui-time-hour" inert>00</span>:<span class="ui-time-minute" inert>00</span>-->
+        </div>
+    </div>
+</template>

@@ -18,26 +18,11 @@ import init, {
     UISlider
 } from "../src/index";
 
-// @ts-ignore
-import { makeSelection } from /* @vite-ignore */ "/externals/core/interact.js";
-
 //
 init();
 
 // @ts-ignore
-import(/* @vite-ignore */ "/externals/core/agate.js").then((module)=>{
-    // @ts-ignore
-    module?.default?.();
-}).catch(console.warn.bind(console));
-
-// @ts-ignore
-import(/* @vite-ignore */ "/externals/core/theme.js").then((module)=>{
-    // @ts-ignore
-    module?.default?.();
-}).catch(console.warn.bind(console));
-
-// @ts-ignore
-import(/* @vite-ignore */ "/externals/core/design.js").then((module)=>{
+import(/* @vite-ignore */ "/externals/modules/theme.js").then((module)=>{
     // @ts-ignore
     module?.default?.();
 }).catch(console.warn.bind(console));

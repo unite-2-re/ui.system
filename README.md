@@ -1,9 +1,12 @@
-# UI Essentials
+# UI.system
 
-All UI elements, which may not compact in dedicated project...
+🎈 **Project was marked as rigid!** 🎈
 
-## Madness coming soon
+*These project now marked as rigid!*
 
-V2 will fully refactored. Everything will be role-played.
+- <https://github.com/unite-2-re/OS.u2re.space>
+- <https://github.com/unite-2-re/ui.system>
 
-That is my last strike...
+Which means, those projects are too/very difficult for maintenance and support.
+
+---

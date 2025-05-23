@@ -1,0 +1,6 @@
+$mobileWidth: 9in;
+$isTouch: "screen and (hover: none) and (pointer: coarse)";
+$isNotWide: "(width < #{$mobileWidth})";
+$isDesktop: "(((hover: hover) or (pointer: fine)) and ((width >= #{$mobileWidth}) or (orientation: landscape)))";
+$isMobile: "not #{$isDesktop}";
+$isWindowed: "@container u2-windowed #{$isNotWide}";

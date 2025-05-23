@@ -1,0 +1,86 @@
+@use "@ext/scss/Unified";
+@scope
+(
+    :scope,
+    :host,
+    :root
+)
+{
+    @property --data-taskbar-shift { inherits: true; syntax: "<length-percentage>"; initial-value: 0px; }
+    @property --rx { initial-value: 0px; syntax: "<length-percentage>"; inherits: true; }
+    @property --ry { initial-value: 0px; syntax: "<length-percentage>"; inherits: true; }
+    @property --sp-x { initial-value: 0px; syntax: "<length-percentage>"; inherits: true; }
+    @property --sp-y { initial-value: 0px; syntax: "<length-percentage>"; inherits: true; }
+    @property --inline-size { initial-value: 100%; syntax: "<length-percentage>"; inherits: true; }
+    @property --block-size  { initial-value: 100%; syntax: "<length-percentage>"; inherits: true; }
+    @property --bound-inline-size { initial-value: 100cqi; syntax: "<length-percentage>"; inherits: true; }
+    @property --bound-block-size  { initial-value: 100cqb; syntax: "<length-percentage>"; inherits: true; }
+    @property --limit-drag-x { initial-value: 100%; syntax: "<length-percentage>"; inherits: true; }
+    @property --limit-drag-y { initial-value: 100%; syntax: "<length-percentage>"; inherits: true; }
+    @property --ds-x { initial-value: 0px; syntax: "<length-percentage>"; inherits: true; }
+    @property --ds-y { initial-value: 0px; syntax: "<length-percentage>"; inherits: true; }
+    @property --rs-x { initial-value: 0px; syntax: "<length-percentage>"; inherits: true; }
+    @property --rs-y { initial-value: 0px; syntax: "<length-percentage>"; inherits: true; }
+    @property --initial-inline-size { initial-value: 100%; syntax: "<length-percentage>"; inherits: true; }
+    @property --initial-block-size  { initial-value: 100%; syntax: "<length-percentage>"; inherits: true; }
+    @property --value { initial-value: 0; syntax: "<number>"; inherits: true; }
+    @property --max-value { initial-value: 0; syntax: "<number>"; inherits: true; }
+};
+
+//
+@layer ui-frame-fix {
+    ui-number input::-webkit-outer-spin-button,
+    ui-number input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    //
+    ui-switch {
+        & {
+            --value: 0;
+            --max-value: 1;
+        }
+
+        //
+        @for $i from 1 through 3 {
+            input[type="radio"]:nth-child(#{$i}) { order: #{$i}; };
+            &:has(input[type="radio"]:last-child:nth-child(#{$i})) { --max-value: #{$i - 1}; };
+            &:has(input[type="radio"]:checkbox:nth-child(#{$i})) { --value: #{$i - 1}; };
+        }
+
+        //
+        &:has(input[type="checkbox"]) { transition: --value 100ms linear; --max-value: 1; }
+        &:has(input[type="checkbox"]:checkbox) { --value: 1; }
+    }
+
+    //
+    ui-frame {
+        //
+        &[data-dragging]:not([data-maximized]) {
+            & { will-change: transform !important; };
+            & > :where(*) {
+                animation: none !important;
+                animation-duration: 0ms !important;
+                transition: none !important;
+                transition-duration: 0ms !important;
+                box-shadow: none !important;
+            };
+        };
+
+        //
+        &:where(
+            :not(ui-modal):empty,
+            :has(.ui-content[data-hidden]),
+            :has(.ui-content:empty),
+            :not(:has(.ui-content))
+        ) { display: none; };
+
+        //
+        & .ui-content, :host(&)::slotted(.ui-content) {
+            inline-size: 100%;
+            block-size: 100%;
+            overflow: hidden;
+        }
+    }
+}
